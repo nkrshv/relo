@@ -101,6 +101,7 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
     ? LEVEL_STYLES[advisory.level] ?? LEVEL_STYLES[1]
     : { dot: "", pill: "", ring: "ring-slate-100" };
   const impact = advisory ? impactForProfile(advisory, profile) : null;
+  const vac = advisory?.vaccinations ?? null;
   const why = advisory
     ? advisory.reasons.length
       ? advisory.reasons.slice(0, 3).join(" · ")
@@ -183,6 +184,54 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
           </p>
         </div>
       )}
+
+      {vac &&
+        (vac.required.length > 0 ||
+          vac.recommended.length > 0 ||
+          vac.malaria ||
+          vac.healthNotices.length > 0) && (
+          <div className="mt-4 rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
+            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              Health · CDC
+            </p>
+            {vac.required.length > 0 && (
+              <p className="mt-1.5 text-sm text-slate-600">
+                <span className="font-semibold text-slate-800">
+                  Required vaccines:
+                </span>{" "}
+                {vac.required.map((v) => v.name).join(", ")}
+              </p>
+            )}
+            {vac.recommended.length > 0 && (
+              <p className="mt-1.5 text-sm text-slate-600">
+                <span className="font-semibold text-slate-800">
+                  Recommended vaccines:
+                </span>{" "}
+                {vac.recommended.map((v) => v.name).join(", ")}
+              </p>
+            )}
+            {vac.malaria && (
+              <p className="mt-1.5 text-sm text-slate-600">
+                <span className="font-semibold text-slate-800">Malaria:</span>{" "}
+                {vac.malaria.riskLevel} risk
+                {vac.malaria.medications.length > 0
+                  ? ` · prophylaxis: ${vac.malaria.medications.join(", ")}`
+                  : ""}
+              </p>
+            )}
+            {vac.healthNotices.map((n, i) => (
+              <p key={i} className="mt-1.5 flex items-start gap-1.5 text-sm text-amber-800">
+                <span className="mt-0.5 shrink-0" aria-hidden>
+                  ⚠️
+                </span>
+                <span>
+                  <span className="font-semibold">{n.title}</span>
+                  {n.summary ? ` — ${n.summary}` : ""}
+                </span>
+              </p>
+            ))}
+          </div>
+        )}
 
       {warnings.length > 0 && (
         <ul className="mt-3 space-y-1.5">

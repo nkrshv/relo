@@ -9,9 +9,9 @@
 //
 // Usage: TRAVELADVISORY_API_KEY=... node scripts/fetch-advisory.mjs
 //
-// Cost: 2 requests per destination (advisory + traveler-impact). With ~18
-// destinations that is ~36 requests, so a full refresh fits several times over
-// within the 250/month cap.
+// Cost: 3 requests per destination (advisory + traveler-impact +
+// vaccinations). With ~18 destinations that is ~54 requests, so a full refresh
+// fits several times over within the 250/month cap.
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -89,7 +89,34 @@ function arr(v) {
   return Array.isArray(v) ? v : [];
 }
 
-function buildRecord(name, flag, code, advisory, impact) {
+function buildVaccinations(vac) {
+  const v = vac ?? {};
+  const vaccine = (x) => ({
+    name: s(x?.name),
+    who: s(x?.who),
+  });
+  const malaria = v.malaria ?? {};
+  return {
+    required: arr(v.required).map(vaccine).filter((x) => x.name),
+    recommended: arr(v.recommended).map(vaccine).filter((x) => x.name),
+    routine: arr(v.routine).map(s).filter(Boolean),
+    malaria: malaria.present
+      ? {
+          riskLevel: s(malaria.risk_level) || "unknown",
+          medications: arr(malaria.medications).map(s).filter(Boolean),
+        }
+      : null,
+    healthNotices: arr(v.health_notices)
+      .map((n) => ({
+        title: s(n?.title),
+        level: s(n?.level),
+        summary: s(n?.summary),
+      }))
+      .filter((n) => n.title),
+  };
+}
+
+function buildRecord(name, flag, code, advisory, impact, vaccinations) {
   const a = advisory ?? {};
   const adv = a.advisory ?? {};
   const entry = a.entry_exit ?? {};
@@ -146,6 +173,7 @@ function buildRecord(name, flag, code, advisory, impact) {
       kidnapping: typeof sev.kidnapping === "number" ? sev.kidnapping : 0,
       overall: typeof sev.overall === "number" ? sev.overall : 0,
     },
+    vaccinations: buildVaccinations(vaccinations),
     stateDeptUrl: s(adv.state_dept_url),
     updatedAt: s(adv.updated_at),
     fetchedAt: new Date().toISOString().slice(0, 10),
@@ -163,28 +191,42 @@ async function main() {
 
   for (const d of dests) {
     const key = d.name.toLowerCase();
-    if (!force && records[key]) {
-      console.log(`  · ${d.name} (cached, skip)`);
-      continue;
-    }
     const code = isoFromEmoji(d.emoji);
     if (!code) {
       console.warn(`  ! skip ${d.name}: could not derive ISO code`);
       continue;
     }
+    const existing = !force ? records[key] : undefined;
+    if (existing && existing.vaccinations) {
+      console.log(`  · ${d.name} (cached, skip)`);
+      continue;
+    }
     try {
+      if (existing) {
+        // Record predates the vaccinations field: fetch only that endpoint
+        // and merge, saving quota.
+        const vac = await getJson(`/vaccinations?code=${code}`);
+        lastRemaining = vac.remaining ?? lastRemaining;
+        existing.vaccinations = buildVaccinations(vac.data);
+        console.log(`  ✓ ${d.name} (${code}) vaccinations merged`);
+        await sleep(7000); // 10 req/min cap -> ~1 request per 6s
+        continue;
+      }
       const advisory = await getJson(`/advisory?code=${code}`);
-      await sleep(7000); // 10 req/min cap -> ~1 request per 6s
+      await sleep(7000);
       const impact = await getJson(`/traveler-impact?code=${code}`);
-      lastRemaining = impact.remaining ?? advisory.remaining ?? lastRemaining;
-      records[d.name.toLowerCase()] = buildRecord(
+      await sleep(7000);
+      const vac = await getJson(`/vaccinations?code=${code}`);
+      lastRemaining = vac.remaining ?? impact.remaining ?? lastRemaining;
+      records[key] = buildRecord(
         d.name,
         d.emoji,
         code,
         advisory.data,
         impact.data,
+        vac.data,
       );
-      console.log(`  ✓ ${d.name} (${code}) level ${records[d.name.toLowerCase()].level}`);
+      console.log(`  ✓ ${d.name} (${code}) level ${records[key].level}`);
       await sleep(7000);
     } catch (err) {
       console.error(`  ! ${d.name} (${code}): ${err.message}`);
@@ -201,6 +243,25 @@ async function main() {
 export interface TravelerImpactEntry {
   level: string;
   detail: string;
+}
+
+export interface VaccineEntry {
+  name: string;
+  who: string;
+}
+
+export interface HealthNotice {
+  title: string;
+  level: string;
+  summary: string;
+}
+
+export interface Vaccinations {
+  required: VaccineEntry[];
+  recommended: VaccineEntry[];
+  routine: string[];
+  malaria: { riskLevel: string; medications: string[] } | null;
+  healthNotices: HealthNotice[];
 }
 
 export interface CountryAdvisory {
@@ -238,6 +299,7 @@ export interface CountryAdvisory {
     kidnapping: number;
     overall: number;
   };
+  vaccinations: Vaccinations;
   stateDeptUrl: string;
   updatedAt: string;
   fetchedAt: string;
