@@ -75,12 +75,27 @@ const PROFILE_LABEL: Record<Profile, string> = {
   student: "students",
 };
 
-function Chip({ label, value }: { label: string; value: string }) {
+function Tile({
+  label,
+  value,
+  accent,
+}: {
+  label: string;
+  value: string;
+  accent?: string;
+}) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-lg bg-slate-50 px-2.5 py-1 text-xs text-slate-600 ring-1 ring-slate-200/70">
-      <span className="font-medium text-slate-400">{label}</span>
-      <span className="font-semibold text-slate-700">{value}</span>
-    </span>
+    <div className="rounded-xl bg-slate-50/80 px-3 py-2.5 ring-1 ring-slate-200/60">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+        {label}
+      </p>
+      <p
+        className={`mt-0.5 truncate text-sm font-semibold ${accent ?? "text-slate-800"}`}
+        title={value}
+      >
+        {value}
+      </p>
+    </div>
   );
 }
 
@@ -124,6 +139,23 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
       ].slice(0, 3)
     : [];
 
+  const hasHealth = Boolean(
+    vac &&
+      (vac.required.length > 0 ||
+        vac.recommended.length > 0 ||
+        vac.malaria ||
+        vac.healthNotices.length > 0),
+  );
+  const detailCount =
+    (impact?.detail ? 1 : 0) +
+    (vac
+      ? vac.required.length +
+        vac.recommended.length +
+        (vac.malaria ? 1 : 0) +
+        vac.healthNotices.length
+      : 0) +
+    warnings.length;
+
   return (
     <section
       className={`reveal mt-5 rounded-2xl border border-slate-200 bg-white/70 p-5 shadow-sm ring-1 ${style.ring} backdrop-blur`}
@@ -152,106 +184,134 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
       </div>
 
       {why && (
-        <p className="mt-3 text-sm leading-relaxed text-slate-600">{why}</p>
+        <p className="mt-2.5 text-sm leading-relaxed text-slate-500">{why}</p>
       )}
 
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
         {advisory && advisory.entryExit.visaRequired !== null && (
-          <Chip
+          <Tile
             label="Visa"
-            value={advisory.entryExit.visaRequired ? "required" : "not required"}
+            value={advisory.entryExit.visaRequired ? "Required" : "Not required"}
+            accent={
+              advisory.entryExit.visaRequired
+                ? "text-amber-700"
+                : "text-emerald-700"
+            }
           />
         )}
-        {currencyValue && <Chip label="Currency" value={currencyValue} />}
-        {advisory?.entryExit.language && (
-          <Chip label="Language" value={advisory.entryExit.language} />
-        )}
+        {currencyValue && <Tile label="Currency" value={currencyValue} />}
         {fx && (
-          <Chip
-            label="FX"
-            value={`1 ${fx.fromCode} ≈ ${formatRate(fx.rate)} ${fx.toCode}`}
+          <Tile
+            label={`FX · 1 ${fx.fromCode}`}
+            value={`≈ ${formatRate(fx.rate)} ${fx.toCode}`}
+            accent="text-indigo-700"
           />
+        )}
+        {advisory?.entryExit.language && (
+          <Tile label="Language" value={advisory.entryExit.language} />
         )}
       </div>
 
-      {impact?.detail && (
-        <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
-          <span
-            className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${impactDot(impact.level)}`}
-            aria-hidden
-          />
-          <p className="text-sm text-slate-600">
-            <span className="font-semibold text-slate-800">
-              For {PROFILE_LABEL[profile]}
-            </span>{" "}
-            <span className="text-slate-400">({impact.level} risk)</span>{" "}
-            — {impact.detail}
-          </p>
-        </div>
-      )}
-
-      {vac &&
-        (vac.required.length > 0 ||
-          vac.recommended.length > 0 ||
-          vac.malaria ||
-          vac.healthNotices.length > 0) && (
-          <div className="mt-4 rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
-            <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-              Health · CDC
-            </p>
-            {vac.required.length > 0 && (
-              <p className="mt-1.5 text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">
-                  Required vaccines:
-                </span>{" "}
-                {vac.required.map((v) => v.name).join(", ")}
-              </p>
-            )}
-            {vac.recommended.length > 0 && (
-              <p className="mt-1.5 text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">
-                  Recommended vaccines:
-                </span>{" "}
-                {vac.recommended.map((v) => v.name).join(", ")}
-              </p>
-            )}
-            {vac.malaria && (
-              <p className="mt-1.5 text-sm text-slate-600">
-                <span className="font-semibold text-slate-800">Malaria:</span>{" "}
-                {vac.malaria.riskLevel} risk
-                {vac.malaria.medications.length > 0
-                  ? ` · prophylaxis: ${vac.malaria.medications.join(", ")}`
-                  : ""}
-              </p>
-            )}
-            {vac.healthNotices.map((n, i) => (
-              <p key={i} className="mt-1.5 flex items-start gap-1.5 text-sm text-amber-800">
-                <span className="mt-0.5 shrink-0" aria-hidden>
-                  ⚠️
-                </span>
-                <span>
-                  <span className="font-semibold">{n.title}</span>
-                  {n.summary ? ` — ${n.summary}` : ""}
-                </span>
-              </p>
-            ))}
-          </div>
-        )}
-
-      {warnings.length > 0 && (
-        <ul className="mt-3 space-y-1.5">
-          {warnings.map((w, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-2 text-sm text-amber-800"
+      {(impact?.detail || hasHealth || warnings.length > 0) && (
+        <details className="group/details mt-3">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 rounded-lg px-1 py-1 text-xs font-semibold text-indigo-600 transition hover:text-indigo-800 [&::-webkit-details-marker]:hidden">
+            <span
+              className="inline-block transition-transform duration-200 group-open/details:rotate-90"
+              aria-hidden
             >
-              <span className="mt-0.5 shrink-0" aria-hidden>
-                ⚠️
+              ▸
+            </span>
+            Safety &amp; health details
+            {detailCount > 0 && (
+              <span className="rounded-full bg-indigo-50 px-1.5 py-0.5 text-[10px] font-bold text-indigo-600 ring-1 ring-indigo-100">
+                {detailCount}
               </span>
-              <span>{w}</span>
-            </li>
-          ))}
-        </ul>
+            )}
+          </summary>
+
+          <div className="mt-2 space-y-2.5">
+            {impact?.detail && (
+              <div className="flex items-start gap-2.5 rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
+                <span
+                  className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${impactDot(impact.level)}`}
+                  aria-hidden
+                />
+                <p className="text-sm text-slate-600">
+                  <span className="font-semibold text-slate-800">
+                    For {PROFILE_LABEL[profile]}
+                  </span>{" "}
+                  <span className="text-slate-400">({impact.level} risk)</span>{" "}
+                  — {impact.detail}
+                </p>
+              </div>
+            )}
+
+            {hasHealth && vac && (
+              <div className="rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Health · CDC
+                </p>
+                {vac.required.length > 0 && (
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    <span className="font-semibold text-slate-800">
+                      Required vaccines:
+                    </span>{" "}
+                    {vac.required.map((v) => v.name).join(", ")}
+                  </p>
+                )}
+                {vac.recommended.length > 0 && (
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    <span className="font-semibold text-slate-800">
+                      Recommended vaccines:
+                    </span>{" "}
+                    {vac.recommended.map((v) => v.name).join(", ")}
+                  </p>
+                )}
+                {vac.malaria && (
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    <span className="font-semibold text-slate-800">
+                      Malaria:
+                    </span>{" "}
+                    {vac.malaria.riskLevel} risk
+                    {vac.malaria.medications.length > 0
+                      ? ` · prophylaxis: ${vac.malaria.medications.join(", ")}`
+                      : ""}
+                  </p>
+                )}
+                {vac.healthNotices.map((n, i) => (
+                  <p
+                    key={i}
+                    className="mt-1.5 flex items-start gap-1.5 text-sm text-amber-800"
+                  >
+                    <span className="mt-0.5 shrink-0" aria-hidden>
+                      ⚠️
+                    </span>
+                    <span>
+                      <span className="font-semibold">{n.title}</span>
+                      {n.summary ? ` — ${n.summary}` : ""}
+                    </span>
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {warnings.length > 0 && (
+              <ul className="space-y-1.5 rounded-xl bg-amber-50/60 p-3 ring-1 ring-amber-100">
+                {warnings.map((w, i) => (
+                  <li
+                    key={i}
+                    className="flex items-start gap-2 text-sm text-amber-800"
+                  >
+                    <span className="mt-0.5 shrink-0" aria-hidden>
+                      ⚠️
+                    </span>
+                    <span>{w}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </details>
       )}
 
       <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-400">
