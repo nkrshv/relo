@@ -4,7 +4,18 @@ import {
   type CountryAdvisory,
 } from "@/lib/countryAdvisory";
 import { conversionBetween, formatRate } from "@/lib/exchangeRates";
+import { currencyForCountry } from "@/lib/countryCurrency";
+import { ALL_COUNTRIES } from "@/lib/allCountries";
+import { normalizeName } from "@/lib/countryFacts";
 import type { Profile } from "@/lib/types";
+
+const FLAG_BY_NAME: Record<string, string> = Object.fromEntries(
+  ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
+);
+
+const NAME_BY_NORM: Record<string, string> = Object.fromEntries(
+  ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.name]),
+);
 
 interface Props {
   country: string;
@@ -75,49 +86,63 @@ function Chip({ label, value }: { label: string; value: string }) {
 
 export default function CountrySummary({ country, profile, fromCountry }: Props) {
   const advisory: CountryAdvisory | null = advisoryForCountry(country);
-  if (!advisory) return null;
-
   const fx = fromCountry ? conversionBetween(fromCountry, country) : null;
-  const style = LEVEL_STYLES[advisory.level] ?? LEVEL_STYLES[1];
-  const impact = impactForProfile(advisory, profile);
-  const why = advisory.reasons.length
-    ? advisory.reasons.slice(0, 3).join(" · ")
-    : advisory.label;
+  const currencyCode = currencyForCountry(country);
 
-  const warnings = [
-    ...advisory.doNotTravel.map((d) => `Do not travel: ${d}`),
-    ...advisory.restrictions,
-    ...(advisory.stateOfEmergency ? ["State of emergency declared"] : []),
-    ...(advisory.consularSupport.limited
-      ? ["Limited consular / emergency services"]
-      : []),
-  ].slice(0, 3);
+  // Nothing worth showing (no advisory, no FX, no known currency).
+  if (!advisory && !fx && !currencyCode) return null;
+
+  const norm = normalizeName(country);
+  const name = advisory?.name ?? NAME_BY_NORM[norm] ?? country;
+  const flag = advisory?.flag ?? FLAG_BY_NAME[norm] ?? "🌍";
+  const currencyValue = advisory?.entryExit.currency ?? currencyCode ?? null;
+
+  const style = advisory
+    ? LEVEL_STYLES[advisory.level] ?? LEVEL_STYLES[1]
+    : { dot: "", pill: "", ring: "ring-slate-100" };
+  const impact = advisory ? impactForProfile(advisory, profile) : null;
+  const why = advisory
+    ? advisory.reasons.length
+      ? advisory.reasons.slice(0, 3).join(" · ")
+      : advisory.label
+    : "";
+
+  const warnings = advisory
+    ? [
+        ...advisory.doNotTravel.map((d) => `Do not travel: ${d}`),
+        ...advisory.restrictions,
+        ...(advisory.stateOfEmergency ? ["State of emergency declared"] : []),
+        ...(advisory.consularSupport.limited
+          ? ["Limited consular / emergency services"]
+          : []),
+      ].slice(0, 3)
+    : [];
 
   return (
     <section
       className={`reveal mt-5 rounded-2xl border border-slate-200 bg-white/70 p-5 shadow-sm ring-1 ${style.ring} backdrop-blur`}
-      aria-label={`Travel advisory for ${advisory.name}`}
+      aria-label={`Country snapshot for ${name}`}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <span className="text-2xl leading-none" aria-hidden>
-            {advisory.flag}
+            {flag}
           </span>
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
               Country snapshot
             </p>
-            <h3 className="text-base font-bold text-slate-900">
-              {advisory.name}
-            </h3>
+            <h3 className="text-base font-bold text-slate-900">{name}</h3>
           </div>
         </div>
-        <span
-          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 ${style.pill}`}
-        >
-          <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
-          Level {advisory.level} · {advisory.label}
-        </span>
+        {advisory && (
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold ring-1 ${style.pill}`}
+          >
+            <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
+            Level {advisory.level} · {advisory.label}
+          </span>
+        )}
       </div>
 
       {why && (
@@ -125,16 +150,14 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
       )}
 
       <div className="mt-3 flex flex-wrap gap-2">
-        {advisory.entryExit.visaRequired !== null && (
+        {advisory && advisory.entryExit.visaRequired !== null && (
           <Chip
             label="Visa"
             value={advisory.entryExit.visaRequired ? "required" : "not required"}
           />
         )}
-        {advisory.entryExit.currency && (
-          <Chip label="Currency" value={advisory.entryExit.currency} />
-        )}
-        {advisory.entryExit.language && (
+        {currencyValue && <Chip label="Currency" value={currencyValue} />}
+        {advisory?.entryExit.language && (
           <Chip label="Language" value={advisory.entryExit.language} />
         )}
         {fx && (
@@ -145,7 +168,7 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
         )}
       </div>
 
-      {impact.detail && (
+      {impact?.detail && (
         <div className="mt-4 flex items-start gap-2.5 rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
           <span
             className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${impactDot(impact.level)}`}
@@ -179,11 +202,13 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
 
       <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-400">
         <span>
-          Source: U.S. State Department
-          {advisory.updatedAt ? ` · updated ${advisory.updatedAt}` : ""}
+          {advisory
+            ? "Source: U.S. State Department"
+            : "Source: exchangerate-api"}
+          {advisory?.updatedAt ? ` · updated ${advisory.updatedAt}` : ""}
           {fx && fx.updatedAt ? ` · FX ${fx.updatedAt}` : ""}
         </span>
-        {advisory.stateDeptUrl && (
+        {advisory?.stateDeptUrl && (
           <a
             href={advisory.stateDeptUrl}
             target="_blank"
