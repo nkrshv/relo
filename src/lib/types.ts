@@ -40,6 +40,7 @@ export interface ChecklistItem {
   tip?: string;
   category: string;
   estimate?: string;
+  url?: string;
 }
 
 export const PHASE_KEYS = ["before", "week1", "month1", "days90"] as const;
@@ -51,8 +52,16 @@ export interface Phase {
   items: ChecklistItem[];
 }
 
+export type FeasibilityLevel = "ok" | "caution" | "blocked";
+
+export interface Feasibility {
+  level: FeasibilityLevel;
+  note: string;
+}
+
 export interface ReloPlan {
   destinationSummary: string;
+  feasibility?: Feasibility;
   phases: Phase[];
 }
 

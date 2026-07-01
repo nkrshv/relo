@@ -82,7 +82,7 @@ export default async function MovingToPage({
 
   return (
     <main className="flex-1">
-      <section className="mx-auto max-w-3xl px-4 pt-14 pb-8 text-center">
+      <section className="mx-auto max-w-3xl px-4 pt-14 pb-8 text-center print:hidden">
         <Link
           href="/"
           className="text-sm font-medium text-indigo-600 hover:text-indigo-800"
@@ -103,7 +103,7 @@ export default async function MovingToPage({
         <ReloApp initialTo={dest.name} />
       </section>
 
-      <section className="mx-auto max-w-3xl px-4 py-10">
+      <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
         <h2 className="text-2xl font-bold text-slate-900">
           The {dest.name} relocation checklist at a glance
         </h2>
@@ -137,7 +137,7 @@ export default async function MovingToPage({
         </p>
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-10">
+      <section className="mx-auto max-w-5xl px-4 py-10 print:hidden">
         <h2 className="text-center text-lg font-bold text-slate-900">
           Other destinations
         </h2>
@@ -154,7 +154,7 @@ export default async function MovingToPage({
         </div>
       </section>
 
-      <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-400">
+      <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-400 print:hidden">
         ReloChecklist · Not legal or immigration advice — always verify official
         requirements.
       </footer>

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import ReloForm from "@/components/ReloForm";
 import ChecklistView from "@/components/ChecklistView";
+import PlanSkeleton from "@/components/PlanSkeleton";
 import type { ReloInput, ReloPlan } from "@/lib/types";
 
 interface Props {
@@ -140,6 +141,14 @@ export default function ReloApp({ initialTo }: Props) {
           onUnlock={unlock}
           onReset={reset}
         />
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="px-4 py-6">
+        <PlanSkeleton />
       </div>
     );
   }
