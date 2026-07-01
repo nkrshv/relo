@@ -24,7 +24,18 @@ Respond ONLY with JSON matching this exact shape:
     {
       "key": "before" | "week1" | "month1" | "days90",
       "items": [
-        { "title": string, "why": string, "tip": string, "category": string, "estimate": string, "url": string }
+        {
+          "title": string,
+          "why": string,
+          "tip": string,
+          "category": string,
+          "estimate": string,
+          "url": string,
+          "steps": string[],
+          "documents": string[],
+          "deadline": string,
+          "commonMistake": string
+        }
       ]
     }
   ]
@@ -52,10 +63,35 @@ SPECIFICITY IS MANDATORY. This is the whole product — generic advice is worthl
 - Instead of "check the tax authority", say exactly WHICH authority, what you register for, and the concrete step (e.g. "Register for a tax ID (NIF) at a Finanças office or via a fiscal representative; non-EU residents usually need a representative").
 - "title": specific imperative naming the real thing (e.g. "Register for your NIF at Finanças", not "Sort out taxes").
 - "why": one sentence with the real consequence or gotcha (what breaks if you skip it), not a platitude.
-- "tip": a concrete, insider detail — a specific document to bring, a real portal/website, a common mistake, a realistic cost or wait time.
+- "tip": a concrete, insider detail — a specific document to bring, a real portal/website, a realistic cost or wait time.
+- "steps": 2 to 4 concrete sub-actions describing HOW to actually complete this item, in order — where exactly to go or which portal/form to use, what to book or request, what happens next. Each step is one short imperative sentence with real names (offices, forms, portals). Never restate the title; never pad with filler. Use [] only when the item genuinely has a single trivial action.
+- "documents": the exact papers/artifacts to bring or prepare for this item (e.g. "Passport", "Proof of address (rental contract)", "Apostilled birth certificate", "3 months of bank statements"). Use [] when none are needed.
+- "deadline": the hard legal or practical deadline if one exists (e.g. "Within 14 days of moving in", "Within 30 days of arrival", "Before your visa appointment"), otherwise "".
+- "commonMistake": the single most common way people get this step wrong and its consequence, one sentence (e.g. "Booking the Anmeldung appointment after arrival — slots in big cities are gone weeks ahead, blocking your bank account and tax ID"). Use "" only if there is genuinely no notable pitfall.
 - "url": the official website for the specific institution, portal, or scheme named in this item (e.g. the tax authority, immigration agency, health service, or the housing/banking portal). RULES for url: (1) only a real, well-established OFFICIAL domain you are confident exists — prefer government sites (.gov, .gob, country TLDs) or the well-known official portal; (2) use the site's ROOT homepage (https://domain/) NOT a deep path, since deep links go stale and 404; (3) if you are not confident of the exact real domain, use an empty string "" — NEVER guess, invent, or approximate a URL. A wrong link is far worse than no link.
 
+PROFILE MODULES — mandatory extra coverage depending on who is moving:
+- "family" profile: MUST include at least one item on school/kindergarten enrolment (real system names, application windows, catchment/registration rules) and one on registering children for healthcare/vaccination records.
+- "student" profile: MUST cover student-specific residence conditions, enrolment confirmation for the visa, and student health insurance rules.
+- "nomad" / remote-worker profile: MUST include an item on tax residency (the 183-day rule or the destination's specific trigger, and what registration it forces) and on whether the visa route actually permits remote work for foreign employers.
+- If the user's priorities include "Pets": MUST include pet import rules (microchip, rabies vaccination timing, health certificate, the destination's animal-import authority) as a "before" item with real lead times.
+- If the user's priorities include "Driving license": MUST include the destination's license exchange/validity rule (whether the origin country's license can be exchanged or a local test is required, and the deadline).
+- Weave the user's stated budget, timeline and notes into item choices and estimates — do not ignore them.
+
 Accuracy: use real, well-established facts about the destination. If you are unsure of an exact current figure (income threshold, fee), still name the specific scheme/office and add "verify the current figure on the official [named authority] site" — never fall back to generic advice. Do NOT invent fake office names or laws.`;
+
+const CRITIC_PROMPT = `You are a merciless relocation-content editor reviewing a draft checklist for the move described by the user. Your single job: eliminate every trace of generic advice and add real, verifiable depth. Return the FULL corrected plan as JSON in exactly the same shape you received — same phases, same field names.
+
+For EVERY item in the draft:
+1. If the title, why, tip, steps or commonMistake could apply to more than one country, rewrite them with destination-specific substance: the real office/portal/form name, the actual fee or threshold (approximate is fine — add "verify the current figure on [named authority]" if it changes yearly), the real waiting time, the real order of operations.
+2. If "steps" is empty, too short, or just restates the title — write 2–4 real sub-actions (which office/portal, which form, what to book, what happens after).
+3. If "documents" is empty but the process obviously requires papers — list the exact documents.
+4. If "deadline" is empty but a legal deadline exists — add it. If "commonMistake" is empty or bland — replace it with the real pitfall people hit for this exact step.
+5. Delete or merge filler items ("join communities", "explore the city", "familiarize yourself with X") unless you can turn them into something concrete and destination-specific.
+6. Keep everything consistent with the VERIFIED FACTS and OFFICIAL TRAVEL ADVISORY blocks if they were provided — they are ground truth. Never invent office names, laws, or URLs; for url keep the same rules (official root domain or "").
+7. Do NOT change the JSON structure, phase keys, or feasibility level; you may sharpen the feasibility note's wording.
+
+Be aggressive: a rewritten plan where 80% of fields changed is expected. Respond ONLY with the JSON.`;
 
 interface RawItem {
   title?: unknown;
@@ -64,6 +100,10 @@ interface RawItem {
   category?: unknown;
   estimate?: unknown;
   url?: unknown;
+  steps?: unknown;
+  documents?: unknown;
+  deadline?: unknown;
+  commonMistake?: unknown;
 }
 
 interface RawPhase {
@@ -94,6 +134,12 @@ function normalizeUrl(v: unknown): string | undefined {
   }
 }
 
+function strList(v: unknown): string[] | undefined {
+  if (!Array.isArray(v)) return undefined;
+  const out = v.map(str).filter(Boolean);
+  return out.length ? out : undefined;
+}
+
 function normalizeItem(raw: RawItem): ChecklistItem | null {
   const title = str(raw.title);
   if (!title) return null;
@@ -104,6 +150,10 @@ function normalizeItem(raw: RawItem): ChecklistItem | null {
     category: str(raw.category) || "General",
     estimate: str(raw.estimate) || undefined,
     url: normalizeUrl(raw.url),
+    steps: strList(raw.steps),
+    documents: strList(raw.documents),
+    deadline: str(raw.deadline) || undefined,
+    commonMistake: str(raw.commonMistake) || undefined,
   };
 }
 
@@ -231,52 +281,51 @@ export async function POST(req: NextRequest) {
     notes: str(body.notes) || undefined,
   };
 
-  let aiRes: Response;
+  const userContent = buildUserContent(input);
+
+  // Pass 1: draft plan.
+  let draftContent: string;
   try {
-    aiRes = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        temperature: 0.5,
-        response_format: { type: "json_object" },
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          { role: "user", content: buildUserContent(input) },
-        ],
-      }),
-    });
-  } catch {
+    draftContent = await callModel(apiKey, [
+      { role: "system", content: SYSTEM_PROMPT },
+      { role: "user", content: userContent },
+    ]);
+  } catch (e) {
     return Response.json(
-      { error: "Couldn't reach the AI service." },
+      { error: "The AI request failed.", detail: String(e).slice(0, 300) },
       { status: 502 },
     );
   }
-
-  if (!aiRes.ok) {
-    const detail = await aiRes.text().catch(() => "");
-    return Response.json(
-      { error: "The AI request failed.", detail: detail.slice(0, 300) },
-      { status: 502 },
-    );
-  }
-
-  const data = (await aiRes.json()) as {
-    choices?: Array<{ message?: { content?: string } }>;
-  };
-  const content = data.choices?.[0]?.message?.content ?? "";
 
   let parsed: RawPlan;
   try {
-    parsed = JSON.parse(content) as RawPlan;
+    parsed = JSON.parse(draftContent) as RawPlan;
   } catch {
     return Response.json(
       { error: "The AI returned an unexpected format." },
       { status: 502 },
     );
+  }
+
+  // Pass 2: critic/deepening pass. On any failure fall back to the draft.
+  try {
+    const critiqued = await callModel(apiKey, [
+      { role: "system", content: CRITIC_PROMPT },
+      {
+        role: "user",
+        content: `${userContent}\n\nDRAFT PLAN TO REVIEW AND DEEPEN:\n${JSON.stringify(parsed)}`,
+      },
+    ]);
+    const revised = JSON.parse(critiqued) as RawPlan;
+    const revisedPlan = normalizePlan(revised);
+    if (revisedPlan.phases.length > 0) {
+      // Feasibility level must not be weakened by the critic.
+      revisedPlan.feasibility =
+        normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
+      return Response.json({ input, plan: revisedPlan });
+    }
+  } catch {
+    // fall through to the draft
   }
 
   const plan = normalizePlan(parsed);
@@ -288,4 +337,31 @@ export async function POST(req: NextRequest) {
   }
 
   return Response.json({ input, plan });
+}
+
+async function callModel(
+  apiKey: string,
+  messages: Array<{ role: "system" | "user"; content: string }>,
+): Promise<string> {
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: "gpt-4o",
+      temperature: 0.4,
+      response_format: { type: "json_object" },
+      messages,
+    }),
+  });
+  if (!res.ok) {
+    const detail = await res.text().catch(() => "");
+    throw new Error(detail.slice(0, 300) || `HTTP ${res.status}`);
+  }
+  const data = (await res.json()) as {
+    choices?: Array<{ message?: { content?: string } }>;
+  };
+  return data.choices?.[0]?.message?.content ?? "";
 }

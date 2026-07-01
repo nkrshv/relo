@@ -119,6 +119,48 @@ body {
   animation: var(--animate-shimmer);
 }
 
+/* Springy pop for the custom checkbox tick. */
+.check-pop {
+  animation: check-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes check-pop {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Confetti pieces inside the plan-complete card. */
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 7px;
+  height: 12px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: confetti-fall 2.6s ease-in infinite;
+}
+
+@keyframes confetti-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) rotate(0deg);
+  }
+  10% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(160px) rotate(320deg);
+  }
+}
+
 /* Staggered reveal helper. */
 .reveal {
   animation: var(--animate-fade-up);
@@ -127,6 +169,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .skeleton,
+  .check-pop,
+  .confetti-piece,
   .app-backdrop::before,
   .app-backdrop::after {
     animation: none !important;
@@ -153,5 +197,16 @@ body {
   * {
     backdrop-filter: none !important;
     box-shadow: none !important;
+  }
+  .confetti-piece {
+    display: none !important;
+  }
+  /* Collapsed <details> sections print expanded, without their toggles. */
+  details::details-content {
+    content-visibility: visible !important;
+    display: block !important;
+  }
+  details > summary {
+    display: none !important;
   }
 }

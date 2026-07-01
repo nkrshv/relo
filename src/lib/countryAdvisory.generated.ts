@@ -10,6 +10,25 @@ export interface TravelerImpactEntry {
   detail: string;
 }
 
+export interface VaccineEntry {
+  name: string;
+  who: string;
+}
+
+export interface HealthNotice {
+  title: string;
+  level: string;
+  summary: string;
+}
+
+export interface Vaccinations {
+  required: VaccineEntry[];
+  recommended: VaccineEntry[];
+  routine: string[];
+  malaria: { riskLevel: string; medications: string[] } | null;
+  healthNotices: HealthNotice[];
+}
+
 export interface CountryAdvisory {
   code: string;
   name: string;
@@ -45,6 +64,7 @@ export interface CountryAdvisory {
     kidnapping: number;
     overall: number;
   };
+  vaccinations: Vaccinations;
   stateDeptUrl: string;
   updatedAt: string;
   fetchedAt: string;
@@ -105,7 +125,40 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/portugal-travel-advisory.html",
     "updatedAt": "2023-10-01",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Yellow Fever",
+          "who": ""
+        }
+      ],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Portugal. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Portugal."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "spain": {
     "code": "ES",
@@ -162,7 +215,36 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.esp.html",
     "updatedAt": "2025-05-11T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Spain. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Spain."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)",
+        "Routine vaccines"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "germany": {
     "code": "DE",
@@ -218,7 +300,47 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.deu.html",
     "updatedAt": "2025-05-12T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Measles (MMR)",
+          "who": "All international travelers"
+        }
+      ],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Germany. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Germany."
+        },
+        {
+          "name": "Polio",
+          "who": "Adults traveling to Germany who received a complete polio vaccination series as children may receive a single lifetime booster dose of inactivated polio vaccine; travelers who are unvaccinated or not fully vaccinated should receive a complete polio vaccination series before travel."
+        }
+      ],
+      "routine": [],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Polio",
+          "level": "alert",
+          "summary": "Some international destinations have circulating poliovirus. Before any international travel, make sure you are up to date on your polio vaccines."
+        },
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine."
+        }
+      ]
+    }
   },
   "netherlands": {
     "code": "NL",
@@ -277,7 +399,40 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/netherlands-travel-advisory.html",
     "updatedAt": "2023-10-01",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Measles (MMR)",
+          "who": "All international travelers"
+        }
+      ],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to the Netherlands. Unvaccinated travelers 60 years and older may get vaccinated before traveling to the Netherlands."
+        }
+      ],
+      "routine": [
+        "Routine Vaccines"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "france": {
     "code": "FR",
@@ -334,7 +489,36 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.fra.html",
     "updatedAt": "2025-05-27T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to France. Unvaccinated travelers 60 years and older may get vaccinated before traveling to France."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)",
+        "Routine Vaccines"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "italy": {
     "code": "IT",
@@ -390,7 +574,35 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.ita.html",
     "updatedAt": "2025-05-22T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Italy. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Italy."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "ireland": {
     "code": "IE",
@@ -448,7 +660,40 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/ireland-travel-advisory.html",
     "updatedAt": "2026-03-19T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Measles-Mumps-Rubella (MMR)",
+          "who": "All international travelers"
+        }
+      ],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Ireland. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Ireland."
+        }
+      ],
+      "routine": [
+        "Routine Vaccines"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "united kingdom": {
     "code": "GB",
@@ -504,7 +749,47 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.gbr.html",
     "updatedAt": "2025-05-07T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Measles (Rubeola)",
+          "who": "All international travelers"
+        }
+      ],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to the United Kingdom. Unvaccinated travelers 60 years and older may get vaccinated before traveling to the United Kingdom."
+        },
+        {
+          "name": "Polio",
+          "who": "Adults traveling to the United Kingdom who received a complete polio vaccination series as children may receive a single lifetime booster dose of inactivated polio vaccine; travelers who are unvaccinated or not fully vaccinated should receive a complete polio vaccination series before travel."
+        }
+      ],
+      "routine": [],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Polio",
+          "level": "alert",
+          "summary": "Some international destinations have circulating poliovirus. Before any international travel, make sure you are up to date on your polio vaccines."
+        },
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "united states": {
     "code": "US",
@@ -565,7 +850,21 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.gc.ca/destinations/united-states",
     "updatedAt": "2026-07-01T12:52:30.740Z",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19 Vaccine",
+          "who": "all travelers"
+        }
+      ],
+      "routine": [
+        "Routine Vaccines"
+      ],
+      "malaria": null,
+      "healthNotices": []
+    }
   },
   "canada": {
     "code": "CA",
@@ -619,7 +918,40 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/canada-travel-advisory.html",
     "updatedAt": "2025-06-10T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Canada"
+        },
+        {
+          "name": "COVID-19",
+          "who": "all eligible travelers"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "New Hepatitis A in Canada",
+          "level": "watch",
+          "summary": "Manitoba, Canada is currently experiencing a hepatitis A virus (HAV) outbreak. HAV is contagious and spreads through close person-to-person contact and by eating contaminated food or drink."
+        },
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "australia": {
     "code": "AU",
@@ -674,7 +1006,39 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/australia-travel-advisory.html",
     "updatedAt": "2025-05-29T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Measles-Mumps-Rubella (MMR)",
+          "who": "All international travelers should be fully vaccinated against measles with the MMR vaccine, including an early dose for infants 6–11 months."
+        },
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers should be up to date with their COVID-19 vaccines."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Recommended for unvaccinated travelers younger than 60 years old traveling to Australia. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Australia."
+        },
+        {
+          "name": "Japanese Encephalitis",
+          "who": "Recommended for travelers who are moving to an area with Japanese encephalitis to live, spending long periods of time, or frequently traveling to areas with Japanese encephalitis."
+        }
+      ],
+      "routine": [
+        "Diphtheria"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine."
+        }
+      ]
+    }
   },
   "united arab emirates": {
     "code": "AE",
@@ -737,7 +1101,43 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/united-arab-emirates-travel-advisory.html",
     "updatedAt": "2026-03-02",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old"
+        },
+        {
+          "name": "Rabies",
+          "who": ""
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "estonia": {
     "code": "EE",
@@ -795,7 +1195,35 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/estonia-travel-advisory.html",
     "updatedAt": "2023-10-01",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Estonia; infants 6 to 11 months old should also be vaccinated"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Estonia; unvaccinated travelers 60 years and older may get vaccinated before traveling"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "poland": {
     "code": "PL",
@@ -849,7 +1277,44 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/poland-travel-advisory.html",
     "updatedAt": "2025-06-04T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Poland; infants 6 to 11 months old should also be vaccinated"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Poland; unvaccinated travelers 60 years and older may get vaccinated before traveling"
+        },
+        {
+          "name": "Polio",
+          "who": "Adults traveling to Poland who received a complete polio vaccination series as children may receive a single lifetime booster dose; travelers who are unvaccinated or not fully vaccinated should receive a complete polio vaccination series before travel."
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Polio",
+          "level": "alert",
+          "summary": "Some international destinations have circulating poliovirus. Before any international travel, make sure you are up to date on your polio vaccines."
+        },
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine."
+        }
+      ]
+    }
   },
   "mexico": {
     "code": "MX",
@@ -924,7 +1389,59 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/mexico-travel-advisory.html",
     "updatedAt": "2023-10-01",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Mexico"
+        },
+        {
+          "name": "COVID-19",
+          "who": "all eligible travelers"
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "Atovaquone-proguanil",
+          "chloroquine",
+          "doxycycline",
+          "mefloquine",
+          "primaquine",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Rocky Mountain Spotted Fever in Mexico",
+          "level": "watch",
+          "summary": "Illness and death due to Rocky Mountain spotted fever (RMSF) have been reported in the northern region of Mexico along the U.S. border, particularly in Baja California, Sonora, Chihuahua, Coahuila, and Nuevo León."
+        },
+        {
+          "title": "Global Measles",
+          "level": "alert",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        },
+        {
+          "title": "Salmonella Newport in Mexico",
+          "level": "info",
+          "summary": "Some travelers who have spent time in Mexico have been infected with multidrug-resistant (MDR) Salmonella Newport."
+        }
+      ]
+    }
   },
   "thailand": {
     "code": "TH",
@@ -987,7 +1504,50 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/thailand-travel-advisory.html",
     "updatedAt": "2023-10-01",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old"
+        },
+        {
+          "name": "Japanese Encephalitis",
+          "who": "travelers who are moving to an area with Japanese encephalitis to live or spending long periods of time, such as a month or more, in areas with Japanese encephalitis"
+        },
+        {
+          "name": "COVID-19",
+          "who": "all eligible travelers"
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "Atovaquone-proguanil",
+          "doxycycline",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Southern Thailand Flooding",
+          "level": "watch",
+          "summary": "Southern Thailand is experiencing major flooding, which may increase the risk of waterborne, vector-borne, and fungal diseases."
+        }
+      ]
+    }
   },
   "japan": {
     "code": "JP",
@@ -1041,7 +1601,39 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.jpn.html",
     "updatedAt": "2025-05-14T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers should be up to date with their COVID-19 vaccines."
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Japan. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Japan."
+        },
+        {
+          "name": "Japanese Encephalitis",
+          "who": "Travelers moving to an area with Japanese encephalitis to live, spending long periods in areas with Japanese encephalitis, or frequently traveling to such areas."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   },
   "singapore": {
     "code": "SG",
@@ -1097,6 +1689,38 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
     },
     "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/singapore-travel-advisory.html",
     "updatedAt": "2026-03-08T20:00:00-04:00",
-    "fetchedAt": "2026-07-01"
+    "fetchedAt": "2026-07-01",
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers should be up to date with their COVID-19 vaccines."
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Singapore. Infants 6 to 11 months old should also be vaccinated against Hepatitis A."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Singapore. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Singapore."
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    }
   }
 };
