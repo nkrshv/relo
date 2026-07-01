@@ -1,8 +1,11 @@
 import type { NextRequest } from "next/server";
+import { factsForCountry } from "@/lib/countryFacts";
+import { advisoryForCountry, impactForProfile } from "@/lib/countryAdvisory";
 import {
   PHASE_KEYS,
   PHASE_TITLES,
   type ChecklistItem,
+  type Feasibility,
   type Phase,
   type PhaseKey,
   type ReloInput,
@@ -11,32 +14,48 @@ import {
 
 export const runtime = "nodejs";
 
-const SYSTEM_PROMPT = `You are an expert relocation advisor who has helped thousands of people move between countries. Produce a concrete, personalized relocation checklist for one specific person's move.
+const SYSTEM_PROMPT = `You are a senior relocation advisor with deep, current, country-specific knowledge (visa schemes, tax registration, healthcare enrolment, banking, housing portals) for moves between specific countries. You produce checklists that feel like they were written by someone who has personally done this exact move — not generic advice anyone could guess.
 
 Respond ONLY with JSON matching this exact shape:
 {
   "destinationSummary": string,
+  "feasibility": { "level": "ok" | "caution" | "blocked", "note": string },
   "phases": [
     {
       "key": "before" | "week1" | "month1" | "days90",
       "items": [
-        { "title": string, "why": string, "tip": string, "category": string, "estimate": string }
+        { "title": string, "why": string, "tip": string, "category": string, "estimate": string, "url": string }
       ]
     }
   ]
 }
 
-Rules:
+FEASIBILITY CHECK (do this FIRST, before writing the checklist):
+- Assess whether this specific move (this origin → this destination, for this person's profile and visa status) is currently legally and practically possible as of today.
+- Consider: active wars or armed conflict, closed borders, entry bans or sanctions tied to the person's nationality, mobilization/conscription rules that bar exit or entry (e.g. male citizens of a certain age), suspended visa routes, or no diplomatic relations.
+- "level": "blocked" = the move is currently illegal, impossible, or extremely dangerous for this specific person (e.g. a Russian male of conscription age moving to Ukraine during the war); "caution" = legal but with serious active risks or major restrictions the person must know (war nearby, sanctions affecting banking, unusual visa hurdles); "ok" = a normal, feasible move.
+- "note": one or two plain-language sentences. For "blocked"/"caution", state the concrete restriction and who it applies to. For "ok", use an empty string "".
+- If "blocked": still return the phases, but frame the FIRST phase around the legal/safety reality (e.g. official routes, safer alternatives, what would need to change) rather than pretending it's a routine move. Never output steps that assume an impossible move is fine.
+- Base this on well-established, widely-known geopolitical facts. Do not invent conflicts or bans.
+- If an OFFICIAL TRAVEL ADVISORY block is provided below, treat it as authoritative current ground truth about the destination and let it drive the feasibility level: a Level 4 (Do Not Travel), any "do not travel" areas, or a declared state of emergency means the destination itself is dangerous — set "caution" at minimum, and "blocked" if it combines with a nationality/conscription barrier. A Level 3 (Reconsider Travel) should be at least "caution". Reflect the concrete reason from the advisory in the "note". Do NOT contradict the advisory's level or downplay it.
+
+Structure rules:
 - Include all four phases exactly once, in this order: "before", "week1", "month1", "days90".
-- "before" = tasks to do before leaving the origin country. "week1" = urgent tasks in the first week after arrival. "month1" = tasks within the first month. "days90" = tasks within the first 90 days.
-- 4 to 7 items per phase. Be specific to the origin country, destination country, and the person's profile, visa status, and stated priorities.
-- "title": short imperative action (e.g. "Open a local bank account").
-- "why": one sentence explaining why it matters or a gotcha to avoid.
-- "tip": a concrete, practical tip (a document to prepare, a common mistake, a rough cost). Keep it short.
+- "before" = tasks before leaving the origin country. "week1" = urgent tasks in the first week after arrival. "month1" = within the first month. "days90" = within the first 90 days.
+- 4 to 7 items per phase. Every item must be specific to the destination country (and where relevant the origin country) and the person's profile, visa status, and selected priorities.
 - "category": one short label such as "Housing", "Banking", "Healthcare", "Residency", "Taxes", "Logistics", "Pets", "Schooling".
-- "estimate": rough time or cost when relevant (e.g. "1-2 weeks", "~€150"), otherwise an empty string.
-- Prioritize the priorities the user selected. Do not invent visa rules you are unsure about; phrase uncertain items as "check the official requirements for ...".
-- Be practical and specific, never generic filler.`;
+- "estimate": a concrete time or cost when relevant (e.g. "1-2 weeks", "~€200", "€75 fee"), otherwise "".
+
+SPECIFICITY IS MANDATORY. This is the whole product — generic advice is worthless.
+- Every single item MUST contain at least one concrete, destination-specific fact the person would NOT already know: the exact name of the government body / office / portal (e.g. in Portugal: Finanças for the NIF, AIMA for residency, Segurança Social, SNS for health; use the correct real equivalents for the actual destination), a specific document name, a real threshold, deadline, fee, or number.
+- BANNED: vague filler verbs and phrases such as "research", "look into", "check the local authorities", "familiarize yourself with", "consider your options", "understand the requirements", "be aware of", "make sure to". If a sentence would still be true for any country on earth, rewrite it until it is specific to THIS destination.
+- Instead of "check the tax authority", say exactly WHICH authority, what you register for, and the concrete step (e.g. "Register for a tax ID (NIF) at a Finanças office or via a fiscal representative; non-EU residents usually need a representative").
+- "title": specific imperative naming the real thing (e.g. "Register for your NIF at Finanças", not "Sort out taxes").
+- "why": one sentence with the real consequence or gotcha (what breaks if you skip it), not a platitude.
+- "tip": a concrete, insider detail — a specific document to bring, a real portal/website, a common mistake, a realistic cost or wait time.
+- "url": the official website for the specific institution, portal, or scheme named in this item (e.g. the tax authority, immigration agency, health service, or the housing/banking portal). RULES for url: (1) only a real, well-established OFFICIAL domain you are confident exists — prefer government sites (.gov, .gob, country TLDs) or the well-known official portal; (2) use the site's ROOT homepage (https://domain/) NOT a deep path, since deep links go stale and 404; (3) if you are not confident of the exact real domain, use an empty string "" — NEVER guess, invent, or approximate a URL. A wrong link is far worse than no link.
+
+Accuracy: use real, well-established facts about the destination. If you are unsure of an exact current figure (income threshold, fee), still name the specific scheme/office and add "verify the current figure on the official [named authority] site" — never fall back to generic advice. Do NOT invent fake office names or laws.`;
 
 interface RawItem {
   title?: unknown;
@@ -44,6 +63,7 @@ interface RawItem {
   tip?: unknown;
   category?: unknown;
   estimate?: unknown;
+  url?: unknown;
 }
 
 interface RawPhase {
@@ -53,11 +73,25 @@ interface RawPhase {
 
 interface RawPlan {
   destinationSummary?: unknown;
+  feasibility?: unknown;
   phases?: unknown;
 }
 
 function str(v: unknown): string {
   return typeof v === "string" ? v.trim() : "";
+}
+
+function normalizeUrl(v: unknown): string | undefined {
+  const s = str(v);
+  if (!s) return undefined;
+  try {
+    const u = new URL(s);
+    if (u.protocol !== "https:" && u.protocol !== "http:") return undefined;
+    if (!u.hostname.includes(".")) return undefined;
+    return u.toString();
+  } catch {
+    return undefined;
+  }
 }
 
 function normalizeItem(raw: RawItem): ChecklistItem | null {
@@ -69,7 +103,16 @@ function normalizeItem(raw: RawItem): ChecklistItem | null {
     tip: str(raw.tip) || undefined,
     category: str(raw.category) || "General",
     estimate: str(raw.estimate) || undefined,
+    url: normalizeUrl(raw.url),
   };
+}
+
+function normalizeFeasibility(raw: unknown): Feasibility | undefined {
+  if (!raw || typeof raw !== "object") return undefined;
+  const r = raw as { level?: unknown; note?: unknown };
+  const level = str(r.level);
+  if (level !== "caution" && level !== "blocked") return undefined;
+  return { level, note: str(r.note) };
 }
 
 function normalizePlan(raw: RawPlan): ReloPlan {
@@ -93,12 +136,13 @@ function normalizePlan(raw: RawPlan): ReloPlan {
 
   return {
     destinationSummary: str(raw.destinationSummary),
+    feasibility: normalizeFeasibility(raw.feasibility),
     phases,
   };
 }
 
 function buildUserContent(input: ReloInput): string {
-  return [
+  const profile = [
     `Moving from: ${input.fromCountry}`,
     `Moving to: ${input.toCountry}`,
     `Profile: ${input.profile}`,
@@ -112,6 +156,41 @@ function buildUserContent(input: ReloInput): string {
   ]
     .filter(Boolean)
     .join("\n");
+
+  const blocks = [profile];
+
+  const advisory = advisoryForCountry(input.toCountry);
+  if (advisory) {
+    const impact = impactForProfile(advisory, input.profile);
+    const lines = [
+      `OFFICIAL TRAVEL ADVISORY for ${advisory.name} (U.S. State Department${advisory.updatedAt ? `, updated ${advisory.updatedAt}` : ""}). Authoritative current ground truth — use it for the feasibility check.`,
+      `- Advisory level: ${advisory.level} (${advisory.label})`,
+    ];
+    if (advisory.reasons.length)
+      lines.push(`- Reasons: ${advisory.reasons.join("; ")}`);
+    if (advisory.doNotTravel.length)
+      lines.push(`- Do-not-travel areas: ${advisory.doNotTravel.join("; ")}`);
+    if (advisory.restrictions.length)
+      lines.push(`- Restrictions: ${advisory.restrictions.join("; ")}`);
+    if (advisory.stateOfEmergency)
+      lines.push(`- A state of emergency is currently declared.`);
+    if (impact.detail)
+      lines.push(
+        `- Risk for this profile (${input.profile}, ${impact.level}): ${impact.detail}`,
+      );
+    blocks.push(lines.join("\n"));
+  }
+
+  const facts = factsForCountry(input.toCountry);
+  if (facts) {
+    const factBlock = [
+      `VERIFIED FACTS about ${input.toCountry} — these are current and authoritative. Treat them as ground truth: they OVERRIDE your training data wherever they conflict (institution names change over time). Weave the relevant ones into the checklist; never contradict them.`,
+      ...facts.map((f) => `- ${f}`),
+    ].join("\n");
+    blocks.push(factBlock);
+  }
+
+  return blocks.join("\n\n");
 }
 
 export async function POST(req: NextRequest) {
@@ -161,7 +240,7 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: "gpt-4o",
         temperature: 0.5,
         response_format: { type: "json_object" },
         messages: [
