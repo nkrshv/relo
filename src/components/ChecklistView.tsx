@@ -500,6 +500,11 @@ export default function ChecklistView({
                                   {item.category}
                                 </span>
                                 {item.estimate && <span>{item.estimate}</span>}
+                                {!isChecked && item.deadline && (
+                                  <span className="rounded-md bg-amber-50 px-1.5 py-0.5 text-[10px] font-semibold text-amber-700 ring-1 ring-amber-200/70">
+                                    ⏱ {item.deadline}
+                                  </span>
+                                )}
                               </span>
                               {!isChecked && item.why && (
                                 <span className="mt-1.5 block text-sm leading-relaxed text-slate-600">
@@ -528,19 +533,65 @@ export default function ChecklistView({
                                 </span>
                               </a>
                             )}
-                            {!isChecked && item.tip && (
-                              <details className="group/tip mt-2">
-                                <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-indigo-600 transition hover:text-indigo-800 [&::-webkit-details-marker]:hidden">
-                                  <span aria-hidden>💡</span> Tip
-                                  <span className="text-slate-400 transition group-open/tip:rotate-180">
-                                    ⌄
-                                  </span>
-                                </summary>
-                                <p className="mt-1.5 rounded-lg border border-indigo-100 bg-indigo-50/60 px-3 py-2 text-sm leading-relaxed text-slate-600">
-                                  {item.tip}
-                                </p>
-                              </details>
-                            )}
+                            {!isChecked &&
+                              (item.steps?.length ||
+                                item.documents?.length ||
+                                item.commonMistake ||
+                                item.tip) && (
+                                <details className="group/tip mt-2">
+                                  <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-indigo-600 transition hover:text-indigo-800 [&::-webkit-details-marker]:hidden">
+                                    <span aria-hidden>
+                                      {item.steps?.length ? "📋" : "💡"}
+                                    </span>
+                                    {item.steps?.length ? "How to do it" : "Tip"}
+                                    <span className="text-slate-400 transition group-open/tip:rotate-180">
+                                      ⌄
+                                    </span>
+                                  </summary>
+                                  <div className="mt-1.5 space-y-2.5 rounded-lg border border-indigo-100 bg-indigo-50/60 px-3 py-2.5 text-sm leading-relaxed text-slate-600">
+                                    {item.steps && item.steps.length > 0 && (
+                                      <ol className="space-y-1.5">
+                                        {item.steps.map((step, si) => (
+                                          <li key={si} className="flex gap-2">
+                                            <span className="mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-full bg-indigo-100 text-[10px] font-bold text-indigo-700">
+                                              {si + 1}
+                                            </span>
+                                            <span className="min-w-0">{step}</span>
+                                          </li>
+                                        ))}
+                                      </ol>
+                                    )}
+                                    {item.documents && item.documents.length > 0 && (
+                                      <div>
+                                        <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                                          Bring / prepare
+                                        </p>
+                                        <div className="mt-1 flex flex-wrap gap-1">
+                                          {item.documents.map((doc, di) => (
+                                            <span
+                                              key={di}
+                                              className="rounded-md bg-white px-1.5 py-0.5 text-xs text-slate-600 ring-1 ring-slate-200"
+                                            >
+                                              📄 {doc}
+                                            </span>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    )}
+                                    {item.commonMistake && (
+                                      <p className="rounded-md border border-rose-100 bg-rose-50/70 px-2 py-1.5 text-xs leading-relaxed text-rose-700">
+                                        <span className="font-semibold">Common mistake:</span>{" "}
+                                        {item.commonMistake}
+                                      </p>
+                                    )}
+                                    {item.tip && (
+                                      <p className="text-sm">
+                                        <span aria-hidden>💡</span> {item.tip}
+                                      </p>
+                                    )}
+                                  </div>
+                                </details>
+                              )}
                           </div>
                         </div>
                       </li>

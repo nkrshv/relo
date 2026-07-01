@@ -41,6 +41,10 @@ export interface ChecklistItem {
   category: string;
   estimate?: string;
   url?: string;
+  steps?: string[];
+  documents?: string[];
+  deadline?: string;
+  commonMistake?: string;
 }
 
 export const PHASE_KEYS = ["before", "week1", "month1", "days90"] as const;
