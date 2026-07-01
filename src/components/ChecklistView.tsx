@@ -156,7 +156,11 @@ export default function ChecklistView({
             </div>
           </div>
         )}
-        <CountrySummary country={input.toCountry} profile={input.profile} />
+        <CountrySummary
+          country={input.toCountry}
+          profile={input.profile}
+          fromCountry={input.fromCountry}
+        />
         <div className="mt-5">
           <div className="mb-1.5 flex items-center justify-between text-sm">
             <span className="font-medium text-slate-600">Your progress</span>

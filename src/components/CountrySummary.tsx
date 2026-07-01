@@ -3,11 +3,13 @@ import {
   impactForProfile,
   type CountryAdvisory,
 } from "@/lib/countryAdvisory";
+import { conversionBetween, formatRate } from "@/lib/exchangeRates";
 import type { Profile } from "@/lib/types";
 
 interface Props {
   country: string;
   profile: Profile;
+  fromCountry?: string;
 }
 
 const LEVEL_STYLES: Record<
@@ -71,10 +73,11 @@ function Chip({ label, value }: { label: string; value: string }) {
   );
 }
 
-export default function CountrySummary({ country, profile }: Props) {
+export default function CountrySummary({ country, profile, fromCountry }: Props) {
   const advisory: CountryAdvisory | null = advisoryForCountry(country);
   if (!advisory) return null;
 
+  const fx = fromCountry ? conversionBetween(fromCountry, country) : null;
   const style = LEVEL_STYLES[advisory.level] ?? LEVEL_STYLES[1];
   const impact = impactForProfile(advisory, profile);
   const why = advisory.reasons.length
@@ -134,6 +137,12 @@ export default function CountrySummary({ country, profile }: Props) {
         {advisory.entryExit.language && (
           <Chip label="Language" value={advisory.entryExit.language} />
         )}
+        {fx && (
+          <Chip
+            label="FX"
+            value={`1 ${fx.fromCode} ≈ ${formatRate(fx.rate)} ${fx.toCode}`}
+          />
+        )}
       </div>
 
       {impact.detail && (
@@ -172,6 +181,7 @@ export default function CountrySummary({ country, profile }: Props) {
         <span>
           Source: U.S. State Department
           {advisory.updatedAt ? ` · updated ${advisory.updatedAt}` : ""}
+          {fx && fx.updatedAt ? ` · FX ${fx.updatedAt}` : ""}
         </span>
         {advisory.stateDeptUrl && (
           <a
