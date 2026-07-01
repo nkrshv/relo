@@ -102,9 +102,14 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
     : { dot: "", pill: "", ring: "ring-slate-100" };
   const impact = advisory ? impactForProfile(advisory, profile) : null;
   const vac = advisory?.vaccinations ?? null;
+  // Reasons may arrive as machine codes (e.g. "civil_unrest").
+  const humanize = (r: string) =>
+    r.includes("_") || r === r.toLowerCase()
+      ? r.replaceAll("_", " ").replace(/^./, (c) => c.toUpperCase())
+      : r;
   const why = advisory
     ? advisory.reasons.length
-      ? advisory.reasons.slice(0, 3).join(" · ")
+      ? advisory.reasons.slice(0, 3).map(humanize).join(" · ")
       : advisory.label
     : "";
 
