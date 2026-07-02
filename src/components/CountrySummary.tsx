@@ -122,6 +122,30 @@ export default function CountrySummary({
   const today = new Date().toISOString().slice(0, 10);
   const nextHolidays =
     insights?.holidays?.sample.filter((h) => h.date >= today).slice(0, 3) ?? [];
+  // Big Mac price alone is noise; compare against the origin when we can.
+  const originInsights = fromCountry ? insightsForCountry(fromCountry) : null;
+  const priceLevel = (() => {
+    const dest = insights?.bigMacUsd?.value;
+    if (!dest) return null;
+    const origin = originInsights?.bigMacUsd?.value;
+    if (origin && fromCountry) {
+      const pct = Math.round(((dest - origin) / origin) * 100);
+      if (pct === 0) return { value: "Similar prices", hint: `Big Mac index vs ${fromCountry}` };
+      return {
+        value: `${pct > 0 ? "+" : ""}${pct}% vs home`,
+        hint: `Big Mac index: $${dest} here vs $${origin} in ${fromCountry}`,
+      };
+    }
+    return { value: `Big Mac ~$${dest}`, hint: "Big Mac index (The Economist)" };
+  })();
+  const fmtDate = (iso: string) => {
+    const d = new Date(`${iso}T00:00:00Z`);
+    return d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      timeZone: "UTC",
+    });
+  };
 
   // Nothing worth showing at all.
   if (!advisory && !fx && !currencyCode && !visa && !insights && !staticData)
@@ -300,45 +324,56 @@ export default function CountrySummary({
 
           <div className="mt-2 space-y-2.5">
             {livingRows > 0 && insights && (
-              <div className="rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
                   Cost &amp; living
                 </p>
-                {insights.inflation && (
-                  <p className="mt-1.5 text-sm text-slate-600">
-                    <span className="font-semibold text-slate-800">
-                      Inflation:
-                    </span>{" "}
-                    {insights.inflation.value}% ({insights.inflation.year},
-                    World Bank)
-                  </p>
-                )}
-                {insights.bigMacUsd && (
-                  <p className="mt-1.5 text-sm text-slate-600">
-                    <span className="font-semibold text-slate-800">
-                      Big Mac price:
-                    </span>{" "}
-                    ~${insights.bigMacUsd.value} (The Economist)
-                  </p>
-                )}
-                {insights.lifeExpectancy && (
-                  <p className="mt-1.5 text-sm text-slate-600">
-                    <span className="font-semibold text-slate-800">
-                      Life expectancy:
-                    </span>{" "}
-                    {insights.lifeExpectancy.value} years (WHO)
-                  </p>
-                )}
-                {nextHolidays.length > 0 && insights.holidays && (
-                  <p className="mt-1.5 text-sm text-slate-600">
-                    <span className="font-semibold text-slate-800">
-                      Next public holidays:
-                    </span>{" "}
-                    {nextHolidays
-                      .map((h) => `${h.name} (${h.date})`)
-                      .join(", ")}{" "}
-                    · offices closed
-                  </p>
+                <div className="mt-1.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  {insights.inflation && (
+                    <Tile
+                      label={`Inflation · ${insights.inflation.year}`}
+                      value={`${insights.inflation.value.toFixed(1)}% / yr`}
+                    />
+                  )}
+                  {priceLevel && (
+                    <div
+                      className="rounded-xl bg-slate-50/80 px-3 py-2.5 ring-1 ring-slate-200/60"
+                      title={priceLevel.hint}
+                    >
+                      <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                        Price level
+                      </p>
+                      <p className="mt-0.5 truncate text-sm font-semibold text-slate-800">
+                        {priceLevel.value}
+                      </p>
+                    </div>
+                  )}
+                  {insights.lifeExpectancy && (
+                    <Tile
+                      label="Life expectancy"
+                      value={`${insights.lifeExpectancy.value.toFixed(0)} yrs`}
+                    />
+                  )}
+                </div>
+                {nextHolidays.length > 0 && (
+                  <div className="mt-2">
+                    <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                      Upcoming public holidays · offices closed
+                    </p>
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                      {nextHolidays.map((h) => (
+                        <span
+                          key={h.date}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200/70"
+                        >
+                          <span className="font-semibold text-slate-800">
+                            {fmtDate(h.date)}
+                          </span>
+                          {h.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             )}
@@ -359,28 +394,32 @@ export default function CountrySummary({
             )}
 
             {hasHealth && vac && (
-              <div className="rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
-                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-400">
                   Health · CDC
                 </p>
-                {vac.required.length > 0 && (
-                  <p className="mt-1.5 text-sm text-slate-600">
-                    <span className="font-semibold text-slate-800">
-                      Required vaccines:
-                    </span>{" "}
-                    {vac.required.map((v) => v.name).join(", ")}
-                  </p>
-                )}
-                {vac.recommended.length > 0 && (
-                  <p className="mt-1.5 text-sm text-slate-600">
-                    <span className="font-semibold text-slate-800">
-                      Recommended vaccines:
-                    </span>{" "}
-                    {vac.recommended.map((v) => v.name).join(", ")}
-                  </p>
+                {(vac.required.length > 0 || vac.recommended.length > 0) && (
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {vac.required.map((v) => (
+                      <span
+                        key={v.name}
+                        className="inline-flex items-center rounded-full bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-800 ring-1 ring-amber-200/70"
+                      >
+                        {v.name} · required
+                      </span>
+                    ))}
+                    {vac.recommended.map((v) => (
+                      <span
+                        key={v.name}
+                        className="inline-flex items-center rounded-full bg-slate-50 px-2.5 py-1 text-xs font-medium text-slate-600 ring-1 ring-slate-200/70"
+                      >
+                        {v.name}
+                      </span>
+                    ))}
+                  </div>
                 )}
                 {vac.malaria && (
-                  <p className="mt-1.5 text-sm text-slate-600">
+                  <p className="mt-2 text-sm text-slate-600">
                     <span className="font-semibold text-slate-800">
                       Malaria:
                     </span>{" "}
