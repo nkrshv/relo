@@ -10,6 +10,7 @@
 //   https://www.ef.com/epi/
 
 import { DESTINATIONS } from "./countries";
+import { normalizeName } from "./countryFacts";
 
 export interface StaticCountryData {
   /** Median fixed-broadband download speed, Mbps (approximate). */
@@ -45,11 +46,11 @@ const DATA: Record<string, StaticCountryData> = {
 
 const BY_NAME: Record<string, StaticCountryData> = Object.fromEntries(
   DESTINATIONS.filter((d) => DATA[d.slug]).map((d) => [
-    d.name.toLowerCase(),
+    normalizeName(d.name),
     DATA[d.slug],
   ]),
 );
 
 export function staticDataForCountry(name: string): StaticCountryData | null {
-  return BY_NAME[name.trim().toLowerCase()] ?? null;
+  return BY_NAME[normalizeName(name)] ?? null;
 }
