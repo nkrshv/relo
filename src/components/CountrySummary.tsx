@@ -7,7 +7,9 @@ import { conversionBetween, formatRate } from "@/lib/exchangeRates";
 import { currencyForCountry } from "@/lib/countryCurrency";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
-import type { Profile } from "@/lib/types";
+import type { Profile, VisaSummary } from "@/lib/types";
+import { insightsForCountry, climateSummary } from "@/lib/countryInsights";
+import { staticDataForCountry } from "@/lib/staticCountryData";
 
 const FLAG_BY_NAME: Record<string, string> = Object.fromEntries(
   ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
@@ -21,6 +23,7 @@ interface Props {
   country: string;
   profile: Profile;
   fromCountry?: string;
+  visa?: VisaSummary | null;
 }
 
 const LEVEL_STYLES: Record<
@@ -99,13 +102,30 @@ function Tile({
   );
 }
 
-export default function CountrySummary({ country, profile, fromCountry }: Props) {
+export default function CountrySummary({
+  country,
+  profile,
+  fromCountry,
+  visa,
+}: Props) {
   const advisory: CountryAdvisory | null = advisoryForCountry(country);
   const fx = fromCountry ? conversionBetween(fromCountry, country) : null;
   const currencyCode = currencyForCountry(country);
+  const insights = insightsForCountry(country);
+  const staticData = staticDataForCountry(country);
+  const climate = insights ? climateSummary(insights) : null;
+  const visaValue = visa
+    ? visa.days != null
+      ? `Visa-free · ${visa.days}d`
+      : visa.label
+    : null;
+  const today = new Date().toISOString().slice(0, 10);
+  const nextHolidays =
+    insights?.holidays?.sample.filter((h) => h.date >= today).slice(0, 3) ?? [];
 
-  // Nothing worth showing (no advisory, no FX, no known currency).
-  if (!advisory && !fx && !currencyCode) return null;
+  // Nothing worth showing at all.
+  if (!advisory && !fx && !currencyCode && !visa && !insights && !staticData)
+    return null;
 
   const norm = normalizeName(country);
   const name = advisory?.name ?? NAME_BY_NORM[norm] ?? country;
@@ -146,7 +166,16 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
         vac.malaria ||
         vac.healthNotices.length > 0),
   );
+  const livingRows = insights
+    ? [
+        insights.inflation ? 1 : 0,
+        insights.bigMacUsd ? 1 : 0,
+        insights.lifeExpectancy ? 1 : 0,
+        nextHolidays.length > 0 ? 1 : 0,
+      ].reduce((a, b) => a + b, 0)
+    : 0;
   const detailCount =
+    livingRows +
     (impact?.detail ? 1 : 0) +
     (vac
       ? vac.required.length +
@@ -188,16 +217,31 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
       )}
 
       <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {advisory && advisory.entryExit.visaRequired !== null && (
+        {visaValue ? (
           <Tile
-            label="Visa"
-            value={advisory.entryExit.visaRequired ? "Required" : "Not required"}
+            label="Short-stay visa"
+            value={visaValue}
             accent={
-              advisory.entryExit.visaRequired
-                ? "text-amber-700"
-                : "text-emerald-700"
+              visa?.category === "visa-free"
+                ? "text-emerald-700"
+                : "text-amber-700"
             }
           />
+        ) : (
+          advisory &&
+          advisory.entryExit.visaRequired !== null && (
+            <Tile
+              label="Visa"
+              value={
+                advisory.entryExit.visaRequired ? "Required" : "Not required"
+              }
+              accent={
+                advisory.entryExit.visaRequired
+                  ? "text-amber-700"
+                  : "text-emerald-700"
+              }
+            />
+          )
         )}
         {currencyValue && <Tile label="Currency" value={currencyValue} />}
         {fx && (
@@ -210,9 +254,34 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
         {advisory?.entryExit.language && (
           <Tile label="Language" value={advisory.entryExit.language} />
         )}
+        {climate && insights && (
+          <Tile label={`Climate · ${insights.climate.city}`} value={climate} />
+        )}
+        {staticData && (
+          <Tile
+            label="Internet"
+            value={`~${staticData.internetMbps} Mbps`}
+            accent="text-sky-700"
+          />
+        )}
+        {staticData && (
+          <Tile
+            label="Plugs"
+            value={`Type ${staticData.plugTypes.join("/")} · ${staticData.voltage}`}
+          />
+        )}
+        {staticData && (
+          <Tile
+            label="English level"
+            value={
+              staticData.english.charAt(0).toUpperCase() +
+              staticData.english.slice(1)
+            }
+          />
+        )}
       </div>
 
-      {(impact?.detail || hasHealth || warnings.length > 0) && (
+      {(impact?.detail || hasHealth || warnings.length > 0 || livingRows > 0) && (
         <details className="group/details mt-3">
           <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 rounded-lg px-1 py-1 text-xs font-semibold text-indigo-600 transition hover:text-indigo-800 [&::-webkit-details-marker]:hidden">
             <span
@@ -221,7 +290,7 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
             >
               ▸
             </span>
-            Safety &amp; health details
+            Country details
             {detailCount > 0 && (
               <span className="rounded-full bg-indigo-50 px-1.5 py-0.5 text-[10px] font-bold text-indigo-600 ring-1 ring-indigo-100">
                 {detailCount}
@@ -230,6 +299,49 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
           </summary>
 
           <div className="mt-2 space-y-2.5">
+            {livingRows > 0 && insights && (
+              <div className="rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  Cost &amp; living
+                </p>
+                {insights.inflation && (
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    <span className="font-semibold text-slate-800">
+                      Inflation:
+                    </span>{" "}
+                    {insights.inflation.value}% ({insights.inflation.year},
+                    World Bank)
+                  </p>
+                )}
+                {insights.bigMacUsd && (
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    <span className="font-semibold text-slate-800">
+                      Big Mac price:
+                    </span>{" "}
+                    ~${insights.bigMacUsd.value} (The Economist)
+                  </p>
+                )}
+                {insights.lifeExpectancy && (
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    <span className="font-semibold text-slate-800">
+                      Life expectancy:
+                    </span>{" "}
+                    {insights.lifeExpectancy.value} years (WHO)
+                  </p>
+                )}
+                {nextHolidays.length > 0 && insights.holidays && (
+                  <p className="mt-1.5 text-sm text-slate-600">
+                    <span className="font-semibold text-slate-800">
+                      Next public holidays:
+                    </span>{" "}
+                    {nextHolidays
+                      .map((h) => `${h.name} (${h.date})`)
+                      .join(", ")}{" "}
+                    · offices closed
+                  </p>
+                )}
+              </div>
+            )}
             {impact?.detail && (
               <div className="flex items-start gap-2.5 rounded-xl bg-slate-50/80 p-3 ring-1 ring-slate-200/60">
                 <span
@@ -317,8 +429,10 @@ export default function CountrySummary({ country, profile, fromCountry }: Props)
       <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3 text-xs text-slate-400">
         <span>
           {advisory
-            ? "Source: U.S. State Department"
-            : "Source: exchangerate-api"}
+            ? "Sources: U.S. State Dept"
+            : "Sources: open data"}
+          {visa ? " · Passport Index" : ""}
+          {insights ? " · Open-Meteo · World Bank" : ""}
           {advisory?.updatedAt ? ` · updated ${advisory.updatedAt}` : ""}
           {fx && fx.updatedAt ? ` · FX ${fx.updatedAt}` : ""}
         </span>

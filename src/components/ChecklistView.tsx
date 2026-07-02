@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { ReloInput, ReloPlan } from "@/lib/types";
+import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
 
 interface Props {
   input: ReloInput;
   plan: ReloPlan;
+  visa?: VisaSummary | null;
   unlocked: boolean;
   unlocking: boolean;
   onUnlock: () => void;
@@ -143,6 +144,7 @@ function Confetti() {
 export default function ChecklistView({
   input,
   plan,
+  visa,
   unlocked,
   unlocking,
   onUnlock,
@@ -273,6 +275,7 @@ export default function ChecklistView({
           country={input.toCountry}
           profile={input.profile}
           fromCountry={input.fromCountry}
+          visa={visa ?? null}
         />
       </header>
 

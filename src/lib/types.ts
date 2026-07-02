@@ -63,6 +63,15 @@ export interface Feasibility {
   note: string;
 }
 
+// Short-stay visa requirement for the specific origin -> destination pair,
+// resolved server-side from the Passport Index matrix and returned with the plan.
+export interface VisaSummary {
+  label: string;
+  category: string;
+  days: number | null;
+  updatedAt: string;
+}
+
 export interface ReloPlan {
   destinationSummary: string;
   feasibility?: Feasibility;
