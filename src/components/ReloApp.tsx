@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import ReloForm from "@/components/ReloForm";
 import ChecklistView from "@/components/ChecklistView";
 import PlanSkeleton from "@/components/PlanSkeleton";
-import type { ReloInput, ReloPlan } from "@/lib/types";
+import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 
 interface Props {
   initialTo?: string;
@@ -13,6 +13,7 @@ interface Props {
 interface StoredResult {
   input: ReloInput;
   plan: ReloPlan;
+  visa?: VisaSummary | null;
 }
 
 const RESULT_KEY = "relochecklist:result";
@@ -136,6 +137,7 @@ export default function ReloApp({ initialTo }: Props) {
         <ChecklistView
           input={result.input}
           plan={result.plan}
+          visa={result.visa ?? null}
           unlocked={unlocked}
           unlocking={unlocking}
           onUnlock={unlock}

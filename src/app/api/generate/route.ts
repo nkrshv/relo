@@ -1,6 +1,13 @@
 import type { NextRequest } from "next/server";
 import { factsForCountry } from "@/lib/countryFacts";
 import { advisoryForCountry, impactForProfile } from "@/lib/countryAdvisory";
+import { visaRequirementBetween } from "@/lib/visaMatrix";
+import {
+  insightsForCountry,
+  climateSummary,
+  wettestMonths,
+} from "@/lib/countryInsights";
+import { staticDataForCountry } from "@/lib/staticCountryData";
 import {
   PHASE_KEYS,
   PHASE_TITLES,
@@ -237,6 +244,58 @@ function buildUserContent(input: ReloInput): string {
     blocks.push(lines.join("\n"));
   }
 
+  const visa = visaRequirementBetween(input.fromCountry, input.toCountry);
+  if (visa) {
+    blocks.push(
+      [
+        `SHORT-STAY VISA RULE (Passport Index dataset, updated ${visa.updatedAt}) for a ${input.fromCountry} passport holder entering ${input.toCountry}: ${visa.label}.`,
+        `This covers tourist/short stays only — long-term relocation still needs the residence route. Use it to ground advice about scouting trips, visa-run realities, and whether the person can enter first and regularize later.`,
+      ].join("\n"),
+    );
+  }
+
+  const insights = insightsForCountry(input.toCountry);
+  const staticData = staticDataForCountry(input.toCountry);
+  if (insights || staticData) {
+    const lines = [
+      `DESTINATION DATA (free official/open sources — treat as ground truth):`,
+    ];
+    if (insights) {
+      const climate = climateSummary(insights);
+      if (climate)
+        lines.push(
+          `- Climate in ${insights.climate.city}: mean daily temp ${climate}${wettestMonths(insights) ? `; wettest months: ${wettestMonths(insights)}` : ""} (Open-Meteo, ${insights.climate.year}). Use for packing/wardrobe and housing (heating/AC) advice.`,
+        );
+      if (insights.holidays)
+        lines.push(
+          `- Public holidays ${insights.holidays.year}: ${insights.holidays.count} national holidays, e.g. ${insights.holidays.sample
+            .slice(0, 4)
+            .map((h) => `${h.name} (${h.date})`)
+            .join(", ")} (Nager.Date). Government offices close on these — warn about booking appointments around them.`,
+        );
+      if (insights.inflation)
+        lines.push(
+          `- Inflation (CPI, ${insights.inflation.year}): ${insights.inflation.value}% (World Bank).`,
+        );
+      if (insights.lifeExpectancy)
+        lines.push(
+          `- Life expectancy: ${insights.lifeExpectancy.value} years (WHO, ${insights.lifeExpectancy.year}).`,
+        );
+      if (insights.bigMacUsd)
+        lines.push(
+          `- Big Mac price: ~$${insights.bigMacUsd.value} USD (The Economist, ${insights.bigMacUsd.date}) — a rough price-level signal.`,
+        );
+    }
+    if (staticData) {
+      lines.push(
+        `- Internet: median fixed broadband ~${staticData.internetMbps} Mbps (Ookla Speedtest Global Index).`,
+        `- Electricity: ${staticData.voltage}, plug type(s) ${staticData.plugTypes.join(", ")} — mention adapters/appliances if the origin differs.`,
+        `- English proficiency: ${staticData.english}${staticData.english === "native" ? "" : " (EF EPI)"} — calibrate language-prep advice accordingly.`,
+      );
+    }
+    if (lines.length > 1) blocks.push(lines.join("\n"));
+  }
+
   const facts = factsForCountry(input.toCountry);
   if (facts) {
     const factBlock = [
@@ -328,7 +387,11 @@ export async function POST(req: NextRequest) {
       // Feasibility level must not be weakened by the critic.
       revisedPlan.feasibility =
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
-      return Response.json({ input, plan: revisedPlan });
+      return Response.json({
+        input,
+        plan: revisedPlan,
+        visa: visaRequirementBetween(input.fromCountry, input.toCountry),
+      });
     }
   } catch {
     // fall through to the draft
@@ -342,7 +405,11 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  return Response.json({ input, plan });
+  return Response.json({
+    input,
+    plan,
+    visa: visaRequirementBetween(input.fromCountry, input.toCountry),
+  });
 }
 
 async function callModel(
