@@ -17,9 +17,9 @@ interface Props {
 }
 
 const fieldClass =
-  "w-full rounded-xl border border-slate-200 bg-white/80 px-3.5 py-2.5 text-slate-900 shadow-sm outline-none backdrop-blur transition focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-100";
+  "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200";
 
-const labelClass = "mb-1.5 block text-sm font-medium text-slate-700";
+const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700";
 
 export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
   const [fromCountry, setFromCountry] = useState("");
@@ -61,7 +61,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="reveal mx-auto w-full max-w-2xl rounded-3xl border border-slate-200/70 bg-white/70 p-6 shadow-[0_10px_40px_-15px_rgba(15,23,42,0.2)] ring-1 ring-white/60 backdrop-blur-xl sm:p-8"
+      className="reveal mx-auto w-full max-w-2xl rounded-xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
@@ -122,7 +122,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
         <label className="block sm:col-span-2">
           <span className={labelClass}>
             Visa / residency status{" "}
-            <span className="font-normal text-slate-400">(optional)</span>
+            <span className="font-normal text-zinc-400">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -144,10 +144,10 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
                 key={p}
                 onClick={() => togglePriority(p)}
                 aria-pressed={active}
-                className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-all duration-150 active:scale-95 ${
+                className={`rounded-md border px-3 py-1.5 text-sm transition-colors ${
                   active
-                    ? "border-transparent bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-sm"
-                    : "border-slate-200 bg-white/70 text-slate-700 hover:border-indigo-300 hover:text-indigo-700"
+                    ? "border-zinc-900 bg-zinc-900 text-white"
+                    : "border-zinc-300 bg-white text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
                 }`}
               >
                 {p}
@@ -160,7 +160,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>
-            Budget <span className="font-normal text-slate-400">(optional)</span>
+            Budget <span className="font-normal text-zinc-400">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -172,7 +172,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
         <label className="block">
           <span className={labelClass}>
             Anything else?{" "}
-            <span className="font-normal text-slate-400">(optional)</span>
+            <span className="font-normal text-zinc-400">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -186,7 +186,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="group mt-7 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3 text-base font-semibold text-white shadow-lg shadow-indigo-600/20 transition-all duration-200 hover:shadow-xl hover:shadow-indigo-600/30 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-7 flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? (
           <>
@@ -194,15 +194,10 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
             Building your plan…
           </>
         ) : (
-          <>
-            Build my relocation plan
-            <span className="transition-transform duration-200 group-hover:translate-x-0.5">
-              →
-            </span>
-          </>
+          <>Build my relocation plan →</>
         )}
       </button>
-      <p className="mt-3 text-center text-xs text-slate-400">
+      <p className="mt-3 text-center text-xs text-zinc-400">
         Free preview · Full personalized plan for $9
       </p>
     </form>

@@ -23,10 +23,10 @@ export default function PlanSkeleton() {
   return (
     <div className="mx-auto w-full max-w-3xl reveal">
       <div className="mb-8 flex items-center gap-3">
-        <span className="h-5 w-5 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600" />
+        <span className="h-4 w-4 animate-spin rounded-full border-2 border-zinc-200 border-t-zinc-700" />
         <p
           key={step}
-          className="reveal text-sm font-medium text-slate-600"
+          className="reveal text-sm font-medium text-zinc-600"
           aria-live="polite"
         >
           {STEPS[step]}
@@ -37,16 +37,16 @@ export default function PlanSkeleton() {
         {PHASES.map((phase, pi) => (
           <section key={phase}>
             <div className="mb-3 flex items-center gap-2">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-indigo-100 text-sm font-bold text-indigo-400">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full border border-zinc-200 bg-white text-xs font-medium text-zinc-400">
                 {pi + 1}
               </span>
-              <span className="text-lg font-bold text-slate-300">{phase}</span>
+              <span className="text-lg font-semibold text-zinc-300">{phase}</span>
             </div>
             <div className="space-y-3">
               {Array.from({ length: pi === 0 ? 3 : 2 }).map((_, ii) => (
                 <div
                   key={ii}
-                  className="rounded-2xl border border-slate-200/70 bg-white/60 p-4 shadow-sm"
+                  className="rounded-lg border border-zinc-200 bg-white p-4"
                 >
                   <div className="flex items-start gap-3">
                     <div className="skeleton mt-1 h-5 w-5 shrink-0 rounded" />

@@ -78,7 +78,7 @@ export default function CountryCombobox({
 
   return (
     <div className="block" ref={rootRef}>
-      <span className="mb-1.5 block text-sm font-medium text-slate-700">
+      <span className="mb-1.5 block text-sm font-medium text-zinc-700">
         {label}
       </span>
       <div className="relative">
@@ -90,7 +90,7 @@ export default function CountryCombobox({
           autoComplete="off"
           autoFocus={autoFocus}
           required={required}
-          className="w-full rounded-xl border border-slate-200 bg-white/80 px-3.5 py-2.5 text-slate-900 shadow-sm outline-none backdrop-blur transition focus:border-indigo-400 focus:bg-white focus:ring-4 focus:ring-indigo-100"
+          className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200"
           placeholder={placeholder}
           value={query}
           onChange={(e) => {
@@ -106,7 +106,7 @@ export default function CountryCombobox({
           <ul
             id={listId}
             role="listbox"
-            className="absolute z-30 mt-2 max-h-64 w-full overflow-auto rounded-xl border border-slate-200 bg-white/95 p-1 shadow-xl backdrop-blur reveal"
+            className="absolute z-30 mt-1.5 max-h-64 w-full overflow-auto rounded-lg border border-zinc-200 bg-white p-1 shadow-lg reveal"
           >
             {results.map((c, i) => {
               const isActive = i === active;
@@ -120,10 +120,8 @@ export default function CountryCombobox({
                     e.preventDefault();
                     select(c);
                   }}
-                  className={`flex cursor-pointer items-center gap-2.5 rounded-lg px-3 py-2 text-sm transition ${
-                    isActive
-                      ? "bg-indigo-50 text-indigo-900"
-                      : "text-slate-700"
+                  className={`flex cursor-pointer items-center gap-2.5 rounded-md px-3 py-1.5 text-sm transition-colors ${
+                    isActive ? "bg-zinc-100 text-zinc-900" : "text-zinc-600"
                   }`}
                 >
                   <span className="text-lg leading-none">{c.emoji}</span>
