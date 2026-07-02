@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
+import type {
+  ChecklistItem,
+  ReloInput,
+  ReloPlan,
+  VisaSummary,
+} from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
 
 interface Props {
@@ -15,6 +20,9 @@ interface Props {
 }
 
 const CHECK_KEY_PREFIX = "relochecklist:checked";
+const VIEW_KEY = "relochecklist:view";
+
+type ViewMode = "simple" | "advanced";
 
 function itemId(phaseIndex: number, itemIndex: number): string {
   return `${phaseIndex}:${itemIndex}`;
@@ -74,6 +82,37 @@ function milestoneCopy(pct: number): string {
   return "Everything checked off. Enjoy your new home.";
 }
 
+interface TaskRow {
+  pos: string;
+  display: string;
+  item: ChecklistItem;
+  phaseIndex: number;
+}
+
+function buildRows(plan: ReloPlan): {
+  rows: TaskRow[];
+  byModelId: Map<string, TaskRow>;
+} {
+  const rows: TaskRow[] = [];
+  let n = 0;
+  plan.phases.forEach((phase, pi) => {
+    phase.items.forEach((item, ii) => {
+      n += 1;
+      rows.push({
+        pos: itemId(pi, ii),
+        display: `REL-${n}`,
+        item,
+        phaseIndex: pi,
+      });
+    });
+  });
+  const byModelId = new Map<string, TaskRow>();
+  for (const r of rows) {
+    if (r.item.id) byModelId.set(r.item.id, r);
+  }
+  return { rows, byModelId };
+}
+
 // Rounded-square checkbox in the Linear/Notion vein.
 function CheckToggle({
   id,
@@ -114,6 +153,223 @@ function CheckToggle({
   );
 }
 
+// Linear-style tracker: flat task table with IDs, deadlines and dependencies.
+function AdvancedTable({
+  plan,
+  checked,
+  toggle,
+  unlocked,
+}: {
+  plan: ReloPlan;
+  checked: Record<string, boolean>;
+  toggle: (id: string) => void;
+  unlocked: boolean;
+}) {
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const { rows, byModelId } = buildRows(plan);
+  const hasDeps = rows.some((r) => r.item.dependsOn?.length);
+
+  return (
+    <div className="space-y-6">
+      {plan.phases.map((phase, pi) => {
+        const locked = !unlocked && pi > 0;
+        const phaseRows = rows.filter((r) => r.phaseIndex === pi);
+        const phaseDone = phaseRows.filter((r) => checked[r.pos]).length;
+        return (
+          <section key={phase.key} className={locked ? "print:hidden" : ""}>
+            <div className="mb-2 flex items-baseline gap-2">
+              <h2 className="text-sm font-semibold text-zinc-900">
+                {phase.title}
+              </h2>
+              <span className="text-xs tabular-nums text-zinc-400">
+                {locked ? "Locked" : `${phaseDone}/${phaseRows.length}`}
+              </span>
+            </div>
+            <div className="relative">
+              <div
+                className={`divide-y divide-zinc-100 overflow-hidden rounded-lg border border-zinc-200 bg-white ${
+                  locked ? "pointer-events-none select-none blur-sm" : ""
+                }`}
+                aria-hidden={locked}
+              >
+                {phaseRows.map((row) => {
+                  const isChecked = !!checked[row.pos];
+                  const deps = (row.item.dependsOn ?? [])
+                    .map((d) => byModelId.get(d))
+                    .filter((d): d is TaskRow => !!d && d.pos !== row.pos);
+                  const openBlockers = deps.filter((d) => !checked[d.pos]);
+                  const isBlocked = !isChecked && openBlockers.length > 0;
+                  const isOpen = !!expanded[row.pos];
+                  const hasDetails = !!(
+                    row.item.why ||
+                    row.item.steps?.length ||
+                    row.item.documents?.length ||
+                    row.item.commonMistake ||
+                    row.item.tip ||
+                    row.item.url
+                  );
+                  return (
+                    <div key={row.pos}>
+                      <div
+                        className={`flex items-center gap-3 px-3 py-2 transition-colors ${
+                          isChecked ? "bg-zinc-50/60" : "hover:bg-zinc-50"
+                        }`}
+                      >
+                        <CheckToggle
+                          id={`adv-${row.pos}`}
+                          checked={isChecked}
+                          onToggle={() => toggle(row.pos)}
+                        />
+                        <span className="w-12 shrink-0 font-mono text-[11px] text-zinc-400">
+                          {row.display}
+                        </span>
+                        <button
+                          onClick={() =>
+                            hasDetails &&
+                            setExpanded((p) => ({
+                              ...p,
+                              [row.pos]: !p[row.pos],
+                            }))
+                          }
+                          className={`flex min-w-0 flex-1 items-center gap-1.5 text-left text-sm ${
+                            hasDetails ? "cursor-pointer" : "cursor-default"
+                          }`}
+                        >
+                          <span
+                            className={`truncate font-medium ${
+                              isChecked
+                                ? "text-zinc-400 line-through"
+                                : isBlocked
+                                  ? "text-zinc-500"
+                                  : "text-zinc-900"
+                            }`}
+                          >
+                            {row.item.title}
+                          </span>
+                          {hasDetails && (
+                            <svg
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              className={`h-3 w-3 shrink-0 text-zinc-300 transition-transform ${
+                                isOpen ? "rotate-180" : ""
+                              }`}
+                              aria-hidden
+                            >
+                              <path d="M4 6l4 4 4-4" />
+                            </svg>
+                          )}
+                        </button>
+                        <span className="hidden shrink-0 items-center gap-1.5 text-[11px] font-medium capitalize text-zinc-500 sm:inline-flex">
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full ${categoryDot(row.item.category)}`}
+                            aria-hidden
+                          />
+                          {row.item.category}
+                        </span>
+                        {!isChecked && row.item.deadline && (
+                          <span className="hidden shrink-0 text-[11px] font-medium text-amber-700 md:inline">
+                            {row.item.deadline}
+                          </span>
+                        )}
+                        {isBlocked && (
+                          <span className="inline-flex shrink-0 items-center gap-1 rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
+                            Blocked by{" "}
+                            {openBlockers.map((d) => d.display).join(", ")}
+                          </span>
+                        )}
+                        {!isBlocked && deps.length > 0 && !isChecked && (
+                          <span className="hidden shrink-0 font-mono text-[10px] text-zinc-300 sm:inline">
+                            ← {deps.map((d) => d.display).join(", ")}
+                          </span>
+                        )}
+                      </div>
+                      {isOpen && hasDetails && (
+                        <div className="space-y-2.5 border-t border-zinc-100 bg-zinc-50/60 px-3 py-3 pl-[76px] text-sm leading-relaxed text-zinc-600">
+                          {row.item.why && <p>{row.item.why}</p>}
+                          {deps.length > 0 && (
+                            <p className="text-xs text-zinc-500">
+                              <span className="font-medium">Depends on:</span>{" "}
+                              {deps
+                                .map((d) => `${d.display} ${d.item.title}`)
+                                .join(" · ")}
+                            </p>
+                          )}
+                          {row.item.steps && row.item.steps.length > 0 && (
+                            <ol className="space-y-1.5">
+                              {row.item.steps.map((step, si) => (
+                                <li key={si} className="flex gap-2">
+                                  <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-zinc-400">
+                                    {si + 1}.
+                                  </span>
+                                  <span className="min-w-0">{step}</span>
+                                </li>
+                              ))}
+                            </ol>
+                          )}
+                          {row.item.documents &&
+                            row.item.documents.length > 0 && (
+                              <div className="flex flex-wrap gap-1">
+                                {row.item.documents.map((doc, di) => (
+                                  <span
+                                    key={di}
+                                    className="rounded border border-zinc-200 bg-white px-1.5 py-0.5 text-xs text-zinc-600"
+                                  >
+                                    {doc}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          {row.item.commonMistake && (
+                            <p className="text-xs leading-relaxed">
+                              <span className="font-medium text-rose-700">
+                                Common mistake:
+                              </span>{" "}
+                              {row.item.commonMistake}
+                            </p>
+                          )}
+                          {row.item.tip && <p>{row.item.tip}</p>}
+                          {row.item.url && (
+                            <a
+                              href={row.item.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 underline decoration-zinc-300 underline-offset-2 transition-colors hover:text-zinc-900"
+                            >
+                              {prettyHost(row.item.url)}
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              {locked && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="pointer-events-auto rounded-lg border border-zinc-200 bg-white p-4 text-center shadow-sm">
+                    <p className="text-sm font-medium text-zinc-700">
+                      Unlock the full plan to see this phase
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+        );
+      })}
+      {!hasDeps && (
+        <p className="text-xs text-zinc-400">
+          Dependencies appear here for newly generated plans.
+        </p>
+      )}
+    </div>
+  );
+}
+
 export default function ChecklistView({
   input,
   plan,
@@ -124,8 +380,30 @@ export default function ChecklistView({
   onReset,
 }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
+  const [view, setView] = useState<ViewMode>("simple");
   const storageKey = planStorageKey(input, plan);
   const doneRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(VIEW_KEY);
+      if (saved === "advanced" || saved === "simple") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setView(saved);
+      }
+    } catch {
+      // ignore
+    }
+  }, []);
+
+  function switchView(mode: ViewMode) {
+    setView(mode);
+    try {
+      localStorage.setItem(VIEW_KEY, mode);
+    } catch {
+      // ignore
+    }
+  }
 
   useEffect(() => {
     try {
@@ -186,7 +464,28 @@ export default function ChecklistView({
         >
           ← Start over
         </button>
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
+          <div className="flex rounded-md border border-zinc-200 bg-white p-0.5">
+            {(
+              [
+                ["simple", "Simple"],
+                ["advanced", "Advanced"],
+              ] as const
+            ).map(([mode, label]) => (
+              <button
+                key={mode}
+                onClick={() => switchView(mode)}
+                aria-pressed={view === mode}
+                className={`rounded px-2.5 py-1 text-sm transition-colors ${
+                  view === mode
+                    ? "bg-zinc-100 font-medium text-zinc-900"
+                    : "text-zinc-500 hover:text-zinc-900"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
           <button
             onClick={() => window.print()}
             className="rounded-md border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
@@ -367,8 +666,19 @@ export default function ChecklistView({
         </div>
       )}
 
+      {view === "advanced" && (
+        <AdvancedTable
+          plan={plan}
+          checked={checked}
+          toggle={toggle}
+          unlocked={unlocked}
+        />
+      )}
+
       {/* Journey timeline: a vertical rail connects the phases of the move. */}
-      <div className="relative space-y-10 pl-10 sm:pl-12">
+      <div
+        className={`relative space-y-10 pl-10 sm:pl-12 ${view === "advanced" ? "hidden" : ""}`}
+      >
         <div
           className="absolute bottom-4 left-[15px] top-1 w-px bg-zinc-200 sm:left-[19px] print:hidden"
           aria-hidden
