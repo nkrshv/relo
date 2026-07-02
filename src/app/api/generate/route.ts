@@ -76,7 +76,12 @@ PROFILE MODULES — mandatory extra coverage depending on who is moving:
 - "nomad" / remote-worker profile: MUST include an item on tax residency (the 183-day rule or the destination's specific trigger, and what registration it forces) and on whether the visa route actually permits remote work for foreign employers.
 - If the user's priorities include "Pets": MUST include pet import rules (microchip, rabies vaccination timing, health certificate, the destination's animal-import authority) as a "before" item with real lead times.
 - If the user's priorities include "Driving license": MUST include the destination's license exchange/validity rule (whether the origin country's license can be exchanged or a local test is required, and the deadline).
-- Weave the user's stated budget, timeline and notes into item choices and estimates — do not ignore them.
+
+PERSONALIZATION IS MANDATORY — the plan must visibly reflect THIS user's inputs, not just the destination:
+- Every concrete detail the user gives (a budget cap, a rent limit, total savings, children's ages, pet species/breed, a spouse's job plans, an employer situation, a stated timeline) MUST appear verbatim or near-verbatim inside at least one relevant item's title, why, tip, steps or commonMistake. Example: if they say "rent under 1500 eur", the housing item must reference searching with a ≤€1,500 filter and what that budget realistically gets in that market; if a spouse will look for local work, add an item about local work authorization / job-search realities and required registrations.
+- Children's ages change the advice (kindergarten vs primary vs secondary enrolment) — use the actual ages given.
+- If the user gave NO visa / status information, do NOT silently pick one visa route for them. Make the FIRST "before" item a comparison of the 2-3 realistic visa/residency routes for this origin nationality and profile (real scheme names, income thresholds, processing times) ending with how to decide; base later items on requirements common to those routes.
+- Weave the user's stated budget, timeline and notes into item choices and estimates — never ignore them.
 
 Accuracy: use real, well-established facts about the destination. If you are unsure of an exact current figure (income threshold, fee), still name the specific scheme/office and add "verify the current figure on the official [named authority] site" — never fall back to generic advice. Do NOT invent fake office names or laws.`;
 
@@ -87,9 +92,10 @@ For EVERY item in the draft:
 2. If "steps" is empty, too short, or just restates the title — write 2–4 real sub-actions (which office/portal, which form, what to book, what happens after).
 3. If "documents" is empty but the process obviously requires papers — list the exact documents.
 4. If "deadline" is empty but a legal deadline exists — add it. If "commonMistake" is empty or bland — replace it with the real pitfall people hit for this exact step.
-5. Delete or merge filler items ("join communities", "explore the city", "familiarize yourself with X") unless you can turn them into something concrete and destination-specific.
-6. Keep everything consistent with the VERIFIED FACTS and OFFICIAL TRAVEL ADVISORY blocks if they were provided — they are ground truth. Never invent office names, laws, or URLs; for url keep the same rules (official root domain or "").
-7. Do NOT change the JSON structure, phase keys, or feasibility level; you may sharpen the feasibility note's wording.
+5. Replace filler items ("join communities", "explore the city", "familiarize yourself with X") with concrete, destination-specific items. Do NOT shrink the plan: every phase must keep at least 4 items — when you cut filler, add a real missing task for this move (e.g. SIM/eSIM registration rules, utility contracts, license exchange, apostilles) instead.
+6. Personalization audit: re-read the user's message and verify every concrete detail they gave (budget or rent cap, savings, children's ages, pets, spouse's work plans, employer situation, timeline) is reflected in at least one item. If any detail is missing from the draft, weave it into the most relevant item or add a dedicated item for it. If the user gave no visa/status info, ensure the plan compares realistic visa routes rather than assuming one.
+7. Keep everything consistent with the VERIFIED FACTS and OFFICIAL TRAVEL ADVISORY blocks if they were provided — they are ground truth. Never invent office names, laws, or URLs; for url keep the same rules (official root domain or "").
+8. Do NOT change the JSON structure, phase keys, or feasibility level; you may sharpen the feasibility note's wording.
 
 Be aggressive: a rewritten plan where 80% of fields changed is expected. Respond ONLY with the JSON.`;
 
