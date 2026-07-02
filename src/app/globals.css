@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fbfbfd;
-  --foreground: #0b1020;
+  --background: #fafafa;
+  --foreground: #18181b;
 }
 
 @theme inline {
@@ -11,21 +11,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-  --animate-fade-in: fade-in 0.4s ease both;
+  --animate-fade-in: fade-in 0.2s ease both;
   --animate-shimmer: shimmer 1.4s linear infinite;
-  --animate-float: float 8s ease-in-out infinite;
-}
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes fade-in {
@@ -46,65 +33,12 @@
   }
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(0, -18px) scale(1.04);
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, Arial,
     sans-serif;
   -webkit-font-smoothing: antialiased;
-}
-
-/* Ambient page backdrop: soft dot grid + drifting colour blooms. */
-.app-backdrop {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  overflow: hidden;
-  background-color: var(--background);
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    rgba(15, 23, 42, 0.05) 1px,
-    transparent 0
-  );
-  background-size: 26px 26px;
-}
-
-.app-backdrop::before,
-.app-backdrop::after {
-  content: "";
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(90px);
-  opacity: 0.5;
-}
-
-.app-backdrop::before {
-  width: 460px;
-  height: 460px;
-  top: -140px;
-  left: -80px;
-  background: radial-gradient(circle, #c7d2fe 0%, transparent 70%);
-  animation: var(--animate-float);
-}
-
-.app-backdrop::after {
-  width: 420px;
-  height: 420px;
-  top: 120px;
-  right: -120px;
-  background: radial-gradient(circle, #ddd6fe 0%, transparent 70%);
-  animation: var(--animate-float);
-  animation-delay: -4s;
 }
 
 /* Shimmer used by skeleton loaders. */
@@ -119,69 +53,20 @@ body {
   animation: var(--animate-shimmer);
 }
 
-/* Springy pop for the custom checkbox tick. */
-.check-pop {
-  animation: check-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-}
-
-@keyframes check-pop {
-  0% {
-    transform: scale(0);
-  }
-  70% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* Confetti pieces inside the plan-complete card. */
-.confetti-piece {
-  position: absolute;
-  top: -12px;
-  width: 7px;
-  height: 12px;
-  border-radius: 2px;
-  opacity: 0;
-  animation: confetti-fall 2.6s ease-in infinite;
-}
-
-@keyframes confetti-fall {
-  0% {
-    opacity: 0;
-    transform: translateY(-10px) rotate(0deg);
-  }
-  10% {
-    opacity: 0.9;
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(160px) rotate(320deg);
-  }
-}
-
-/* Staggered reveal helper. */
+/* Subtle content fade helper. */
 .reveal {
-  animation: var(--animate-fade-up);
+  animation: var(--animate-fade-in);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal,
-  .skeleton,
-  .check-pop,
-  .confetti-piece,
-  .app-backdrop::before,
-  .app-backdrop::after {
+  .skeleton {
     animation: none !important;
   }
 }
 
 @media print {
   .print\:hidden {
-    display: none !important;
-  }
-  .app-backdrop {
     display: none !important;
   }
   body {
@@ -193,13 +78,9 @@ body {
     opacity: 1 !important;
     transform: none !important;
   }
-  /* Backdrop-blur and shadows waste ink and can render as grey blocks. */
+  /* Shadows waste ink and can render as grey blocks. */
   * {
-    backdrop-filter: none !important;
     box-shadow: none !important;
-  }
-  .confetti-piece {
-    display: none !important;
   }
   /* Collapsed <details> sections print expanded, without their toggles. */
   details::details-content {

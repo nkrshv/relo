@@ -21,14 +21,14 @@ export default function PlanPage() {
       <section className="mx-auto max-w-3xl px-4 pt-14 pb-8 text-center print:hidden">
         <Link
           href="/"
-          className="text-sm font-medium text-indigo-600 hover:text-indigo-800"
+          className="text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-900"
         >
           ← ReloChecklist
         </Link>
-        <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-slate-900 sm:text-4xl">
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
           Build your relocation plan
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-slate-600">
+        <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-500">
           The more you tell us, the more specific your plan gets. Visa status,
           kids, pets, budget: every detail changes the checklist.
         </p>
@@ -38,7 +38,7 @@ export default function PlanPage() {
         <ReloApp />
       </section>
 
-      <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-400 print:hidden">
+      <footer className="border-t border-zinc-200 py-8 text-center text-sm text-zinc-400 print:hidden">
         ReloChecklist · Not legal or immigration advice. Always verify official
         requirements.
       </footer>
