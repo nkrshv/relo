@@ -90,7 +90,11 @@ export default function Home() {
           Grounded in official data, refreshed monthly
         </span>
         <h1 className="reveal mt-5 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
-          Move abroad without the 3am panic research
+          Move abroad without the{" "}
+          <span className="relative inline-block whitespace-nowrap">
+            <span className="absolute -inset-x-1 inset-y-0 -rotate-1 rounded bg-amber-200/70" aria-hidden />
+            <span className="relative">3am panic research</span>
+          </span>
         </h1>
         <p className="reveal mx-auto mt-5 max-w-xl text-lg text-zinc-500">
           Get a relocation checklist built for your exact situation: your
@@ -122,7 +126,7 @@ export default function Home() {
                 stroke="currentColor"
                 strokeWidth="1.5"
                 strokeLinecap="round"
-                className="mt-0.5 h-4 w-4 shrink-0 text-zinc-400"
+                className="mt-0.5 h-4 w-4 shrink-0 text-rose-500"
                 aria-hidden
               >
                 <path d="M4 4l8 8M12 4l-8 8" />
@@ -176,7 +180,7 @@ export default function Home() {
                 strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="mt-0.5 h-4 w-4 shrink-0 text-zinc-900"
+                className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
                 aria-hidden
               >
                 <path d="M3 8.5l3.5 3.5L13 5" />
