@@ -118,21 +118,30 @@ function CheckToggle({
   id,
   checked,
   onToggle,
+  disabled,
+  disabledReason,
 }: {
   id: string;
   checked: boolean;
   onToggle: () => void;
+  disabled?: boolean;
+  disabledReason?: string;
 }) {
   return (
     <button
       id={id}
       role="checkbox"
       aria-checked={checked}
+      aria-disabled={disabled}
+      disabled={disabled}
+      title={disabled ? disabledReason : undefined}
       onClick={onToggle}
-      className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 cursor-pointer items-center justify-center rounded border transition-colors ${
-        checked
-          ? "border-zinc-900 bg-zinc-900"
-          : "border-zinc-300 bg-white hover:border-zinc-400"
+      className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded border transition-colors ${
+        disabled
+          ? "cursor-not-allowed border-zinc-200 bg-zinc-100"
+          : checked
+            ? "cursor-pointer border-zinc-900 bg-zinc-900"
+            : "cursor-pointer border-zinc-300 bg-white hover:border-zinc-400"
       }`}
     >
       <svg
@@ -219,6 +228,10 @@ function AdvancedTable({
                           id={`adv-${row.pos}`}
                           checked={isChecked}
                           onToggle={() => toggle(row.pos)}
+                          disabled={isBlocked}
+                          disabledReason={`Complete ${openBlockers
+                            .map((d) => d.display)
+                            .join(", ")} first`}
                         />
                         <span className="w-12 shrink-0 font-mono text-[11px] text-zinc-400">
                           {row.display}
