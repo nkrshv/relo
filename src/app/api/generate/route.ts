@@ -32,6 +32,8 @@ Respond ONLY with JSON matching this exact shape:
       "key": "before" | "week1" | "month1" | "days90",
       "items": [
         {
+          "id": string,
+          "dependsOn": string[],
           "title": string,
           "why": string,
           "tip": string,
@@ -62,6 +64,8 @@ Structure rules:
 - "before" = tasks before leaving the origin country. "week1" = urgent tasks in the first week after arrival. "month1" = within the first month. "days90" = within the first 90 days.
 - 4 to 7 items per phase. Every item must be specific to the destination country (and where relevant the origin country) and the person's profile, visa status, and selected priorities.
 - "category": one short label such as "Housing", "Banking", "Healthcare", "Residency", "Taxes", "Logistics", "Pets", "Schooling".
+- "id": a short unique id for the item, sequential across the WHOLE plan: "t1", "t2", "t3", ... Never reuse an id.
+- "dependsOn": ids of OTHER items in this plan that must genuinely be completed BEFORE this one can start (hard real-world prerequisites only, e.g. a tax ID before opening a bank account, a rental contract before address registration, a visa before the residence permit). Dependencies may cross phases. Most items have 0-1 dependencies; use [] when none. Never create circular dependencies.
 - "estimate": a concrete time or cost when relevant (e.g. "1-2 weeks", "~€200", "€75 fee"), otherwise "".
 
 SPECIFICITY IS MANDATORY. This is the whole product — generic advice is worthless.
@@ -102,11 +106,13 @@ For EVERY item in the draft:
 5. Replace filler items ("join communities", "explore the city", "familiarize yourself with X") with concrete, destination-specific items. Do NOT shrink the plan: every phase must keep at least 4 items — when you cut filler, add a real missing task for this move (e.g. SIM/eSIM registration rules, utility contracts, license exchange, apostilles) instead.
 6. Personalization audit: re-read the user's message and verify every concrete detail they gave (budget or rent cap, savings, children's ages, pets, spouse's work plans, employer situation, timeline) is reflected in at least one item. If any detail is missing from the draft, weave it into the most relevant item or add a dedicated item for it. If the user gave no visa/status info, ensure the plan compares realistic visa routes rather than assuming one.
 7. Keep everything consistent with the VERIFIED FACTS and OFFICIAL TRAVEL ADVISORY blocks if they were provided — they are ground truth. Never invent office names, laws, or URLs; for url keep the same rules (official root domain or "").
-8. Do NOT change the JSON structure, phase keys, or feasibility level; you may sharpen the feasibility note's wording.
+8. Do NOT change the JSON structure, phase keys, or feasibility level; you may sharpen the feasibility note's wording. Keep each item's "id" unchanged. Keep "dependsOn" pointing only at ids that still exist; if you add an item, give it a new unused id (continue the "tN" sequence) and set real dependencies; add a missing genuine dependency where the draft overlooked one.
 
 Be aggressive: a rewritten plan where 80% of fields changed is expected. Respond ONLY with the JSON.`;
 
 interface RawItem {
+  id?: unknown;
+  dependsOn?: unknown;
   title?: unknown;
   why?: unknown;
   tip?: unknown;
@@ -157,6 +163,8 @@ function normalizeItem(raw: RawItem): ChecklistItem | null {
   const title = str(raw.title);
   if (!title) return null;
   return {
+    id: str(raw.id) || undefined,
+    dependsOn: strList(raw.dependsOn),
     title,
     why: str(raw.why),
     tip: str(raw.tip) || undefined,

@@ -35,6 +35,8 @@ export interface ReloInput {
 }
 
 export interface ChecklistItem {
+  id?: string;
+  dependsOn?: string[];
   title: string;
   why: string;
   tip?: string;
