@@ -7,10 +7,10 @@ const TYPE_CITIES = [
   "Lisbon",
   "Berlin",
   "Toronto",
-  "Amsterdam",
   "Tokyo",
   "Madrid",
-  "Singapore",
+  "Dublin",
+  "Vienna",
 ];
 
 const PAINS = [
@@ -103,7 +103,7 @@ export default function Home() {
           Grounded in official data, refreshed monthly
         </span>
         <h1 className="rise rise-1 mt-6 text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 sm:text-6xl">
-          Move abroad without the{" "}
+          Move to <Typewriter words={TYPE_CITIES} /> without the{" "}
           <span className="relative inline-block whitespace-nowrap">
             <span className="absolute -inset-x-1 inset-y-0 -rotate-1 rounded bg-amber-200/70" aria-hidden />
             <span className="relative">3am panic research</span>
@@ -114,10 +114,7 @@ export default function Home() {
           route, visa, family and budget. Real office names, real documents,
           real deadlines. Not another generic listicle.
         </p>
-        <p className="rise rise-2 mt-4 text-base font-medium text-stone-700">
-          Moving to <Typewriter words={TYPE_CITIES} />
-        </p>
-        <div className="rise rise-3 mt-8 flex flex-col items-center gap-3">
+        <div className="rise rise-3 mt-9 flex flex-col items-center gap-3">
           <CtaButton label="Get my relocation plan" />
           <span className="text-sm text-stone-400">
             Free to generate · takes about a minute
