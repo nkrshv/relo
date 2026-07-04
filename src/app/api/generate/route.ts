@@ -8,6 +8,7 @@ import {
   wettestMonths,
 } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
+import { openDataForCountry } from "@/lib/countryOpenData";
 import {
   PHASE_KEYS,
   PHASE_TITLES,
@@ -362,6 +363,32 @@ function buildUserContent(input: ReloInput): string {
         `- Electricity: ${staticData.voltage}, plug type(s) ${staticData.plugTypes.join(", ")} — mention adapters/appliances if the origin differs.`,
         `- English proficiency: ${staticData.english}${staticData.english === "native" ? "" : " (EF EPI)"} — calibrate language-prep advice accordingly.`,
       );
+    }
+    const openData = openDataForCountry(input.toCountry);
+    if (openData) {
+      lines.push(
+        `- Driving: ${openData.drivingSide}-hand traffic${openData.callingCode ? `; calling code ${openData.callingCode}` : ""}${openData.timezone ? `; capital timezone ${openData.timezone.name} (${openData.timezone.offset})` : ""} — relevant for licence exchange and staying reachable.`,
+      );
+      if (openData.priceLevelEU)
+        lines.push(
+          `- Consumer price level: ${openData.priceLevelEU.value} where EU27 average = 100 (Eurostat, ${openData.priceLevelEU.year}).`,
+        );
+      if (openData.taxWedge)
+        lines.push(
+          `- Tax wedge for a single worker at the average wage: ${openData.taxWedge.value}% of total labour cost (OECD Taxing Wages, ${openData.taxWedge.year}) — ground net-salary expectations on this.`,
+        );
+      if (openData.airQuality)
+        lines.push(
+          `- Air quality in ${openData.capital}: AQI ${openData.airQuality.aqi}${openData.airQuality.dominant ? ` (dominant pollutant ${openData.airQuality.dominant})` : ""} (WAQI) — mention only if relevant to health priorities or the profile.`,
+        );
+      if (openData.offices?.length)
+        lines.push(
+          `- Real local government offices near ${openData.capital} (OpenStreetMap): ${openData.offices.join("; ")} — use these exact names when a task involves in-person registration in the capital.`,
+        );
+      if (input.profile === "student" && openData.universities)
+        lines.push(
+          `- Universities: ${openData.universities.count} institutions listed (Hipolabs), e.g. ${openData.universities.sample.join(", ")} — anchor student-specific tasks on real institutions.`,
+        );
     }
     if (lines.length > 1) blocks.push(lines.join("\n"));
   }
