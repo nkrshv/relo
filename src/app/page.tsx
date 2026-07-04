@@ -1,5 +1,17 @@
 import Link from "next/link";
 import { DESTINATIONS } from "@/lib/countries";
+import Spotlight from "@/components/Spotlight";
+import Typewriter from "@/components/Typewriter";
+
+const TYPE_CITIES = [
+  "Lisbon",
+  "Berlin",
+  "Toronto",
+  "Amsterdam",
+  "Tokyo",
+  "Madrid",
+  "Singapore",
+];
 
 const PAINS = [
   "37 open tabs of contradictory visa blog posts from 2019",
@@ -86,7 +98,8 @@ export default function Home() {
       />
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-4 pt-24 pb-20 text-center">
-        <span className="rise inline-flex items-center rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium tracking-wide text-stone-500">
+        <span className="rise inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium tracking-wide text-stone-500">
+          <span className="pulse-dot" aria-hidden />
           Grounded in official data, refreshed monthly
         </span>
         <h1 className="rise rise-1 mt-6 text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 sm:text-6xl">
@@ -101,7 +114,10 @@ export default function Home() {
           route, visa, family and budget. Real office names, real documents,
           real deadlines. Not another generic listicle.
         </p>
-        <div className="rise rise-3 mt-9 flex flex-col items-center gap-3">
+        <p className="rise rise-2 mt-4 text-base font-medium text-stone-700">
+          Moving to <Typewriter words={TYPE_CITIES} />
+        </p>
+        <div className="rise rise-3 mt-8 flex flex-col items-center gap-3">
           <CtaButton label="Get my relocation plan" />
           <span className="text-sm text-stone-400">
             Free to generate · takes about a minute
@@ -148,7 +164,7 @@ export default function Home() {
         </h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {STEPS.map((s, i) => (
-            <div
+            <Spotlight
               key={s.title}
               className="card-lift rounded-lg border border-stone-200 bg-white p-6 sm:nth-2:col-span-2 sm:last:col-span-2"
             >
@@ -157,7 +173,7 @@ export default function Home() {
               </p>
               <h3 className="text-base font-semibold text-stone-900">{s.title}</h3>
               <p className="mt-2 text-sm text-stone-500">{s.body}</p>
-            </div>
+            </Spotlight>
           ))}
         </div>
       </section>
