@@ -14,6 +14,7 @@ interface Props {
   loading: boolean;
   initialTo?: string;
   onSubmit: (input: ReloInput) => void;
+  onRouteChange?: (fromCountry: string, toCountry: string) => void;
 }
 
 const fieldClass =
@@ -21,7 +22,12 @@ const fieldClass =
 
 const labelClass = "mb-1.5 block text-sm font-medium text-stone-700";
 
-export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
+export default function ReloForm({
+  loading,
+  initialTo,
+  onSubmit,
+  onRouteChange,
+}: Props) {
   const [fromCountry, setFromCountry] = useState("");
   const [toCountry, setToCountry] = useState(initialTo ?? "");
   const [profile, setProfile] = useState<Profile>("solo");
@@ -68,7 +74,10 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
           <CountryCombobox
             label="Moving from"
             value={fromCountry}
-            onChange={setFromCountry}
+            onChange={(v) => {
+              setFromCountry(v);
+              onRouteChange?.(v, toCountry);
+            }}
             placeholder="Start typing a country…"
             required
           />
@@ -83,7 +92,10 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
           <CountryCombobox
             label="Moving to"
             value={toCountry}
-            onChange={setToCountry}
+            onChange={(v) => {
+              setToCountry(v);
+              onRouteChange?.(fromCountry, v);
+            }}
             placeholder="Start typing a country…"
             required
           />

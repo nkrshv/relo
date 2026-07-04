@@ -25,17 +25,10 @@ export default function PlanPage() {
         >
           ← ReloChecklist
         </Link>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
-          Build your relocation plan
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-stone-500">
-          The more you tell us, the more specific your plan gets. Visa status,
-          kids, pets, budget: every detail changes the checklist.
-        </p>
       </section>
 
       <section className="pb-12">
-        <ReloApp />
+        <ReloApp showHeading />
       </section>
 
       <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400 print:hidden">

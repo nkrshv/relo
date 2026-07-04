@@ -358,7 +358,7 @@ export default function CountrySummary({
       value: `AQI ${air.aqi}`,
       sub:
         aqiDelta !== null && Math.abs(aqiDelta) >= 5
-          ? `${aqiDelta < 0 ? "↓" : "↑"}${Math.abs(aqiDelta)} vs ${origin!.capital}`
+          ? `${aqiDelta < 0 ? "↓" : "↑"}${Math.abs(aqiDelta)} vs home`
           : airBand.text,
       accent:
         airBand.tone === "good"
@@ -409,9 +409,9 @@ export default function CountrySummary({
       label: "Timezone",
       value:
         tzDiff !== null && tzDiff !== 0
-          ? `${tzDiff > 0 ? "+" : "−"}${fmtH(Math.abs(tzDiff))} vs ${origin!.capital}`
+          ? `${tzDiff > 0 ? "+" : "−"}${fmtH(Math.abs(tzDiff))} vs home`
           : tzDiff === 0
-            ? `Same as ${origin!.capital}`
+            ? "Same time as home"
             : openData.timezone.offset,
       sub:
         tzDiff !== null
