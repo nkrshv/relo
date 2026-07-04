@@ -358,6 +358,7 @@ export default function CountrySummary({
       icon: "tax",
       label: "Tax on wages",
       value: `~${Math.round(openData.taxWedge.value)}%`,
+      sub: "of labour cost (OECD)",
       hint: "OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost",
     });
   if (openData?.timezone)
