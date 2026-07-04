@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import type {
   ChecklistItem,
   ReloInput,
@@ -10,10 +10,146 @@ import type {
 import CountrySummary from "@/components/CountrySummary";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
+import { openDataForCountry } from "@/lib/countryOpenData";
 
 const FLAG_BY_NORM: Record<string, string> = Object.fromEntries(
   ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
 );
+
+// The first question every mover has, answered in one plain-language line
+// right under the route: do I need a visa on my passport?
+function VisaAnswer({
+  visa,
+  fromCountry,
+}: {
+  visa: VisaSummary;
+  fromCountry: string;
+}) {
+  const passport = `${fromCountry} passport`;
+  let verdict: ReactNode;
+  switch (visa.category) {
+    case "visa-free":
+      verdict = (
+        <>
+          <strong className="font-semibold text-emerald-700">
+            No visa needed
+          </strong>{" "}
+          for short visits{visa.days ? ` (up to ${visa.days} days)` : ""} on a{" "}
+          {passport} — but staying long-term still needs a residence permit.
+          The plan below covers it.
+        </>
+      );
+      break;
+    case "visa-on-arrival":
+      verdict = (
+        <>
+          <strong className="font-semibold text-emerald-700">
+            Visa on arrival
+          </strong>{" "}
+          for short visits on a {passport}. Staying long-term needs its own
+          residence route — the plan below covers it.
+        </>
+      );
+      break;
+    case "e-visa":
+      verdict = (
+        <>
+          <strong className="font-semibold text-amber-700">e-Visa needed</strong>{" "}
+          even for short visits on a {passport} — apply online before you fly.
+          Staying long-term needs its own residence route; the plan below
+          covers it.
+        </>
+      );
+      break;
+    case "eta":
+      verdict = (
+        <>
+          <strong className="font-semibold text-amber-700">
+            Travel authorization (eTA) needed
+          </strong>{" "}
+          before you fly on a {passport}. Staying long-term needs its own
+          residence route; the plan below covers it.
+        </>
+      );
+      break;
+    case "no-admission":
+      verdict = (
+        <>
+          <strong className="font-semibold text-red-700">
+            Entry is currently not permitted
+          </strong>{" "}
+          on a {passport}. Verify with official sources before planning
+          further.
+        </>
+      );
+      break;
+    default:
+      verdict = (
+        <>
+          <strong className="font-semibold text-amber-700">Visa required</strong>{" "}
+          even for a short visit on a {passport} — apply before you book
+          anything. The plan below starts there.
+        </>
+      );
+  }
+  return <p className="mt-3 text-base leading-relaxed text-stone-700">{verdict}</p>;
+}
+
+// Tasks about registering with local authorities get a map link per real
+// office name (from OpenStreetMap) near the capital.
+const OFFICE_TASK_RE =
+  /\bregist(er|ration)|town hall|city hall|municipal|rathaus|ayuntamiento|câmara municipal|gemeente|commune|anmeld/i;
+
+function officeTaskMatch(item: ChecklistItem): boolean {
+  return OFFICE_TASK_RE.test(
+    `${item.title} ${item.why} ${(item.steps ?? []).join(" ")}`,
+  );
+}
+
+function OfficeLinks({
+  offices,
+  capital,
+}: {
+  offices: string[];
+  capital: string;
+}) {
+  return (
+    <div>
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-stone-400">
+        Offices near {capital} · tap to open the map
+      </p>
+      <div className="mt-1 flex flex-wrap gap-1">
+        {offices.slice(0, 4).map((name) => (
+          <a
+            key={name}
+            href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${name}, ${capital}`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 rounded border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600 transition-colors hover:border-stone-400 hover:text-stone-900"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-3 w-3 shrink-0 text-stone-400"
+              aria-hidden
+            >
+              <path d="M8 14.5s-4.5-4.1-4.5-7.5a4.5 4.5 0 0 1 9 0c0 3.4-4.5 7.5-4.5 7.5Zm0-5.8a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4Z" />
+            </svg>
+            {name}
+          </a>
+        ))}
+      </div>
+      <p className="mt-1 text-[11px] text-stone-400">
+        OpenStreetMap · moving to another city? Search its local office
+        instead.
+      </p>
+    </div>
+  );
+}
 
 interface Props {
   input: ReloInput;
@@ -400,6 +536,11 @@ export default function ChecklistView({
 }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [view, setView] = useState<ViewMode>("simple");
+  const destOpenData = openDataForCountry(input.toCountry);
+  const destOffices =
+    destOpenData?.offices && destOpenData.offices.length > 0
+      ? { offices: destOpenData.offices, capital: destOpenData.capital }
+      : null;
   const storageKey = planStorageKey(input, plan);
   const doneRef = useRef<HTMLDivElement>(null);
 
@@ -535,6 +676,7 @@ export default function ChecklistView({
           )}
           {input.toCountry}
         </h1>
+        {visa && <VisaAnswer visa={visa} fromCountry={input.fromCountry} />}
         {plan.destinationSummary && (
           <p className="mt-3 text-stone-600">{plan.destinationSummary}</p>
         )}
@@ -860,7 +1002,8 @@ export default function ChecklistView({
                               (item.steps?.length ||
                                 item.documents?.length ||
                                 item.commonMistake ||
-                                item.tip) && (
+                                item.tip ||
+                                (destOffices && officeTaskMatch(item))) && (
                                 <details className="group/tip mt-2">
                                   <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-stone-500 transition-colors hover:text-stone-900 [&::-webkit-details-marker]:hidden">
                                     {item.steps?.length ? "How to do it" : "Tip"}
@@ -915,6 +1058,12 @@ export default function ChecklistView({
                                     )}
                                     {item.tip && (
                                       <p className="text-sm">{item.tip}</p>
+                                    )}
+                                    {destOffices && officeTaskMatch(item) && (
+                                      <OfficeLinks
+                                        offices={destOffices.offices}
+                                        capital={destOffices.capital}
+                                      />
                                     )}
                                   </div>
                                 </details>
