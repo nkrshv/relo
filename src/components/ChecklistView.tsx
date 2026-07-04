@@ -31,64 +31,71 @@ function VisaAnswer({
     case "visa-free":
       verdict = (
         <>
+          Good news: your {passport}{" "}
           <strong className="font-semibold text-emerald-700">
-            No visa needed
-          </strong>{" "}
-          for short visits{visa.days ? ` (up to ${visa.days} days)` : ""} on a{" "}
-          {passport} — but staying long-term still needs a residence permit.
-          The plan below covers it.
+            gets you in visa-free
+          </strong>
+          {visa.days ? ` — up to ${visa.days} days, zero paperwork` : " — zero paperwork"}
+          . Moving for good is a different story: that takes a residence
+          permit, and this plan walks you through it.
         </>
       );
       break;
     case "visa-on-arrival":
       verdict = (
         <>
+          Easy one: with a {passport} you{" "}
           <strong className="font-semibold text-emerald-700">
-            Visa on arrival
+            get a visa right at the border
           </strong>{" "}
-          for short visits on a {passport}. Staying long-term needs its own
-          residence route — the plan below covers it.
+          — just show up. Staying for good takes a residence permit; the plan
+          below walks you through it.
         </>
       );
       break;
     case "e-visa":
       verdict = (
         <>
-          <strong className="font-semibold text-amber-700">e-Visa needed</strong>{" "}
-          even for short visits on a {passport} — apply online before you fly.
-          Staying long-term needs its own residence route; the plan below
-          covers it.
+          One thing before you fly: your {passport}{" "}
+          <strong className="font-semibold text-amber-700">
+            needs an e-Visa
+          </strong>{" "}
+          — a few minutes online, done. Staying for good takes a residence
+          permit; the plan below walks you through it.
         </>
       );
       break;
     case "eta":
       verdict = (
         <>
+          One thing before you fly: grab a{" "}
           <strong className="font-semibold text-amber-700">
-            Travel authorization (eTA) needed
+            travel authorization (eTA)
           </strong>{" "}
-          before you fly on a {passport}. Staying long-term needs its own
-          residence route; the plan below covers it.
+          online — a few minutes on a {passport}. Staying for good takes a
+          residence permit; the plan below walks you through it.
         </>
       );
       break;
     case "no-admission":
       verdict = (
         <>
+          Hard stop: right now{" "}
           <strong className="font-semibold text-red-700">
-            Entry is currently not permitted
-          </strong>{" "}
-          on a {passport}. Verify with official sources before planning
-          further.
+            a {passport} won&apos;t get you in
+          </strong>
+          . Check official sources before making any plans.
         </>
       );
       break;
     default:
       verdict = (
         <>
-          <strong className="font-semibold text-amber-700">Visa required</strong>{" "}
-          even for a short visit on a {passport} — apply before you book
-          anything. The plan below starts there.
+          Heads up: your {passport}{" "}
+          <strong className="font-semibold text-amber-700">
+            needs a visa — even for a quick trip
+          </strong>
+          . Get that sorted before you book anything. It&apos;s step one below.
         </>
       );
   }
