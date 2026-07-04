@@ -649,7 +649,7 @@ export default function CountrySummary({
               {air && airBand && (
                 <div className="mb-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
                   <Tile
-                    label={`Air quality · ${openData?.capital ?? ""}`}
+                    label={`Air quality · ${openData?.capital ?? air.station}`}
                     value={`AQI ${air.aqi} · ${airBand.text}`}
                     accent={
                       airBand.tone === "good"
