@@ -13,6 +13,7 @@ import { normalizeName } from "@/lib/countryFacts";
 import type { Profile, VisaSummary } from "@/lib/types";
 import { insightsForCountry, climateSummary } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
+import { openDataForCountry, aqiLabel } from "@/lib/countryOpenData";
 
 const FLAG_BY_NAME: Record<string, string> = Object.fromEntries(
   ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
@@ -105,6 +106,7 @@ export default function CountrySummary({
   const currencyCode = currencyForCountry(country);
   const insights = insightsForCountry(country);
   const staticData = staticDataForCountry(country);
+  const openData = openDataForCountry(country);
   const climate = insights ? climateSummary(insights) : null;
   const visaValue = visa
     ? visa.days != null
@@ -140,7 +142,7 @@ export default function CountrySummary({
   };
 
   // Nothing worth showing at all.
-  if (!advisory && !fx && !currencyCode && !visa && !insights && !staticData)
+  if (!advisory && !fx && !currencyCode && !visa && !insights && !staticData && !openData)
     return null;
 
   const norm = normalizeName(country);
@@ -170,18 +172,26 @@ export default function CountrySummary({
       ].slice(0, 3)
     : [];
 
+  const air = openData?.airQuality ?? null;
+  const airBand = air ? aqiLabel(air.aqi) : null;
   const hasHealth = Boolean(
-    vac &&
-      (vac.required.length > 0 ||
-        vac.recommended.length > 0 ||
-        vac.malaria ||
-        vac.healthNotices.length > 0),
+    air ||
+      (vac &&
+        (vac.required.length > 0 ||
+          vac.recommended.length > 0 ||
+          vac.malaria ||
+          vac.healthNotices.length > 0)),
   );
   const hasCost = Boolean(
-    insights &&
-      (insights.inflation || priceLevel || insights.lifeExpectancy),
+    insights?.inflation ||
+      priceLevel ||
+      insights?.lifeExpectancy ||
+      openData?.priceLevelEU ||
+      openData?.taxWedge,
   );
-  const hasPractical = Boolean(staticData || nextHolidays.length > 0);
+  const hasPractical = Boolean(
+    staticData || nextHolidays.length > 0 || openData,
+  );
   const hasSafety = Boolean(advisory && (reasons || impact?.detail || advisory.stateDeptUrl));
 
   // One combined money tile instead of separate currency and FX tiles.
@@ -313,13 +323,33 @@ export default function CountrySummary({
 
           {openTab === "practical" && hasPractical && (
             <div className="mt-2.5 space-y-2.5">
-              {staticData && (
+              {(staticData || openData) && (
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  <Tile label="Internet" value={`~${staticData.internetMbps} Mbps`} />
-                  <Tile
-                    label="Plugs"
-                    value={`Type ${staticData.plugTypes.join("/")} · ${staticData.voltage}`}
-                  />
+                  {staticData && (
+                    <Tile label="Internet" value={`~${staticData.internetMbps} Mbps`} />
+                  )}
+                  {staticData && (
+                    <Tile
+                      label="Plugs"
+                      value={`Type ${staticData.plugTypes.join("/")} · ${staticData.voltage}`}
+                    />
+                  )}
+                  {openData?.timezone && (
+                    <Tile
+                      label="Timezone"
+                      value={openData.timezone.offset}
+                      hint={openData.timezone.name}
+                    />
+                  )}
+                  {openData?.drivingSide && (
+                    <Tile
+                      label="Driving"
+                      value={`${openData.drivingSide === "left" ? "Left" : "Right"}-hand side`}
+                    />
+                  )}
+                  {openData?.callingCode && (
+                    <Tile label="Calling code" value={openData.callingCode} />
+                  )}
                 </div>
               )}
               {nextHolidays.length > 0 && (
@@ -345,18 +375,32 @@ export default function CountrySummary({
             </div>
           )}
 
-          {openTab === "cost" && insights && (
+          {openTab === "cost" && hasCost && (
             <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
               {priceLevel && (
                 <Tile label="Price level" value={priceLevel.value} hint={priceLevel.hint} />
               )}
-              {insights.inflation && (
+              {openData?.priceLevelEU && (
+                <Tile
+                  label="Prices vs EU average"
+                  value={`${openData.priceLevelEU.value >= 100 ? "+" : "−"}${Math.abs(Math.round(openData.priceLevelEU.value - 100))}%`}
+                  hint={`Eurostat price level index ${openData.priceLevelEU.year}: EU27 = 100`}
+                />
+              )}
+              {openData?.taxWedge && (
+                <Tile
+                  label={`Tax on wages · ${openData.taxWedge.year}`}
+                  value={`~${Math.round(openData.taxWedge.value)}% wedge`}
+                  hint="OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost"
+                />
+              )}
+              {insights?.inflation && (
                 <Tile
                   label={`Inflation · ${insights.inflation.year}`}
                   value={`${insights.inflation.value.toFixed(1)}% / yr`}
                 />
               )}
-              {insights.lifeExpectancy && (
+              {insights?.lifeExpectancy && (
                 <Tile
                   label="Life expectancy"
                   value={`${insights.lifeExpectancy.value.toFixed(0)} yrs`}
@@ -365,9 +409,25 @@ export default function CountrySummary({
             </div>
           )}
 
-          {openTab === "health" && vac && (
+          {openTab === "health" && hasHealth && (
             <div className="mt-2.5">
-              {(vac.required.length > 0 || vac.recommended.length > 0) && (
+              {air && airBand && (
+                <div className="mb-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                  <Tile
+                    label={`Air quality · ${openData?.capital ?? ""}`}
+                    value={`AQI ${air.aqi} · ${airBand.text}`}
+                    accent={
+                      airBand.tone === "good"
+                        ? "text-emerald-700"
+                        : airBand.tone === "moderate"
+                          ? "text-amber-700"
+                          : "text-orange-700"
+                    }
+                    hint={`WAQI, station: ${air.station}`}
+                  />
+                </div>
+              )}
+              {vac && (vac.required.length > 0 || vac.recommended.length > 0) && (
                 <div className="flex flex-wrap gap-1.5">
                   {vac.required.map((v) => (
                     <span
@@ -387,7 +447,7 @@ export default function CountrySummary({
                   ))}
                 </div>
               )}
-              {vac.malaria && (
+              {vac?.malaria && (
                 <p className="mt-2 text-sm text-stone-600">
                   <span className="font-medium text-stone-800">Malaria:</span>{" "}
                   {vac.malaria.riskLevel} risk
@@ -396,7 +456,7 @@ export default function CountrySummary({
                     : ""}
                 </p>
               )}
-              {vac.healthNotices.map((n, i) => (
+              {(vac?.healthNotices ?? []).map((n, i) => (
                 <p key={i} className="mt-1.5 text-sm text-amber-800">
                   <span>
                     <span className="font-medium">{n.title}</span>
@@ -404,7 +464,9 @@ export default function CountrySummary({
                   </span>
                 </p>
               ))}
-              <p className="mt-2 text-xs text-stone-400">Source: CDC</p>
+              <p className="mt-2 text-xs text-stone-400">
+                Source: {[vac ? "CDC" : null, air ? "WAQI" : null].filter(Boolean).join(" · ")}
+              </p>
             </div>
           )}
 
@@ -451,6 +513,7 @@ export default function CountrySummary({
           {advisory ? "Sources: U.S. State Dept" : "Sources: open data"}
           {visa ? " · Passport Index" : ""}
           {insights ? " · Open-Meteo · World Bank" : ""}
+          {openData ? " · Eurostat · OECD" : ""}
           {advisory?.updatedAt ? ` · updated ${advisory.updatedAt}` : ""}
           {fx && fx.updatedAt ? ` · FX ${fx.updatedAt}` : ""}
         </span>
