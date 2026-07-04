@@ -92,6 +92,55 @@ function Tile({
   );
 }
 
+type IconName =
+  | "visa"
+  | "money"
+  | "language"
+  | "climate"
+  | "air"
+  | "prices"
+  | "tax"
+  | "clock";
+
+const ICON_PATHS: Record<IconName, string> = {
+  visa: "M4 3.5h8a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Zm2 3.5h4M6 9.5h4M6 12h2.5",
+  money: "M8 2.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Zm0 2.5v6m1.8-4.6c-.3-.5-1-.9-1.8-.9-1 0-1.8.6-1.8 1.3 0 1.8 3.6.9 3.6 2.6 0 .7-.8 1.3-1.8 1.3-.8 0-1.5-.4-1.8-.9",
+  language: "M2.5 4h7M6 2.5V4m2.5 0c-.7 2.6-2.7 4.8-5.5 6m1.2-3.5c.9 1.8 2.6 3.2 4.3 3.9M9.5 13.5 12 7l2.5 6.5m-4.3-2h3.6",
+  climate: "M8 1.5v1.8M8 12.7v1.8M1.5 8h1.8m9.4 0h1.8M3.4 3.4l1.3 1.3m6.6 6.6 1.3 1.3m0-9.2-1.3 1.3M4.7 11.3l-1.3 1.3M8 5.2a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6Z",
+  air: "M2 5.5h7a2 2 0 1 0-2-2M2 8.5h10a2 2 0 1 1-2 2M2 11.5h4.5a1.8 1.8 0 1 1-1.8 1.8",
+  prices: "M2.8 8.6 8.6 2.8a1 1 0 0 1 .7-.3h3.2a1 1 0 0 1 1 1v3.2a1 1 0 0 1-.3.7l-5.8 5.8a1 1 0 0 1-1.4 0L2.8 10a1 1 0 0 1 0-1.4ZM11 5h.01",
+  tax: "M3.5 12.5 12.5 3.5M5 3.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z",
+  clock: "M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2Zm0 2.5V8l2.5 1.5",
+};
+
+function CellIcon({ name }: { name: IconName }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      className="h-3.5 w-3.5 shrink-0 text-stone-400"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d={ICON_PATHS[name]} />
+    </svg>
+  );
+}
+
+interface BentoCell {
+  key: string;
+  icon: IconName;
+  label: string;
+  value: string;
+  sub?: string;
+  accent?: string;
+  hint?: string;
+  wide?: boolean;
+}
+
 type TabKey = "practical" | "cost" | "health" | "safety";
 
 export default function CountrySummary({
@@ -217,6 +266,127 @@ export default function CountrySummary({
       ? `English ${english.toLowerCase()}`
       : null;
 
+  // Apple-keynote-style bento summary: importance = cell size, and cells for
+  // missing data simply don't render so the grid adapts per country.
+  const cells: BentoCell[] = [];
+  if (visaValue) {
+    cells.push({
+      key: "visa",
+      icon: "visa",
+      label: "Short-stay visa",
+      value: visaValue,
+      sub: "Long-term stays need a residence route",
+      accent:
+        visa?.category === "visa-free" ? "text-emerald-700" : "text-amber-700",
+      wide: true,
+    });
+  } else if (advisory && advisory.entryExit.visaRequired !== null) {
+    cells.push({
+      key: "visa",
+      icon: "visa",
+      label: "Visa",
+      value: advisory.entryExit.visaRequired ? "Required" : "Not required",
+      accent: advisory.entryExit.visaRequired
+        ? "text-amber-700"
+        : "text-emerald-700",
+      wide: true,
+    });
+  }
+  if (moneyValue) {
+    cells.push({
+      key: "money",
+      icon: "money",
+      label: "Money",
+      value: moneyValue,
+      sub: fx ? `Rate as of ${fx.updatedAt}` : undefined,
+      wide: true,
+    });
+  }
+  if (languageValue)
+    cells.push({
+      key: "language",
+      icon: "language",
+      label: "Language",
+      value: language ?? languageValue,
+      sub:
+        language && english && !language.toLowerCase().includes("english")
+          ? `English ${english.toLowerCase()}`
+          : undefined,
+    });
+  if (climate && insights)
+    cells.push({
+      key: "climate",
+      icon: "climate",
+      label: "Climate",
+      value: climate.replace(` in ${insights.climate.city}`, ""),
+      sub: insights.climate.city,
+    });
+  if (air && airBand)
+    cells.push({
+      key: "air",
+      icon: "air",
+      label: "Air quality",
+      value: `AQI ${air.aqi}`,
+      sub: airBand.text,
+      accent:
+        airBand.tone === "good"
+          ? "text-emerald-700"
+          : airBand.tone === "moderate"
+            ? "text-amber-700"
+            : "text-orange-700",
+      hint: `WAQI, station: ${air.station}`,
+    });
+  if (priceLevel)
+    cells.push({
+      key: "prices",
+      icon: "prices",
+      label: "Prices",
+      value: priceLevel.value,
+      hint: priceLevel.hint,
+    });
+  else if (openData?.priceLevelEU)
+    cells.push({
+      key: "prices",
+      icon: "prices",
+      label: "Prices vs EU",
+      value: `${openData.priceLevelEU.value >= 100 ? "+" : "−"}${Math.abs(Math.round(openData.priceLevelEU.value - 100))}%`,
+      hint: `Eurostat price level index ${openData.priceLevelEU.year}: EU27 = 100`,
+    });
+  if (openData?.taxWedge)
+    cells.push({
+      key: "tax",
+      icon: "tax",
+      label: "Tax on wages",
+      value: `~${Math.round(openData.taxWedge.value)}%`,
+      sub: "of labour cost (OECD)",
+      hint: "OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost",
+    });
+  if (openData?.timezone)
+    cells.push({
+      key: "clock",
+      icon: "clock",
+      label: "Timezone",
+      value: openData.timezone.offset,
+      sub: openData.timezone.name.split("/").pop()?.replace(/_/g, " "),
+      hint: openData.timezone.name,
+    });
+
+  // Keep the grid gapless: stretch the trailing cells of an incomplete last
+  // row of small cells across the remaining columns.
+  const visibleCells = cells.slice(0, 8);
+  const smallCount = visibleCells.filter((c) => !c.wide).length;
+  const rem = smallCount % 4;
+  const spanClass = (c: BentoCell, i: number): string => {
+    if (c.wide) return "col-span-2";
+    const smallIndex = visibleCells.slice(0, i + 1).filter((x) => !x.wide).length;
+    const inLastRow = smallIndex > smallCount - rem;
+    if (!inLastRow) return "";
+    if (rem === 1) return "col-span-2 sm:col-span-4";
+    if (rem === 2) return "col-span-2";
+    if (rem === 3 && smallIndex === smallCount) return "col-span-2";
+    return "";
+  };
+
   const tabs: { key: TabKey; label: string; show: boolean }[] = [
     { key: "practical", label: "Practical", show: hasPractical },
     { key: "cost", label: "Cost of living", show: hasCost },
@@ -252,39 +422,32 @@ export default function CountrySummary({
         )}
       </div>
 
-      <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-        {visaValue ? (
-          <Tile
-            label="Short-stay visa"
-            value={visaValue}
-            accent={
-              visa?.category === "visa-free"
-                ? "text-emerald-700"
-                : "text-amber-700"
-            }
-          />
-        ) : (
-          advisory &&
-          advisory.entryExit.visaRequired !== null && (
-            <Tile
-              label="Visa"
-              value={
-                advisory.entryExit.visaRequired ? "Required" : "Not required"
-              }
-              accent={
-                advisory.entryExit.visaRequired
-                  ? "text-amber-700"
-                  : "text-emerald-700"
-              }
-            />
-          )
-        )}
-        {moneyValue && <Tile label="Money" value={moneyValue} />}
-        {languageValue && <Tile label="Language" value={languageValue} />}
-        {climate && insights && (
-          <Tile label={`Climate · ${insights.climate.city}`} value={climate} />
-        )}
-      </div>
+      {visibleCells.length > 0 && (
+        <div className="mt-4 grid grid-flow-dense grid-cols-2 gap-2 sm:grid-cols-4">
+          {visibleCells.map((c, i) => (
+            <div
+              key={c.key}
+              title={c.hint ?? c.value}
+              className={`rounded-lg border border-stone-200 bg-stone-50 px-3 py-3 ${spanClass(c, i)}`}
+            >
+              <div className="flex items-center gap-1.5">
+                <CellIcon name={c.icon} />
+                <p className="truncate text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                  {c.label}
+                </p>
+              </div>
+              <p
+                className={`tnum mt-1.5 truncate text-sm font-semibold ${c.wide ? "sm:text-base" : ""} ${c.accent ?? "text-stone-900"}`}
+              >
+                {c.value}
+              </p>
+              {c.sub && (
+                <p className="mt-0.5 truncate text-xs text-stone-400">{c.sub}</p>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Critical warnings are never hidden behind a tab. */}
       {warnings.length > 0 && (
