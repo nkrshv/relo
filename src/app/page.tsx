@@ -57,7 +57,7 @@ function CtaButton({ label }: { label: string }) {
   return (
     <Link
       href="/plan"
-      className="inline-flex items-center gap-2 rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700"
+      className="pressable inline-flex items-center gap-2 rounded-lg bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:bg-stone-700"
     >
       {label}
       <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden>
@@ -85,40 +85,40 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
       />
       {/* Hero */}
-      <section className="mx-auto max-w-3xl px-4 pt-20 pb-14 text-center">
-        <span className="reveal inline-flex items-center rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-500">
+      <section className="mx-auto max-w-3xl px-4 pt-24 pb-20 text-center">
+        <span className="rise inline-flex items-center rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium tracking-wide text-stone-500">
           Grounded in official data, refreshed monthly
         </span>
-        <h1 className="reveal mt-5 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl">
+        <h1 className="rise rise-1 mt-6 text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 sm:text-6xl">
           Move abroad without the{" "}
           <span className="relative inline-block whitespace-nowrap">
             <span className="absolute -inset-x-1 inset-y-0 -rotate-1 rounded bg-amber-200/70" aria-hidden />
             <span className="relative">3am panic research</span>
           </span>
         </h1>
-        <p className="reveal mx-auto mt-5 max-w-xl text-lg text-zinc-500">
+        <p className="rise rise-2 mx-auto mt-6 max-w-xl text-lg leading-relaxed text-stone-500">
           Get a relocation checklist built for your exact situation: your
           route, visa, family and budget. Real office names, real documents,
           real deadlines. Not another generic listicle.
         </p>
-        <div className="reveal mt-8 flex flex-col items-center gap-3">
+        <div className="rise rise-3 mt-9 flex flex-col items-center gap-3">
           <CtaButton label="Get my relocation plan" />
-          <span className="text-sm text-zinc-400">
+          <span className="text-sm text-stone-400">
             Free to generate · takes about a minute
           </span>
         </div>
       </section>
 
       {/* Pain */}
-      <section className="mx-auto max-w-3xl px-4 py-14">
-        <h2 className="text-center text-2xl font-semibold tracking-tight text-zinc-900">
+      <section className="mx-auto max-w-3xl px-4 py-16">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           Planning a move abroad usually looks like this
         </h2>
-        <ul className="mx-auto mt-8 max-w-xl space-y-2">
+        <ul className="mt-8 max-w-xl divide-y divide-stone-200/70">
           {PAINS.map((p) => (
             <li
               key={p}
-              className="flex items-start gap-3 rounded-lg border border-zinc-200 bg-white p-4 text-sm text-zinc-600"
+              className="flex items-start gap-3 py-3.5 text-sm leading-relaxed text-stone-600"
             >
               <svg
                 viewBox="0 0 16 16"
@@ -135,43 +135,43 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <p className="mx-auto mt-8 max-w-xl text-center text-lg font-medium text-zinc-900">
+        <p className="mt-9 max-w-xl text-lg font-medium leading-snug text-stone-900">
           One missed deadline can block your bank account, your tax ID and your
           residence permit. You need a plan, not more tabs.
         </p>
       </section>
 
       {/* How it works */}
-      <section className="mx-auto max-w-5xl px-4 py-14">
-        <h2 className="text-center text-2xl font-semibold tracking-tight text-zinc-900">
+      <section className="mx-auto max-w-5xl px-4 py-16">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           How it works
         </h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {STEPS.map((s, i) => (
             <div
               key={s.title}
-              className="rounded-lg border border-zinc-200 bg-white p-6"
+              className="card-lift rounded-lg border border-stone-200 bg-white p-6 sm:nth-2:col-span-2 sm:last:col-span-2"
             >
-              <p className="mb-3 font-mono text-xs font-medium text-zinc-400">
+              <p className="mb-3 font-mono text-xs font-medium text-stone-400">
                 {String(i + 1).padStart(2, "0")}
               </p>
-              <h3 className="text-base font-semibold text-zinc-900">{s.title}</h3>
-              <p className="mt-2 text-sm text-zinc-500">{s.body}</p>
+              <h3 className="text-base font-semibold text-stone-900">{s.title}</h3>
+              <p className="mt-2 text-sm text-stone-500">{s.body}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Features */}
-      <section className="mx-auto max-w-3xl px-4 py-14">
-        <h2 className="text-center text-2xl font-semibold tracking-tight text-zinc-900">
+      <section className="mx-auto max-w-3xl px-4 py-16">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           What&apos;s inside every plan
         </h2>
-        <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+        <ul className="mt-8 grid gap-x-8 sm:grid-cols-2">
           {FEATURES.map((f) => (
             <li
               key={f}
-              className="flex items-start gap-2.5 rounded-lg border border-zinc-200 bg-white p-3.5 text-sm text-zinc-600"
+              className="flex items-start gap-2.5 border-b border-stone-200/70 py-3 text-sm leading-relaxed text-stone-600"
             >
               <svg
                 viewBox="0 0 16 16"
@@ -195,46 +195,46 @@ export default function Home() {
       </section>
 
       {/* Destinations (SEO internal links) */}
-      <section className="mx-auto max-w-5xl px-4 py-14">
-        <h2 className="text-center text-2xl font-semibold tracking-tight text-zinc-900">
+      <section className="mx-auto max-w-5xl px-4 py-16">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           Popular destinations
         </h2>
-        <p className="mt-2 text-center text-zinc-500">
+        <p className="mt-2 text-stone-500">
           Browse relocation guides for the most popular countries.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
+        <div className="mt-6 flex flex-wrap gap-2">
           {DESTINATIONS.map((d) => (
             <Link
               key={d.slug}
               href={`/moving-to/${d.slug}`}
-              className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
+              className="rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors duration-200 hover:bg-stone-50 hover:text-stone-900"
             >
-              {d.emoji} Moving to {d.name}
+              Moving to {d.name}
             </Link>
           ))}
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-2xl px-4 py-14">
-        <h2 className="text-center text-2xl font-semibold tracking-tight text-zinc-900">
+      <section className="mx-auto max-w-2xl px-4 py-16">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           Frequently asked questions
         </h2>
-        <div className="mt-8 space-y-2">
+        <div className="mt-6">
           {FAQ.map((f) => (
             <details
               key={f.q}
-              className="group rounded-lg border border-zinc-200 bg-white p-4"
+              className="group border-b border-stone-200/70 py-4"
             >
-              <summary className="cursor-pointer list-none text-sm font-medium text-zinc-900 marker:content-none">
+              <summary className="cursor-pointer list-none text-sm font-medium text-stone-900 marker:content-none">
                 <span className="flex items-center justify-between gap-2">
                   {f.q}
-                  <span className="text-zinc-400 transition-transform duration-150 group-open:rotate-45">
+                  <span className="font-mono text-stone-400 transition-transform duration-200 group-open:rotate-45">
                     +
                   </span>
                 </span>
               </summary>
-              <p className="mt-3 text-sm leading-relaxed text-zinc-500">
+              <p className="mt-3 max-w-prose text-sm leading-relaxed text-stone-500">
                 {f.a}
               </p>
             </details>
@@ -243,11 +243,11 @@ export default function Home() {
       </section>
 
       {/* Final CTA */}
-      <section className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <h2 className="text-3xl font-semibold tracking-tight text-zinc-900">
+      <section className="mx-auto max-w-3xl px-4 pt-16 pb-24 text-center">
+        <h2 className="text-3xl font-semibold tracking-tight text-stone-900">
           Your move, planned in a minute
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-lg text-zinc-500">
+        <p className="mx-auto mt-4 max-w-md text-lg text-stone-500">
           Stop guessing what to do first. Get the exact steps, documents and
           deadlines for your move.
         </p>
@@ -256,7 +256,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-zinc-200 py-8 text-center text-sm text-zinc-400">
+      <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400">
         ReloChecklist · Not legal or immigration advice. Always verify official
         requirements.
       </footer>

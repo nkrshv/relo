@@ -85,15 +85,15 @@ export default async function MovingToPage({
       <section className="mx-auto max-w-3xl px-4 pt-14 pb-8 text-center print:hidden">
         <Link
           href="/"
-          className="text-sm font-medium text-zinc-500 transition-colors hover:text-zinc-900"
+          className="text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
         >
           ← ReloChecklist
         </Link>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
-          {dest.emoji} Moving to {dest.name}: your relocation checklist
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
+          Moving to {dest.name}: your relocation checklist
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-lg text-zinc-500">
-          Everything you need to settle into {dest.name} — organized by phase.
+        <p className="mx-auto mt-4 max-w-xl text-lg text-stone-500">
+          Everything you need to settle into {dest.name}, organized by phase.
           Generate a free plan tailored to your visa status, family, and
           budget below.
         </p>
@@ -104,24 +104,21 @@ export default async function MovingToPage({
       </section>
 
       <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
-        <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           The {dest.name} relocation checklist at a glance
         </h2>
         <div className="mt-6 space-y-8">
           {OUTLINE.map((block, i) => (
             <div key={block.phase}>
-              <h3 className="flex items-center gap-2 text-lg font-semibold text-zinc-900">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-zinc-300 bg-white text-xs font-medium text-zinc-600">
+              <h3 className="flex items-center gap-2 text-lg font-semibold text-stone-900">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full border border-stone-300 bg-white text-xs font-medium text-stone-600">
                   {i + 1}
                 </span>
                 {block.phase}
               </h3>
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-2 divide-y divide-stone-200/70">
                 {block.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-lg border border-zinc-200 bg-white p-3 text-sm text-zinc-600"
-                  >
+                  <li key={item} className="py-2.5 text-sm text-stone-600">
                     {item}
                   </li>
                 ))}
@@ -129,16 +126,16 @@ export default async function MovingToPage({
             </div>
           ))}
         </div>
-        <p className="mt-8 rounded-lg border border-zinc-200 bg-white p-4 text-sm text-zinc-500">
+        <p className="mt-8 rounded-lg border border-stone-200 bg-white p-4 text-sm leading-relaxed text-stone-500">
           This is a general outline. Your personalized plan above adapts every
           step to where you&apos;re moving from, your visa status, and your
-          situation. Always verify official requirements — this is not legal or
+          situation. Always verify official requirements: this is not legal or
           immigration advice.
         </p>
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-10 print:hidden">
-        <h2 className="text-center text-lg font-semibold text-zinc-900">
+        <h2 className="text-center text-lg font-semibold text-stone-900">
           Other destinations
         </h2>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
@@ -146,16 +143,16 @@ export default async function MovingToPage({
             <Link
               key={d.slug}
               href={`/moving-to/${d.slug}`}
-              className="rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-sm text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
+              className="rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-50 hover:text-stone-900"
             >
-              {d.emoji} {d.name}
+              {d.name}
             </Link>
           ))}
         </div>
       </section>
 
-      <footer className="border-t border-zinc-200 py-8 text-center text-sm text-zinc-400 print:hidden">
-        ReloChecklist · Not legal or immigration advice — always verify official
+      <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400 print:hidden">
+        ReloChecklist · Not legal or immigration advice. Always verify official
         requirements.
       </footer>
     </main>

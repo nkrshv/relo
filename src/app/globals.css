@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafafa;
-  --foreground: #18181b;
+  --background: #fbfbfa;
+  --foreground: #1c1917;
 }
 
 @theme inline {
@@ -12,6 +12,7 @@
   --font-mono: var(--font-geist-mono);
 
   --animate-fade-in: fade-in 0.2s ease both;
+  --animate-rise-in: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
   --animate-shimmer: shimmer 1.4s linear infinite;
 }
 
@@ -21,6 +22,17 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -41,13 +53,42 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Tabular figures for data-heavy rows and tiles. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Physical press feedback on interactive controls. */
+button:active:not(:disabled),
+a.pressable:active {
+  transform: scale(0.98);
+}
+
+/* Ultra-diffuse hover lift for cards. */
+.card-lift {
+  transition: box-shadow 0.2s ease;
+}
+.card-lift:hover {
+  box-shadow: 0 2px 8px rgba(28, 25, 23, 0.04);
+}
+
 /* Shimmer used by skeleton loaders. */
 .skeleton {
   background: linear-gradient(
     90deg,
-    rgba(148, 163, 184, 0.12) 25%,
-    rgba(148, 163, 184, 0.28) 37%,
-    rgba(148, 163, 184, 0.12) 63%
+    rgba(168, 162, 158, 0.12) 25%,
+    rgba(168, 162, 158, 0.28) 37%,
+    rgba(168, 162, 158, 0.12) 63%
   );
   background-size: 200% 100%;
   animation: var(--animate-shimmer);
@@ -58,8 +99,23 @@ body {
   animation: var(--animate-fade-in);
 }
 
+/* Gentle rise-and-fade entrance for hero and section blocks. */
+.rise {
+  animation: var(--animate-rise-in);
+}
+.rise-1 {
+  animation-delay: 80ms;
+}
+.rise-2 {
+  animation-delay: 160ms;
+}
+.rise-3 {
+  animation-delay: 240ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
+  .rise,
   .skeleton {
     animation: none !important;
   }
@@ -73,7 +129,8 @@ body {
     background: #fff;
   }
   /* Reveal/entrance animations must not leave content faded or shifted on paper. */
-  .reveal {
+  .reveal,
+  .rise {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

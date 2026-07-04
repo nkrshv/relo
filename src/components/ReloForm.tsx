@@ -17,9 +17,9 @@ interface Props {
 }
 
 const fieldClass =
-  "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-zinc-500 focus:ring-2 focus:ring-zinc-200";
+  "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-500 focus:ring-2 focus:ring-stone-200";
 
-const labelClass = "mb-1.5 block text-sm font-medium text-zinc-700";
+const labelClass = "mb-1.5 block text-sm font-medium text-stone-700";
 
 export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
   const [fromCountry, setFromCountry] = useState("");
@@ -61,7 +61,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="reveal mx-auto w-full max-w-2xl rounded-xl border border-zinc-200 bg-white p-6 shadow-sm sm:p-8"
+      className="reveal mx-auto w-full max-w-2xl rounded-xl border border-stone-200 bg-white p-6 shadow-sm sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
@@ -122,7 +122,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
         <label className="block sm:col-span-2">
           <span className={labelClass}>
             Visa / residency status{" "}
-            <span className="font-normal text-zinc-400">(optional)</span>
+            <span className="font-normal text-stone-400">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -146,8 +146,8 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
                 aria-pressed={active}
                 className={`rounded-md border px-3 py-1.5 text-sm transition-colors ${
                   active
-                    ? "border-zinc-900 bg-zinc-900 text-white"
-                    : "border-zinc-300 bg-white text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900"
+                    ? "border-stone-900 bg-stone-900 text-white"
+                    : "border-stone-300 bg-white text-stone-600 hover:bg-stone-50 hover:text-stone-900"
                 }`}
               >
                 {p}
@@ -160,7 +160,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>
-            Budget <span className="font-normal text-zinc-400">(optional)</span>
+            Budget <span className="font-normal text-stone-400">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -172,7 +172,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
         <label className="block">
           <span className={labelClass}>
             Anything else?{" "}
-            <span className="font-normal text-zinc-400">(optional)</span>
+            <span className="font-normal text-stone-400">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -186,7 +186,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="mt-7 flex w-full items-center justify-center gap-2 rounded-lg bg-zinc-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-60"
+        className="mt-7 flex w-full items-center justify-center gap-2 rounded-lg bg-stone-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-stone-700 disabled:cursor-not-allowed disabled:opacity-60"
       >
         {loading ? (
           <>
@@ -197,7 +197,7 @@ export default function ReloForm({ loading, initialTo, onSubmit }: Props) {
           <>Build my relocation plan →</>
         )}
       </button>
-      <p className="mt-3 text-center text-xs text-zinc-400">
+      <p className="mt-3 text-center text-xs text-stone-400">
         Free preview · Full personalized plan for $9
       </p>
     </form>
