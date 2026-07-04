@@ -200,7 +200,7 @@ export default function CountrySummary({
     ? staticData.english.charAt(0).toUpperCase() + staticData.english.slice(1)
     : null;
   const languageValue = language
-    ? english
+    ? english && !language.toLowerCase().includes("english")
       ? `${language} · English ${english.toLowerCase()}`
       : language
     : english
@@ -311,7 +311,7 @@ export default function CountrySummary({
             })}
           </div>
 
-          {openTab === "practical" && (
+          {openTab === "practical" && hasPractical && (
             <div className="mt-2.5 space-y-2.5">
               {staticData && (
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
