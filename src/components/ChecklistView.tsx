@@ -70,7 +70,7 @@ const CATEGORY_DOTS: Record<string, string> = {
 };
 
 function categoryDot(category: string) {
-  return CATEGORY_DOTS[category.trim().toLowerCase()] ?? "bg-zinc-400";
+  return CATEGORY_DOTS[category.trim().toLowerCase()] ?? "bg-stone-400";
 }
 
 function milestoneCopy(pct: number): string {
@@ -138,10 +138,10 @@ function CheckToggle({
       onClick={onToggle}
       className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded border transition-colors ${
         disabled
-          ? "cursor-not-allowed border-zinc-200 bg-zinc-100"
+          ? "cursor-not-allowed border-stone-200 bg-stone-100"
           : checked
-            ? "cursor-pointer border-zinc-900 bg-zinc-900"
-            : "cursor-pointer border-zinc-300 bg-white hover:border-zinc-400"
+            ? "cursor-pointer border-stone-900 bg-stone-900"
+            : "cursor-pointer border-stone-300 bg-white hover:border-stone-400"
       }`}
     >
       <svg
@@ -187,16 +187,16 @@ function AdvancedTable({
         return (
           <section key={phase.key} className={locked ? "print:hidden" : ""}>
             <div className="mb-2 flex items-baseline gap-2">
-              <h2 className="text-sm font-semibold text-zinc-900">
+              <h2 className="text-sm font-semibold text-stone-900">
                 {phase.title}
               </h2>
-              <span className="text-xs tabular-nums text-zinc-400">
+              <span className="text-xs tabular-nums text-stone-400">
                 {locked ? "Locked" : `${phaseDone}/${phaseRows.length}`}
               </span>
             </div>
             <div className="relative">
               <div
-                className={`divide-y divide-zinc-100 overflow-hidden rounded-lg border border-zinc-200 bg-white ${
+                className={`divide-y divide-stone-100 overflow-hidden rounded-lg border border-stone-200 bg-white ${
                   locked ? "pointer-events-none select-none blur-sm" : ""
                 }`}
                 aria-hidden={locked}
@@ -221,7 +221,7 @@ function AdvancedTable({
                     <div key={row.pos}>
                       <div
                         className={`flex items-center gap-3 px-3 py-2 transition-colors ${
-                          isChecked ? "bg-zinc-50/60" : "hover:bg-zinc-50"
+                          isChecked ? "bg-stone-50/60" : "hover:bg-stone-50"
                         }`}
                       >
                         <CheckToggle
@@ -233,7 +233,7 @@ function AdvancedTable({
                             .map((d) => d.display)
                             .join(", ")} first`}
                         />
-                        <span className="w-12 shrink-0 font-mono text-[11px] text-zinc-400">
+                        <span className="w-12 shrink-0 font-mono text-[11px] text-stone-400">
                           {row.display}
                         </span>
                         <button
@@ -251,10 +251,10 @@ function AdvancedTable({
                           <span
                             className={`truncate font-medium ${
                               isChecked
-                                ? "text-zinc-400 line-through"
+                                ? "text-stone-400 line-through"
                                 : isBlocked
-                                  ? "text-zinc-500"
-                                  : "text-zinc-900"
+                                  ? "text-stone-500"
+                                  : "text-stone-900"
                             }`}
                           >
                             {row.item.title}
@@ -267,7 +267,7 @@ function AdvancedTable({
                               strokeWidth="1.5"
                               strokeLinecap="round"
                               strokeLinejoin="round"
-                              className={`h-3 w-3 shrink-0 text-zinc-300 transition-transform ${
+                              className={`h-3 w-3 shrink-0 text-stone-300 transition-transform ${
                                 isOpen ? "rotate-180" : ""
                               }`}
                               aria-hidden
@@ -276,7 +276,7 @@ function AdvancedTable({
                             </svg>
                           )}
                         </button>
-                        <span className="hidden shrink-0 items-center gap-1.5 text-[11px] font-medium capitalize text-zinc-500 sm:inline-flex">
+                        <span className="hidden shrink-0 items-center gap-1.5 text-[11px] font-medium capitalize text-stone-500 sm:inline-flex">
                           <span
                             className={`h-1.5 w-1.5 rounded-full ${categoryDot(row.item.category)}`}
                             aria-hidden
@@ -295,16 +295,16 @@ function AdvancedTable({
                           </span>
                         )}
                         {!isBlocked && deps.length > 0 && !isChecked && (
-                          <span className="hidden shrink-0 font-mono text-[10px] text-zinc-300 sm:inline">
+                          <span className="hidden shrink-0 font-mono text-[10px] text-stone-300 sm:inline">
                             ← {deps.map((d) => d.display).join(", ")}
                           </span>
                         )}
                       </div>
                       {isOpen && hasDetails && (
-                        <div className="space-y-2.5 border-t border-zinc-100 bg-zinc-50/60 px-3 py-3 pl-[76px] text-sm leading-relaxed text-zinc-600">
+                        <div className="space-y-2.5 border-t border-stone-100 bg-stone-50/60 px-3 py-3 pl-[76px] text-sm leading-relaxed text-stone-600">
                           {row.item.why && <p>{row.item.why}</p>}
                           {deps.length > 0 && (
-                            <p className="text-xs text-zinc-500">
+                            <p className="text-xs text-stone-500">
                               <span className="font-medium">Depends on:</span>{" "}
                               {deps
                                 .map((d) => `${d.display} ${d.item.title}`)
@@ -315,7 +315,7 @@ function AdvancedTable({
                             <ol className="space-y-1.5">
                               {row.item.steps.map((step, si) => (
                                 <li key={si} className="flex gap-2">
-                                  <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-zinc-400">
+                                  <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-400">
                                     {si + 1}.
                                   </span>
                                   <span className="min-w-0">{step}</span>
@@ -329,7 +329,7 @@ function AdvancedTable({
                                 {row.item.documents.map((doc, di) => (
                                   <span
                                     key={di}
-                                    className="rounded border border-zinc-200 bg-white px-1.5 py-0.5 text-xs text-zinc-600"
+                                    className="rounded border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600"
                                   >
                                     {doc}
                                   </span>
@@ -350,7 +350,7 @@ function AdvancedTable({
                               href={row.item.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 text-xs font-medium text-zinc-500 underline decoration-zinc-300 underline-offset-2 transition-colors hover:text-zinc-900"
+                              className="inline-flex items-center gap-1 text-xs font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
                             >
                               {prettyHost(row.item.url)}
                             </a>
@@ -363,8 +363,8 @@ function AdvancedTable({
               </div>
               {locked && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="pointer-events-auto rounded-lg border border-zinc-200 bg-white p-4 text-center shadow-sm">
-                    <p className="text-sm font-medium text-zinc-700">
+                  <div className="pointer-events-auto rounded-lg border border-stone-200 bg-white p-4 text-center shadow-sm">
+                    <p className="text-sm font-medium text-stone-700">
                       Unlock the full plan to see this phase
                     </p>
                   </div>
@@ -375,7 +375,7 @@ function AdvancedTable({
         );
       })}
       {!hasDeps && (
-        <p className="text-xs text-zinc-400">
+        <p className="text-xs text-stone-400">
           Dependencies appear here for newly generated plans.
         </p>
       )}
@@ -473,12 +473,12 @@ export default function ChecklistView({
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3 print:hidden">
         <button
           onClick={onReset}
-          className="text-sm text-zinc-500 transition-colors hover:text-zinc-900"
+          className="text-sm text-stone-500 transition-colors hover:text-stone-900"
         >
           ← Start over
         </button>
         <div className="flex items-center gap-2">
-          <div className="flex rounded-md border border-zinc-200 bg-white p-0.5">
+          <div className="flex rounded-md border border-stone-200 bg-white p-0.5">
             {(
               [
                 ["simple", "Simple"],
@@ -491,8 +491,8 @@ export default function ChecklistView({
                 aria-pressed={view === mode}
                 className={`rounded px-2.5 py-1 text-sm transition-colors ${
                   view === mode
-                    ? "bg-zinc-100 font-medium text-zinc-900"
-                    : "text-zinc-500 hover:text-zinc-900"
+                    ? "bg-stone-100 font-medium text-stone-900"
+                    : "text-stone-500 hover:text-stone-900"
                 }`}
               >
                 {label}
@@ -501,7 +501,7 @@ export default function ChecklistView({
           </div>
           <button
             onClick={() => window.print()}
-            className="rounded-md border border-zinc-300 bg-white px-3 py-1.5 text-sm text-zinc-600 transition-colors hover:bg-zinc-50 hover:text-zinc-900"
+            className="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-50 hover:text-stone-900"
           >
             Print / PDF
           </button>
@@ -509,14 +509,14 @@ export default function ChecklistView({
       </div>
 
       <header className="mb-8">
-        <p className="text-xs font-medium uppercase tracking-wider text-zinc-400">
+        <p className="text-xs font-medium uppercase tracking-wider text-stone-400">
           {input.fromCountry} → {input.toCountry}
         </p>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
           Your relocation plan
         </h1>
         {plan.destinationSummary && (
-          <p className="mt-3 text-zinc-600">{plan.destinationSummary}</p>
+          <p className="mt-3 text-stone-600">{plan.destinationSummary}</p>
         )}
         {plan.feasibility && (
           <div
@@ -579,7 +579,7 @@ export default function ChecklistView({
 
       {/* Progress rail: sticks to the top while working through the list. */}
       <div className="sticky top-3 z-20 mb-8 print:hidden">
-        <div className="flex items-center gap-3 rounded-lg border border-zinc-200 bg-white px-4 py-3 shadow-sm">
+        <div className="flex items-center gap-3 rounded-lg border border-stone-200 bg-white px-4 py-3 shadow-sm">
           <div className="relative h-10 w-10 shrink-0">
             <svg viewBox="0 0 40 40" className="h-10 w-10 -rotate-90" aria-hidden>
               <circle
@@ -588,7 +588,7 @@ export default function ChecklistView({
                 r="16"
                 fill="none"
                 strokeWidth="4"
-                className="stroke-zinc-100"
+                className="stroke-stone-100"
               />
               <circle
                 cx="20"
@@ -600,30 +600,30 @@ export default function ChecklistView({
                 strokeDasharray={2 * Math.PI * 16}
                 strokeDashoffset={2 * Math.PI * 16 * (1 - pct / 100)}
                 className={`transition-[stroke-dashoffset] duration-500 ease-out ${
-                  allDone ? "stroke-emerald-500" : "stroke-zinc-900"
+                  allDone ? "stroke-emerald-500" : "stroke-stone-900"
                 }`}
               />
             </svg>
-            <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold tabular-nums text-zinc-700">
+            <span className="absolute inset-0 flex items-center justify-center text-[10px] font-semibold tabular-nums text-stone-700">
               {pct}%
             </span>
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-baseline justify-between gap-2">
-              <p className="truncate text-sm font-semibold text-zinc-800">
+              <p className="truncate text-sm font-semibold text-stone-800">
                 {doneItems}/{totalItems} steps done
               </p>
-              <p className="hidden text-xs text-zinc-400 sm:block">
+              <p className="hidden text-xs text-stone-400 sm:block">
                 {input.fromCountry} → {input.toCountry}
               </p>
             </div>
-            <p className="mt-0.5 truncate text-xs text-zinc-500">
+            <p className="mt-0.5 truncate text-xs text-stone-500">
               {milestoneCopy(pct)}
             </p>
-            <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-zinc-100">
+            <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-stone-100">
               <div
                 className={`h-full rounded-full transition-[width] duration-500 ease-out ${
-                  allDone ? "bg-emerald-500" : "bg-zinc-900"
+                  allDone ? "bg-emerald-500" : "bg-stone-900"
                 }`}
                 style={{ width: `${pct}%` }}
               />
@@ -693,7 +693,7 @@ export default function ChecklistView({
         className={`relative space-y-10 pl-10 sm:pl-12 ${view === "advanced" ? "hidden" : ""}`}
       >
         <div
-          className="absolute bottom-4 left-[15px] top-1 w-px bg-zinc-200 sm:left-[19px] print:hidden"
+          className="absolute bottom-4 left-[15px] top-1 w-px bg-stone-200 sm:left-[19px] print:hidden"
           aria-hidden
         />
         {plan.phases.map((phase, pi) => {
@@ -702,14 +702,14 @@ export default function ChecklistView({
           const phaseComplete = phase.items.length > 0 && phaseDone >= phase.items.length;
           return (
             <section key={phase.key} className={locked ? "print:hidden" : ""}>
-              <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold tracking-tight text-zinc-900">
+              <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold tracking-tight text-stone-900">
                 <span
                   className={`absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium ring-4 ring-[#fafafa] transition-colors duration-300 sm:h-10 sm:w-10 ${
                     phaseComplete
                       ? "bg-emerald-600 text-white"
                       : locked
-                        ? "border border-zinc-200 bg-white text-zinc-300"
-                        : "border border-zinc-300 bg-white text-zinc-600"
+                        ? "border border-stone-200 bg-white text-stone-300"
+                        : "border border-stone-300 bg-white text-stone-600"
                   }`}
                 >
                   {phaseComplete ? (
@@ -731,13 +731,13 @@ export default function ChecklistView({
                 </span>
                 {phase.title}
                 {locked ? (
-                  <span className="ml-1 text-xs font-medium text-zinc-400">
+                  <span className="ml-1 text-xs font-medium text-stone-400">
                     Locked
                   </span>
                 ) : (
                   <span
                     className={`ml-1 text-xs font-medium tabular-nums print:hidden ${
-                      phaseComplete ? "text-emerald-600" : "text-zinc-400"
+                      phaseComplete ? "text-emerald-600" : "text-stone-400"
                     }`}
                   >
                     {phaseDone}/{phase.items.length}
@@ -761,14 +761,14 @@ export default function ChecklistView({
                         key={id}
                         className={`relative rounded-lg border bg-white transition-colors duration-150 ${
                           isChecked
-                            ? "border-zinc-200 opacity-60"
+                            ? "border-stone-200 opacity-60"
                             : isNext
-                              ? "border-zinc-400"
-                              : "border-zinc-200 hover:border-zinc-300"
+                              ? "border-stone-400"
+                              : "border-stone-200 hover:border-stone-300"
                         } ${isChecked ? "p-3" : "p-4"}`}
                       >
                         {isNext && (
-                          <span className="absolute right-3 top-3 rounded bg-zinc-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-zinc-500 print:hidden">
+                          <span className="absolute right-3 top-3 rounded bg-stone-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-stone-500 print:hidden">
                             Up next
                           </span>
                         )}
@@ -786,14 +786,14 @@ export default function ChecklistView({
                               <span
                                 className={`block text-sm font-medium leading-snug transition-colors duration-150 ${
                                   isChecked
-                                    ? "text-zinc-400 line-through"
-                                    : "text-zinc-900"
+                                    ? "text-stone-400 line-through"
+                                    : "text-stone-900"
                                 } ${isNext ? "pr-16" : ""}`}
                               >
                                 {item.title}
                               </span>
-                              <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-zinc-400">
-                                <span className="inline-flex items-center gap-1.5 text-[11px] font-medium capitalize text-zinc-500">
+                              <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-stone-400">
+                                <span className="inline-flex items-center gap-1.5 text-[11px] font-medium capitalize text-stone-500">
                                   <span
                                     className={`h-1.5 w-1.5 rounded-full ${categoryDot(item.category)}`}
                                     aria-hidden
@@ -808,7 +808,7 @@ export default function ChecklistView({
                                 )}
                               </span>
                               {!isChecked && item.why && (
-                                <span className="mt-1.5 block text-sm leading-relaxed text-zinc-600">
+                                <span className="mt-1.5 block text-sm leading-relaxed text-stone-600">
                                   {item.why}
                                 </span>
                               )}
@@ -818,7 +818,7 @@ export default function ChecklistView({
                                 href={item.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="mt-2 inline-flex max-w-full items-center gap-1 text-xs font-medium text-zinc-500 underline decoration-zinc-300 underline-offset-2 transition-colors hover:text-zinc-900 hover:decoration-zinc-500"
+                                className="mt-2 inline-flex max-w-full items-center gap-1 text-xs font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900 hover:decoration-stone-500"
                               >
                                 <svg
                                   viewBox="0 0 20 20"
@@ -840,7 +840,7 @@ export default function ChecklistView({
                                 item.commonMistake ||
                                 item.tip) && (
                                 <details className="group/tip mt-2">
-                                  <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-zinc-500 transition-colors hover:text-zinc-900 [&::-webkit-details-marker]:hidden">
+                                  <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-stone-500 transition-colors hover:text-stone-900 [&::-webkit-details-marker]:hidden">
                                     {item.steps?.length ? "How to do it" : "Tip"}
                                     <svg
                                       viewBox="0 0 16 16"
@@ -849,18 +849,18 @@ export default function ChecklistView({
                                       strokeWidth="1.5"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
-                                      className="h-3 w-3 text-zinc-400 transition-transform group-open/tip:rotate-180"
+                                      className="h-3 w-3 text-stone-400 transition-transform group-open/tip:rotate-180"
                                       aria-hidden
                                     >
                                       <path d="M4 6l4 4 4-4" />
                                     </svg>
                                   </summary>
-                                  <div className="mt-1.5 space-y-2.5 rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2.5 text-sm leading-relaxed text-zinc-600">
+                                  <div className="mt-1.5 space-y-2.5 rounded-md border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm leading-relaxed text-stone-600">
                                     {item.steps && item.steps.length > 0 && (
                                       <ol className="space-y-1.5">
                                         {item.steps.map((step, si) => (
                                           <li key={si} className="flex gap-2">
-                                            <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-zinc-400">
+                                            <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-400">
                                               {si + 1}.
                                             </span>
                                             <span className="min-w-0">{step}</span>
@@ -870,14 +870,14 @@ export default function ChecklistView({
                                     )}
                                     {item.documents && item.documents.length > 0 && (
                                       <div>
-                                        <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-400">
+                                        <p className="text-[10px] font-semibold uppercase tracking-wider text-stone-400">
                                           Bring / prepare
                                         </p>
                                         <div className="mt-1 flex flex-wrap gap-1">
                                           {item.documents.map((doc, di) => (
                                             <span
                                               key={di}
-                                              className="rounded border border-zinc-200 bg-white px-1.5 py-0.5 text-xs text-zinc-600"
+                                              className="rounded border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600"
                                             >
                                               {doc}
                                             </span>
@@ -886,7 +886,7 @@ export default function ChecklistView({
                                       </div>
                                     )}
                                     {item.commonMistake && (
-                                      <p className="text-xs leading-relaxed text-zinc-600">
+                                      <p className="text-xs leading-relaxed text-stone-600">
                                         <span className="font-medium text-rose-700">Common mistake:</span>{" "}
                                         {item.commonMistake}
                                       </p>
@@ -906,8 +906,8 @@ export default function ChecklistView({
 
                 {locked && (
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="pointer-events-auto rounded-lg border border-zinc-200 bg-white p-4 text-center shadow-sm">
-                      <p className="text-sm font-medium text-zinc-700">
+                    <div className="pointer-events-auto rounded-lg border border-stone-200 bg-white p-4 text-center shadow-sm">
+                      <p className="text-sm font-medium text-stone-700">
                         Unlock the full plan to see this phase
                       </p>
                     </div>
@@ -920,18 +920,18 @@ export default function ChecklistView({
       </div>
 
       {!unlocked && (
-        <div className="reveal mt-10 rounded-xl border border-zinc-200 bg-white p-8 text-center print:hidden">
-          <h3 className="text-xl font-semibold tracking-tight text-zinc-900">
+        <div className="reveal mt-10 rounded-xl border border-stone-200 bg-white p-8 text-center print:hidden">
+          <h3 className="text-xl font-semibold tracking-tight text-stone-900">
             Unlock your full relocation plan
           </h3>
-          <p className="mx-auto mt-2 max-w-md text-sm text-zinc-600">
+          <p className="mx-auto mt-2 max-w-md text-sm text-stone-600">
             Get every phase — first week, first month, and first 90 days — with
             all personalized steps, tips, and cost estimates.
           </p>
           <button
             onClick={onUnlock}
             disabled={unlocking}
-            className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 disabled:opacity-50"
+            className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-stone-700 disabled:opacity-50"
           >
             {unlocking ? (
               <>

@@ -47,7 +47,7 @@ function impactDot(level: string): string {
     case "extreme":
       return "bg-red-500";
     default:
-      return "bg-zinc-300";
+      return "bg-stone-300";
   }
 }
 
@@ -69,12 +69,12 @@ function Tile({
   accent?: string;
 }) {
   return (
-    <div className="rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2.5">
-      <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400">
+    <div className="rounded-md border border-stone-200 bg-stone-50 px-3 py-2.5">
+      <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
         {label}
       </p>
       <p
-        className={`mt-0.5 truncate text-sm font-medium ${accent ?? "text-zinc-800"}`}
+        className={`tnum mt-0.5 truncate text-sm font-medium ${accent ?? "text-stone-800"}`}
         title={value}
       >
         {value}
@@ -192,7 +192,7 @@ export default function CountrySummary({
 
   return (
     <section
-      className="reveal mt-5 rounded-xl border border-zinc-200 bg-white p-5"
+      className="reveal mt-5 rounded-xl border border-stone-200 bg-white p-5"
       aria-label={`Country snapshot for ${name}`}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
@@ -201,15 +201,15 @@ export default function CountrySummary({
             {flag}
           </span>
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
               Country snapshot
             </p>
-            <h3 className="text-base font-semibold text-zinc-900">{name}</h3>
+            <h3 className="text-base font-semibold text-stone-900">{name}</h3>
           </div>
         </div>
         {advisory && (
           <span
-            className={`inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-2.5 py-1 text-xs font-medium ${style.pill}`}
+            className={`inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-2.5 py-1 text-xs font-medium ${style.pill}`}
           >
             <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
             Level {advisory.level} · {advisory.label}
@@ -218,7 +218,7 @@ export default function CountrySummary({
       </div>
 
       {why && (
-        <p className="mt-2.5 text-sm leading-relaxed text-zinc-500">{why}</p>
+        <p className="mt-2.5 text-sm leading-relaxed text-stone-500">{why}</p>
       )}
 
       <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -286,7 +286,7 @@ export default function CountrySummary({
 
       {(impact?.detail || hasHealth || warnings.length > 0 || livingRows > 0) && (
         <details className="group/details mt-3">
-          <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 py-1 text-xs font-medium text-zinc-500 transition-colors hover:text-zinc-900 [&::-webkit-details-marker]:hidden">
+          <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 py-1 text-xs font-medium text-stone-500 transition-colors hover:text-stone-900 [&::-webkit-details-marker]:hidden">
             <svg
               viewBox="0 0 16 16"
               fill="none"
@@ -294,14 +294,14 @@ export default function CountrySummary({
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-3 w-3 text-zinc-400 transition-transform duration-150 group-open/details:rotate-90"
+              className="h-3 w-3 text-stone-400 transition-transform duration-150 group-open/details:rotate-90"
               aria-hidden
             >
               <path d="M6 4l4 4-4 4" />
             </svg>
             Country details
             {detailCount > 0 && (
-              <span className="rounded border border-zinc-200 bg-zinc-50 px-1.5 py-0.5 text-[10px] font-medium text-zinc-500">
+              <span className="rounded border border-stone-200 bg-stone-50 px-1.5 py-0.5 text-[10px] font-medium text-stone-500">
                 {detailCount}
               </span>
             )}
@@ -310,7 +310,7 @@ export default function CountrySummary({
           <div className="mt-2 space-y-2.5">
             {livingRows > 0 && insights && (
               <div>
-                <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400">
+                <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
                   Cost &amp; living
                 </p>
                 <div className="mt-1.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -322,13 +322,13 @@ export default function CountrySummary({
                   )}
                   {priceLevel && (
                     <div
-                      className="rounded-md border border-zinc-200 bg-zinc-50 px-3 py-2.5"
+                      className="rounded-md border border-stone-200 bg-stone-50 px-3 py-2.5"
                       title={priceLevel.hint}
                     >
-                      <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400">
+                      <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
                         Price level
                       </p>
-                      <p className="mt-0.5 truncate text-sm font-medium text-zinc-800">
+                      <p className="mt-0.5 truncate text-sm font-medium text-stone-800">
                         {priceLevel.value}
                       </p>
                     </div>
@@ -342,16 +342,16 @@ export default function CountrySummary({
                 </div>
                 {nextHolidays.length > 0 && (
                   <div className="mt-2">
-                    <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400">
+                    <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
                       Upcoming public holidays · offices closed
                     </p>
                     <div className="mt-1.5 flex flex-wrap gap-1.5">
                       {nextHolidays.map((h) => (
                         <span
                           key={h.date}
-                          className="inline-flex items-center gap-1.5 rounded border border-zinc-200 bg-white px-2 py-1 text-xs text-zinc-600"
+                          className="inline-flex items-center gap-1.5 rounded border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
                         >
-                          <span className="font-medium text-zinc-800">
+                          <span className="font-medium text-stone-800">
                             {fmtDate(h.date)}
                           </span>
                           {h.name}
@@ -363,16 +363,16 @@ export default function CountrySummary({
               </div>
             )}
             {impact?.detail && (
-              <div className="flex items-start gap-2.5 rounded-md border border-zinc-200 bg-zinc-50 p-3">
+              <div className="flex items-start gap-2.5 rounded-md border border-stone-200 bg-stone-50 p-3">
                 <span
                   className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${impactDot(impact.level)}`}
                   aria-hidden
                 />
-                <p className="text-sm text-zinc-600">
-                  <span className="font-medium text-zinc-800">
+                <p className="text-sm text-stone-600">
+                  <span className="font-medium text-stone-800">
                     For {PROFILE_LABEL[profile]}
                   </span>{" "}
-                  <span className="text-zinc-400">({impact.level} risk)</span>{" "}
+                  <span className="text-stone-400">({impact.level} risk)</span>{" "}
                   — {impact.detail}
                 </p>
               </div>
@@ -380,7 +380,7 @@ export default function CountrySummary({
 
             {hasHealth && vac && (
               <div>
-                <p className="text-[10px] font-medium uppercase tracking-wider text-zinc-400">
+                <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
                   Health · CDC
                 </p>
                 {(vac.required.length > 0 || vac.recommended.length > 0) && (
@@ -396,7 +396,7 @@ export default function CountrySummary({
                     {vac.recommended.map((v) => (
                       <span
                         key={v.name}
-                        className="inline-flex items-center rounded border border-zinc-200 bg-white px-2 py-1 text-xs text-zinc-600"
+                        className="inline-flex items-center rounded border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
                       >
                         {v.name}
                       </span>
@@ -404,8 +404,8 @@ export default function CountrySummary({
                   </div>
                 )}
                 {vac.malaria && (
-                  <p className="mt-2 text-sm text-zinc-600">
-                    <span className="font-medium text-zinc-800">
+                  <p className="mt-2 text-sm text-stone-600">
+                    <span className="font-medium text-stone-800">
                       Malaria:
                     </span>{" "}
                     {vac.malaria.riskLevel} risk
@@ -441,7 +441,7 @@ export default function CountrySummary({
         </details>
       )}
 
-      <div className="mt-4 flex items-center justify-between border-t border-zinc-100 pt-3 text-xs text-zinc-400">
+      <div className="mt-4 flex items-center justify-between border-t border-stone-100 pt-3 text-xs text-stone-400">
         <span>
           {advisory
             ? "Sources: U.S. State Dept"
@@ -456,7 +456,7 @@ export default function CountrySummary({
             href={advisory.stateDeptUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-zinc-500 underline decoration-zinc-300 underline-offset-2 transition-colors hover:text-zinc-900"
+            className="font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
           >
             Full advisory
           </a>
