@@ -327,7 +327,8 @@ function buildUserContent(input: ReloInput): string {
 
   const insights = insightsForCountry(input.toCountry);
   const staticData = staticDataForCountry(input.toCountry);
-  if (insights || staticData) {
+  const openData = openDataForCountry(input.toCountry);
+  if (insights || staticData || openData) {
     const lines = [
       `DESTINATION DATA (free official/open sources — treat as ground truth):`,
     ];
@@ -364,7 +365,6 @@ function buildUserContent(input: ReloInput): string {
         `- English proficiency: ${staticData.english}${staticData.english === "native" ? "" : " (EF EPI)"} — calibrate language-prep advice accordingly.`,
       );
     }
-    const openData = openDataForCountry(input.toCountry);
     if (openData) {
       lines.push(
         `- Driving: ${openData.drivingSide}-hand traffic${openData.callingCode ? `; calling code ${openData.callingCode}` : ""}${openData.timezone ? `; capital timezone ${openData.timezone.name} (${openData.timezone.offset})` : ""} — relevant for licence exchange and staying reachable.`,
