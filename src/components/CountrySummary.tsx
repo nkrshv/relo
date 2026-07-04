@@ -9,6 +9,7 @@ import {
 import { conversionBetween, formatRate, EXCHANGE_RATES } from "@/lib/exchangeRates";
 import { currencyForCountry } from "@/lib/countryCurrency";
 import { originForCountry } from "@/lib/countryOrigin";
+import { useLiveRates } from "@/lib/useLiveRates";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
 import type { Profile, VisaSummary } from "@/lib/types";
@@ -152,7 +153,10 @@ export default function CountrySummary({
 }: Props) {
   const [openTab, setOpenTab] = useState<TabKey | null>(null);
   const advisory: CountryAdvisory | null = advisoryForCountry(country);
-  const fx = fromCountry ? conversionBetween(fromCountry, country) : null;
+  const liveRates = useLiveRates();
+  const fx = fromCountry
+    ? conversionBetween(fromCountry, country, liveRates)
+    : null;
   const currencyCode = currencyForCountry(country);
   const insights = insightsForCountry(country);
   const staticData = staticDataForCountry(country);
@@ -185,7 +189,7 @@ export default function CountrySummary({
     }
     const usdToOrigin =
       originCurrency && originCurrency !== "USD"
-        ? EXCHANGE_RATES.rates[originCurrency]
+        ? (liveRates ?? EXCHANGE_RATES).rates[originCurrency]
         : null;
     if (usdToOrigin) {
       const home = (dest * usdToOrigin).toLocaleString("en-US", {
@@ -241,7 +245,14 @@ export default function CountrySummary({
       ].slice(0, 3)
     : [];
 
-  const air = openData?.airQuality ?? null;
+  // Uncurated destinations have no rich open-data record, but the origin-lite
+  // layer covers every country — fall back to it for air quality and timezone.
+  const destLite = originForCountry(country);
+  const air =
+    openData?.airQuality ??
+    (destLite?.aqi != null
+      ? { aqi: destLite.aqi, dominant: null, station: destLite.capital }
+      : null);
   const airBand = air ? aqiLabel(air.aqi) : null;
   const hasHealth = Boolean(
     air ||
@@ -395,8 +406,19 @@ export default function CountrySummary({
       sub: "of labour cost (OECD)",
       hint: "OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost",
     });
-  if (openData?.timezone) {
-    const destOffset = parseFloat(openData.timezone.offset.replace("UTC", ""));
+  const destTimezone =
+    openData?.timezone ??
+    (destLite?.offsetHours != null
+      ? {
+          name: destLite.capital,
+          offset: `UTC${destLite.offsetHours >= 0 ? "+" : "−"}${Math.abs(destLite.offsetHours)}`,
+        }
+      : null);
+  if (destTimezone) {
+    const destOffset =
+      openData?.timezone != null
+        ? parseFloat(openData.timezone.offset.replace("UTC", ""))
+        : destLite!.offsetHours!;
     const tzDiff =
       origin?.offsetHours != null && !sameCountry && Number.isFinite(destOffset)
         ? destOffset - origin.offsetHours
@@ -412,12 +434,12 @@ export default function CountrySummary({
           ? `${tzDiff > 0 ? "+" : "−"}${fmtH(Math.abs(tzDiff))} vs home`
           : tzDiff === 0
             ? "Same time as home"
-            : openData.timezone.offset,
+            : destTimezone.offset,
       sub:
         tzDiff !== null
-          ? `${openData.timezone.offset} · ${openData.timezone.name.split("/").pop()?.replace(/_/g, " ")}`
-          : openData.timezone.name.split("/").pop()?.replace(/_/g, " "),
-      hint: openData.timezone.name,
+          ? `${destTimezone.offset} · ${destTimezone.name.split("/").pop()?.replace(/_/g, " ")}`
+          : destTimezone.name.split("/").pop()?.replace(/_/g, " "),
+      hint: destTimezone.name,
     });
   }
 
