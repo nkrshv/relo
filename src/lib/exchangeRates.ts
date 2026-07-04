@@ -11,27 +11,29 @@ export interface Conversion {
 }
 
 // Converts one unit of the origin country's currency into the destination
-// country's currency using the committed USD-based snapshot. Returns null if
-// either currency is unknown/unsupported, or if the two countries share a
-// currency (nothing useful to show).
+// country's currency using USD-based rates — a live table if provided,
+// otherwise the committed snapshot. Returns null if either currency is
+// unknown/unsupported, or if the two countries share a currency (nothing
+// useful to show).
 export function conversionBetween(
   fromCountry: string,
   toCountry: string,
+  source?: { rates: Record<string, number>; updatedAt: string } | null,
 ): Conversion | null {
   const fromCode = currencyForCountry(fromCountry);
   const toCode = currencyForCountry(toCountry);
   if (!fromCode || !toCode || fromCode === toCode) return null;
 
-  const rates = EXCHANGE_RATES.rates;
-  const fromRate = rates[fromCode];
-  const toRate = rates[toCode];
+  const table = source ?? EXCHANGE_RATES;
+  const fromRate = table.rates[fromCode];
+  const toRate = table.rates[toCode];
   if (!fromRate || !toRate) return null;
 
   return {
     fromCode,
     toCode,
     rate: toRate / fromRate,
-    updatedAt: EXCHANGE_RATES.updatedAt,
+    updatedAt: table.updatedAt,
   };
 }
 
