@@ -4,10 +4,73 @@ import { useCallback, useEffect, useState } from "react";
 import ReloForm from "@/components/ReloForm";
 import ChecklistView from "@/components/ChecklistView";
 import PlanSkeleton from "@/components/PlanSkeleton";
+import { ALL_COUNTRIES, isValidCountry } from "@/lib/allCountries";
+import { normalizeName } from "@/lib/countryFacts";
 import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 
 interface Props {
   initialTo?: string;
+  /** Render the page heading, morphing into the route once both countries are picked. */
+  showHeading?: boolean;
+}
+
+const COUNTRY_BY_NORM: Record<string, { name: string; emoji: string }> =
+  Object.fromEntries(
+    ALL_COUNTRIES.map((c) => [
+      normalizeName(c.name),
+      { name: c.name, emoji: c.emoji },
+    ]),
+  );
+
+// The heading becomes the route itself once we know it ("Philippines →
+// Netherlands"), so snapshot cells below can say just "vs home".
+function RouteHeading({
+  from,
+  to,
+  building,
+}: {
+  from: string;
+  to: string;
+  building: boolean;
+}) {
+  const fromC = isValidCountry(from)
+    ? COUNTRY_BY_NORM[normalizeName(from)]
+    : null;
+  const toC = isValidCountry(to) ? COUNTRY_BY_NORM[normalizeName(to)] : null;
+  const hasRoute = Boolean(fromC && toC);
+  return (
+    <header className="mx-auto max-w-3xl pb-8 text-center">
+      <h1
+        key={hasRoute ? `${fromC!.name}-${toC!.name}` : "default"}
+        className="reveal text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl"
+      >
+        {hasRoute ? (
+          <>
+            <span className="mr-2" aria-hidden>
+              {fromC!.emoji}
+            </span>
+            {fromC!.name}
+            <span className="mx-3 font-normal text-stone-300" aria-hidden>
+              →
+            </span>
+            <span className="mr-2" aria-hidden>
+              {toC!.emoji}
+            </span>
+            {toC!.name}
+          </>
+        ) : (
+          "Build your relocation plan"
+        )}
+      </h1>
+      <p className="mx-auto mt-4 max-w-xl text-lg text-stone-500">
+        {building
+          ? "Building your plan… grounding it in official data for your route."
+          : hasRoute
+            ? "Building your next chapter. Every detail below tunes the checklist to this route."
+            : "The more you tell us, the more specific your plan gets. Visa status, kids, pets, budget: every detail changes the checklist."}
+      </p>
+    </header>
+  );
 }
 
 interface StoredResult {
@@ -19,8 +82,9 @@ interface StoredResult {
 const RESULT_KEY = "relochecklist:result";
 const UNLOCK_KEY = "relochecklist:unlocked";
 
-export default function ReloApp({ initialTo }: Props) {
+export default function ReloApp({ initialTo, showHeading }: Props) {
   const [result, setResult] = useState<StoredResult | null>(null);
+  const [route, setRoute] = useState({ from: "", to: initialTo ?? "" });
   const [loading, setLoading] = useState(false);
   const [unlocking, setUnlocking] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
@@ -150,6 +214,9 @@ export default function ReloApp({ initialTo }: Props) {
   if (loading) {
     return (
       <div className="px-4 py-6">
+        {showHeading && (
+          <RouteHeading from={route.from} to={route.to} building />
+        )}
         <PlanSkeleton />
       </div>
     );
@@ -157,12 +224,20 @@ export default function ReloApp({ initialTo }: Props) {
 
   return (
     <div className="px-4">
+      {showHeading && (
+        <RouteHeading from={route.from} to={route.to} building={false} />
+      )}
       {error && (
         <p className="mx-auto mb-4 max-w-2xl rounded-lg bg-red-50 px-4 py-2 text-center text-sm text-red-700">
           {error}
         </p>
       )}
-      <ReloForm loading={loading} initialTo={initialTo} onSubmit={generate} />
+      <ReloForm
+        loading={loading}
+        initialTo={initialTo}
+        onSubmit={generate}
+        onRouteChange={(from, to) => setRoute({ from, to })}
+      />
     </div>
   );
 }
