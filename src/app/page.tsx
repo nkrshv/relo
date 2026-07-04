@@ -114,11 +114,13 @@ export default function Home() {
           route, visa, family and budget. Real office names, real documents,
           real deadlines. Not another generic listicle.
         </p>
-        <div className="rise rise-3 mt-9 flex flex-col items-center gap-3">
+        <p className="rise rise-2 mt-4 text-base font-medium text-stone-700">
+          Moving to <Typewriter words={TYPE_CITIES} />
+        </p>
+        <div className="rise rise-3 mt-8 flex flex-col items-center gap-3">
           <CtaButton label="Get my relocation plan" />
           <span className="text-sm text-stone-400">
-            Moving to <Typewriter words={TYPE_CITIES} />? Free to generate ·
-            takes about a minute
+            Free to generate · takes about a minute
           </span>
         </div>
       </section>
