@@ -8,6 +8,12 @@ import type {
   VisaSummary,
 } from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
+import { ALL_COUNTRIES } from "@/lib/allCountries";
+import { normalizeName } from "@/lib/countryFacts";
+
+const FLAG_BY_NORM: Record<string, string> = Object.fromEntries(
+  ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
+);
 
 interface Props {
   input: ReloInput;
@@ -510,10 +516,24 @@ export default function ChecklistView({
 
       <header className="mb-8">
         <p className="text-xs font-medium uppercase tracking-wider text-stone-400">
-          {input.fromCountry} → {input.toCountry}
+          Your relocation plan
         </p>
         <h1 className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
-          Your relocation plan
+          {FLAG_BY_NORM[normalizeName(input.fromCountry)] && (
+            <span className="mr-2" aria-hidden>
+              {FLAG_BY_NORM[normalizeName(input.fromCountry)]}
+            </span>
+          )}
+          {input.fromCountry}
+          <span className="mx-2.5 font-normal text-stone-300" aria-hidden>
+            →
+          </span>
+          {FLAG_BY_NORM[normalizeName(input.toCountry)] && (
+            <span className="mr-2" aria-hidden>
+              {FLAG_BY_NORM[normalizeName(input.toCountry)]}
+            </span>
+          )}
+          {input.toCountry}
         </h1>
         {plan.destinationSummary && (
           <p className="mt-3 text-stone-600">{plan.destinationSummary}</p>
