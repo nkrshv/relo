@@ -150,7 +150,7 @@ export default function Home() {
           {STEPS.map((s, i) => (
             <div
               key={s.title}
-              className="card-lift rounded-lg border border-stone-200 bg-white p-6 sm:first:col-span-2 sm:last:col-start-2 sm:last:col-span-2"
+              className="card-lift rounded-lg border border-stone-200 bg-white p-6 sm:nth-2:col-span-2 sm:last:col-span-2"
             >
               <p className="mb-3 font-mono text-xs font-medium text-stone-400">
                 {String(i + 1).padStart(2, "0")}

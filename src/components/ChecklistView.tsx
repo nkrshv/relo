@@ -704,7 +704,7 @@ export default function ChecklistView({
             <section key={phase.key} className={locked ? "print:hidden" : ""}>
               <h2 className="mb-3 flex items-center gap-2 text-lg font-semibold tracking-tight text-stone-900">
                 <span
-                  className={`absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium ring-4 ring-[#fafafa] transition-colors duration-300 sm:h-10 sm:w-10 ${
+                  className={`absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium ring-4 ring-[#fbfbfa] transition-colors duration-300 sm:h-10 sm:w-10 ${
                     phaseComplete
                       ? "bg-emerald-600 text-white"
                       : locked
