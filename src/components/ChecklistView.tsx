@@ -695,7 +695,9 @@ export default function ChecklistView({
         <div
           className="absolute bottom-4 left-[15px] top-1 w-px bg-stone-200 sm:left-[19px] print:hidden"
           aria-hidden
-        />
+        >
+          <div className="timeline-ink absolute inset-0 bg-stone-900" />
+        </div>
         {plan.phases.map((phase, pi) => {
           const locked = !unlocked && pi > 0;
           const phaseDone = phase.items.filter((_, ii) => checked[itemId(pi, ii)]).length;
