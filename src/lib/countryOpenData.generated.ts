@@ -58,7 +58,13 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       "dominant": "pm25",
       "station": "Entrecampos, Lisboa, Portugal"
     },
-    "offices": null
+    "offices": [
+      "Câmara Municipal de Almada",
+      "Junta de Freguesia do Lumiar",
+      "Junta de Freguesia de Carnaxide",
+      "União das Freguesias de Barreiro e Lavradio",
+      "Junta de Freguesia da Cova da Piedade"
+    ]
   },
   "Spain": {
     "iso2": "ES",
@@ -89,7 +95,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
     },
     "airQuality": {
       "aqi": 74,
-      "dominant": "o3",
+      "dominant": "pm25",
       "station": "Madrid"
     },
     "offices": [
@@ -128,8 +134,8 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 29,
-      "dominant": "o3",
+      "aqi": 42,
+      "dominant": "pm25",
       "station": "Berlin, Germany"
     },
     "offices": [
@@ -168,7 +174,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 28,
+      "aqi": 29,
       "dominant": "o3",
       "station": "Amsterdam"
     },
@@ -208,7 +214,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 25,
+      "aqi": 52,
       "dominant": "pm25",
       "station": "Paris"
     },
@@ -292,12 +298,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       "dominant": "pm25",
       "station": "Pearse Street, Dublin 2, Ireland"
     },
-    "offices": [
-      "Dublin City Hall",
-      "The Mansion House",
-      "Ballymun Civic Centre",
-      "Dublin City Council"
-    ]
+    "offices": null
   },
   "United Kingdom": {
     "iso2": "GB",
@@ -324,7 +325,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 23,
+      "aqi": 25,
       "dominant": "pm25",
       "station": "London"
     },
@@ -398,7 +399,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 25,
+      "aqi": 30,
       "dominant": "pm25",
       "station": "Ottawa"
     },
@@ -420,7 +421,10 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       "offset": "UTC+10"
     },
     "priceLevelEU": null,
-    "taxWedge": null,
+    "taxWedge": {
+      "value": 27.9,
+      "year": "2025"
+    },
     "universities": {
       "count": 59,
       "sample": [
@@ -462,7 +466,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 106,
+      "aqi": 105,
       "dominant": "pm10",
       "station": "Abu Dhabi City/Kalifah High School, UAE"
     },
@@ -540,7 +544,13 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       "dominant": "pm25",
       "station": "Marszałkowska, Warszawa, Mazowieckie, Poland"
     },
-    "offices": null
+    "offices": [
+      "Urząd Dzielnicy Ochota",
+      "Urząd Dzielnicy Bemowo",
+      "Urząd Dzielnicy Praga-Południe",
+      "Urząd Dzielnicy Ursus",
+      "Urząd Dzielnicy Praga-Północ"
+    ]
   },
   "Mexico": {
     "iso2": "MX",
@@ -567,7 +577,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 97,
+      "aqi": 109,
       "dominant": "pm25",
       "station": "Merced, México, Mexico"
     },
@@ -601,7 +611,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 53,
+      "aqi": 42,
       "dominant": "pm25",
       "station": "Bangkok"
     },
@@ -638,11 +648,17 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 30,
+      "aqi": 21,
       "dominant": "pm25",
       "station": "Meguro (目黒)"
     },
-    "offices": null
+    "offices": [
+      "Kita City Office",
+      "世田谷区 桜丘区民センター",
+      "都税事務所",
+      "杉並区高井戸駅前事務所宮前分室",
+      "新宿区立元気館"
+    ]
   },
   "Singapore": {
     "iso2": "SG",
@@ -666,7 +682,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 61,
+      "aqi": 55,
       "dominant": "pm25",
       "station": "South, Singapore"
     },

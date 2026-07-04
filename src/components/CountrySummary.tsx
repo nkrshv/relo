@@ -6,8 +6,9 @@ import {
   impactForProfile,
   type CountryAdvisory,
 } from "@/lib/countryAdvisory";
-import { conversionBetween, formatRate } from "@/lib/exchangeRates";
+import { conversionBetween, formatRate, EXCHANGE_RATES } from "@/lib/exchangeRates";
 import { currencyForCountry } from "@/lib/countryCurrency";
+import { originForCountry } from "@/lib/countryOrigin";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
 import type { Profile, VisaSummary } from "@/lib/types";
@@ -165,21 +166,40 @@ export default function CountrySummary({
   const today = new Date().toISOString().slice(0, 10);
   const nextHolidays =
     insights?.holidays?.sample.filter((h) => h.date >= today).slice(0, 3) ?? [];
-  // Big Mac price alone is noise; compare against the origin when we can.
+  // Big Mac price alone is noise; compare against the origin when we can,
+  // or at least quote it in the origin currency so it reads as a home price.
   const originInsights = fromCountry ? insightsForCountry(fromCountry) : null;
+  const originCurrency = fromCountry ? currencyForCountry(fromCountry) : null;
   const priceLevel = (() => {
     const dest = insights?.bigMacUsd?.value;
     if (!dest) return null;
     const origin = originInsights?.bigMacUsd?.value;
     if (origin && fromCountry) {
       const pct = Math.round(((dest - origin) / origin) * 100);
-      if (pct === 0) return { value: "Similar prices", hint: `Big Mac index vs ${fromCountry}` };
+      if (pct === 0) return { value: "Similar prices", sub: undefined, hint: `Big Mac index vs ${fromCountry}` };
       return {
         value: `${pct > 0 ? "+" : ""}${pct}% vs home`,
+        sub: undefined,
         hint: `Big Mac index: $${dest} here vs $${origin} in ${fromCountry}`,
       };
     }
-    return { value: `Big Mac ~$${dest}`, hint: "Big Mac index (The Economist)" };
+    const usdToOrigin =
+      originCurrency && originCurrency !== "USD"
+        ? EXCHANGE_RATES.rates[originCurrency]
+        : null;
+    if (usdToOrigin) {
+      const home = (dest * usdToOrigin).toLocaleString("en-US", {
+        style: "currency",
+        currency: originCurrency!,
+        maximumFractionDigits: 0,
+      });
+      return {
+        value: `Big Mac ~${home}`,
+        sub: `~$${dest} · The Economist`,
+        hint: `Big Mac index (The Economist): ~$${dest} converted to ${originCurrency}`,
+      };
+    }
+    return { value: `Big Mac ~$${dest}`, sub: undefined, hint: "Big Mac index (The Economist)" };
   })();
   const fmtDate = (iso: string) => {
     const d = new Date(`${iso}T00:00:00Z`);
@@ -244,14 +264,16 @@ export default function CountrySummary({
   const hasSafety = Boolean(advisory && (reasons || impact?.detail || advisory.stateDeptUrl));
 
   // One combined money tile instead of separate currency and FX tiles.
+  // Lead with the destination currency ("1 EUR ≈ 70 PHP") so the rate reads
+  // as "what their unit costs in my money"; flip only if that goes below 1
+  // (e.g. JPY) to avoid unreadable micro-decimals.
   const currencyValue = advisory?.entryExit.currency ?? currencyCode ?? null;
-  const moneyValue = currencyValue
-    ? fx
-      ? `${fx.toCode} · 1 ${fx.fromCode} ≈ ${formatRate(fx.rate)}`
-      : currencyValue
-    : fx
-      ? `1 ${fx.fromCode} ≈ ${formatRate(fx.rate)} ${fx.toCode}`
-      : null;
+  const fxValue = fx
+    ? 1 / fx.rate >= 1
+      ? `1 ${fx.toCode} ≈ ${formatRate(1 / fx.rate)} ${fx.fromCode}`
+      : `1 ${fx.fromCode} ≈ ${formatRate(fx.rate)} ${fx.toCode}`
+    : null;
+  const moneyValue = fxValue ?? currencyValue;
 
   // One combined language tile: local language plus English level.
   const language = advisory?.entryExit.language ?? null;
@@ -298,7 +320,9 @@ export default function CountrySummary({
       icon: "money",
       label: "Money",
       value: moneyValue,
-      sub: fx ? `Rate as of ${fx.updatedAt}` : undefined,
+      sub: fx
+        ? `${currencyValue && currencyValue !== fx.toCode ? `${currencyValue} · ` : ""}Rate as of ${fx.updatedAt}`
+        : undefined,
       wide: true,
     });
   }
@@ -321,27 +345,37 @@ export default function CountrySummary({
       value: climate.replace(` in ${insights.climate.city}`, ""),
       sub: insights.climate.city,
     });
-  if (air && airBand)
+  const origin = fromCountry ? originForCountry(fromCountry) : null;
+  const sameCountry =
+    fromCountry && normalizeName(fromCountry) === normalizeName(country);
+  if (air && airBand) {
+    const aqiDelta =
+      origin?.aqi != null && !sameCountry ? air.aqi - origin.aqi : null;
     cells.push({
       key: "air",
       icon: "air",
       label: "Air quality",
       value: `AQI ${air.aqi}`,
-      sub: airBand.text,
+      sub:
+        aqiDelta !== null && Math.abs(aqiDelta) >= 5
+          ? `${aqiDelta < 0 ? "↓" : "↑"}${Math.abs(aqiDelta)} vs ${origin!.capital}`
+          : airBand.text,
       accent:
         airBand.tone === "good"
           ? "text-emerald-700"
           : airBand.tone === "moderate"
             ? "text-amber-700"
             : "text-orange-700",
-      hint: `WAQI, station: ${air.station}`,
+      hint: `${airBand.text} · WAQI, station: ${air.station}${origin?.aqi != null ? ` · ${origin.capital} AQI ${origin.aqi}` : ""}`,
     });
+  }
   if (priceLevel)
     cells.push({
       key: "prices",
       icon: "prices",
       label: "Prices",
       value: priceLevel.value,
+      sub: priceLevel.sub,
       hint: priceLevel.hint,
     });
   else if (openData?.priceLevelEU)
@@ -361,15 +395,31 @@ export default function CountrySummary({
       sub: "of labour cost (OECD)",
       hint: "OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost",
     });
-  if (openData?.timezone)
+  if (openData?.timezone) {
+    const destOffset = parseFloat(openData.timezone.offset.replace("UTC", ""));
+    const tzDiff =
+      origin?.offsetHours != null && !sameCountry && Number.isFinite(destOffset)
+        ? destOffset - origin.offsetHours
+        : null;
+    const fmtH = (h: number) =>
+      `${Number.isInteger(h) ? h : h.toFixed(1)}h`;
     cells.push({
       key: "clock",
       icon: "clock",
       label: "Timezone",
-      value: openData.timezone.offset,
-      sub: openData.timezone.name.split("/").pop()?.replace(/_/g, " "),
+      value:
+        tzDiff !== null && tzDiff !== 0
+          ? `${tzDiff > 0 ? "+" : "−"}${fmtH(Math.abs(tzDiff))} vs ${origin!.capital}`
+          : tzDiff === 0
+            ? `Same as ${origin!.capital}`
+            : openData.timezone.offset,
+      sub:
+        tzDiff !== null
+          ? `${openData.timezone.offset} · ${openData.timezone.name.split("/").pop()?.replace(/_/g, " ")}`
+          : openData.timezone.name.split("/").pop()?.replace(/_/g, " "),
       hint: openData.timezone.name,
     });
+  }
 
   // Keep the grid gapless: stretch the trailing cells of an incomplete last
   // row of small cells across the remaining columns.
