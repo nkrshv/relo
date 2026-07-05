@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const PHASES = ["Before you go", "First week", "First month", "First 90 days"];
 const STEPS = [
@@ -8,11 +8,12 @@ const STEPS = [
   "Pulling live data: FX, climate, air quality",
   "Mapping banking, tax & healthcare",
   "Personalizing to who's moving with you",
-  "Assembling your checklist",
 ];
+const FINAL_STEP = "Assembling your checklist";
 
-// Rotating status lines while the model finishes the plan — the last
-// step takes the longest, so keep the wait entertaining.
+// Extra "checks" that append to the list one by one while the model
+// finishes the plan — the final step takes the longest, so keep the
+// wait entertaining.
 const QUIPS = [
   "Tasting the local coffee — quality control, obviously",
   "Reading page 47 of the visa fine print so you never have to",
@@ -35,18 +36,31 @@ interface Props {
   done?: boolean;
 }
 
+type RowState = "done" | "active" | "pending";
+
 export default function PlanSkeleton({ done = false }: Props) {
   const [tick, setTick] = useState(0);
   const [finishChecked, setFinishChecked] = useState(false);
+  const doneRef = useRef(done);
+  useEffect(() => {
+    doneRef.current = done;
+  }, [done]);
 
-  // Tick through the real checks; the final step only runs once the
-  // backend actually returns the plan — until then the quips carry the wait.
+  // Tick through the real checks, then append one quip per tick; the tick
+  // freezes the moment the backend returns, so no new quips appear and the
+  // final step takes over.
   useEffect(() => {
     const id = setInterval(() => {
+      if (doneRef.current) return;
       setTick((t) => t + 1);
     }, 2100);
     return () => clearInterval(id);
   }, []);
+
+  const quipCount = Math.min(
+    Math.max(0, tick - STEPS.length + 1),
+    QUIPS.length,
+  );
 
   useEffect(() => {
     if (!done) return;
@@ -54,21 +68,25 @@ export default function PlanSkeleton({ done = false }: Props) {
     return () => clearTimeout(id);
   }, [done]);
 
-  const lastIndex = STEPS.length - 1;
-  const checkedCount = finishChecked
-    ? STEPS.length
-    : done
-      ? lastIndex
-      : Math.min(tick, lastIndex);
-  const spinnerIndex = finishChecked
-    ? -1
-    : done
-      ? lastIndex
-      : Math.min(tick, lastIndex);
-  const quip =
-    !done && tick >= lastIndex
-      ? QUIPS[(tick - lastIndex) % QUIPS.length]
-      : null;
+  const realChecked = done ? STEPS.length : Math.min(tick, STEPS.length);
+  const rows: { label: string; state: RowState }[] = [
+    ...STEPS.map((label, i) => ({
+      label,
+      state: (i < realChecked
+        ? "done"
+        : !done && i === tick
+          ? "active"
+          : "pending") as RowState,
+    })),
+    ...QUIPS.slice(0, quipCount).map((label, i) => ({
+      label,
+      state: (done || i < quipCount - 1 ? "done" : "active") as RowState,
+    })),
+    {
+      label: FINAL_STEP,
+      state: finishChecked ? "done" : done ? "active" : "pending",
+    },
+  ];
 
   return (
     <div
@@ -76,15 +94,14 @@ export default function PlanSkeleton({ done = false }: Props) {
         finishChecked ? "opacity-0" : "opacity-100"
       }`}
     >
-      <ol className="mx-auto mb-8 w-fit space-y-2" aria-live="polite">
-        {STEPS.map((label, i) => {
-          const checked = i < checkedCount;
-          const active = i === spinnerIndex;
-          const isLast = i === lastIndex;
+      <ol className="mx-auto mb-8 w-full max-w-lg space-y-2" aria-live="polite">
+        {rows.map(({ label, state }) => {
+          const checked = state === "done";
+          const active = state === "active";
           return (
             <li
               key={label}
-              className={`flex items-center gap-3 text-sm transition-colors duration-300 ${
+              className={`reveal flex items-center gap-3 text-sm transition-colors duration-300 ${
                 checked
                   ? "text-stone-400"
                   : active
@@ -110,13 +127,7 @@ export default function PlanSkeleton({ done = false }: Props) {
               ) : (
                 <span className="mx-1 h-1.5 w-1.5 shrink-0 rounded-full bg-stone-200" />
               )}
-              {isLast && quip ? (
-                <span key={quip} className="reveal font-medium text-stone-800">
-                  {quip}
-                </span>
-              ) : (
-                label
-              )}
+              {label}
               {checked && <span className="sr-only">— done</span>}
             </li>
           );

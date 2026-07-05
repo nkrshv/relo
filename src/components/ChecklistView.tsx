@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type {
   ChecklistItem,
+  Profile,
   ReloInput,
   ReloPlan,
   VisaSummary,
@@ -16,16 +17,36 @@ const FLAG_BY_NORM: Record<string, string> = Object.fromEntries(
   ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
 );
 
+// Short-stay entry rules (Passport Index) cover tourist visits only.
+// The tail of the verdict spells out what the reader's actual purpose
+// needs, so a digital nomad doesn't mistake "90 days visa-free" for a
+// right to live and work there.
+function stayTail(profile: Profile): string {
+  switch (profile) {
+    case "nomad":
+      return " But that's tourist entry — working remotely from there usually needs its own permit, like a digital nomad visa. The plan below starts with it.";
+    case "student":
+      return " But that's tourist entry — studying there takes a student visa or permit, and the plan below starts with it.";
+    case "family":
+      return " Moving your family for good is a different story: everyone needs a residence route, and this plan walks you through it.";
+    default:
+      return " Moving for good is a different story: that takes a residence permit, and this plan walks you through it.";
+  }
+}
+
 // The first question every mover has, answered in one plain-language line
 // right under the route: do I need a visa on my passport?
 function VisaAnswer({
   visa,
   fromCountry,
+  profile,
 }: {
   visa: VisaSummary;
   fromCountry: string;
+  profile: Profile;
 }) {
   const passport = `${fromCountry} passport`;
+  const tail = stayTail(profile);
   let verdict: ReactNode;
   switch (visa.category) {
     case "visa-free":
@@ -36,8 +57,7 @@ function VisaAnswer({
             gets you in visa-free
           </strong>
           {visa.days ? ` — up to ${visa.days} days, zero paperwork` : " — zero paperwork"}
-          . Moving for good is a different story: that takes a residence
-          permit, and this plan walks you through it.
+          .{tail}
         </>
       );
       break;
@@ -48,8 +68,7 @@ function VisaAnswer({
           <strong className="font-semibold text-emerald-700">
             get a visa right at the border
           </strong>{" "}
-          — just show up. Staying for good takes a residence permit; the plan
-          below walks you through it.
+          — just show up.{tail}
         </>
       );
       break;
@@ -60,8 +79,7 @@ function VisaAnswer({
           <strong className="font-semibold text-amber-700">
             needs an e-Visa
           </strong>{" "}
-          — a few minutes online, done. Staying for good takes a residence
-          permit; the plan below walks you through it.
+          — a few minutes online, done.{tail}
         </>
       );
       break;
@@ -72,8 +90,7 @@ function VisaAnswer({
           <strong className="font-semibold text-amber-700">
             travel authorization (eTA)
           </strong>{" "}
-          online — a few minutes on a {passport}. Staying for good takes a
-          residence permit; the plan below walks you through it.
+          online — a few minutes on a {passport}.{tail}
         </>
       );
       break;
@@ -709,7 +726,13 @@ export default function ChecklistView({
           )}
           {input.toCity?.trim() || input.toCountry}
         </h1>
-        {visa && <VisaAnswer visa={visa} fromCountry={input.fromCountry} />}
+        {visa && (
+          <VisaAnswer
+            visa={visa}
+            fromCountry={input.fromCountry}
+            profile={input.profile}
+          />
+        )}
         {plan.destinationSummary && (
           <p className="mt-3 text-stone-600">{plan.destinationSummary}</p>
         )}
