@@ -116,9 +116,11 @@ function officeTaskMatch(item: ChecklistItem): boolean {
 function OfficeLinks({
   offices,
   capital,
+  curated,
 }: {
-  offices: string[];
+  offices: { name: string; place: string }[];
   capital: string;
+  curated: boolean;
 }) {
   return (
     <div>
@@ -126,10 +128,10 @@ function OfficeLinks({
         Offices near {capital} · tap to open the map
       </p>
       <div className="mt-1 flex flex-wrap gap-1">
-        {offices.slice(0, 4).map((name) => (
+        {offices.slice(0, 4).map(({ name, place }) => (
           <a
             key={name}
-            href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${name}, ${capital}`)}`}
+            href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${name}, ${place}`)}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 rounded border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600 transition-colors hover:border-stone-400 hover:text-stone-900"
@@ -151,8 +153,9 @@ function OfficeLinks({
         ))}
       </div>
       <p className="mt-1 text-[11px] text-stone-400">
-        OpenStreetMap · moving to another city? Search its local office
-        instead.
+        {curated
+          ? "OpenStreetMap · moving to another city? Search its local office instead."
+          : "OpenStreetMap · exact office names vary; the map search finds the local one."}
       </p>
     </div>
   );
@@ -544,10 +547,33 @@ export default function ChecklistView({
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [view, setView] = useState<ViewMode>("simple");
   const destOpenData = openDataForCountry(input.toCountry);
+  // A chosen destination city overrides the capital office list: the curated
+  // names are capital-specific, so point the map search at the user's city.
+  const toCity = input.toCity?.trim();
+  const cityIsCapital =
+    toCity &&
+    destOpenData?.capital &&
+    normalizeName(toCity) === normalizeName(destOpenData.capital);
   const destOffices =
-    destOpenData?.offices && destOpenData.offices.length > 0
-      ? { offices: destOpenData.offices, capital: destOpenData.capital }
-      : null;
+    toCity && !cityIsCapital
+      ? {
+          offices: [
+            { name: `Town hall / city hall, ${toCity}`, place: toCity },
+            { name: `Immigration office, ${toCity}`, place: toCity },
+          ],
+          capital: toCity,
+          curated: false,
+        }
+      : destOpenData?.offices && destOpenData.offices.length > 0
+        ? {
+            offices: destOpenData.offices.map((name) => ({
+              name,
+              place: destOpenData.capital,
+            })),
+            capital: destOpenData.capital,
+            curated: true,
+          }
+        : null;
   const storageKey = planStorageKey(input, plan);
   const doneRef = useRef<HTMLDivElement>(null);
 
@@ -672,7 +698,7 @@ export default function ChecklistView({
               {FLAG_BY_NORM[normalizeName(input.fromCountry)]}
             </span>
           )}
-          {input.fromCountry}
+          {input.fromCity?.trim() || input.fromCountry}
           <span className="mx-2.5 font-normal text-stone-300" aria-hidden>
             →
           </span>
@@ -681,7 +707,7 @@ export default function ChecklistView({
               {FLAG_BY_NORM[normalizeName(input.toCountry)]}
             </span>
           )}
-          {input.toCountry}
+          {input.toCity?.trim() || input.toCountry}
         </h1>
         {visa && <VisaAnswer visa={visa} fromCountry={input.fromCountry} />}
         {plan.destinationSummary && (
@@ -742,6 +768,8 @@ export default function ChecklistView({
           country={input.toCountry}
           profile={input.profile}
           fromCountry={input.fromCountry}
+          fromCity={input.fromCity}
+          toCity={input.toCity}
           visa={visa ?? null}
         />
       </header>
@@ -1070,6 +1098,7 @@ export default function ChecklistView({
                                       <OfficeLinks
                                         offices={destOffices.offices}
                                         capital={destOffices.capital}
+                                        curated={destOffices.curated}
                                       />
                                     )}
                                   </div>

@@ -26,6 +26,8 @@ export type Priority = (typeof PRIORITY_OPTIONS)[number];
 export interface ReloInput {
   fromCountry: string;
   toCountry: string;
+  fromCity?: string;
+  toCity?: string;
   profile: Profile;
   visaStatus: string;
   timeline: string;

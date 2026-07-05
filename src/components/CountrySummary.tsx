@@ -16,6 +16,7 @@ import type { Profile, VisaSummary } from "@/lib/types";
 import { insightsForCountry, climateSummary } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
 import { openDataForCountry, aqiLabel } from "@/lib/countryOpenData";
+import { useCityContext } from "@/lib/useCityContext";
 
 const FLAG_BY_NAME: Record<string, string> = Object.fromEntries(
   ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
@@ -29,6 +30,8 @@ interface Props {
   country: string;
   profile: Profile;
   fromCountry?: string;
+  fromCity?: string;
+  toCity?: string;
   visa?: VisaSummary | null;
 }
 
@@ -149,9 +152,16 @@ export default function CountrySummary({
   country,
   profile,
   fromCountry,
+  fromCity,
+  toCity,
   visa,
 }: Props) {
   const [openTab, setOpenTab] = useState<TabKey | null>(null);
+  // City-level overrides: in big countries (India, Australia) capital-level
+  // climate/AQI/timezone can be way off, so recompute them for the chosen
+  // cities live and fall back to the country snapshot while loading.
+  const destCity = useCityContext(toCity, country);
+  const originCity = useCityContext(fromCity, fromCountry);
   const advisory: CountryAdvisory | null = advisoryForCountry(country);
   const liveRates = useLiveRates();
   const fx = fromCountry
@@ -348,7 +358,16 @@ export default function CountrySummary({
           ? `English ${english.toLowerCase()}`
           : undefined,
     });
-  if (climate && insights)
+  if (destCity && destCity.janC !== null && destCity.julC !== null)
+    cells.push({
+      key: "climate",
+      icon: "climate",
+      label: "Climate",
+      value: `Jan ${destCity.janC}° · Jul ${destCity.julC}°`,
+      sub: destCity.city,
+      hint: `Mean daily temperature in ${destCity.city}, ${destCity.climateYear} (Open-Meteo)`,
+    });
+  else if (climate && insights)
     cells.push({
       key: "climate",
       icon: "climate",
@@ -359,25 +378,31 @@ export default function CountrySummary({
   const origin = fromCountry ? originForCountry(fromCountry) : null;
   const sameCountry =
     fromCountry && normalizeName(fromCountry) === normalizeName(country);
-  if (air && airBand) {
+  const cityAir =
+    destCity?.aqi != null
+      ? { aqi: destCity.aqi, station: destCity.station ?? destCity.city }
+      : air;
+  const cityAirBand = cityAir ? aqiLabel(cityAir.aqi) : null;
+  if (cityAir && cityAirBand) {
+    const originAqi = originCity?.aqi ?? origin?.aqi ?? null;
     const aqiDelta =
-      origin?.aqi != null && !sameCountry ? air.aqi - origin.aqi : null;
+      originAqi != null && !sameCountry ? cityAir.aqi - originAqi : null;
     cells.push({
       key: "air",
       icon: "air",
       label: "Air quality",
-      value: `AQI ${air.aqi}`,
+      value: `AQI ${cityAir.aqi}`,
       sub:
         aqiDelta !== null && Math.abs(aqiDelta) >= 5
           ? `${aqiDelta < 0 ? "↓" : "↑"}${Math.abs(aqiDelta)} vs home`
-          : airBand.text,
+          : cityAirBand.text,
       accent:
-        airBand.tone === "good"
+        cityAirBand.tone === "good"
           ? "text-emerald-700"
-          : airBand.tone === "moderate"
+          : cityAirBand.tone === "moderate"
             ? "text-amber-700"
             : "text-orange-700",
-      hint: `${airBand.text} · WAQI, station: ${air.station}${origin?.aqi != null ? ` · ${origin.capital} AQI ${origin.aqi}` : ""}`,
+      hint: `${cityAirBand.text} · WAQI, station: ${cityAir.station}${originAqi != null ? ` · ${originCity?.city ?? origin?.capital} AQI ${originAqi}` : ""}`,
     });
   }
   if (priceLevel)
@@ -407,21 +432,29 @@ export default function CountrySummary({
       hint: "OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost",
     });
   const destTimezone =
-    openData?.timezone ??
-    (destLite?.offsetHours != null
+    destCity?.offsetHours != null
       ? {
-          name: destLite.capital,
-          offset: `UTC${destLite.offsetHours >= 0 ? "+" : "−"}${Math.abs(destLite.offsetHours)}`,
+          name: destCity.timezone ?? destCity.city,
+          offset: `UTC${destCity.offsetHours >= 0 ? "+" : "−"}${Math.abs(destCity.offsetHours)}`,
         }
-      : null);
+      : (openData?.timezone ??
+        (destLite?.offsetHours != null
+          ? {
+              name: destLite.capital,
+              offset: `UTC${destLite.offsetHours >= 0 ? "+" : "−"}${Math.abs(destLite.offsetHours)}`,
+            }
+          : null));
   if (destTimezone) {
     const destOffset =
-      openData?.timezone != null
-        ? parseFloat(openData.timezone.offset.replace("UTC", ""))
-        : destLite!.offsetHours!;
+      destCity?.offsetHours != null
+        ? destCity.offsetHours
+        : openData?.timezone != null
+          ? parseFloat(openData.timezone.offset.replace("UTC", ""))
+          : destLite!.offsetHours!;
+    const originOffset = originCity?.offsetHours ?? origin?.offsetHours ?? null;
     const tzDiff =
-      origin?.offsetHours != null && !sameCountry && Number.isFinite(destOffset)
-        ? destOffset - origin.offsetHours
+      originOffset != null && !sameCountry && Number.isFinite(destOffset)
+        ? destOffset - originOffset
         : null;
     const fmtH = (h: number) =>
       `${Number.isInteger(h) ? h : h.toFixed(1)}h`;

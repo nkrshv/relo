@@ -277,8 +277,8 @@ function breakDependencyCycles(phases: Phase[]): Phase[] {
 
 function buildUserContent(input: ReloInput): string {
   const profile = [
-    `Moving from: ${input.fromCountry}`,
-    `Moving to: ${input.toCountry}`,
+    `Moving from: ${input.fromCity ? `${input.fromCity}, ` : ""}${input.fromCountry}`,
+    `Moving to: ${input.toCity ? `${input.toCity}, ` : ""}${input.toCountry}`,
     `Profile: ${input.profile}`,
     input.visaStatus ? `Visa / status: ${input.visaStatus}` : "",
     input.timeline ? `Timeline: ${input.timeline}` : "",
@@ -292,6 +292,15 @@ function buildUserContent(input: ReloInput): string {
     .join("\n");
 
   const blocks = [profile];
+
+  if (input.toCity) {
+    blocks.push(
+      [
+        `DESTINATION CITY: the person is moving specifically to ${input.toCity}, not necessarily the capital of ${input.toCountry}.`,
+        `Tailor location-dependent tasks to ${input.toCity}: local registration offices, housing search areas, commute, climate/wardrobe advice, and city-specific costs. If reference data below describes the capital, adapt it to ${input.toCity} rather than repeating capital-specific names.`,
+      ].join("\n"),
+    );
+  }
 
   const advisory = advisoryForCountry(input.toCountry);
   if (advisory) {
@@ -442,6 +451,8 @@ export async function POST(req: NextRequest) {
   const input: ReloInput = {
     fromCountry,
     toCountry,
+    fromCity: cap(str(body.fromCity)).slice(0, 80) || undefined,
+    toCity: cap(str(body.toCity)).slice(0, 80) || undefined,
     profile: (body.profile as ReloInput["profile"]) ?? "solo",
     visaStatus: cap(str(body.visaStatus)),
     timeline: cap(str(body.timeline)),
