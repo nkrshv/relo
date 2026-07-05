@@ -211,7 +211,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
 
   if (result) {
     return (
-      <div className="reveal px-4 py-10">
+      <div className="rise px-4 py-10">
         {error && (
           <p className="mx-auto mb-4 max-w-3xl rounded-lg bg-red-50 px-4 py-2 text-sm text-red-700">
             {error}
