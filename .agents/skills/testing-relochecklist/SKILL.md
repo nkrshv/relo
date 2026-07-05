@@ -28,6 +28,13 @@ Pick an adversarial route where capital data would visibly differ from the city,
 - Pick a curated destination (e.g. Spain) to exercise all tabs — uncurated countries lack tax wedge, vaccines, and price data.
 - The pipeline diagram lives on the landing page under "How it works"; it should span roughly the section width with 7 source chips.
 
+## Stage stepper (three-stage progress bar)
+- A horizontal stepper ("Your move" → "Building your plan" → "Your checklist") renders above the plan flow when `showHeading` is true (on /plan and /moving-to/*), NOT on the landing page. Done steps: emerald check circles + emerald connectors; active: stone-900 circle; pending: gray.
+- The stepper should stay in one place across stage changes (single top-level return in ReloApp keeps it mounted; state changes are in-place CSS color transitions). If it visibly re-fades or shifts on stage change, the branches may have been split back into separate returns, or its `reveal` class reintroduced.
+- Loading stage should show ONLY the stepped check list (no skeleton phase cards below it — removed in #35).
+- Known nuance: the short loading page may drop the scrollbar, shifting centered content ~4px vs other stages. `scrollbar-gutter: stable` is the fix if pixel-perfection is requested.
+- When comparing stepper positions across stages, compare screenshot pixel coordinates of the circles, not impressions.
+
 ## Unlocking locked phases (First week/month/90 days)
 Registration tasks with OSM office-link chips live in locked phases. Without a Stripe key configured, clicking "Unlock full plan — $9" performs a dev unlock instantly — use it to expand "How to do it" and check "Offices near <city>" chips.
 
