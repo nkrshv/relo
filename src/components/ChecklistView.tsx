@@ -34,6 +34,21 @@ function stayTail(profile: Profile): string {
   }
 }
 
+// Same idea for visa-required destinations: make sure the reader applies
+// for the visa that matches their purpose, not just any tourist visa.
+function requiredTail(profile: Profile): string {
+  switch (profile) {
+    case "nomad":
+      return " And pick the right one: a tourist visa won't cover working remotely — look at a digital nomad or work visa. It's step one below.";
+    case "student":
+      return " And make it the right one: studying takes a student visa, not a tourist one. It's step one below.";
+    case "family":
+      return " And everyone moving with you needs their own. It's step one below.";
+    default:
+      return " It's step one below.";
+  }
+}
+
 // The first question every mover has, answered in one plain-language line
 // right under the route: do I need a visa on my passport?
 function VisaAnswer({
@@ -112,7 +127,7 @@ function VisaAnswer({
           <strong className="font-semibold text-amber-700">
             needs a visa — even for a quick trip
           </strong>
-          . Get that sorted before you book anything. It&apos;s step one below.
+          . Get that sorted before you book anything.{requiredTail(profile)}
         </>
       );
   }
