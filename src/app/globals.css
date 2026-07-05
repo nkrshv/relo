@@ -302,7 +302,8 @@ a.pressable:active {
   }
   /* Reveal/entrance animations must not leave content faded or shifted on paper. */
   .reveal,
-  .rise {
+  .rise,
+  .plan-line {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
