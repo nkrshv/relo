@@ -74,11 +74,13 @@ function Tile({
   value,
   accent,
   hint,
+  sub,
 }: {
   label: string;
   value: string;
   accent?: string;
   hint?: string;
+  sub?: string;
 }) {
   return (
     <div
@@ -93,6 +95,7 @@ function Tile({
       >
         {value}
       </p>
+      {sub && <p className="mt-0.5 text-xs leading-snug text-stone-400">{sub}</p>}
     </div>
   );
 }
@@ -594,7 +597,12 @@ export default function CountrySummary({
               {(staticData || openData) && (
                 <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
                   {staticData && (
-                    <Tile label="Internet" value={`~${staticData.internetMbps} Mbps`} />
+                    <Tile
+                      label="Internet"
+                      value={`~${staticData.internetMbps} Mbps`}
+                      sub="typical home broadband, country median"
+                      hint="Median fixed-broadband download speed (Ookla Speedtest Global Index)"
+                    />
                   )}
                   {staticData && (
                     <Tile
@@ -657,9 +665,10 @@ export default function CountrySummary({
               )}
               {openData?.taxWedge && (
                 <Tile
-                  label={`Tax on wages · ${openData.taxWedge.year}`}
-                  value={`~${Math.round(openData.taxWedge.value)}% wedge`}
-                  hint="OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost"
+                  label={`Taxes on salary · ${openData.taxWedge.year}`}
+                  value={`~${Math.round(openData.taxWedge.value)}%`}
+                  sub="of what your job costs goes to tax & social security — not your income-tax rate"
+                  hint="OECD tax wedge: income tax + employee and employer social contributions for a single worker at the average wage, as a share of total labour cost"
                 />
               )}
               {insights?.inflation && (
@@ -695,24 +704,38 @@ export default function CountrySummary({
                   />
                 </div>
               )}
-              {vac && (vac.required.length > 0 || vac.recommended.length > 0) && (
-                <div className="flex flex-wrap gap-1.5">
-                  {vac.required.map((v) => (
-                    <span
-                      key={v.name}
-                      className="inline-flex items-center rounded border border-amber-200 bg-white px-2 py-1 text-xs font-medium text-amber-800"
-                    >
-                      {v.name} · required
-                    </span>
-                  ))}
-                  {vac.recommended.map((v) => (
-                    <span
-                      key={v.name}
-                      className="inline-flex items-center rounded border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
-                    >
-                      {v.name}
-                    </span>
-                  ))}
+              {vac && vac.required.length > 0 && (
+                <div className="mb-2">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                    Vaccines required to enter
+                  </p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {vac.required.map((v) => (
+                      <span
+                        key={v.name}
+                        className="inline-flex items-center rounded border border-amber-200 bg-white px-2 py-1 text-xs font-medium text-amber-800"
+                      >
+                        {v.name}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+              {vac && vac.recommended.length > 0 && (
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                    Vaccines CDC suggests having before you go
+                  </p>
+                  <div className="mt-1.5 flex flex-wrap gap-1.5">
+                    {vac.recommended.map((v) => (
+                      <span
+                        key={v.name}
+                        className="inline-flex items-center rounded border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
+                      >
+                        {v.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
               {vac?.malaria && (
@@ -724,14 +747,28 @@ export default function CountrySummary({
                     : ""}
                 </p>
               )}
-              {(vac?.healthNotices ?? []).map((n, i) => (
-                <p key={i} className="mt-1.5 text-sm text-amber-800">
-                  <span>
-                    <span className="font-medium">{n.title}</span>
-                    {n.summary ? ` — ${n.summary}` : ""}
-                  </span>
-                </p>
-              ))}
+              {(vac?.healthNotices ?? []).length > 0 && (
+                <div className="mt-2.5">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                    Current health notices · tap to read
+                  </p>
+                  <div className="mt-1.5 space-y-1.5">
+                    {vac!.healthNotices.map((n, i) => (
+                      <details
+                        key={i}
+                        className="rounded-md border border-stone-200 bg-white px-3 py-2"
+                      >
+                        <summary className="cursor-pointer text-sm font-medium text-stone-700 marker:text-stone-300">
+                          {n.title}
+                        </summary>
+                        {n.summary && (
+                          <p className="mt-1.5 text-sm text-stone-600">{n.summary}</p>
+                        )}
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
               <p className="mt-2 text-xs text-stone-400">
                 Source: {[vac ? "CDC" : null, air ? "WAQI" : null].filter(Boolean).join(" · ")}
               </p>
@@ -740,12 +777,19 @@ export default function CountrySummary({
 
           {openTab === "safety" && advisory && (
             <div className="mt-2.5 space-y-2.5">
-              <p className="text-sm text-stone-600">
-                <span className="font-medium text-stone-800">
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="text-sm font-medium text-stone-800">
                   Level {advisory.level} · {advisory.label}
                 </span>
-                {reasons ? ` — ${reasons}` : ""}
-              </p>
+                {advisory.reasons.slice(0, 3).map((r) => (
+                  <span
+                    key={r}
+                    className="inline-flex items-center rounded border border-stone-200 bg-white px-2 py-0.5 text-xs text-stone-500"
+                  >
+                    {humanize(r)}
+                  </span>
+                ))}
+              </div>
               {impact?.detail && (
                 <div className="flex items-start gap-2.5 rounded-md border border-stone-200 bg-stone-50 p-3">
                   <span

@@ -4,6 +4,7 @@ import { useState } from "react";
 import CountryCombobox from "@/components/CountryCombobox";
 import CityCombobox from "@/components/CityCombobox";
 import { isValidCountry } from "@/lib/allCountries";
+import { originForCountry } from "@/lib/countryOrigin";
 import {
   PRIORITY_OPTIONS,
   PROFILES,
@@ -48,6 +49,12 @@ export default function ReloForm({
 
   const fromValid = isValidCountry(fromCountry);
   const toValid = isValidCountry(toCountry);
+  // Country-aware example city so the hint never suggests a city from the
+  // wrong country (Albania should say "e.g. Tirana", not "e.g. Mumbai").
+  const cityExample = (country: string, fallback: string) => {
+    const capital = originForCountry(country)?.capital;
+    return `e.g. ${capital || fallback}`;
+  };
   const canSubmit = fromValid && toValid && !loading;
 
   function togglePriority(p: string) {
@@ -127,7 +134,7 @@ export default function ReloForm({
               setFromCity(v);
               onRouteChange?.(fromCountry, toCountry, v, toCity);
             }}
-            placeholder="e.g. Mumbai"
+            placeholder={cityExample(fromCountry, "Mumbai")}
           />
         )}
 
@@ -140,7 +147,7 @@ export default function ReloForm({
               setToCity(v);
               onRouteChange?.(fromCountry, toCountry, fromCity, v);
             }}
-            placeholder="e.g. Sydney"
+            placeholder={cityExample(toCountry, "Sydney")}
           />
         )}
 
