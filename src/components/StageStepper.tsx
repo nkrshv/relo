@@ -12,7 +12,7 @@ interface Props {
 // (emerald checks, stone palette, thin lines).
 export default function StageStepper({ current }: Props) {
   return (
-    <nav aria-label="Progress" className="reveal mx-auto mb-10 w-full max-w-lg print:hidden">
+    <nav aria-label="Progress" className="mx-auto mb-10 w-full max-w-lg print:hidden">
       <ol className="flex items-center">
         {STAGES.map((label, i) => {
           const step = i + 1;
@@ -51,10 +51,11 @@ export default function StageStepper({ current }: Props) {
                     step
                   )}
                 </span>
+                {/* Weight stays constant so label widths never shift between stages. */}
                 <span
-                  className={`whitespace-nowrap text-xs sm:text-sm ${
+                  className={`whitespace-nowrap text-xs font-medium transition-colors duration-500 sm:text-sm ${
                     active
-                      ? "font-medium text-stone-900"
+                      ? "text-stone-900"
                       : done
                         ? "text-stone-500"
                         : "text-stone-400"

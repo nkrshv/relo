@@ -210,71 +210,74 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
 
-  if (result) {
-    return (
-      <div className="rise px-4 py-10">
-        {showHeading && <StageStepper current={3} />}
-        {error && (
-          <p className="mx-auto mb-4 max-w-3xl rounded-lg bg-red-50 px-4 py-2 text-sm text-red-700">
-            {error}
-          </p>
-        )}
-        <ChecklistView
-          input={result.input}
-          plan={result.plan}
-          visa={result.visa ?? null}
-          unlocked={unlocked}
-          unlocking={unlocking}
-          onUnlock={unlock}
-          onReset={reset}
-        />
-      </div>
-    );
-  }
-
-  if (loading) {
-    return (
-      <div className="px-4 py-6">
-        {showHeading && <StageStepper current={2} />}
-        {showHeading && (
-          <RouteHeading
-            from={route.from}
-            to={route.to}
-            fromCity={route.fromCity}
-            toCity={route.toCity}
-            building
-          />
-        )}
-        <PlanSkeleton done={finishing} />
-      </div>
-    );
-  }
-
+  // The stepper stays mounted at a fixed position across all three stages,
+  // so stage changes animate in place instead of remounting.
   return (
-    <div className="px-4">
-      {showHeading && <StageStepper current={1} />}
+    <div className="px-4 py-6">
       {showHeading && (
-        <RouteHeading
-          from={route.from}
-          to={route.to}
-          fromCity={route.fromCity}
-          toCity={route.toCity}
-          building={false}
-        />
+        <StageStepper current={result ? 3 : loading ? 2 : 1} />
       )}
-      {error && (
-        <p className="mx-auto mb-4 max-w-2xl rounded-lg bg-red-50 px-4 py-2 text-center text-sm text-red-700">
-          {error}
-        </p>
+      {result ? (
+        <div className="rise">
+          {error && (
+            <p className="mx-auto mb-4 max-w-3xl rounded-lg bg-red-50 px-4 py-2 text-sm text-red-700">
+              {error}
+            </p>
+          )}
+          <ChecklistView
+            input={result.input}
+            plan={result.plan}
+            visa={result.visa ?? null}
+            unlocked={unlocked}
+            unlocking={unlocking}
+            onUnlock={unlock}
+            onReset={reset}
+          />
+        </div>
+      ) : loading ? (
+        <>
+          {showHeading && (
+            <RouteHeading
+              from={route.from}
+              to={route.to}
+              fromCity={route.fromCity}
+              toCity={route.toCity}
+              building
+            />
+          )}
+          <PlanSkeleton done={finishing} />
+        </>
+      ) : (
+        <>
+          {showHeading && (
+            <RouteHeading
+              from={route.from}
+              to={route.to}
+              fromCity={route.fromCity}
+              toCity={route.toCity}
+              building={false}
+            />
+          )}
+          {error && (
+            <p className="mx-auto mb-4 max-w-2xl rounded-lg bg-red-50 px-4 py-2 text-center text-sm text-red-700">
+              {error}
+            </p>
+          )}
+          <ReloForm
+            loading={loading}
+            initialTo={initialTo}
+            onSubmit={generate}
+            onRouteChange={(from, to, fromCity, toCity) =>
+              setRoute({
+                from,
+                to,
+                fromCity: fromCity ?? "",
+                toCity: toCity ?? "",
+              })
+            }
+          />
+        </>
       )}
-      <ReloForm
-        loading={loading}
-        initialTo={initialTo}
-        onSubmit={generate}
-        onRouteChange={(from, to, fromCity, toCity) =>
-          setRoute({ from, to, fromCity: fromCity ?? "", toCity: toCity ?? "" })
-        }
-      />
     </div>
   );
 }
