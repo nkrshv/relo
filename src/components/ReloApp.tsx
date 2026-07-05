@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import ReloForm from "@/components/ReloForm";
 import ChecklistView from "@/components/ChecklistView";
 import PlanSkeleton from "@/components/PlanSkeleton";
+import StageStepper from "@/components/StageStepper";
 import { ALL_COUNTRIES, isValidCountry } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
 import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
@@ -212,6 +213,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   if (result) {
     return (
       <div className="rise px-4 py-10">
+        {showHeading && <StageStepper current={3} />}
         {error && (
           <p className="mx-auto mb-4 max-w-3xl rounded-lg bg-red-50 px-4 py-2 text-sm text-red-700">
             {error}
@@ -233,6 +235,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   if (loading) {
     return (
       <div className="px-4 py-6">
+        {showHeading && <StageStepper current={2} />}
         {showHeading && (
           <RouteHeading
             from={route.from}
@@ -249,6 +252,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
 
   return (
     <div className="px-4">
+      {showHeading && <StageStepper current={1} />}
       {showHeading && (
         <RouteHeading
           from={route.from}
