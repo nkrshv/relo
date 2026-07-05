@@ -23,7 +23,7 @@ export async function generateMetadata({
   const dest = findDestination(country);
   if (!dest) return {};
   const title = `Moving to ${dest.name}: relocation checklist`;
-  const description = `A step-by-step checklist for moving to ${dest.name} — visa and residency, housing, banking, healthcare, taxes and more. Get a free personalized plan.`;
+  const description = `A step-by-step checklist for moving to ${dest.name}: visa and residency, housing, banking, healthcare, taxes and more. Get a free personalized plan.`;
   return {
     title,
     description,

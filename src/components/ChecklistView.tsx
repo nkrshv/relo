@@ -24,9 +24,9 @@ const FLAG_BY_NORM: Record<string, string> = Object.fromEntries(
 function stayTail(profile: Profile): string {
   switch (profile) {
     case "nomad":
-      return " But that's tourist entry — working remotely from there usually needs its own permit, like a digital nomad visa. The plan below starts with it.";
+      return " But that's tourist entry: working remotely from there usually needs its own permit, like a digital nomad visa. The plan below starts with it.";
     case "student":
-      return " But that's tourist entry — studying there takes a student visa or permit, and the plan below starts with it.";
+      return " But that's tourist entry: studying there takes a student visa or permit, and the plan below starts with it.";
     case "family":
       return " Moving your family for good is a different story: everyone needs a residence route, and this plan walks you through it.";
     default:
@@ -39,7 +39,7 @@ function stayTail(profile: Profile): string {
 function requiredTail(profile: Profile): string {
   switch (profile) {
     case "nomad":
-      return " And pick the right one: a tourist visa won't cover working remotely — look at a digital nomad or work visa. It's step one below.";
+      return " And pick the right one: a tourist visa won't cover working remotely, so look at a digital nomad or work visa. It's step one below.";
     case "student":
       return " And make it the right one: studying takes a student visa, not a tourist one. It's step one below.";
     case "family":
@@ -71,7 +71,7 @@ function VisaAnswer({
           <strong className="font-semibold text-emerald-700">
             gets you in visa-free
           </strong>
-          {visa.days ? ` — up to ${visa.days} days, zero paperwork` : " — zero paperwork"}
+          {visa.days ? `, up to ${visa.days} days, zero paperwork` : ", zero paperwork"}
           .{tail}
         </>
       );
@@ -82,8 +82,8 @@ function VisaAnswer({
           Easy one: with a {passport} you{" "}
           <strong className="font-semibold text-emerald-700">
             get a visa right at the border
-          </strong>{" "}
-          — just show up.{tail}
+          </strong>
+          , no paperwork before the flight.{tail}
         </>
       );
       break;
@@ -93,8 +93,8 @@ function VisaAnswer({
           One thing before you fly: your {passport}{" "}
           <strong className="font-semibold text-amber-700">
             needs an e-Visa
-          </strong>{" "}
-          — a few minutes online, done.{tail}
+          </strong>
+          : a few minutes online, done.{tail}
         </>
       );
       break;
@@ -105,7 +105,7 @@ function VisaAnswer({
           <strong className="font-semibold text-amber-700">
             travel authorization (eTA)
           </strong>{" "}
-          online — a few minutes on a {passport}.{tail}
+          online, a few minutes on a {passport}.{tail}
         </>
       );
       break;
@@ -125,7 +125,7 @@ function VisaAnswer({
         <>
           Heads up: your {passport}{" "}
           <strong className="font-semibold text-amber-700">
-            needs a visa — even for a quick trip
+            needs a visa, even for a quick trip
           </strong>
           . Get that sorted before you book anything.{requiredTail(profile)}
         </>
@@ -258,11 +258,11 @@ function categoryDot(category: string) {
 }
 
 function milestoneCopy(pct: number): string {
-  if (pct === 0) return "Ready when you are — start with the first step.";
-  if (pct < 25) return "Great start — momentum matters more than speed.";
-  if (pct < 50) return "Solid progress — the hardest steps are behind you soon.";
-  if (pct < 75) return "Over halfway there — keep it rolling.";
-  if (pct < 100) return "Almost done — just a few steps left.";
+  if (pct === 0) return "Ready when you are. Start with the first step.";
+  if (pct < 25) return "Great start. Momentum matters more than speed.";
+  if (pct < 50) return "Solid progress. The hardest steps are behind you soon.";
+  if (pct < 75) return "Over halfway there. Keep it rolling.";
+  if (pct < 100) return "Almost done, just a few steps left.";
   return "Everything checked off. Enjoy your new home.";
 }
 
@@ -1170,7 +1170,7 @@ export default function ChecklistView({
             Unlock your full relocation plan
           </h3>
           <p className="mx-auto mt-2 max-w-md text-sm text-stone-600">
-            Get every phase — first week, first month, and first 90 days — with
+            Get every phase (first week, first month, and first 90 days) with
             all personalized steps, tips, and cost estimates.
           </p>
           <button
@@ -1184,7 +1184,7 @@ export default function ChecklistView({
                 Redirecting…
               </>
             ) : (
-              "Unlock full plan — $9"
+              "Unlock full plan for $9"
             )}
           </button>
         </div>

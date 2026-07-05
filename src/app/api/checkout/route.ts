@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   form.set("line_items[0][price_data][unit_amount]", String(PRICE_CENTS));
   form.set(
     "line_items[0][price_data][product_data][name]",
-    "ReloChecklist — full personalized relocation plan",
+    "ReloChecklist: full personalized relocation plan",
   );
 
   let res: Response;
