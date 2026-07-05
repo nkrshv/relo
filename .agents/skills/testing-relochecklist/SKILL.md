@@ -34,6 +34,11 @@ Registration tasks with OSM office-link chips live in locked phases. Without a S
 ## Same-country guard
 - Picking a country in one combobox hides it from the other's suggestions (`exclude` prop). Typing the same country manually shows "You're already there — pick a different destination." and blocks submit; /api/generate also 400s equal countries.
 
+## Copy/style checks (e.g. banned characters)
+- To verify banned characters (em dashes etc.) across a rendered page, don't eyeball screenshots: the computer tool saves stripped page HTML to /tmp (`page_html_*.html`) — grep it, e.g. `grep -c $'\u2014' /tmp/page_html_*.html` and `grep -o $'.\{40\}\u2014.\{40\}'` for context.
+- AI-generated text mimics EXAMPLES in the prompt more than it follows style rules. If banned characters leak into model output, check the prompt's few-shot/example strings first — a single em dash in an example can override an explicit ban.
+- After editing prompt code, you MUST rebuild (`npm run build`) before re-testing generation; the running prod server serves the old bundle.
+
 ## Gotchas
 - A stale `next-server` may already occupy port 3100 from a previous session/build — `npm run start` then fails with EADDRINUSE while curl still returns 200 from the OLD build, making new changes look broken. Always `pkill -f next-server` (or kill the PID from `ps aux | grep next`) and confirm the new server actually started before testing.
 - PR comments posted via `gh pr comment` do NOT auto-upload local image paths — use the builtin PR-comment tool (or pre-upload attachments) so screenshots render.
