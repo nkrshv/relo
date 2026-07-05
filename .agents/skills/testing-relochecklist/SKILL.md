@@ -22,7 +22,7 @@ description: Test the ReloChecklist app end-to-end (plan form, country/city snap
 Pick an adversarial route where capital data would visibly differ from the city, so numbers prove city-level correctness. Good example: Mumbai (India) → Perth (Australia): Perth is UTC+8 / Jan ~26° / Jul ~12° / AQI ~40 vs Canberra UTC+10/11 / Jan ~21° / Jul ~6°, and Mumbai AQI (~158) differs from Delhi (~114).
 
 ## Loading state & snapshot detail tabs
-- Submitting shows a stepped loading list (5 checks, centered): the first 4 tick green ~every 2s, then the LAST step ("Assembling your checklist") stays a grey dot while rotating humorous quips cycle below it. Only when the backend returns does the last step briefly spin → green check → plan reveal (~1.6s hold). If the last step spins during the whole wait, the smart-finish wiring (`PlanSkeleton done` prop / `finishing` state in ReloApp) may have regressed.
+- Submitting shows a stepped loading list (5 checks, centered): the first 4 tick green ~every 2s, then the LAST row becomes the active step — spinner + rotating humorous quips INLINE in the list (dark, non-italic, same style as other steps). If quips appear as italic centered subtext below the list, that's the old pre-#28 behavior. When the backend returns, the row reverts to "Assembling your checklist" → brief spin → green check, then the skeleton fades out and the plan rises in (`rise` animation). A hard instant swap into the plan means the fade wiring (`finishChecked` opacity transition in PlanSkeleton, `rise` on the result wrapper in ReloApp) may have regressed.
 - City placeholders are country-aware ("e.g. Tirana" for Albania) via the 238-country origin layer (`originForCountry().capital`). If they show generic "e.g. Mumbai" for every country, that wiring may be broken.
 - Snapshot detail tabs (Practical/Cost/Health/Safety) render on the RESULT page, not under the form — submit first, then click the tab pills under the bento grid. Health notices use native `<details>`; click the summary to expand.
 - Pick a curated destination (e.g. Spain) to exercise all tabs — uncurated countries lack tax wedge, vaccines, and price data.
@@ -37,6 +37,7 @@ Registration tasks with OSM office-link chips live in locked phases. Without a S
 ## Gotchas
 - A stale `next-server` may already occupy port 3100 from a previous session/build — `npm run start` then fails with EADDRINUSE while curl still returns 200 from the OLD build, making new changes look broken. Always `pkill -f next-server` (or kill the PID from `ps aux | grep next`) and confirm the new server actually started before testing.
 - PR comments posted via `gh pr comment` do NOT auto-upload local image paths — use the builtin PR-comment tool (or pre-upload attachments) so screenshots render.
+- A previously generated plan is cached in localStorage — /plan may load straight into the RESULT view; click "← Start over" to get back to the form before a fresh run.
 - sessionStorage caches city context 24h and FX daily — reload or use a fresh route if you need to re-trigger fetches.
 - WAQI geo lookup might return a distant station; the API uses name-based feed first, then geo with a 150km sanity check. If AQI looks like the capital's, this path may be broken.
 - Don't curl the OpenAI-backed /api/generate directly; test via UI (rate limiting and prompt assembly live there).
