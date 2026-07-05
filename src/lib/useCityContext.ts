@@ -22,7 +22,6 @@ export function useCityContext(
       setCtx(null);
       return;
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCtx(null);
     const key = `relochecklist:city:${country.toLowerCase()}:${city.toLowerCase()}`;
     try {
