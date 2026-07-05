@@ -11,36 +11,85 @@ const STEPS = [
   "Assembling your checklist",
 ];
 
-export default function PlanSkeleton() {
-  const [step, setStep] = useState(0);
+// Rotating status lines while the model finishes the plan — the last
+// step takes the longest, so keep the wait entertaining.
+const QUIPS = [
+  "Tasting the local coffee — quality control, obviously",
+  "Reading page 47 of the visa fine print so you never have to",
+  "Asking locals where they actually buy groceries",
+  "Translating bureaucratese into human",
+  "Double-checking the one deadline everyone misses",
+  "Locating the office that's only open Tuesdays, 9 to 11",
+  "Counting how many stamps your paperwork really needs",
+  "Checking if your plug fits — literally",
+  "Negotiating with the visa gods on your behalf",
+  "Stress-testing your budget against real rents",
+  "Figuring out which SIM card locals actually use",
+  "Sorting the steps so nothing blocks anything else",
+  "Practicing 'where is the bathroom?' in the local language",
+  "Polishing your checklist until it squeaks",
+];
 
-  // Advance through the checks, then hold on the last one until the
-  // real plan arrives and this component unmounts.
+interface Props {
+  /** The backend finished — run the final "assembling" step, then check it off. */
+  done?: boolean;
+}
+
+export default function PlanSkeleton({ done = false }: Props) {
+  const [tick, setTick] = useState(0);
+  const [finishChecked, setFinishChecked] = useState(false);
+
+  // Tick through the real checks; the final step only runs once the
+  // backend actually returns the plan — until then the quips carry the wait.
   useEffect(() => {
     const id = setInterval(() => {
-      setStep((s) => Math.min(s + 1, STEPS.length - 1));
+      setTick((t) => t + 1);
     }, 2100);
     return () => clearInterval(id);
   }, []);
 
+  useEffect(() => {
+    if (!done) return;
+    const id = setTimeout(() => setFinishChecked(true), 900);
+    return () => clearTimeout(id);
+  }, [done]);
+
+  const lastIndex = STEPS.length - 1;
+  const checkedCount = finishChecked
+    ? STEPS.length
+    : done
+      ? lastIndex
+      : Math.min(tick, lastIndex);
+  const spinnerIndex = done
+    ? finishChecked
+      ? -1
+      : lastIndex
+    : tick < lastIndex
+      ? tick
+      : -1;
+  const quip =
+    !done && tick >= lastIndex
+      ? QUIPS[(tick - lastIndex) % QUIPS.length]
+      : null;
+
   return (
     <div className="mx-auto w-full max-w-3xl reveal">
-      <ol className="mb-8 space-y-2" aria-live="polite">
+      <ol className="mx-auto mb-3 w-fit space-y-2" aria-live="polite">
         {STEPS.map((label, i) => {
-          const done = i < step;
-          const active = i === step;
+          const checked = i < checkedCount;
+          const active = i === spinnerIndex;
           return (
             <li
               key={label}
               className={`flex items-center gap-3 text-sm transition-colors duration-300 ${
-                done
+                checked
                   ? "text-stone-400"
                   : active
                     ? "font-medium text-stone-800"
                     : "text-stone-300"
               }`}
             >
-              {done ? (
+              {checked ? (
                 <svg
                   viewBox="0 0 16 16"
                   className="reveal h-4 w-4 shrink-0 text-emerald-600"
@@ -59,11 +108,18 @@ export default function PlanSkeleton() {
                 <span className="mx-1 h-1.5 w-1.5 shrink-0 rounded-full bg-stone-200" />
               )}
               {label}
-              {done && <span className="sr-only">— done</span>}
+              {checked && <span className="sr-only">— done</span>}
             </li>
           );
         })}
       </ol>
+
+      <p
+        key={quip ?? "pending"}
+        className="reveal mb-8 min-h-5 text-center text-sm italic text-stone-400"
+      >
+        {quip}
+      </p>
 
       <div className="space-y-7">
         {PHASES.map((phase, pi) => (

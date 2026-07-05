@@ -97,6 +97,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
     toCity: "",
   });
   const [loading, setLoading] = useState(false);
+  const [finishing, setFinishing] = useState(false);
   const [unlocking, setUnlocking] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -143,18 +144,25 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
           ("error" in data && data.error) ||
             "Something went wrong generating your plan.",
         );
+        setLoading(false);
         return;
       }
-      setResult(data);
-      try {
-        localStorage.setItem(RESULT_KEY, JSON.stringify(data));
-      } catch {
-        // ignore
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      // Let the final "Assembling your checklist" step visibly complete
+      // before swapping the skeleton for the real plan.
+      setFinishing(true);
+      setTimeout(() => {
+        setResult(data);
+        try {
+          localStorage.setItem(RESULT_KEY, JSON.stringify(data));
+        } catch {
+          // ignore
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setLoading(false);
+        setFinishing(false);
+      }, 1600);
     } catch {
       setError("Network error. Please try again.");
-    } finally {
       setLoading(false);
     }
   }, []);
@@ -234,7 +242,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
             building
           />
         )}
-        <PlanSkeleton />
+        <PlanSkeleton done={finishing} />
       </div>
     );
   }
