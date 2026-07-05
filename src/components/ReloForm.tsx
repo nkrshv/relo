@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CountryCombobox from "@/components/CountryCombobox";
+import CityCombobox from "@/components/CityCombobox";
 import { isValidCountry } from "@/lib/allCountries";
 import {
   PRIORITY_OPTIONS,
@@ -14,7 +15,12 @@ interface Props {
   loading: boolean;
   initialTo?: string;
   onSubmit: (input: ReloInput) => void;
-  onRouteChange?: (fromCountry: string, toCountry: string) => void;
+  onRouteChange?: (
+    fromCountry: string,
+    toCountry: string,
+    fromCity?: string,
+    toCity?: string,
+  ) => void;
 }
 
 const fieldClass =
@@ -30,6 +36,8 @@ export default function ReloForm({
 }: Props) {
   const [fromCountry, setFromCountry] = useState("");
   const [toCountry, setToCountry] = useState(initialTo ?? "");
+  const [fromCity, setFromCity] = useState("");
+  const [toCity, setToCity] = useState("");
   const [profile, setProfile] = useState<Profile>("solo");
   const [visaStatus, setVisaStatus] = useState("");
   const [timeline, setTimeline] = useState("");
@@ -55,6 +63,8 @@ export default function ReloForm({
     onSubmit({
       fromCountry: fromCountry.trim(),
       toCountry: toCountry.trim(),
+      fromCity: fromCity.trim() || undefined,
+      toCity: toCity.trim() || undefined,
       profile,
       visaStatus: visaStatus.trim(),
       timeline: timeline.trim(),
@@ -76,7 +86,8 @@ export default function ReloForm({
             value={fromCountry}
             onChange={(v) => {
               setFromCountry(v);
-              onRouteChange?.(v, toCountry);
+              setFromCity("");
+              onRouteChange?.(v, toCountry, "", toCity);
             }}
             placeholder="Start typing a country…"
             required
@@ -94,7 +105,8 @@ export default function ReloForm({
             value={toCountry}
             onChange={(v) => {
               setToCountry(v);
-              onRouteChange?.(fromCountry, v);
+              setToCity("");
+              onRouteChange?.(fromCountry, v, fromCity, "");
             }}
             placeholder="Start typing a country…"
             required
@@ -105,6 +117,32 @@ export default function ReloForm({
             </p>
           )}
         </div>
+
+        {fromValid && (
+          <CityCombobox
+            label="City you're leaving"
+            country={fromCountry}
+            value={fromCity}
+            onChange={(v) => {
+              setFromCity(v);
+              onRouteChange?.(fromCountry, toCountry, v, toCity);
+            }}
+            placeholder="e.g. Mumbai"
+          />
+        )}
+
+        {toValid && (
+          <CityCombobox
+            label="City you're heading to"
+            country={toCountry}
+            value={toCity}
+            onChange={(v) => {
+              setToCity(v);
+              onRouteChange?.(fromCountry, toCountry, fromCity, v);
+            }}
+            placeholder="e.g. Sydney"
+          />
+        )}
 
         <label className="block">
           <span className={labelClass}>Who is moving?</span>

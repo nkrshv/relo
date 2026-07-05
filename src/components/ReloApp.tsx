@@ -27,10 +27,14 @@ const COUNTRY_BY_NORM: Record<string, { name: string; emoji: string }> =
 function RouteHeading({
   from,
   to,
+  fromCity,
+  toCity,
   building,
 }: {
   from: string;
   to: string;
+  fromCity?: string;
+  toCity?: string;
   building: boolean;
 }) {
   const fromC = isValidCountry(from)
@@ -38,10 +42,12 @@ function RouteHeading({
     : null;
   const toC = isValidCountry(to) ? COUNTRY_BY_NORM[normalizeName(to)] : null;
   const hasRoute = Boolean(fromC && toC);
+  const fromLabel = fromCity?.trim() || fromC?.name;
+  const toLabel = toCity?.trim() || toC?.name;
   return (
     <header className="mx-auto max-w-3xl pb-8 text-center">
       <h1
-        key={hasRoute ? `${fromC!.name}-${toC!.name}` : "default"}
+        key={hasRoute ? `${fromLabel}-${toLabel}` : "default"}
         className="reveal text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl"
       >
         {hasRoute ? (
@@ -49,14 +55,14 @@ function RouteHeading({
             <span className="mr-2" aria-hidden>
               {fromC!.emoji}
             </span>
-            {fromC!.name}
+            {fromLabel}
             <span className="mx-3 font-normal text-stone-300" aria-hidden>
               →
             </span>
             <span className="mr-2" aria-hidden>
               {toC!.emoji}
             </span>
-            {toC!.name}
+            {toLabel}
           </>
         ) : (
           "Build your relocation plan"
@@ -84,7 +90,12 @@ const UNLOCK_KEY = "relochecklist:unlocked";
 
 export default function ReloApp({ initialTo, showHeading }: Props) {
   const [result, setResult] = useState<StoredResult | null>(null);
-  const [route, setRoute] = useState({ from: "", to: initialTo ?? "" });
+  const [route, setRoute] = useState({
+    from: "",
+    to: initialTo ?? "",
+    fromCity: "",
+    toCity: "",
+  });
   const [loading, setLoading] = useState(false);
   const [unlocking, setUnlocking] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
@@ -215,7 +226,13 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
     return (
       <div className="px-4 py-6">
         {showHeading && (
-          <RouteHeading from={route.from} to={route.to} building />
+          <RouteHeading
+            from={route.from}
+            to={route.to}
+            fromCity={route.fromCity}
+            toCity={route.toCity}
+            building
+          />
         )}
         <PlanSkeleton />
       </div>
@@ -225,7 +242,13 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   return (
     <div className="px-4">
       {showHeading && (
-        <RouteHeading from={route.from} to={route.to} building={false} />
+        <RouteHeading
+          from={route.from}
+          to={route.to}
+          fromCity={route.fromCity}
+          toCity={route.toCity}
+          building={false}
+        />
       )}
       {error && (
         <p className="mx-auto mb-4 max-w-2xl rounded-lg bg-red-50 px-4 py-2 text-center text-sm text-red-700">
@@ -236,7 +259,9 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         loading={loading}
         initialTo={initialTo}
         onSubmit={generate}
-        onRouteChange={(from, to) => setRoute({ from, to })}
+        onRouteChange={(from, to, fromCity, toCity) =>
+          setRoute({ from, to, fromCity: fromCity ?? "", toCity: toCity ?? "" })
+        }
       />
     </div>
   );
