@@ -667,7 +667,7 @@ export default function CountrySummary({
                 <Tile
                   label={`Taxes on salary · ${openData.taxWedge.year}`}
                   value={`~${Math.round(openData.taxWedge.value)}%`}
-                  sub="of what your job costs goes to tax & social security — not your income-tax rate"
+                  sub="of what your job costs goes to tax & social security, not your income-tax rate"
                   hint="OECD tax wedge: income tax + employee and employer social contributions for a single worker at the average wage, as a share of total labour cost"
                 />
               )}
@@ -801,7 +801,7 @@ export default function CountrySummary({
                       For {PROFILE_LABEL[profile]}
                     </span>{" "}
                     <span className="text-stone-400">({impact.level} risk)</span>{" "}
-                    — {impact.detail}
+                    · {impact.detail}
                   </p>
                 </div>
               )}

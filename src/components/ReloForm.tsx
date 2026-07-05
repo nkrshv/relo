@@ -129,7 +129,7 @@ export default function ReloForm({
           )}
           {sameCountry && (
             <p className="mt-1 text-xs text-rose-500">
-              You&apos;re already there — pick a different destination.
+              You&apos;re already there. Pick a different destination.
             </p>
           )}
         </div>

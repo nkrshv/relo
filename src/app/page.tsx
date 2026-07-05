@@ -24,15 +24,15 @@ const PAINS = [
 const STEPS = [
   {
     title: "Tell us about your move",
-    body: "Where you're going, who's coming with you — kids, pets, partner — your visa situation and budget. 60 seconds, and every answer changes your plan.",
+    body: "Where you're going, who's coming with you (kids, pets, partner), your visa situation and budget. 60 seconds, and every answer changes your plan.",
   },
   {
     title: "Get a plan that's actually yours",
-    body: "Not another generic “moving abroad” list. Your route, your deadlines, the actual offices in your new city — the weeks of research, already done.",
+    body: "Not another generic “moving abroad” list. Your route, your deadlines, the actual offices in your new city. The weeks of research, already done.",
   },
   {
     title: "Check things off, not your sanity",
-    body: "From “before you book flights” to “your first 90 days”: what to bring, where to go, and the mistake everyone makes at each step — so you don't.",
+    body: "From “before you book flights” to “your first 90 days”: what to bring, where to go, and the mistake everyone makes at each step, so you don't.",
   },
 ];
 
@@ -50,7 +50,7 @@ const FEATURES = [
 const FAQ = [
   {
     q: "Is it really personalized?",
-    a: "Yes — that's the whole point. A family with two kids and a dog gets a completely different plan than a solo remote worker on the same route. Your budget, your kids' ages, your partner's job plans become concrete steps, not footnotes.",
+    a: "Yes, that's the whole point. A family with two kids and a dog gets a completely different plan than a solo remote worker on the same route. Your budget, your kids' ages, your partner's job plans become concrete steps, not footnotes.",
   },
   {
     q: "Can I trust the information?",
@@ -58,11 +58,11 @@ const FAQ = [
   },
   {
     q: "Is this legal or immigration advice?",
-    a: "No — it's the research assistant you wish you had. It tells you what to do, when, and where to double-check it. If your case is tricky, the plan is also the fastest way to brief an actual immigration lawyer.",
+    a: "No, it's the research assistant you wish you had. It tells you what to do, when, and where to double-check it. If your case is tricky, the plan is also the fastest way to brief an actual immigration lawyer.",
   },
   {
     q: "How long does it take?",
-    a: "About a minute to answer the questions, under a minute to get your plan. People spend weeks piecing the same answers together from forums and outdated blog posts — that's the part you skip.",
+    a: "About a minute to answer the questions, under a minute to get your plan. People spend weeks piecing the same answers together from forums and outdated blog posts. That's the part you skip.",
   },
 ];
 

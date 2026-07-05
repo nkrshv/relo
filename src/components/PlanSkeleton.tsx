@@ -15,14 +15,14 @@ const FINAL_STEP = "Assembling your checklist";
 // finishes the plan — the final step takes the longest, so keep the
 // wait entertaining.
 const QUIPS = [
-  "Tasting the local coffee — quality control, obviously",
+  "Tasting the local coffee. Quality control, obviously",
   "Reading page 47 of the visa fine print so you never have to",
   "Asking locals where they actually buy groceries",
   "Translating bureaucratese into human",
   "Double-checking the one deadline everyone misses",
   "Locating the office that's only open Tuesdays, 9 to 11",
   "Counting how many stamps your paperwork really needs",
-  "Checking if your plug fits — literally",
+  "Checking if your plug fits, literally",
   "Negotiating with the visa gods on your behalf",
   "Stress-testing your budget against real rents",
   "Figuring out which SIM card locals actually use",
@@ -128,7 +128,7 @@ export default function PlanSkeleton({ done = false }: Props) {
                 <span className="mx-1 h-1.5 w-1.5 shrink-0 rounded-full bg-stone-200" />
               )}
               {label}
-              {checked && <span className="sr-only">— done</span>}
+              {checked && <span className="sr-only">, done</span>}
             </li>
           );
         })}
