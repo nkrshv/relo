@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DESTINATIONS } from "@/lib/countries";
 import Spotlight from "@/components/Spotlight";
 import Typewriter from "@/components/Typewriter";
+import PipelineDiagram from "@/components/PipelineDiagram";
 
 const TYPE_CITIES = [
   "Lisbon",
@@ -159,6 +160,7 @@ export default function Home() {
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           How it works
         </h2>
+        <PipelineDiagram />
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {STEPS.map((s, i) => (
             <Spotlight

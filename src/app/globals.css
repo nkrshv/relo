@@ -192,6 +192,63 @@ a.pressable:active {
   animation: var(--animate-shimmer);
 }
 
+/* Pipeline diagram: dots ride their offset-path into the engine node. */
+.flow-dot {
+  offset-rotate: 0deg;
+  offset-distance: 0%;
+  opacity: 0;
+  animation: flow-travel 3.4s ease-in-out infinite;
+}
+.flow-dot-out {
+  animation-delay: 1.7s;
+}
+@keyframes flow-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  52% {
+    opacity: 1;
+  }
+  62%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+.pipeline-node {
+  animation: node-breathe 3.4s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes node-breathe {
+  0%,
+  45%,
+  100% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+}
+.plan-line {
+  opacity: 0.35;
+  animation: plan-tick 6.8s ease-out infinite;
+}
+@keyframes plan-tick {
+  0%,
+  20% {
+    opacity: 0.35;
+  }
+  28%,
+  100% {
+    opacity: 1;
+  }
+}
+
 /* Subtle content fade helper. */
 .reveal {
   animation: var(--animate-fade-in);
@@ -218,6 +275,17 @@ a.pressable:active {
   .caret,
   .pulse-dot::after {
     animation: none !important;
+  }
+  .flow-dot {
+    animation: none !important;
+    opacity: 0;
+  }
+  .pipeline-node {
+    animation: none !important;
+  }
+  .plan-line {
+    animation: none !important;
+    opacity: 1;
   }
   .timeline-ink {
     animation: none !important;
