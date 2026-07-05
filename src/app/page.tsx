@@ -22,16 +22,16 @@ const PAINS = [
 
 const STEPS = [
   {
-    title: "Tell us your situation",
-    body: "Route, visa status, family, pets, budget, timeline. Takes 60 seconds. Every detail changes the plan.",
+    title: "Tell us about your move",
+    body: "Where you're going, who's coming with you — kids, pets, partner — your visa situation and budget. 60 seconds, and every answer changes your plan.",
   },
   {
-    title: "AI builds your checklist",
-    body: "Two-pass generation grounded in verified data: U.S. State Department advisories, CDC health notes, live FX rates and curated country facts.",
+    title: "Get a plan that's actually yours",
+    body: "Not another generic “moving abroad” list. Your route, your deadlines, the actual offices in your new city — the weeks of research, already done.",
   },
   {
-    title: "Follow it step by step",
-    body: "Four phases, real office names, exact documents, hard deadlines and the mistakes everyone makes. Check items off as you go.",
+    title: "Check things off, not your sanity",
+    body: "From “before you book flights” to “your first 90 days”: what to bring, where to go, and the mistake everyone makes at each step — so you don't.",
   },
 ];
 
@@ -49,19 +49,19 @@ const FEATURES = [
 const FAQ = [
   {
     q: "Is it really personalized?",
-    a: "Yes. A family with two kids and a dog moving on a D7 visa gets a completely different plan than a solo remote worker. Budget caps, children's ages and spouse job plans are woven into specific steps.",
+    a: "Yes — that's the whole point. A family with two kids and a dog gets a completely different plan than a solo remote worker on the same route. Your budget, your kids' ages, your partner's job plans become concrete steps, not footnotes.",
   },
   {
-    q: "Where does the data come from?",
-    a: "Safety levels come from official U.S. State Department travel advisories, health info from the CDC, exchange rates from a live FX feed, plus a curated facts layer with visa thresholds, fees and deadlines per country. Snapshots refresh monthly.",
+    q: "Can I trust the information?",
+    a: "It comes from the sources you'd check yourself if you had the time: official government travel advisories, health notices, daily exchange rates and country facts we keep fresh. Every plan links back to the originals, so verifying anything takes one click instead of an evening.",
   },
   {
     q: "Is this legal or immigration advice?",
-    a: "No. It's a research and planning tool. Every plan links to official sources so you can verify current requirements before acting.",
+    a: "No — it's the research assistant you wish you had. It tells you what to do, when, and where to double-check it. If your case is tricky, the plan is also the fastest way to brief an actual immigration lawyer.",
   },
   {
     q: "How long does it take?",
-    a: "About a minute to fill the form, 30 to 60 seconds to generate. The plan is drafted, then reviewed by a second AI pass that removes generic filler.",
+    a: "About a minute to answer the questions, under a minute to get your plan. People spend weeks piecing the same answers together from forums and outdated blog posts — that's the part you skip.",
   },
 ];
 
