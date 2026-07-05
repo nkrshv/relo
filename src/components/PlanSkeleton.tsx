@@ -60,7 +60,11 @@ export default function PlanSkeleton({ done = false }: Props) {
     : done
       ? lastIndex
       : Math.min(tick, lastIndex);
-  const spinnerIndex = finishChecked ? -1 : Math.min(tick, lastIndex);
+  const spinnerIndex = finishChecked
+    ? -1
+    : done
+      ? lastIndex
+      : Math.min(tick, lastIndex);
   const quip =
     !done && tick >= lastIndex
       ? QUIPS[(tick - lastIndex) % QUIPS.length]
@@ -68,7 +72,7 @@ export default function PlanSkeleton({ done = false }: Props) {
 
   return (
     <div
-      className={`mx-auto w-full max-w-3xl reveal transition-opacity delay-500 duration-500 ${
+      className={`mx-auto w-full max-w-3xl reveal transition-opacity delay-150 duration-300 ${
         finishChecked ? "opacity-0" : "opacity-100"
       }`}
     >
