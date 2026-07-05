@@ -30,6 +30,15 @@ interface GeoResult {
 
 const cache = new Map<string, { at: number; data: CityContext | null }>();
 const TTL_MS = 6 * 60 * 60 * 1000;
+const CACHE_MAX = 2000;
+
+function cacheSet(key: string, data: CityContext | null) {
+  if (cache.size >= CACHE_MAX) {
+    const oldest = cache.keys().next().value;
+    if (oldest !== undefined) cache.delete(oldest);
+  }
+  cache.set(key, { at: Date.now(), data });
+}
 
 function offsetHoursFor(tz: string): number | null {
   try {
@@ -178,7 +187,7 @@ export async function GET(req: NextRequest) {
     // treated as not found below
   }
   if (!geo) {
-    cache.set(key, { at: Date.now(), data: null });
+    cacheSet(key, null);
     return Response.json({ error: "not found" }, { status: 404 });
   }
 
@@ -198,7 +207,7 @@ export async function GET(req: NextRequest) {
     julC: climate ? Math.round(climate.julC) : null,
     climateYear: climate?.year ?? null,
   };
-  cache.set(key, { at: Date.now(), data });
+  cacheSet(key, data);
   return Response.json(data, {
     headers: { "Cache-Control": "public, s-maxage=21600" },
   });
