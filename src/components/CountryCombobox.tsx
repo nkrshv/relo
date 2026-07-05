@@ -10,6 +10,8 @@ interface Props {
   placeholder?: string;
   required?: boolean;
   autoFocus?: boolean;
+  /** Country name to hide from suggestions (e.g. the other side of the route). */
+  exclude?: string;
 }
 
 export default function CountryCombobox({
@@ -19,6 +21,7 @@ export default function CountryCombobox({
   placeholder,
   required,
   autoFocus,
+  exclude,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState(value);
@@ -34,7 +37,10 @@ export default function CountryCombobox({
     setQuery(value);
   }
 
-  const results = useMemo<Country[]>(() => searchCountries(query), [query]);
+  const results = useMemo<Country[]>(
+    () => searchCountries(query).filter((c) => c.name !== exclude),
+    [query, exclude],
+  );
 
   // Close on outside click.
   useEffect(() => {

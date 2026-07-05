@@ -49,13 +49,15 @@ export default function ReloForm({
 
   const fromValid = isValidCountry(fromCountry);
   const toValid = isValidCountry(toCountry);
+  const sameCountry =
+    fromValid && toValid && fromCountry.trim() === toCountry.trim();
   // Country-aware example city so the hint never suggests a city from the
   // wrong country (Albania should say "e.g. Tirana", not "e.g. Mumbai").
   const cityExample = (country: string, fallback: string) => {
     const capital = originForCountry(country)?.capital;
     return `e.g. ${capital || fallback}`;
   };
-  const canSubmit = fromValid && toValid && !loading;
+  const canSubmit = fromValid && toValid && !sameCountry && !loading;
 
   function togglePriority(p: string) {
     setPriorities((prev) =>
@@ -98,6 +100,7 @@ export default function ReloForm({
             }}
             placeholder="Start typing a country…"
             required
+            exclude={toValid ? toCountry : undefined}
           />
           {touched && !fromValid && (
             <p className="mt-1 text-xs text-rose-500">
@@ -117,10 +120,16 @@ export default function ReloForm({
             }}
             placeholder="Start typing a country…"
             required
+            exclude={fromValid ? fromCountry : undefined}
           />
           {touched && !toValid && (
             <p className="mt-1 text-xs text-rose-500">
               Please pick a country from the list.
+            </p>
+          )}
+          {sameCountry && (
+            <p className="mt-1 text-xs text-rose-500">
+              You&apos;re already there — pick a different destination.
             </p>
           )}
         </div>

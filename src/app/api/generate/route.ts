@@ -447,6 +447,12 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
+  if (fromCountry.toLowerCase() === toCountry.toLowerCase()) {
+    return Response.json(
+      { error: "Origin and destination must be different countries." },
+      { status: 400 },
+    );
+  }
 
   const input: ReloInput = {
     fromCountry,
