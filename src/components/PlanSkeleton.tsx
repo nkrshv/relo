@@ -60,24 +60,23 @@ export default function PlanSkeleton({ done = false }: Props) {
     : done
       ? lastIndex
       : Math.min(tick, lastIndex);
-  const spinnerIndex = done
-    ? finishChecked
-      ? -1
-      : lastIndex
-    : tick < lastIndex
-      ? tick
-      : -1;
+  const spinnerIndex = finishChecked ? -1 : Math.min(tick, lastIndex);
   const quip =
     !done && tick >= lastIndex
       ? QUIPS[(tick - lastIndex) % QUIPS.length]
       : null;
 
   return (
-    <div className="mx-auto w-full max-w-3xl reveal">
-      <ol className="mx-auto mb-3 w-fit space-y-2" aria-live="polite">
+    <div
+      className={`mx-auto w-full max-w-3xl reveal transition-opacity delay-500 duration-500 ${
+        finishChecked ? "opacity-0" : "opacity-100"
+      }`}
+    >
+      <ol className="mx-auto mb-8 w-fit space-y-2" aria-live="polite">
         {STEPS.map((label, i) => {
           const checked = i < checkedCount;
           const active = i === spinnerIndex;
+          const isLast = i === lastIndex;
           return (
             <li
               key={label}
@@ -107,19 +106,18 @@ export default function PlanSkeleton({ done = false }: Props) {
               ) : (
                 <span className="mx-1 h-1.5 w-1.5 shrink-0 rounded-full bg-stone-200" />
               )}
-              {label}
+              {isLast && quip ? (
+                <span key={quip} className="reveal font-medium text-stone-800">
+                  {quip}
+                </span>
+              ) : (
+                label
+              )}
               {checked && <span className="sr-only">— done</span>}
             </li>
           );
         })}
       </ol>
-
-      <p
-        key={quip ?? "pending"}
-        className="reveal mb-8 min-h-5 text-center text-sm italic text-stone-400"
-      >
-        {quip}
-      </p>
 
       <div className="space-y-7">
         {PHASES.map((phase, pi) => (
