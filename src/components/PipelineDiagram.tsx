@@ -1,17 +1,20 @@
 const SOURCES = [
-  { label: "Your answers", y: 32, accent: true },
-  { label: "Official advisories", y: 78, accent: false },
-  { label: "Live FX rates", y: 124, accent: false },
-  { label: "Country facts", y: 170, accent: false },
+  { label: "Your answers", y: 26, accent: true },
+  { label: "Visa rules · Passport Index", y: 66, accent: false },
+  { label: "Official advisories", y: 106, accent: false },
+  { label: "Live FX rates", y: 146, accent: false },
+  { label: "Climate & air quality", y: 186, accent: false },
+  { label: "Prices & taxes", y: 226, accent: false },
+  { label: "Local offices & maps", y: 266, accent: false },
 ];
 
-const NODE = { x: 356, y: 101 };
+const NODE = { x: 392, y: 146 };
 
 function sourcePath(y: number): string {
-  return `M172 ${y} C 250 ${y} 268 ${NODE.y} ${NODE.x - 30} ${NODE.y}`;
+  return `M196 ${y} C 292 ${y} 306 ${NODE.y} ${NODE.x - 30} ${NODE.y}`;
 }
 
-const OUT_PATH = `M${NODE.x + 30} ${NODE.y} L 520 ${NODE.y}`;
+const OUT_PATH = `M${NODE.x + 30} ${NODE.y} L 540 ${NODE.y}`;
 
 /**
  * Assembly-line diagram: data sources flow into one engine node,
@@ -20,10 +23,10 @@ const OUT_PATH = `M${NODE.x + 30} ${NODE.y} L 520 ${NODE.y}`;
 export default function PipelineDiagram() {
   return (
     <svg
-      viewBox="0 0 720 202"
+      viewBox="0 0 746 292"
       role="img"
       aria-label="Your answers and live country data are combined into one personalized relocation plan"
-      className="mx-auto mt-10 w-full max-w-2xl"
+      className="mx-auto mt-10 w-full max-w-4xl"
     >
       {/* rails */}
       {SOURCES.map((s) => (
@@ -48,7 +51,7 @@ export default function PipelineDiagram() {
           <rect
             x="10"
             y={s.y - 14}
-            width="162"
+            width="186"
             height="28"
             rx="7"
             fill="white"
@@ -79,7 +82,7 @@ export default function PipelineDiagram() {
           className="flow-dot"
           style={{
             offsetPath: `path("${sourcePath(s.y)}")`,
-            animationDelay: `${i * 0.55}s`,
+            animationDelay: `${i * 0.4}s`,
           }}
         />
       ))}
@@ -115,21 +118,21 @@ export default function PipelineDiagram() {
       {/* plan card */}
       <g>
         <rect
-          x="520"
-          y="41"
-          width="190"
-          height="120"
+          x="540"
+          y="72"
+          width="196"
+          height="148"
           rx="10"
           fill="white"
           stroke="var(--color-stone-200)"
         />
-        <text x="538" y="68" className="fill-stone-900 text-[12px] font-semibold">
+        <text x="558" y="99" className="fill-stone-900 text-[12px] font-semibold">
           Your relocation plan
         </text>
-        {[0, 1, 2].map((i) => (
-          <g key={i} className="plan-line" style={{ animationDelay: `${1.1 + i * 0.7}s` }}>
+        {[0, 1, 2, 3].map((i) => (
+          <g key={i} className="plan-line" style={{ animationDelay: `${1.1 + i * 0.6}s` }}>
             <path
-              d={`M538 ${86 + i * 22} l3.5 3.5 6 -6`}
+              d={`M558 ${117 + i * 22} l3.5 3.5 6 -6`}
               fill="none"
               stroke="var(--color-emerald-600)"
               strokeWidth="1.5"
@@ -137,9 +140,9 @@ export default function PipelineDiagram() {
               strokeLinejoin="round"
             />
             <rect
-              x="556"
-              y={82 + i * 22}
-              width={[128, 96, 112][i]}
+              x="576"
+              y={113 + i * 22}
+              width={[134, 100, 118, 88][i]}
               height="7"
               rx="3.5"
               fill="var(--color-stone-200)"
