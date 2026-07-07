@@ -25,7 +25,7 @@ export interface CountryInsights {
   bigMacUsd: { value: number; date: string } | null;
 }
 
-export const INSIGHTS_UPDATED_AT = "2026-07-02";
+export const INSIGHTS_UPDATED_AT = "2026-07-07";
 
 export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
   "Portugal": {
@@ -2067,6 +2067,2357 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": {
       "value": 5.78,
+      "date": "2026-01-01"
+    }
+  },
+  "Greece": {
+    "iso2": "GR",
+    "capital": "Athens",
+    "climate": {
+      "city": "Athens",
+      "year": "2025",
+      "months": [
+        {
+          "t": 10.9,
+          "rainyDays": 5
+        },
+        {
+          "t": 8.3,
+          "rainyDays": 9
+        },
+        {
+          "t": 13.7,
+          "rainyDays": 5
+        },
+        {
+          "t": 14.8,
+          "rainyDays": 13
+        },
+        {
+          "t": 20.7,
+          "rainyDays": 7
+        },
+        {
+          "t": 28,
+          "rainyDays": 1
+        },
+        {
+          "t": 30.6,
+          "rainyDays": 1
+        },
+        {
+          "t": 27.9,
+          "rainyDays": 1
+        },
+        {
+          "t": 24.7,
+          "rainyDays": 2
+        },
+        {
+          "t": 18.3,
+          "rainyDays": 6
+        },
+        {
+          "t": 16.7,
+          "rainyDays": 11
+        },
+        {
+          "t": 11.7,
+          "rainyDays": 6
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 15,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-02-23",
+          "name": "Clean Monday"
+        },
+        {
+          "date": "2026-03-25",
+          "name": "Annunciation"
+        },
+        {
+          "date": "2026-03-25",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-31",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-10-28",
+          "name": "Ochi Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": {
+      "value": 79.6,
+      "year": "2021"
+    },
+    "bigMacUsd": null
+  },
+  "Cyprus": {
+    "iso2": "CY",
+    "capital": "Nicosia",
+    "climate": {
+      "city": "Nicosia",
+      "year": "2025",
+      "months": [
+        {
+          "t": 11.8,
+          "rainyDays": 4
+        },
+        {
+          "t": 9.2,
+          "rainyDays": 5
+        },
+        {
+          "t": 16,
+          "rainyDays": 3
+        },
+        {
+          "t": 17.2,
+          "rainyDays": 7
+        },
+        {
+          "t": 22.6,
+          "rainyDays": 6
+        },
+        {
+          "t": 28.4,
+          "rainyDays": 0
+        },
+        {
+          "t": 30.4,
+          "rainyDays": 1
+        },
+        {
+          "t": 30.1,
+          "rainyDays": 0
+        },
+        {
+          "t": 26.7,
+          "rainyDays": 1
+        },
+        {
+          "t": 21.5,
+          "rainyDays": 0
+        },
+        {
+          "t": 18.5,
+          "rainyDays": 3
+        },
+        {
+          "t": 12.7,
+          "rainyDays": 11
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 17,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-02-23",
+          "name": "Green Monday"
+        },
+        {
+          "date": "2026-03-25",
+          "name": "Greek Independence Day"
+        },
+        {
+          "date": "2026-04-01",
+          "name": "Cyprus National Day"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-14",
+          "name": "Easter Tuesday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-31",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption of the Virgin Mary"
+        },
+        {
+          "date": "2026-10-01",
+          "name": "Cyprus Independence Day"
+        },
+        {
+          "date": "2026-10-28",
+          "name": "Ohi Day"
+        },
+        {
+          "date": "2026-12-24",
+          "name": "Christmas Eve"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.13,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 81.9,
+      "year": "2021"
+    },
+    "bigMacUsd": null
+  },
+  "Malta": {
+    "iso2": "MT",
+    "capital": "Valletta",
+    "climate": {
+      "city": "Valletta",
+      "year": "2025",
+      "months": [
+        {
+          "t": 14.9,
+          "rainyDays": 7
+        },
+        {
+          "t": 13.9,
+          "rainyDays": 15
+        },
+        {
+          "t": 16,
+          "rainyDays": 9
+        },
+        {
+          "t": 16.6,
+          "rainyDays": 6
+        },
+        {
+          "t": 20.7,
+          "rainyDays": 5
+        },
+        {
+          "t": 26.1,
+          "rainyDays": 0
+        },
+        {
+          "t": 28.2,
+          "rainyDays": 0
+        },
+        {
+          "t": 27,
+          "rainyDays": 1
+        },
+        {
+          "t": 25.8,
+          "rainyDays": 2
+        },
+        {
+          "t": 21.5,
+          "rainyDays": 9
+        },
+        {
+          "t": 18.1,
+          "rainyDays": 10
+        },
+        {
+          "t": 15.4,
+          "rainyDays": 12
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-10",
+          "name": "Feast of St. Paul's Shipwreck"
+        },
+        {
+          "date": "2026-03-19",
+          "name": "Feast of St. Joseph"
+        },
+        {
+          "date": "2026-03-31",
+          "name": "Freedom Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Worker's Day"
+        },
+        {
+          "date": "2026-06-07",
+          "name": "Sette Giugno"
+        },
+        {
+          "date": "2026-06-29",
+          "name": "Feast of St.Peter and St.Paul"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-09-08",
+          "name": "Feast of Our Lady of Victories"
+        },
+        {
+          "date": "2026-09-21",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Feast of the Immaculate Conception"
+        },
+        {
+          "date": "2026-12-13",
+          "name": "Republic Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.36,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 81.8,
+      "year": "2021"
+    },
+    "bigMacUsd": null
+  },
+  "Switzerland": {
+    "iso2": "CH",
+    "capital": "Bern",
+    "climate": {
+      "city": "Bern",
+      "year": "2025",
+      "months": [
+        {
+          "t": 1.1,
+          "rainyDays": 15
+        },
+        {
+          "t": 2,
+          "rainyDays": 8
+        },
+        {
+          "t": 5.8,
+          "rainyDays": 11
+        },
+        {
+          "t": 9.3,
+          "rainyDays": 10
+        },
+        {
+          "t": 12.8,
+          "rainyDays": 14
+        },
+        {
+          "t": 19.9,
+          "rainyDays": 11
+        },
+        {
+          "t": 18.4,
+          "rainyDays": 19
+        },
+        {
+          "t": 18.9,
+          "rainyDays": 10
+        },
+        {
+          "t": 13.8,
+          "rainyDays": 18
+        },
+        {
+          "t": 8.8,
+          "rainyDays": 12
+        },
+        {
+          "t": 3.6,
+          "rainyDays": 13
+        },
+        {
+          "t": 1.2,
+          "rainyDays": 3
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 4,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-08-01",
+          "name": "Swiss National Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.15,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 83.3,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 9.08,
+      "date": "2026-01-01"
+    }
+  },
+  "Austria": {
+    "iso2": "AT",
+    "capital": "Vienna",
+    "climate": {
+      "city": "Vienna",
+      "year": "2025",
+      "months": [
+        {
+          "t": 1.3,
+          "rainyDays": 6
+        },
+        {
+          "t": 1.2,
+          "rainyDays": 3
+        },
+        {
+          "t": 7.4,
+          "rainyDays": 9
+        },
+        {
+          "t": 12.6,
+          "rainyDays": 7
+        },
+        {
+          "t": 14.7,
+          "rainyDays": 11
+        },
+        {
+          "t": 22.5,
+          "rainyDays": 8
+        },
+        {
+          "t": 21.1,
+          "rainyDays": 18
+        },
+        {
+          "t": 21.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 17.1,
+          "rainyDays": 13
+        },
+        {
+          "t": 10.5,
+          "rainyDays": 13
+        },
+        {
+          "t": 4.8,
+          "rainyDays": 10
+        },
+        {
+          "t": 2.4,
+          "rainyDays": 7
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 15,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "National Holiday"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-24",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-06-04",
+          "name": "Corpus Christi"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-10-26",
+          "name": "National Holiday"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Immaculate Conception"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.53,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 81,
+      "year": "2021"
+    },
+    "bigMacUsd": null
+  },
+  "Czechia": {
+    "iso2": "CZ",
+    "capital": "Prague",
+    "climate": {
+      "city": "Prague",
+      "year": "2025",
+      "months": [
+        {
+          "t": 1.6,
+          "rainyDays": 12
+        },
+        {
+          "t": -0.2,
+          "rainyDays": 2
+        },
+        {
+          "t": 5.7,
+          "rainyDays": 8
+        },
+        {
+          "t": 11.6,
+          "rainyDays": 5
+        },
+        {
+          "t": 14,
+          "rainyDays": 12
+        },
+        {
+          "t": 20.6,
+          "rainyDays": 10
+        },
+        {
+          "t": 20.2,
+          "rainyDays": 17
+        },
+        {
+          "t": 20.3,
+          "rainyDays": 8
+        },
+        {
+          "t": 15.6,
+          "rainyDays": 10
+        },
+        {
+          "t": 9.7,
+          "rainyDays": 12
+        },
+        {
+          "t": 3.8,
+          "rainyDays": 7
+        },
+        {
+          "t": 2,
+          "rainyDays": 4
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 13,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-08",
+          "name": "Liberation Day"
+        },
+        {
+          "date": "2026-07-05",
+          "name": "Saints Cyril and Methodius Day"
+        },
+        {
+          "date": "2026-07-06",
+          "name": "Jan Hus Day"
+        },
+        {
+          "date": "2026-09-28",
+          "name": "St. Wenceslas Day"
+        },
+        {
+          "date": "2026-10-28",
+          "name": "Independent Czechoslovak State Day"
+        },
+        {
+          "date": "2026-11-17",
+          "name": "Struggle for Freedom and Democracy Day"
+        },
+        {
+          "date": "2026-12-24",
+          "name": "Christmas Eve"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.46,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 77.1,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 5.5,
+      "date": "2026-01-01"
+    }
+  },
+  "Georgia": {
+    "iso2": "GE",
+    "capital": "Tbilisi",
+    "climate": {
+      "city": "Tbilisi",
+      "year": "2025",
+      "months": [
+        {
+          "t": 4.1,
+          "rainyDays": 3
+        },
+        {
+          "t": 1.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 9.9,
+          "rainyDays": 5
+        },
+        {
+          "t": 11.9,
+          "rainyDays": 16
+        },
+        {
+          "t": 17.6,
+          "rainyDays": 17
+        },
+        {
+          "t": 21.3,
+          "rainyDays": 7
+        },
+        {
+          "t": 26.2,
+          "rainyDays": 6
+        },
+        {
+          "t": 26.8,
+          "rainyDays": 2
+        },
+        {
+          "t": 19.1,
+          "rainyDays": 11
+        },
+        {
+          "t": 14.4,
+          "rainyDays": 9
+        },
+        {
+          "t": 10.7,
+          "rainyDays": 0
+        },
+        {
+          "t": 4.5,
+          "rainyDays": 10
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 17,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-07",
+          "name": "Christmas Day (Orthodox)"
+        },
+        {
+          "date": "2026-01-19",
+          "name": "Epiphany (Orthodox)"
+        },
+        {
+          "date": "2026-03-03",
+          "name": "Mother's Day"
+        },
+        {
+          "date": "2026-03-08",
+          "name": "International Women's Day"
+        },
+        {
+          "date": "2026-04-09",
+          "name": "National Unity Day"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-11",
+          "name": "Holy Saturday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-09",
+          "name": "Day of Victory over Fascism"
+        },
+        {
+          "date": "2026-05-12",
+          "name": "Saint Andrew the First-Called Day"
+        },
+        {
+          "date": "2026-05-26",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-08-28",
+          "name": "Saint Mary's Day"
+        },
+        {
+          "date": "2026-10-14",
+          "name": "Day of Svetitskhoveli Cathedra"
+        },
+        {
+          "date": "2026-11-23",
+          "name": "Saint George's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.87,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 71.2,
+      "year": "2021"
+    },
+    "bigMacUsd": null
+  },
+  "Armenia": {
+    "iso2": "AM",
+    "capital": "Yerevan",
+    "climate": {
+      "city": "Yerevan",
+      "year": "2025",
+      "months": [
+        {
+          "t": -0.5,
+          "rainyDays": 2
+        },
+        {
+          "t": -1.1,
+          "rainyDays": 6
+        },
+        {
+          "t": 8.8,
+          "rainyDays": 5
+        },
+        {
+          "t": 12.1,
+          "rainyDays": 20
+        },
+        {
+          "t": 18.2,
+          "rainyDays": 11
+        },
+        {
+          "t": 23,
+          "rainyDays": 1
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 1
+        },
+        {
+          "t": 28.8,
+          "rainyDays": 0
+        },
+        {
+          "t": 20.9,
+          "rainyDays": 4
+        },
+        {
+          "t": 14.4,
+          "rainyDays": 8
+        },
+        {
+          "t": 7.6,
+          "rainyDays": 2
+        },
+        {
+          "t": 1.3,
+          "rainyDays": 7
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-05",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-01-28",
+          "name": "Army Day"
+        },
+        {
+          "date": "2026-03-08",
+          "name": "Women's Day"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-24",
+          "name": "Armenian Genocide Remembrance Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-09",
+          "name": "Victory and Peace Day"
+        },
+        {
+          "date": "2026-05-28",
+          "name": "Republic Day"
+        },
+        {
+          "date": "2026-07-05",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-09-21",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-31",
+          "name": "New Year's Eve"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.31,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 73,
+      "year": "2021"
+    },
+    "bigMacUsd": null
+  },
+  "Turkey": {
+    "iso2": "TR",
+    "capital": "Ankara",
+    "climate": {
+      "city": "Ankara",
+      "year": "2025",
+      "months": [
+        {
+          "t": 3.1,
+          "rainyDays": 8
+        },
+        {
+          "t": 0.3,
+          "rainyDays": 5
+        },
+        {
+          "t": 10.6,
+          "rainyDays": 4
+        },
+        {
+          "t": 10.1,
+          "rainyDays": 16
+        },
+        {
+          "t": 17.2,
+          "rainyDays": 10
+        },
+        {
+          "t": 22.2,
+          "rainyDays": 3
+        },
+        {
+          "t": 27.4,
+          "rainyDays": 0
+        },
+        {
+          "t": 26.1,
+          "rainyDays": 2
+        },
+        {
+          "t": 19.6,
+          "rainyDays": 4
+        },
+        {
+          "t": 12.8,
+          "rainyDays": 11
+        },
+        {
+          "t": 9.4,
+          "rainyDays": 4
+        },
+        {
+          "t": 3.5,
+          "rainyDays": 12
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-20",
+          "name": "Eid al-Fitr First Day"
+        },
+        {
+          "date": "2026-03-21",
+          "name": "Eid al-Fitr Second Day"
+        },
+        {
+          "date": "2026-03-22",
+          "name": "Eid al-Fitr Third Day"
+        },
+        {
+          "date": "2026-04-23",
+          "name": "National Independence & Children's Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-19",
+          "name": "Atatürk Commemoration & Youth Day"
+        },
+        {
+          "date": "2026-05-27",
+          "name": "Eid al-Adha First Day"
+        },
+        {
+          "date": "2026-05-28",
+          "name": "Eid al-Adha Second Day"
+        },
+        {
+          "date": "2026-05-29",
+          "name": "Eid al-Adha Third Day"
+        },
+        {
+          "date": "2026-05-30",
+          "name": "Eid al-Adha Fourth Day"
+        },
+        {
+          "date": "2026-07-15",
+          "name": "Democracy and National Unity Day"
+        },
+        {
+          "date": "2026-08-30",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-10-29",
+          "name": "Republic Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 34.88,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 75.3,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 5.9,
+      "date": "2026-01-01"
+    }
+  },
+  "Brazil": {
+    "iso2": "BR",
+    "capital": "Brasília",
+    "climate": {
+      "city": "Brasília",
+      "year": "2025",
+      "months": [
+        {
+          "t": 22,
+          "rainyDays": 23
+        },
+        {
+          "t": 23.1,
+          "rainyDays": 12
+        },
+        {
+          "t": 23.5,
+          "rainyDays": 16
+        },
+        {
+          "t": 22.6,
+          "rainyDays": 16
+        },
+        {
+          "t": 20.4,
+          "rainyDays": 2
+        },
+        {
+          "t": 20.5,
+          "rainyDays": 1
+        },
+        {
+          "t": 20.4,
+          "rainyDays": 1
+        },
+        {
+          "t": 22.5,
+          "rainyDays": 0
+        },
+        {
+          "t": 23.9,
+          "rainyDays": 6
+        },
+        {
+          "t": 23.7,
+          "rainyDays": 9
+        },
+        {
+          "t": 23.1,
+          "rainyDays": 18
+        },
+        {
+          "t": 22.1,
+          "rainyDays": 26
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-21",
+          "name": "Tiradentes"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-06-04",
+          "name": "Corpus Christi"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "Our Lady of Aparecida"
+        },
+        {
+          "date": "2026-11-02",
+          "name": "All Souls' Day"
+        },
+        {
+          "date": "2026-11-15",
+          "name": "Republic Proclamation Day"
+        },
+        {
+          "date": "2026-11-20",
+          "name": "Black Awareness Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 5.02,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.4,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 4.45,
+      "date": "2026-01-01"
+    }
+  },
+  "Argentina": {
+    "iso2": "AR",
+    "capital": "Buenos Aires",
+    "climate": {
+      "city": "Buenos Aires",
+      "year": "2025",
+      "months": [
+        {
+          "t": 25.3,
+          "rainyDays": 8
+        },
+        {
+          "t": 25.5,
+          "rainyDays": 9
+        },
+        {
+          "t": 22.2,
+          "rainyDays": 12
+        },
+        {
+          "t": 17,
+          "rainyDays": 8
+        },
+        {
+          "t": 15.8,
+          "rainyDays": 10
+        },
+        {
+          "t": 10.3,
+          "rainyDays": 4
+        },
+        {
+          "t": 11.1,
+          "rainyDays": 4
+        },
+        {
+          "t": 13,
+          "rainyDays": 4
+        },
+        {
+          "t": 15.3,
+          "rainyDays": 7
+        },
+        {
+          "t": 18.9,
+          "rainyDays": 10
+        },
+        {
+          "t": 20.5,
+          "rainyDays": 11
+        },
+        {
+          "t": 25.7,
+          "rainyDays": 10
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 16,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-03-24",
+          "name": "Day of Remembrance for Truth and Justice"
+        },
+        {
+          "date": "2026-04-02",
+          "name": "Day of the Veterans and Fallen of the Malvinas War"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "May Revolution"
+        },
+        {
+          "date": "2026-06-15",
+          "name": "Anniversary of the Passing of General Martín Miguel de Güemes"
+        },
+        {
+          "date": "2026-06-20",
+          "name": "General Manuel Belgrano Memorial Day"
+        },
+        {
+          "date": "2026-07-09",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-08-17",
+          "name": "General José de San Martín Memorial Day"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "Day of Respect for Cultural Diversity"
+        },
+        {
+          "date": "2026-11-23",
+          "name": "National Sovereignty Day"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Immaculate Conception Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 219.88,
+      "year": "2024"
+    },
+    "lifeExpectancy": {
+      "value": 74.6,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 5.53,
+      "date": "2026-01-01"
+    }
+  },
+  "Uruguay": {
+    "iso2": "UY",
+    "capital": "Montevideo",
+    "climate": {
+      "city": "Montevideo",
+      "year": "2025",
+      "months": [
+        {
+          "t": 22.3,
+          "rainyDays": 5
+        },
+        {
+          "t": 23.8,
+          "rainyDays": 10
+        },
+        {
+          "t": 22.1,
+          "rainyDays": 13
+        },
+        {
+          "t": 17.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 15.8,
+          "rainyDays": 7
+        },
+        {
+          "t": 10.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 10,
+          "rainyDays": 3
+        },
+        {
+          "t": 11.9,
+          "rainyDays": 6
+        },
+        {
+          "t": 13.6,
+          "rainyDays": 12
+        },
+        {
+          "t": 16.8,
+          "rainyDays": 9
+        },
+        {
+          "t": 18.1,
+          "rainyDays": 10
+        },
+        {
+          "t": 22.7,
+          "rainyDays": 8
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 15,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Children's Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-04-02",
+          "name": "Maundy Thursday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-19",
+          "name": "Landing of the 33 Patriots Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "International Workers' Day"
+        },
+        {
+          "date": "2026-05-18",
+          "name": "Battle of Las Piedras"
+        },
+        {
+          "date": "2026-06-19",
+          "name": "Birthday of José Gervasio Artigas and Never Again Day"
+        },
+        {
+          "date": "2026-07-18",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-08-25",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "Day of the race"
+        },
+        {
+          "date": "2026-11-02",
+          "name": "Deceased ones day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 4.65,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 75,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 8.76,
+      "date": "2026-01-01"
+    }
+  },
+  "Costa Rica": {
+    "iso2": "CR",
+    "capital": "San José",
+    "climate": {
+      "city": "San José",
+      "year": "2025",
+      "months": [
+        {
+          "t": 20.4,
+          "rainyDays": 10
+        },
+        {
+          "t": 20.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 21.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 21.8,
+          "rainyDays": 13
+        },
+        {
+          "t": 21.1,
+          "rainyDays": 27
+        },
+        {
+          "t": 20.4,
+          "rainyDays": 29
+        },
+        {
+          "t": 20.8,
+          "rainyDays": 21
+        },
+        {
+          "t": 20.4,
+          "rainyDays": 26
+        },
+        {
+          "t": 20.1,
+          "rainyDays": 30
+        },
+        {
+          "t": 19.5,
+          "rainyDays": 31
+        },
+        {
+          "t": 20.1,
+          "rainyDays": 20
+        },
+        {
+          "t": 20.2,
+          "rainyDays": 6
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-02",
+          "name": "Maundy Thursday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-11",
+          "name": "Juan Santamaría Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-07-25",
+          "name": "Annexation of the Party of Nicoya to Costa Rica"
+        },
+        {
+          "date": "2026-08-02",
+          "name": "Feast of Our Lady of the Angels"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Mother's Day"
+        },
+        {
+          "date": "2026-09-15",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-01",
+          "name": "Army Abolition Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": -0.07,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 78.6,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 6.04,
+      "date": "2026-01-01"
+    }
+  },
+  "Panama": {
+    "iso2": "PA",
+    "capital": "Panama City",
+    "climate": {
+      "city": "Panama City",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.7,
+          "rainyDays": 23
+        },
+        {
+          "t": 27,
+          "rainyDays": 16
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 15
+        },
+        {
+          "t": 27.4,
+          "rainyDays": 22
+        },
+        {
+          "t": 26.5,
+          "rainyDays": 30
+        },
+        {
+          "t": 26.2,
+          "rainyDays": 29
+        },
+        {
+          "t": 26.5,
+          "rainyDays": 27
+        },
+        {
+          "t": 26.4,
+          "rainyDays": 29
+        },
+        {
+          "t": 26.2,
+          "rainyDays": 28
+        },
+        {
+          "t": 26.2,
+          "rainyDays": 30
+        },
+        {
+          "t": 25.9,
+          "rainyDays": 28
+        },
+        {
+          "t": 26.1,
+          "rainyDays": 24
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 13,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-09",
+          "name": "Martyr's Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-11-03",
+          "name": "Separation Day"
+        },
+        {
+          "date": "2026-11-04",
+          "name": "Flag Day"
+        },
+        {
+          "date": "2026-11-05",
+          "name": "Colon Day"
+        },
+        {
+          "date": "2026-11-10",
+          "name": "Shout in Villa de los Santos"
+        },
+        {
+          "date": "2026-11-28",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Mother's Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": -0.19,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 77.2,
+      "year": "2021"
+    },
+    "bigMacUsd": null
+  },
+  "Colombia": {
+    "iso2": "CO",
+    "capital": "Bogotá",
+    "climate": {
+      "city": "Bogotá",
+      "year": "2025",
+      "months": [
+        {
+          "t": 13.9,
+          "rainyDays": 13
+        },
+        {
+          "t": 14.5,
+          "rainyDays": 24
+        },
+        {
+          "t": 14.1,
+          "rainyDays": 25
+        },
+        {
+          "t": 14.5,
+          "rainyDays": 23
+        },
+        {
+          "t": 14,
+          "rainyDays": 27
+        },
+        {
+          "t": 13.5,
+          "rainyDays": 23
+        },
+        {
+          "t": 13.4,
+          "rainyDays": 22
+        },
+        {
+          "t": 13.6,
+          "rainyDays": 15
+        },
+        {
+          "t": 13.8,
+          "rainyDays": 14
+        },
+        {
+          "t": 13.9,
+          "rainyDays": 16
+        },
+        {
+          "t": 14.4,
+          "rainyDays": 19
+        },
+        {
+          "t": 14,
+          "rainyDays": 15
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 19,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-12",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-03-23",
+          "name": "Saint Joseph's Day"
+        },
+        {
+          "date": "2026-04-02",
+          "name": "Maundy Thursday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-18",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-06-08",
+          "name": "Corpus Christi"
+        },
+        {
+          "date": "2026-06-15",
+          "name": "Sacred Heart"
+        },
+        {
+          "date": "2026-06-29",
+          "name": "Saint Peter and Saint Paul"
+        },
+        {
+          "date": "2026-07-13",
+          "name": "Our Lady of Chiquinquirá Day"
+        },
+        {
+          "date": "2026-07-20",
+          "name": "Declaration of Independence"
+        },
+        {
+          "date": "2026-08-07",
+          "name": "Battle of Boyacá"
+        },
+        {
+          "date": "2026-08-17",
+          "name": "Assumption of Mary"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "Columbus Day"
+        },
+        {
+          "date": "2026-11-02",
+          "name": "All Saints’ Day"
+        },
+        {
+          "date": "2026-11-16",
+          "name": "Independence of Cartagena"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Immaculate Conception"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 5.14,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 74.5,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 6.21,
+      "date": "2026-01-01"
+    }
+  },
+  "Malaysia": {
+    "iso2": "MY",
+    "capital": "Kuala Lumpur",
+    "climate": {
+      "city": "Kuala Lumpur",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.1,
+          "rainyDays": 28
+        },
+        {
+          "t": 27.4,
+          "rainyDays": 20
+        },
+        {
+          "t": 27.3,
+          "rainyDays": 29
+        },
+        {
+          "t": 26.9,
+          "rainyDays": 27
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 22
+        },
+        {
+          "t": 28.4,
+          "rainyDays": 17
+        },
+        {
+          "t": 29.7,
+          "rainyDays": 13
+        },
+        {
+          "t": 28,
+          "rainyDays": 20
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 20
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 17
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 24
+        },
+        {
+          "t": 26.6,
+          "rainyDays": 27
+        }
+      ]
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 1.38,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.8,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 3.39,
+      "date": "2026-01-01"
+    }
+  },
+  "Indonesia": {
+    "iso2": "ID",
+    "capital": "Jakarta",
+    "climate": {
+      "city": "Jakarta",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.7,
+          "rainyDays": 29
+        },
+        {
+          "t": 26.7,
+          "rainyDays": 25
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 29
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 27
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 25
+        },
+        {
+          "t": 27.3,
+          "rainyDays": 23
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 18
+        },
+        {
+          "t": 27.3,
+          "rainyDays": 21
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 23
+        },
+        {
+          "t": 28.1,
+          "rainyDays": 23
+        },
+        {
+          "t": 27.5,
+          "rainyDays": 25
+        },
+        {
+          "t": 27.4,
+          "rainyDays": 29
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 8,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "Pancasila Day"
+        },
+        {
+          "date": "2026-08-17",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 1.91,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 68.3,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 2.52,
+      "date": "2026-01-01"
+    }
+  },
+  "Vietnam": {
+    "iso2": "VN",
+    "capital": "Hanoi",
+    "climate": {
+      "city": "Hanoi",
+      "year": "2025",
+      "months": [
+        {
+          "t": 18,
+          "rainyDays": 3
+        },
+        {
+          "t": 17.3,
+          "rainyDays": 15
+        },
+        {
+          "t": 20.7,
+          "rainyDays": 8
+        },
+        {
+          "t": 25.4,
+          "rainyDays": 10
+        },
+        {
+          "t": 27.1,
+          "rainyDays": 19
+        },
+        {
+          "t": 28.8,
+          "rainyDays": 26
+        },
+        {
+          "t": 28.8,
+          "rainyDays": 23
+        },
+        {
+          "t": 28.3,
+          "rainyDays": 23
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 20
+        },
+        {
+          "t": 25.3,
+          "rainyDays": 16
+        },
+        {
+          "t": 20.3,
+          "rainyDays": 8
+        },
+        {
+          "t": 20.1,
+          "rainyDays": 9
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 4,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-30",
+          "name": "Reunification Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-09-02",
+          "name": "National Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.31,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 73.8,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 2.89,
+      "date": "2026-01-01"
+    }
+  },
+  "New Zealand": {
+    "iso2": "NZ",
+    "capital": "Wellington",
+    "climate": {
+      "city": "Wellington",
+      "year": "2025",
+      "months": [
+        {
+          "t": 15.8,
+          "rainyDays": 9
+        },
+        {
+          "t": 17.7,
+          "rainyDays": 5
+        },
+        {
+          "t": 16.4,
+          "rainyDays": 11
+        },
+        {
+          "t": 15.7,
+          "rainyDays": 9
+        },
+        {
+          "t": 13.4,
+          "rainyDays": 11
+        },
+        {
+          "t": 11.6,
+          "rainyDays": 14
+        },
+        {
+          "t": 11,
+          "rainyDays": 11
+        },
+        {
+          "t": 10,
+          "rainyDays": 11
+        },
+        {
+          "t": 12.1,
+          "rainyDays": 12
+        },
+        {
+          "t": 13.4,
+          "rainyDays": 19
+        },
+        {
+          "t": 15.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 16.1,
+          "rainyDays": 14
+        }
+      ]
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "Day after New Year's Day"
+        },
+        {
+          "date": "2026-02-06",
+          "name": "Waitangi Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-27",
+          "name": "Anzac Day"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "King's Birthday"
+        },
+        {
+          "date": "2026-07-10",
+          "name": "Matariki"
+        },
+        {
+          "date": "2026-10-26",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-28",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.84,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 82.2,
+      "year": "2021"
+    },
+    "bigMacUsd": {
+      "value": 4.94,
       "date": "2026-01-01"
     }
   }

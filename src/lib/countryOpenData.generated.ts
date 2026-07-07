@@ -23,7 +23,7 @@ export interface CountryOpenData {
   offices: string[] | null;
 }
 
-export const OPEN_DATA_UPDATED_AT = "2026-07-04";
+export const OPEN_DATA_UPDATED_AT = "2026-07-07";
 
 export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
   "Portugal": {
@@ -54,7 +54,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 55,
+      "aqi": 50,
       "dominant": "pm25",
       "station": "Entrecampos, Lisboa, Portugal"
     },
@@ -94,7 +94,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 74,
+      "aqi": 93,
       "dominant": "pm25",
       "station": "Madrid"
     },
@@ -134,7 +134,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 42,
+      "aqi": 34,
       "dominant": "pm25",
       "station": "Berlin, Germany"
     },
@@ -214,17 +214,11 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 52,
-      "dominant": "pm25",
+      "aqi": 42,
+      "dominant": "o3",
       "station": "Paris"
     },
-    "offices": [
-      "Mairie de Clamart",
-      "Mairie de Joinville-le-Pont",
-      "Mairie Annexe",
-      "Mairie annexe Les Hauts d'Asnières",
-      "Mairie de Quartier de Bécon"
-    ]
+    "offices": null
   },
   "Italy": {
     "iso2": "IT",
@@ -258,13 +252,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       "dominant": "pm25",
       "station": "Arenula, Roma, Lazio, Italy"
     },
-    "offices": [
-      "Municipio IV",
-      "Municipio Roma XIV",
-      "LabPuzzle!",
-      "Municipio II",
-      "Municipio Roma I"
-    ]
+    "offices": null
   },
   "Ireland": {
     "iso2": "IE",
@@ -294,11 +282,16 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 18,
+      "aqi": 29,
       "dominant": "pm25",
       "station": "Pearse Street, Dublin 2, Ireland"
     },
-    "offices": null
+    "offices": [
+      "Dublin City Hall",
+      "The Mansion House",
+      "Ballymun Civic Centre",
+      "Dublin City Council"
+    ]
   },
   "United Kingdom": {
     "iso2": "GB",
@@ -325,7 +318,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 25,
+      "aqi": 46,
       "dominant": "pm25",
       "station": "London"
     },
@@ -362,7 +355,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 33,
+      "aqi": 36,
       "dominant": "pm25",
       "station": "Aurora Hills Visitor Center, Northern Virginia, USA"
     },
@@ -399,7 +392,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 30,
+      "aqi": 46,
       "dominant": "pm25",
       "station": "Ottawa"
     },
@@ -436,13 +429,11 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 1,
+      "aqi": 4,
       "dominant": "o3",
       "station": "Civic, Canberra"
     },
-    "offices": [
-      "Canberra Bridge Club"
-    ]
+    "offices": null
   },
   "United Arab Emirates": {
     "iso2": "AE",
@@ -466,8 +457,8 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 105,
-      "dominant": "pm10",
+      "aqi": 85,
+      "dominant": "pm25",
       "station": "Abu Dhabi City/Kalifah High School, UAE"
     },
     "offices": null
@@ -500,17 +491,11 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 25,
+      "aqi": 24,
       "dominant": "o3",
       "station": "Liivalaia, Estonia"
     },
-    "offices": [
-      "Linnavolikogu",
-      "Tallinna Linnavalitsus",
-      "Haabersti Linnaosa Valitsus",
-      "Nõmme linnaosa valitsus",
-      "Pirita Linnaosa Valitsus"
-    ]
+    "offices": null
   },
   "Poland": {
     "iso2": "PL",
@@ -540,9 +525,9 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 65,
+      "aqi": 32,
       "dominant": "pm25",
-      "station": "Marszałkowska, Warszawa, Mazowieckie, Poland"
+      "station": "Targówek, Warszawa, Mazowieckie, Poland"
     },
     "offices": [
       "Urząd Dzielnicy Ochota",
@@ -577,7 +562,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 109,
+      "aqi": 89,
       "dominant": "pm25",
       "station": "Merced, México, Mexico"
     },
@@ -611,7 +596,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 42,
+      "aqi": 44,
       "dominant": "pm25",
       "station": "Bangkok"
     },
@@ -648,17 +633,11 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 21,
+      "aqi": 17,
       "dominant": "pm25",
       "station": "Meguro (目黒)"
     },
-    "offices": [
-      "Kita City Office",
-      "世田谷区 桜丘区民センター",
-      "都税事務所",
-      "杉並区高井戸駅前事務所宮前分室",
-      "新宿区立元気館"
-    ]
+    "offices": null
   },
   "Singapore": {
     "iso2": "SG",
@@ -682,14 +661,627 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 55,
+      "aqi": 42,
       "dominant": "pm25",
       "station": "South, Singapore"
     },
+    "offices": null
+  },
+  "Greece": {
+    "iso2": "GR",
+    "capital": "Athens",
+    "drivingSide": "right",
+    "callingCode": "+30",
+    "timezone": {
+      "name": "Europe/Athens",
+      "offset": "UTC+3"
+    },
+    "priceLevelEU": {
+      "value": 87.4,
+      "year": "2025"
+    },
+    "taxWedge": {
+      "value": 39.3,
+      "year": "2025"
+    },
+    "universities": {
+      "count": 33,
+      "sample": [
+        "Hellenic College of Noah",
+        "American College of Greece",
+        "American College of Thessaloniki",
+        "Aegean University",
+        "School of Pedagogical and Technological Education - A.S.PAI.T.E."
+      ]
+    },
+    "airQuality": {
+      "aqi": 50,
+      "dominant": "pm25",
+      "station": "Aristotelous, Greece"
+    },
+    "offices": null
+  },
+  "Cyprus": {
+    "iso2": "CY",
+    "capital": "Nicosia",
+    "drivingSide": "left",
+    "callingCode": "+357",
+    "timezone": {
+      "name": "Asia/Nicosia",
+      "offset": "UTC+3"
+    },
+    "priceLevelEU": {
+      "value": 89.2,
+      "year": "2025"
+    },
+    "taxWedge": null,
+    "universities": {
+      "count": 17,
+      "sample": [
+        "Americanos College",
+        "Cyprus International Institute of Management (CIIM)",
+        "Cyprus International University",
+        "The CTL Eurocollege",
+        "Cyprus University of Technology"
+      ]
+    },
+    "airQuality": {
+      "aqi": 63,
+      "dominant": "pm25",
+      "station": "Nicosia Traffic, Cyprus (Λευκωσία - Κυκλοφοριακός Σταθμός)"
+    },
     "offices": [
-      "Bukit Merah Branch Office",
-      "Holland-Bukit Panjang Town Council (Bangkit Office)",
-      "Ang Mo Kio Town Council (Avenue 1 Office)"
+      "Town Hall of Engomi",
+      "Demarcheio",
+      "Yeri Municipaliti Town Hall",
+      "Municipality of Lefkoniko",
+      "Strovolos Municipality"
+    ]
+  },
+  "Malta": {
+    "iso2": "MT",
+    "capital": "Valletta",
+    "drivingSide": "left",
+    "callingCode": "+356",
+    "timezone": {
+      "name": "Europe/Malta",
+      "offset": "UTC+2"
+    },
+    "priceLevelEU": {
+      "value": 91.9,
+      "year": "2025"
+    },
+    "taxWedge": null,
+    "universities": {
+      "count": 4,
+      "sample": [
+        "European Institute of Education",
+        "International Tourism Institute",
+        "Malta College of Arts, Science and Technology",
+        "University of Malta"
+      ]
+    },
+    "airQuality": {
+      "aqi": 47,
+      "dominant": "pm10",
+      "station": "Msida, Malta"
+    },
+    "offices": null
+  },
+  "Switzerland": {
+    "iso2": "CH",
+    "capital": "Bern",
+    "drivingSide": "right",
+    "callingCode": "+41",
+    "timezone": {
+      "name": "Europe/Zurich",
+      "offset": "UTC+2"
+    },
+    "priceLevelEU": null,
+    "taxWedge": {
+      "value": 23,
+      "year": "2025"
+    },
+    "universities": {
+      "count": 76,
+      "sample": [
+        "Schiller International University, American College of Switzerland",
+        "Business and Hotel Management School",
+        "Business School Lausanne (BSL)",
+        "Cubidor University Switzerland",
+        "DCT International Hotel & Business Management School"
+      ]
+    },
+    "airQuality": {
+      "aqi": 35,
+      "dominant": "o3",
+      "station": "Bern Bollwerk, Switzerland"
+    },
+    "offices": [
+      "Gemeindeverwaltung Worb",
+      "Gemeindehaus Bläuacker",
+      "Gemeindevervaltung Kehrsatz",
+      "Gemeindeverwaltung Bremgarten bei Bern",
+      "Gemeindeverwaltung Bolligen"
+    ]
+  },
+  "Austria": {
+    "iso2": "AT",
+    "capital": "Vienna",
+    "drivingSide": "right",
+    "callingCode": "+43",
+    "timezone": {
+      "name": "Europe/Vienna",
+      "offset": "UTC+2"
+    },
+    "priceLevelEU": {
+      "value": 113,
+      "year": "2025"
+    },
+    "taxWedge": {
+      "value": 47.1,
+      "year": "2025"
+    },
+    "universities": {
+      "count": 46,
+      "sample": [
+        "Akademie der bildenden Künste Wien",
+        "Universität für Bodenkultur Wien",
+        "Donau-Universität Krems",
+        "Fachhochschule Burgenland",
+        "Fachhochschulstudiengänge Hagenberg"
+      ]
+    },
+    "airQuality": {
+      "aqi": 9,
+      "dominant": "pm10",
+      "station": "Ecke Taborstraße - Glockengasse, Austria"
+    },
+    "offices": [
+      "Amtshaus Donaustadt",
+      "Magistratisches Bezirksamt für den 4. und 5. Bezirk",
+      "Magistratisches Bezirksamt, 10.Bezirk (1100 Wien)",
+      "Magistratisches Bezirksamt Döbling, Servicestelle",
+      "Bezirksvorstehung Penzing"
+    ]
+  },
+  "Czechia": {
+    "iso2": "CZ",
+    "capital": "Prague",
+    "drivingSide": "right",
+    "callingCode": "+420",
+    "timezone": {
+      "name": "Europe/Prague",
+      "offset": "UTC+2"
+    },
+    "priceLevelEU": {
+      "value": 89.4,
+      "year": "2025"
+    },
+    "taxWedge": {
+      "value": 41.2,
+      "year": "2025"
+    },
+    "universities": null,
+    "airQuality": {
+      "aqi": 35,
+      "dominant": "pm10",
+      "station": "Pha8-Karlin, Prague, Czech Republic"
+    },
+    "offices": [
+      "Úřad městské části Praha 18",
+      "Úřad městské části Praha 19",
+      "Úřad městské části Praha 9",
+      "Odbor hospodářské správy.",
+      "Úřad městské části Praha 6"
+    ]
+  },
+  "Georgia": {
+    "iso2": "GE",
+    "capital": "Tbilisi",
+    "drivingSide": "right",
+    "callingCode": "+995",
+    "timezone": {
+      "name": "Asia/Tbilisi",
+      "offset": "UTC+4"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 15,
+      "sample": [
+        "Akaki Tsereteli State University",
+        "Caucasus University",
+        "European School of Management - Tbilisi",
+        "University of Grigol Robakidze",
+        "Georgian Agricultural University"
+      ]
+    },
+    "airQuality": {
+      "aqi": 17,
+      "dominant": "pm25",
+      "station": "David Agmashenebeli Avenue 73a, Tbilisi, Georgia"
+    },
+    "offices": [
+      "Teleti Town Hall",
+      "Tbilisi City Hall"
+    ]
+  },
+  "Armenia": {
+    "iso2": "AM",
+    "capital": "Yerevan",
+    "drivingSide": "right",
+    "callingCode": "+374",
+    "timezone": {
+      "name": "Asia/Yerevan",
+      "offset": "UTC+4"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 12,
+      "sample": [
+        "Mehrabyan Medical Institute and Medical College",
+        "Armenian State Agrarian University",
+        "Armenian State University of Economics",
+        "American University of Armenia",
+        "Eurasia International University"
+      ]
+    },
+    "airQuality": {
+      "aqi": 44,
+      "dominant": "pm25",
+      "station": "Yerevan US Embassy, Armenia"
+    },
+    "offices": [
+      "Yerevan Municipality",
+      "Zovuni Administration",
+      "Shengavit Municipality",
+      "Yerevan Center Municipality",
+      "Kasakh MUNICIPALITY"
+    ]
+  },
+  "Turkey": {
+    "iso2": "TR",
+    "capital": "Ankara",
+    "drivingSide": "right",
+    "callingCode": "+90",
+    "timezone": {
+      "name": "Europe/Istanbul",
+      "offset": "UTC+3"
+    },
+    "priceLevelEU": null,
+    "taxWedge": {
+      "value": 40.3,
+      "year": "2025"
+    },
+    "universities": null,
+    "airQuality": {
+      "aqi": 52,
+      "dominant": "pm10",
+      "station": "Sıhhıye, Turkey"
+    },
+    "offices": [
+      "Güzeltepe Mahallesi Muhtarlığı",
+      "Birlik Mahallesi Muhtarlığı",
+      "Keçiören Belediyesi",
+      "Mamak Belediyesi",
+      "Ankara Büyükşehir Belediyesi"
+    ]
+  },
+  "Brazil": {
+    "iso2": "BR",
+    "capital": "Brasília",
+    "drivingSide": "right",
+    "callingCode": "+55",
+    "timezone": {
+      "name": "America/Sao_Paulo",
+      "offset": "UTC-3"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 187,
+      "sample": [
+        "Fundação Hermínio Ometto",
+        "Universidade Comunitária da Região de Chapecó - Unochapecó",
+        "Centro Universitário de Brasília, UNICEUB",
+        "Centro Universitário Barao de Maua",
+        "Universidade Braz Cubas"
+      ]
+    },
+    "airQuality": null,
+    "offices": [
+      "Prefeitura da SQN 308",
+      "Administração SQNW 108"
+    ]
+  },
+  "Argentina": {
+    "iso2": "AR",
+    "capital": "Buenos Aires",
+    "drivingSide": "right",
+    "callingCode": "+54",
+    "timezone": {
+      "name": "America/Argentina/Buenos_Aires",
+      "offset": "UTC-3"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 121,
+      "sample": [
+        "Universidad Atlántida Argentina",
+        "Universidad Austral Buenos Aires",
+        "Universidad CAECE, Buenos Aires",
+        "Universidad del CEMA",
+        "Instituto de Enseñanza Superior del Ejército"
+      ]
+    },
+    "airQuality": null,
+    "offices": [
+      "Sede Comunal 2",
+      "Sede comunal 15",
+      "Sede Comunal 6",
+      "Sede Comunal 4",
+      "Sede Comunal 3"
+    ]
+  },
+  "Uruguay": {
+    "iso2": "UY",
+    "capital": "Montevideo",
+    "drivingSide": "right",
+    "callingCode": "+598",
+    "timezone": {
+      "name": "America/Montevideo",
+      "offset": "UTC-3"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 6,
+      "sample": [
+        "Insituto Universitario - Centro Latinoamericano de Economia Humana - IU Claeh",
+        "Universidad ORT Uruguay",
+        "Universidad Católica del Uruguay",
+        "Universidad de la Empresa (UDE)",
+        "Universidad de Montevideo"
+      ]
+    },
+    "airQuality": null,
+    "offices": null
+  },
+  "Costa Rica": {
+    "iso2": "CR",
+    "capital": "San José",
+    "drivingSide": "right",
+    "callingCode": "+506",
+    "timezone": {
+      "name": "America/Costa_Rica",
+      "offset": "UTC-6"
+    },
+    "priceLevelEU": null,
+    "taxWedge": {
+      "value": 27.7,
+      "year": "2025"
+    },
+    "universities": {
+      "count": 32,
+      "sample": [
+        "Universidad Fundepos Alma Mater",
+        "Universidad Isaac Newton",
+        "Instituto Tecnológico de Costa Rica",
+        "Universidad San Juan de la Cruz",
+        "Universidad Autónoma de Centro América"
+      ]
+    },
+    "airQuality": {
+      "aqi": 20,
+      "dominant": "o3",
+      "station": "San Jose - Jackson St, Santa Clara, California"
+    },
+    "offices": [
+      "Instituto Biblico",
+      "topcanto.com",
+      "Municipalidad de Montes de Oca",
+      "Municipalidad de San José",
+      "Municipalidad de Moravia"
+    ]
+  },
+  "Panama": {
+    "iso2": "PA",
+    "capital": "Panama City",
+    "drivingSide": "right",
+    "callingCode": "+507",
+    "timezone": {
+      "name": "America/Panama",
+      "offset": "UTC-5"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 17,
+      "sample": [
+        "Columbus University",
+        "Floret Global University",
+        "Instituto de Enseñanza Superior Oteima",
+        "Universidad Tecnológica Oteima",
+        "Universidad de Cartago"
+      ]
+    },
+    "airQuality": {
+      "aqi": 14,
+      "dominant": "o3",
+      "station": "St. Andrews State Park, Bay, Florida, USA"
+    },
+    "offices": [
+      "Junta Comunal Victoriano Lorenzo",
+      "Junta Comunal de Mateo Iturralde",
+      "Junta Comunal de José Domingo Espinar",
+      "Zona A - Pacìfico [AAUD]",
+      "MOP"
+    ]
+  },
+  "Colombia": {
+    "iso2": "CO",
+    "capital": "Bogotá",
+    "drivingSide": "right",
+    "callingCode": "+57",
+    "timezone": {
+      "name": "America/Bogota",
+      "offset": "UTC-5"
+    },
+    "priceLevelEU": null,
+    "taxWedge": {
+      "value": 0,
+      "year": "2025"
+    },
+    "universities": {
+      "count": 104,
+      "sample": [
+        "Antonio Nariño University",
+        "Universidad Autónoma de Manizales",
+        "Universidad Bellas Artes",
+        "Conservatorio del Tolima",
+        "Colegio de Estudios Superiores de Administración (CESA)"
+      ]
+    },
+    "airQuality": {
+      "aqi": 21,
+      "dominant": "pm25",
+      "station": "San Cristobal, Bogota, Colombia"
+    },
+    "offices": null
+  },
+  "Malaysia": {
+    "iso2": "MY",
+    "capital": "Kuala Lumpur",
+    "drivingSide": "left",
+    "callingCode": "+60",
+    "timezone": {
+      "name": "Asia/Kuala_Lumpur",
+      "offset": "UTC+8"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 152,
+      "sample": [
+        "Asia E University",
+        "Aimst University",
+        "Al-Bukhari International University",
+        "Asia Pacific University of Technology & Innovation (APU)",
+        "Advance Tertiary College"
+      ]
+    },
+    "airQuality": {
+      "aqi": 64,
+      "dominant": "pm25",
+      "station": "Kuala Lumpur"
+    },
+    "offices": [
+      "D'Buana Hall",
+      "Menara MBPJ",
+      "Kuala Lumpur City Hall"
+    ]
+  },
+  "Indonesia": {
+    "iso2": "ID",
+    "capital": "Jakarta",
+    "drivingSide": "left",
+    "callingCode": "+62",
+    "timezone": {
+      "name": "Asia/Jakarta",
+      "offset": "UTC+7"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 192,
+      "sample": [
+        "Universitas Nusa Putra",
+        "Akademi Farmasi Mitra Sehat Mandiri Sidoarjo",
+        "Institut Sains & Teknologi Akprind",
+        "STMIK AMIKOM Yogyakarta",
+        "STIKES RS Anwar Medika"
+      ]
+    },
+    "airQuality": {
+      "aqi": 120,
+      "dominant": "pm25",
+      "station": "Kemayoran, Indonesia"
+    },
+    "offices": [
+      "Balai Serbaguna",
+      "Graha Zeni AD Matraman",
+      "Wisma PPAD",
+      "Gedung SAS",
+      "Balai Kota DKI Jakarta"
+    ]
+  },
+  "Vietnam": {
+    "iso2": "VN",
+    "capital": "Hanoi",
+    "drivingSide": "right",
+    "callingCode": "+84",
+    "timezone": {
+      "name": "Asia/Bangkok",
+      "offset": "UTC+7"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": {
+      "count": 9,
+      "sample": [
+        "Phan Chau Trinh University",
+        "Duy Tan University",
+        "Hanoi University",
+        "Ton Duc Thang University",
+        "University of Da Nang"
+      ]
+    },
+    "airQuality": {
+      "aqi": 87,
+      "dominant": "pm25",
+      "station": "United Nations International School of Hanoi, Vietnam (Trường Quốc tế Liên Hợp Quốc Hà Nội)"
+    },
+    "offices": [
+      "UBND phường Xuân Tảo",
+      "Đảng uỷ-HĐND-UBND phường Hàng Buồm",
+      "Đảng uỷ - UBND phường Đội Cấn",
+      "Đảng uỷ - HĐND phường Văn Miếu - Quốc Tử Giám",
+      "Đảng ủy - HĐND - UBND phường Đống Đa"
+    ]
+  },
+  "New Zealand": {
+    "iso2": "NZ",
+    "capital": "Wellington",
+    "drivingSide": "left",
+    "callingCode": "+64",
+    "timezone": {
+      "name": "Pacific/Auckland",
+      "offset": "UTC+12"
+    },
+    "priceLevelEU": null,
+    "taxWedge": {
+      "value": 20.8,
+      "year": "2025"
+    },
+    "universities": {
+      "count": 12,
+      "sample": [
+        "University of Auckland",
+        "Auckland University of Technology",
+        "University of Canterbury",
+        "Christchurch Polytechnic Institute of Technology",
+        "Lincoln University"
+      ]
+    },
+    "airQuality": null,
+    "offices": [
+      "Newtown Community Hall",
+      "Wellington Town Hall",
+      "Ngaio Town Hall",
+      "Newlands Centennial Hall"
     ]
   }
 };
