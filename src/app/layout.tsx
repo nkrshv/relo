@@ -28,7 +28,35 @@ export const metadata: Metadata = {
       "A step-by-step relocation plan tailored to where you're moving, your visa status, and your family situation.",
     type: "website",
     url: SITE_URL,
+    siteName: "Reloka",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Reloka: your personalized relocation checklist",
+    description:
+      "A step-by-step relocation plan tailored to where you're moving, your visa status, and your family situation.",
+  },
+};
+
+const orgJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: "Reloka",
+      url: SITE_URL,
+      description:
+        "Reloka builds personalized, step-by-step relocation checklists for moving to any country, with dated, source-linked country facts.",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: "Reloka",
+      url: SITE_URL,
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -42,6 +70,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
         {children}
       </body>
     </html>
