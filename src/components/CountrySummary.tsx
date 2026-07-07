@@ -21,7 +21,6 @@ import {
   censorshipForCountry,
   reachabilityLabel,
   allMessengersReachable,
-  disruptedMessengers,
   type MessengerReachability,
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
@@ -451,11 +450,7 @@ export default function CountrySummary({
       key: "messengers",
       icon: "chat",
       label: "Messengers",
-      value: allMessengersReachable(censorship)
-        ? "All work"
-        : disruptedMessengers(censorship)
-            .map((m) => `${m.app}: ${reachabilityLabel(m.status).text.toLowerCase()}`)
-            .join(", "),
+      value: allMessengersReachable(censorship) ? "No known issues" : "",
       sub: `OONI, 6 months to ${formatMonth(censorship.window.until)}`,
       accent: allMessengersReachable(censorship) ? undefined : "text-amber-700",
       messengers: censorship.messengers,

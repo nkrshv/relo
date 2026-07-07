@@ -99,10 +99,10 @@ function buildRows(a: Destination, b: Destination): Row[] {
 
   const messengerSummary = (c: CountryCensorship | null): string | null => {
     if (!c || c.messengers.length === 0) return null;
-    if (allMessengersReachable(c)) return "All measured apps work";
-    return disruptedMessengers(c)
-      .map((m) => `${m.app}: interference`)
-      .join(", ");
+    if (allMessengersReachable(c)) return "No known issues";
+    return `Issues: ${disruptedMessengers(c)
+      .map((m) => m.app)
+      .join(", ")}`;
   };
 
   const aqiTone = (aqi: number | undefined | null): string | undefined => {

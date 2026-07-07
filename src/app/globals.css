@@ -269,7 +269,29 @@ a.pressable:active {
   animation-delay: 240ms;
 }
 
+/* Smooth open/close for FAQ disclosures. Uses ::details-content so the panel
+   slides instead of snapping; degrades to an instant toggle where unsupported. */
+:root {
+  interpolate-size: allow-keywords;
+}
+.faq-details::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    block-size 0.3s ease,
+    opacity 0.3s ease,
+    content-visibility 0.3s allow-discrete;
+}
+.faq-details[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .faq-details::details-content {
+    transition: none;
+  }
   .reveal,
   .rise,
   .skeleton,
