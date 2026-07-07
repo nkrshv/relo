@@ -1,14 +1,17 @@
 const SOURCES = [
   { label: "Your answers", y: 26, accent: true },
-  { label: "Visa rules · Passport Index", y: 66, accent: false },
+  { label: "Visa rules and passports", y: 66, accent: false },
   { label: "Official advisories", y: 106, accent: false },
   { label: "Live FX rates", y: 146, accent: false },
-  { label: "Climate & air quality", y: 186, accent: false },
-  { label: "Prices & taxes", y: 226, accent: false },
-  { label: "Local offices & maps", y: 266, accent: false },
+  { label: "Climate and air quality", y: 186, accent: false },
+  { label: "Prices and taxes", y: 226, accent: false },
+  { label: "Salaries from job listings", y: 266, accent: false },
+  { label: "Messenger reachability", y: 306, accent: false },
+  { label: "Migration statistics", y: 346, accent: false },
+  { label: "Local offices and maps", y: 386, accent: false },
 ];
 
-const NODE = { x: 392, y: 146 };
+const NODE = { x: 392, y: 206 };
 
 function sourcePath(y: number): string {
   return `M196 ${y} C 292 ${y} 306 ${NODE.y} ${NODE.x - 30} ${NODE.y}`;
@@ -23,7 +26,7 @@ const OUT_PATH = `M${NODE.x + 30} ${NODE.y} L 540 ${NODE.y}`;
 export default function PipelineDiagram() {
   return (
     <svg
-      viewBox="0 0 746 292"
+      viewBox="0 0 746 412"
       role="img"
       aria-label="Your answers and live country data are combined into one personalized relocation plan"
       className="mx-auto mt-10 w-full max-w-4xl"
@@ -119,20 +122,20 @@ export default function PipelineDiagram() {
       <g>
         <rect
           x="540"
-          y="72"
+          y="132"
           width="196"
           height="148"
           rx="10"
           fill="white"
           stroke="var(--color-stone-200)"
         />
-        <text x="558" y="99" className="fill-stone-900 text-[12px] font-semibold">
+        <text x="558" y="159" className="fill-stone-900 text-[12px] font-semibold">
           Your relocation plan
         </text>
         {[0, 1, 2, 3].map((i) => (
           <g key={i} className="plan-line" style={{ animationDelay: `${1.1 + i * 0.6}s` }}>
             <path
-              d={`M558 ${117 + i * 22} l3.5 3.5 6 -6`}
+              d={`M558 ${177 + i * 22} l3.5 3.5 6 -6`}
               fill="none"
               stroke="var(--color-emerald-600)"
               strokeWidth="1.5"
@@ -141,7 +144,7 @@ export default function PipelineDiagram() {
             />
             <rect
               x="576"
-              y={113 + i * 22}
+              y={173 + i * 22}
               width={[134, 100, 118, 88][i]}
               height="7"
               rx="3.5"

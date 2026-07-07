@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { put } from "@vercel/blob";
 
 export const runtime = "nodejs";
 
@@ -29,9 +30,27 @@ function rateLimited(ip: string): boolean {
   return false;
 }
 
-// Lightweight intake for email signups and country requests. Entries land in
-// the deployment logs; wire a real store (DB / form service) when volume
-// justifies it.
+// Persist one entry as a small JSON file in Vercel Blob (visible in the
+// Vercel dashboard under Storage). Falls back to deployment logs when no
+// blob store is configured (e.g. local dev without the token).
+async function store(type: string, value: string): Promise<void> {
+  const at = new Date().toISOString();
+  if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    console.log(`[feedback] ${type}: ${value}`);
+    return;
+  }
+  try {
+    await put(
+      `feedback/${type}/${at.replace(/[:.]/g, "-")}.json`,
+      JSON.stringify({ type, value, at }),
+      { access: "public", addRandomSuffix: true, contentType: "application/json" },
+    );
+  } catch (err) {
+    console.error(`[feedback] blob write failed, entry: ${type}: ${value}`, err);
+  }
+}
+
+// Lightweight intake for email signups and country requests.
 export async function POST(req: NextRequest) {
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -59,7 +78,7 @@ export async function POST(req: NextRequest) {
     if (!EMAIL_RE.test(email)) {
       return Response.json({ error: "Enter a valid email." }, { status: 400 });
     }
-    console.log(`[feedback] subscribe: ${email}`);
+    await store("subscribe", email);
     return Response.json({ ok: true });
   }
 
@@ -67,6 +86,6 @@ export async function POST(req: NextRequest) {
   if (!country) {
     return Response.json({ error: "Enter a country." }, { status: 400 });
   }
-  console.log(`[feedback] request-country: ${country}`);
+  await store("request-country", country);
   return Response.json({ ok: true });
 }

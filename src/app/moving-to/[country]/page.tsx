@@ -18,7 +18,11 @@ import {
   CENSORSHIP_UPDATED_AT,
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
+import { formatMonth, formatDate } from "@/lib/dates";
+import MessengerIcons from "@/components/MessengerIcons";
+import SiteFooter from "@/components/SiteFooter";
 import { SITE_URL } from "@/lib/siteUrls";
+import type { MessengerReachability } from "@/lib/countryCensorship";
 
 interface Params {
   country: string;
@@ -88,7 +92,14 @@ const OUTLINE: { phase: string; items: string[] }[] = [
   },
 ];
 
-function quickFacts(name: string): { label: string; value: string; source: string }[] {
+interface QuickFact {
+  label: string;
+  value: string;
+  source: string;
+  messengers?: MessengerReachability[];
+}
+
+function quickFacts(name: string): QuickFact[] {
   const ins = insightsForCountry(name);
   const od = openDataForCountry(name);
   const st = staticDataForCountry(name);
@@ -96,7 +107,7 @@ function quickFacts(name: string): { label: string; value: string; source: strin
   const currency = currencyForCountry(name);
   const cen = censorshipForCountry(name);
   const sal = salaryForCountry(name);
-  const facts: ({ label: string; value: string; source: string } | null)[] = [
+  const facts: (QuickFact | null)[] = [
     ins && climateSummary(ins)
       ? {
           label: `Climate · ${ins.capital}`,
@@ -118,13 +129,6 @@ function quickFacts(name: string): { label: string; value: string; source: strin
           source: `Eurostat ${od.priceLevelEU.year}`,
         }
       : null,
-    od?.taxWedge
-      ? {
-          label: "Taxes on salary",
-          value: `~${Math.round(od.taxWedge.value)}% of labour cost`,
-          source: `OECD ${od.taxWedge.year}`,
-        }
-      : null,
     st
       ? {
           label: "Internet",
@@ -136,11 +140,12 @@ function quickFacts(name: string): { label: string; value: string; source: strin
       ? {
           label: "Messengers",
           value: allMessengersReachable(cen)
-            ? "WhatsApp, Telegram, Signal all work"
+            ? "All work"
             : disruptedMessengers(cen)
                 .map((m) => `${m.app}: ${reachabilityLabel(m.status).text.toLowerCase()}`)
-                .join(" · "),
-          source: "OONI, 6-month window",
+                .join(", "),
+          source: `OONI, 6 months to ${formatMonth(cen.window.until)}`,
+          messengers: cen.messengers,
         }
       : null,
     ins?.migrantShare
@@ -154,7 +159,7 @@ function quickFacts(name: string): { label: string; value: string; source: strin
       ? {
           label: "Avg advertised salary",
           value: `${formatSalary(sal.avgAnnual, sal.currency)} / yr`,
-          source: `Adzuna ${sal.avgMonth ?? ""}`.trim(),
+          source: sal.avgMonth ? `Adzuna, ${formatMonth(sal.avgMonth)}` : "Adzuna",
         }
       : null,
     st
@@ -178,7 +183,7 @@ function quickFacts(name: string): { label: string; value: string; source: strin
       ? { label: "Timezone", value: od.timezone.offset, source: "Open-Meteo" }
       : null,
   ];
-  return facts.filter((f): f is { label: string; value: string; source: string } => f !== null);
+  return facts.filter((f): f is QuickFact => f !== null);
 }
 
 function faqFor(name: string): { q: string; a: string }[] {
@@ -197,7 +202,7 @@ function faqFor(name: string): { q: string; a: string }[] {
     const r = regimes[0];
     faqs.push({
       q: `Does ${name} have a special tax regime for newcomers?`,
-      a: `Yes: ${r.name}. ${r.headline}. ${r.detail} Status: ${r.status === "active" ? "active" : r.status === "closed" ? "closed to new applicants" : "recently changed"}, verified ${r.verified} against ${r.sourceLabel}.`,
+      a: `Yes: ${r.name}. ${r.headline}. ${r.detail} Status: ${r.status === "active" ? "active" : r.status === "closed" ? "closed to new applicants" : "recently changed"}, verified ${formatMonth(r.verified)} against ${r.sourceLabel}.`,
     });
   }
   if (ins && climateSummary(ins)) {
@@ -214,16 +219,16 @@ function faqFor(name: string): { q: string; a: string }[] {
       q: `Can I use WhatsApp and Telegram in ${name}?`,
       a:
         disrupted.length === 0
-          ? `Network measurements over the last six months show ${measured} working normally in ${name} (OONI, ${cen.window.since} to ${cen.window.until}). This reflects measured reachability, not an official policy statement.`
+          ? `Network measurements over the last six months show ${measured} working normally in ${name} (OONI, ${formatDate(cen.window.since)} to ${formatDate(cen.window.until)}). This reflects measured reachability, not an official policy statement.`
           : reachable.length > 0
-            ? `Mostly, but with caveats: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${cen.window.since} to ${cen.window.until}). The rest of the measured apps (${reachable.map((m) => m.app).join(", ")}) work normally. This reflects measured reachability, not an official policy statement.`
-            : `Expect problems: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${cen.window.since} to ${cen.window.until}). Many residents rely on VPNs. This reflects measured reachability, not an official policy statement.`,
+            ? `Mostly, but with caveats: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${formatDate(cen.window.since)} to ${formatDate(cen.window.until)}). The rest of the measured apps (${reachable.map((m) => m.app).join(", ")}) work normally. This reflects measured reachability, not an official policy statement.`
+            : `Expect problems: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${formatDate(cen.window.since)} to ${formatDate(cen.window.until)}). Many residents rely on VPNs. This reflects measured reachability, not an official policy statement.`,
     });
   }
   if (sal?.avgAnnual) {
     faqs.push({
       q: `What do jobs pay in ${name}?`,
-      a: `The average advertised salary is about ${formatSalary(sal.avgAnnual, sal.currency)} a year (Adzuna job listings, ${sal.avgMonth}).${sal.benchmarkMedian ? ` For a benchmark role like ${sal.benchmarkRole}, the median advertised band starts around ${formatSalary(sal.benchmarkMedian, sal.currency)}.` : ""} Advertised salaries skew toward roles that are posted online, so treat this as a signal, not a guarantee.`,
+      a: `The average advertised salary is about ${formatSalary(sal.avgAnnual, sal.currency)} a year (Adzuna job listings, ${formatMonth(sal.avgMonth)}).${sal.benchmarkMedian ? ` For a benchmark role like ${sal.benchmarkRole}, the median advertised band starts around ${formatSalary(sal.benchmarkMedian, sal.currency)}.` : ""} Advertised salaries skew toward roles that are posted online, so treat this as a signal, not a guarantee.`,
     });
   }
   if (od?.taxWedge) {
@@ -234,7 +239,7 @@ function faqFor(name: string): { q: string; a: string }[] {
   }
   faqs.push({
     q: `How current is this data?`,
-    a: `Climate, inflation and life expectancy were refreshed ${INSIGHTS_UPDATED_AT}; prices, taxes and air quality ${OPEN_DATA_UPDATED_AT}; messenger reachability ${CENSORSHIP_UPDATED_AT}. Tax regimes are hand-verified against official government sources. Every fact on this page shows its source.`,
+    a: `Climate, inflation and life expectancy were refreshed ${formatDate(INSIGHTS_UPDATED_AT)}; prices, taxes and air quality ${formatDate(OPEN_DATA_UPDATED_AT)}; messenger reachability ${formatDate(CENSORSHIP_UPDATED_AT)}. Tax regimes are hand-verified against official government sources. Every fact on this page shows its source.`,
   });
   return faqs;
 }
@@ -325,8 +330,9 @@ export default async function MovingToPage({
                 <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
                   {f.label}
                 </p>
-                <p className="tnum mt-1 text-sm font-semibold text-stone-900">
-                  {f.value}
+                <p className="tnum mt-1 flex items-center gap-1.5 text-sm font-semibold text-stone-900">
+                  {f.messengers && <MessengerIcons messengers={f.messengers} />}
+                  <span>{f.value}</span>
                 </p>
                 <p className="mt-0.5 text-[11px] text-stone-400">{f.source}</p>
               </div>
@@ -358,7 +364,7 @@ export default async function MovingToPage({
                     {r.statusNote ? ` ${r.statusNote}.` : ""}
                   </p>
                   <p className="mt-1.5 text-[11px] text-stone-400">
-                    Verified {r.verified} ·{" "}
+                    Verified {formatMonth(r.verified)} ·{" "}
                     <a
                       href={r.sourceUrl}
                       target="_blank"
@@ -466,10 +472,7 @@ export default async function MovingToPage({
         </div>
       </section>
 
-      <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400 print:hidden">
-        Reloka · Not legal or immigration advice. Always verify official
-        requirements.
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

@@ -5,6 +5,9 @@ import Typewriter from "@/components/Typewriter";
 import PipelineDiagram from "@/components/PipelineDiagram";
 import TrustBlock from "@/components/TrustBlock";
 import ScrollRoad from "@/components/ScrollRoad";
+import SiteFooter from "@/components/SiteFooter";
+import { OPEN_DATA_UPDATED_AT } from "@/lib/countryOpenData";
+import { formatMonth } from "@/lib/dates";
 
 const TYPE_CITIES = [
   "Lisbon",
@@ -104,7 +107,7 @@ export default function Home() {
       <section className="mx-auto max-w-3xl px-4 pt-24 pb-20 text-center">
         <span className="rise inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium tracking-wide text-stone-500">
           <span className="pulse-dot" aria-hidden />
-          Grounded in official data, refreshed monthly
+          Grounded in official data, last refreshed {formatMonth(OPEN_DATA_UPDATED_AT)}
         </span>
         <h1 className="rise rise-1 mt-6 text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 sm:text-6xl">
           Move to <Typewriter words={TYPE_CITIES} /> without the{" "}
@@ -121,7 +124,7 @@ export default function Home() {
         <div className="rise rise-3 mt-9 flex flex-col items-center gap-3">
           <CtaButton label="Get my relocation plan" />
           <span className="text-sm text-stone-400">
-            Free to generate · takes about a minute
+            Free plan in about a minute, full checklist $9
           </span>
         </div>
       </section>
@@ -212,7 +215,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust: why we built this, changelog signup, request a country */}
+      {/* Trust: why we built this, request a country */}
       <TrustBlock />
 
       {/* Destinations (SEO internal links) */}
@@ -287,10 +290,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400">
-        Reloka · Not legal or immigration advice. Always verify official
-        requirements.
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

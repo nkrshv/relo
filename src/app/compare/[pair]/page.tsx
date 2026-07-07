@@ -16,6 +16,8 @@ import {
   type CountryCensorship,
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
+import { formatMonth, formatDate } from "@/lib/dates";
+import SiteFooter from "@/components/SiteFooter";
 import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
@@ -100,7 +102,7 @@ function buildRows(a: Destination, b: Destination): Row[] {
     if (allMessengersReachable(c)) return "All measured apps work";
     return disruptedMessengers(c)
       .map((m) => `${m.app}: interference`)
-      .join(" · ");
+      .join(", ");
   };
 
   const aqiTone = (aqi: number | undefined | null): string | undefined => {
@@ -149,12 +151,12 @@ function buildRows(a: Destination, b: Destination): Row[] {
       source: "The Economist Big Mac index",
     },
     {
-      label: "Taxes on salary",
+      label: "Employment taxes (not your rate)",
       a: odA?.taxWedge
-        ? `~${Math.round(odA.taxWedge.value)}% of labour cost (${odA.taxWedge.year})`
+        ? `~${Math.round(odA.taxWedge.value)}% of what a job costs goes to tax (${odA.taxWedge.year})`
         : null,
       b: odB?.taxWedge
-        ? `~${Math.round(odB.taxWedge.value)}% of labour cost (${odB.taxWedge.year})`
+        ? `~${Math.round(odB.taxWedge.value)}% of what a job costs goes to tax (${odB.taxWedge.year})`
         : null,
       source: "OECD tax wedge, single average worker",
     },
@@ -162,17 +164,17 @@ function buildRows(a: Destination, b: Destination): Row[] {
       label: "Special tax regimes",
       a: regA.length > 0 ? regA.map((r) => r.name).join(" · ") : "None curated",
       b: regB.length > 0 ? regB.map((r) => r.name).join(" · ") : "None curated",
-      source: `Official tax authorities, verified ${regA[0]?.verified ?? regB[0]?.verified ?? INSIGHTS_UPDATED_AT.slice(0, 7)}`,
+      source: `Official tax authorities, verified ${formatMonth(regA[0]?.verified ?? regB[0]?.verified ?? INSIGHTS_UPDATED_AT)}`,
     },
     {
       label: "Avg advertised salary",
       a:
         salA?.avgAnnual && salB?.avgAnnual
-          ? `${formatSalary(salA.avgAnnual, salA.currency)} / yr (${salA.avgMonth})`
+          ? `${formatSalary(salA.avgAnnual, salA.currency)} / yr (${formatMonth(salA.avgMonth)})`
           : null,
       b:
         salA?.avgAnnual && salB?.avgAnnual
-          ? `${formatSalary(salB.avgAnnual, salB.currency)} / yr (${salB.avgMonth})`
+          ? `${formatSalary(salB.avgAnnual, salB.currency)} / yr (${formatMonth(salB.avgMonth)})`
           : null,
       source: "Adzuna job listings, local currency",
     },
@@ -206,7 +208,7 @@ function buildRows(a: Destination, b: Destination): Row[] {
         cenA && !allMessengersReachable(cenA) ? "text-amber-700" : undefined,
       bTone:
         cenB && !allMessengersReachable(cenB) ? "text-amber-700" : undefined,
-      source: "OONI network measurements, 6-month window",
+      source: "OONI network measurements, last 6 months",
     },
     {
       label: "Safety advisory",
@@ -348,8 +350,8 @@ export default async function ComparePage({
           ))}
         </div>
         <p className="mt-3 text-xs text-stone-400">
-          Climate, inflation and life expectancy verified {INSIGHTS_UPDATED_AT}.
-          Prices, taxes and air quality verified {OPEN_DATA_UPDATED_AT}. Sources
+          Climate, inflation and life expectancy verified {formatDate(INSIGHTS_UPDATED_AT)}.
+          Prices, taxes and air quality verified {formatDate(OPEN_DATA_UPDATED_AT)}. Sources
           shown per row.
         </p>
       </section>
@@ -384,7 +386,7 @@ export default async function ComparePage({
                 </div>
                 <p className="mt-0.5 text-sm text-stone-700">{r.headline}</p>
                 <p className="mt-1.5 text-[11px] text-stone-400">
-                  Verified {r.verified} ·{" "}
+                  Verified {formatMonth(r.verified)} ·{" "}
                   <a
                     href={r.sourceUrl}
                     target="_blank"
@@ -432,10 +434,7 @@ export default async function ComparePage({
         </div>
       </section>
 
-      <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400">
-        Reloka · Not legal, tax or immigration advice. Always verify
-        official requirements.
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
