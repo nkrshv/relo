@@ -1722,5 +1722,1952 @@ export const COUNTRY_ADVISORY: Record<string, CountryAdvisory> = {
         }
       ]
     }
+  },
+  "greece": {
+    "code": "GR",
+    "name": "Greece",
+    "flag": "🇬🇷",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Greece - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Greece is a generally safe destination for travelers.",
+      "Petty crime is common, especially in popular tourist locations. Stay aware of your surroundings.",
+      "Large-scale demonstrations related to the local political situation may occur with little notice, potentially disrupting transportation and other essential services."
+    ],
+    "reasons": [
+      "crime",
+      "civil_unrest"
+    ],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Euro (EUR)",
+      "language": "Greek",
+      "notableRestrictions": []
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers may face heightened risk of petty crime, particularly in crowded tourist areas like Athens and Santorini, where pickpocketing is common."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers should be aware of potential disruptions from spontaneous demonstrations that can affect transportation and meeting schedules, particularly in urban centers."
+      },
+      "family": {
+        "level": "low",
+        "detail": "Families with children can generally travel safely in Greece, but should remain vigilant in tourist hotspots to avoid petty theft and ensure access to healthcare services."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find good connectivity in major cities like Athens and Thessaloniki, but should be cautious of civil unrest that may disrupt daily activities."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 3.5,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 1.2
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Greece. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Greece."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)",
+        "Routine Vaccines"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.grc.html",
+    "updatedAt": "2025-10-22T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "cyprus": {
+    "code": "CY",
+    "name": "Cyprus",
+    "flag": "🇨🇾",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Cyprus - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Cyprus is generally a safe destination for travelers, but some areas have increased risk.",
+      "Exercise Increased Caution in the Turkish Cypriot-Administered Area due to unrest."
+    ],
+    "reasons": [
+      "crime",
+      "civil_unrest"
+    ],
+    "doNotTravel": [],
+    "restrictions": [
+      "May not travel to the Turkish Cypriot Administered Area without prior approval.",
+      "Must use designated crossing points to enter the United Nations buffer zone."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": false,
+      "currency": "Euro (EUR)",
+      "language": "Greek / Turkish",
+      "notableRestrictions": [
+        "Entry and exit only at Larnaca and Paphos airports or Limassol, Larnaca, and Paphos seaports.",
+        "Entry via Ercan Airport or northern seaports is not recognized as legal."
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers may face increased risk of petty crime in tourist areas, particularly in the Turkish Cypriot-Administered Area where unrest is noted."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers should be cautious in the Turkish Cypriot-Administered Area due to potential disruptions from civil unrest and limited consular support."
+      },
+      "family": {
+        "level": "low",
+        "detail": "Families with children can generally travel safely in Cyprus, but should avoid the Turkish Cypriot-Administered Area due to unrest and ensure access to healthcare facilities."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find suitable environments in urban areas with good connectivity, but should avoid the Turkish Cypriot-Administered Area due to instability."
+      }
+    },
+    "consularSupport": {
+      "availability": "limited",
+      "evacuation": "limited",
+      "limited": true
+    },
+    "severity": {
+      "crime": 3,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 1
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Cyprus; infants 6 to 11 months old should also be vaccinated"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers of all ages traveling to Cyprus"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/cyprus-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "malta": {
+    "code": "MT",
+    "name": "Malta",
+    "flag": "🇲🇹",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Malta - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Exercise normal precautions when traveling to Malta.",
+      "Enroll in the Smart Traveler Enrollment Program (STEP) for alerts from the U.S. Embassy.",
+      "Prepare a plan for emergency situations and review the Traveler’s Checklist."
+    ],
+    "reasons": [],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Euro (EUR)",
+      "language": "Maltese / English",
+      "notableRestrictions": []
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "low",
+        "detail": "Solo travelers should remain vigilant in crowded tourist areas where petty theft can occur, particularly during peak seasons."
+      },
+      "business": {
+        "level": "low",
+        "detail": "Business travelers can expect reliable infrastructure and services, but should remain aware of potential delays due to local bureaucracy."
+      },
+      "family": {
+        "level": "low",
+        "detail": "Families traveling with children should ensure access to healthcare facilities, as pediatric care may be limited outside urban areas."
+      },
+      "remote": {
+        "level": "safe",
+        "detail": "Remote workers will find good connectivity in urban areas, with many cafes offering reliable WiFi for work."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 3,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 1.1
+    },
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Measles-Mumps-Rubella (MMR)",
+          "who": "All international travelers"
+        }
+      ],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers of all ages traveling to Malta."
+        }
+      ],
+      "routine": [
+        "Routine vaccines"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/malta-travel-advisory.html",
+    "updatedAt": "2025-05-27T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "switzerland": {
+    "code": "CH",
+    "name": "Switzerland",
+    "flag": "🇨🇭",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Switzerland  - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Switzerland is generally a safe destination for travelers."
+    ],
+    "reasons": [],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": false,
+      "currency": "Swiss Franc (CHF)",
+      "language": "German / French / Italian",
+      "notableRestrictions": []
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "safe",
+        "detail": "Solo travelers can explore cities like Zurich and Geneva with minimal risk, as the crime rate is low and public transport is reliable."
+      },
+      "business": {
+        "level": "safe",
+        "detail": "Business travelers will find a stable environment with excellent infrastructure and minimal disruptions, making it conducive for meetings and conferences."
+      },
+      "family": {
+        "level": "safe",
+        "detail": "Families can enjoy a safe environment with access to quality healthcare and family-friendly activities, particularly in tourist areas."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers may face challenges in rural areas with limited connectivity, but urban centers offer good WiFi and coworking spaces."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 1,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 0.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "Travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "Unvaccinated travelers younger than 60 years old traveling to Switzerland. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Switzerland."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.che.html",
+    "updatedAt": "2025-05-19T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "austria": {
+    "code": "AT",
+    "name": "Austria",
+    "flag": "🇦🇹",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Austria - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Exercise normal precautions when traveling to Austria.",
+      "Enroll in the Smart Traveler Enrollment Program (STEP) to receive alerts and assistance in emergencies."
+    ],
+    "reasons": [],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Euro (EUR)",
+      "language": "German",
+      "notableRestrictions": []
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "low",
+        "detail": "Solo travelers may face minor risks related to petty crime in urban areas, particularly in crowded tourist spots, but overall safety is high."
+      },
+      "business": {
+        "level": "safe",
+        "detail": "Business travelers can expect reliable infrastructure and services, with minimal disruptions to operations and good connectivity."
+      },
+      "family": {
+        "level": "low",
+        "detail": "Families with children can enjoy a safe environment, but should remain cautious about health risks such as tuberculosis and ensure access to healthcare facilities."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers will find good connectivity in urban centers, but should be aware of potential health risks and ensure access to reliable internet."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 2,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 0.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Austria. Unvaccinated travelers 60 years and older may get vaccinated before traveling to Austria."
+        },
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/austria-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "czechia": {
+    "code": "CZ",
+    "name": "Czechia",
+    "flag": "🇨🇿",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Czechia - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Czechia is generally a safe destination for travelers.",
+      "Travelers should remain vigilant against petty crime, such as pickpocketing and other minor theft, especially in tourist areas and on public transportation."
+    ],
+    "reasons": [
+      "other"
+    ],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": false,
+      "currency": "Czech Koruna (CZK)",
+      "language": "Czech",
+      "notableRestrictions": []
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "low",
+        "detail": "Solo travelers should be cautious of petty theft, particularly in crowded tourist areas and on public transportation, where pickpockets are known to operate."
+      },
+      "business": {
+        "level": "low",
+        "detail": "Business travelers will find reliable infrastructure and services, but should remain aware of minor theft risks in urban centers."
+      },
+      "family": {
+        "level": "low",
+        "detail": "Families with children can enjoy a generally safe environment, but should ensure access to healthcare facilities, particularly for pediatric needs, in rural areas."
+      },
+      "remote": {
+        "level": "safe",
+        "detail": "Remote workers will benefit from good internet connectivity in urban areas, making it easy to work from cafes and co-working spaces."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 3,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 0.7000000000000001
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Czechia"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Czechia"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.cze.html",
+    "updatedAt": "2026-01-07T19:00:00-05:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "georgia": {
+    "code": "GE",
+    "name": "Georgia",
+    "flag": "🇬🇪",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Georgia - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Exercise normal precautions in Georgia, but some areas have increased risk.",
+      "Do not travel to the Russian-occupied Georgian regions of South Ossetia and Abkhazia due to risk of crime, civil unrest, and landmines."
+    ],
+    "reasons": [
+      "crime",
+      "civil_unrest"
+    ],
+    "doNotTravel": [
+      "South Ossetia",
+      "Abkhazia"
+    ],
+    "restrictions": [
+      "U.S. government employees are prohibited from traveling to South Ossetia and Abkhazia."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Lari (GEL)",
+      "language": "Georgian",
+      "notableRestrictions": [
+        "Entering South Ossetia and Abkhazia could lead to arrest, imprisonment, or a fine."
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "moderate",
+        "detail": "Solo travelers may face street crime in urban areas, particularly in Tbilisi, and should remain vigilant, especially after dark."
+      },
+      "business": {
+        "level": "low",
+        "detail": "Business travelers can expect reliable infrastructure in major cities, but should be cautious of potential disruptions from civil unrest in specific regions."
+      },
+      "family": {
+        "level": "low",
+        "detail": "Families with children may find healthcare adequate in urban areas, but should avoid the Russian-occupied regions where safety and medical access are limited."
+      },
+      "remote": {
+        "level": "moderate",
+        "detail": "Remote workers will find decent internet connectivity in urban centers, but should avoid rural areas where access may be unreliable."
+      }
+    },
+    "consularSupport": {
+      "availability": "limited",
+      "evacuation": "limited",
+      "limited": true
+    },
+    "severity": {
+      "crime": 3.5,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 2
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Georgia; infants 6 to 11 months old should also be vaccinated"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Georgia; unvaccinated travelers 60 years and older may get vaccinated before traveling"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/georgia-travel-advisory.html",
+    "updatedAt": "2025-03-12T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "armenia": {
+    "code": "AM",
+    "name": "Armenia",
+    "flag": "🇦🇲",
+    "level": 2,
+    "label": "Exercise Increased Caution",
+    "headline": "Armenia - Level 2: Exercise Increased Caution",
+    "summaryPoints": [
+      "Exercise increased caution in Armenia due to areas of potential armed conflict.",
+      "Do not travel to the border region with Azerbaijan for any reason. U.S. Embassy employees and their families cannot travel to certain regions for non-essential reasons."
+    ],
+    "reasons": [
+      "crime",
+      "civil_unrest"
+    ],
+    "doNotTravel": [
+      "border region with Azerbaijan",
+      "Gegharkunik region east of Vardenis",
+      "Syunik region east of Goris",
+      "Syunik region south of Kapan"
+    ],
+    "restrictions": [
+      "U.S. Embassy employees and their families cannot travel to the border region with Azerbaijan for non-essential reasons.",
+      "Travel to Gegharkunik region east of Vardenis is restricted for non-essential reasons.",
+      "Travel to Syunik region east of Goris is restricted for non-essential reasons.",
+      "Travel to Syunik region south of Kapan is restricted for non-essential reasons."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Dram (AMD)",
+      "language": "Armenian",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers may face increased risks of crime, particularly in urban areas, and should avoid the border regions with Azerbaijan due to potential armed conflict."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter operational disruptions due to civil unrest and should exercise caution when traveling near the border with Azerbaijan."
+      },
+      "family": {
+        "level": "high",
+        "detail": "Families with children should be cautious due to limited healthcare access in rural areas and the potential for armed conflict near the border region."
+      },
+      "remote": {
+        "level": "moderate",
+        "detail": "Remote workers may find decent connectivity in urban areas, but should avoid border regions where security risks are heightened."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 5,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 4.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Armenia; infants 6 to 11 months old should also be vaccinated"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Armenia; unvaccinated travelers 60 years and older may get vaccinated before traveling"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/armenia-travel-advisory.html",
+    "updatedAt": "2025-09-04T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "turkey": {
+    "code": "TR",
+    "name": "Turkey",
+    "flag": "🇹🇷",
+    "level": 2,
+    "label": "Exercise Increased Caution",
+    "headline": "Turkey - Level 2: Exercise Increased Caution",
+    "summaryPoints": [
+      "Exercise caution in crowded public spaces including transportation hubs, markets, malls, government buildings, hotels, restaurants, clubs, places of worship, educational institutions, parks, airports, and major events.",
+      "There is risk of terrorist violence, including terrorist attacks and other activity in Türkiye.",
+      "The Turkish government has detained and arrested individuals, including Americans, for alleged links to terrorist groups based on scant evidence and minimal due process."
+    ],
+    "reasons": [
+      "terrorism",
+      "civil_unrest",
+      "wrongful_detention"
+    ],
+    "doNotTravel": [
+      "Border Region with Syria and Iraq"
+    ],
+    "restrictions": [
+      "Armed escort may be required",
+      "U.S. government employees need special authorization to travel to the border region with Syria and Iraq due to safety risks."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Turkish Lira (TRY)",
+      "language": "Turkish",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers face significant risks of arbitrary detention and potential terrorist attacks in crowded areas, particularly in urban centers and tourist hotspots."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter operational disruptions due to civil unrest and arbitrary detention risks, particularly in sensitive areas or during protests."
+      },
+      "family": {
+        "level": "high",
+        "detail": "Families with children should be cautious due to limited healthcare access and the risk of civil unrest, which can pose safety concerns in public spaces."
+      },
+      "remote": {
+        "level": "moderate",
+        "detail": "Remote workers may find urban areas suitable for work with decent connectivity, but should avoid border regions and remain aware of the potential for civil unrest."
+      }
+    },
+    "consularSupport": {
+      "availability": "limited",
+      "evacuation": "limited",
+      "limited": true
+    },
+    "severity": {
+      "crime": 5,
+      "terrorism": 6,
+      "kidnapping": 0,
+      "overall": 4.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old"
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/turkey-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "brazil": {
+    "code": "BR",
+    "name": "Brazil",
+    "flag": "🇧🇷",
+    "level": 2,
+    "label": "Exercise Increased Caution",
+    "headline": "Brazil - Level 2: Exercise Increased Caution",
+    "summaryPoints": [
+      "Exercise increased caution in Brazil due to crime and kidnapping, especially in certain areas.",
+      "Violent crime, including murder and armed robbery, can occur in urban areas at any time."
+    ],
+    "reasons": [
+      "crime",
+      "kidnapping"
+    ],
+    "doNotTravel": [
+      "Brazil",
+      "Ceilandia",
+      "Santa Maria",
+      "Sao Sebastiao",
+      "Paranoa"
+    ],
+    "restrictions": [
+      "Armed escort may be required",
+      "Must obtain special authorization to travel within 160 km/100 miles of the international land borders with Bolivia, Colombia, Guyana, French Guiana, Paraguay, Peru, Suriname, and Venezuela.",
+      "Must obtain special authorization to travel to informal housing developments in Brazil.",
+      "Must obtain special authorization to travel to Brasilia’s Satellite Cities between 6:00 p.m. and 6:00 a.m."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Brazilian Real (BRL)",
+      "language": "Portuguese",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers face a significant risk of street crime, including robbery and drugging incidents, particularly in urban areas like Rio de Janeiro and São Paulo."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter operational disruptions due to crime and corruption, but can generally rely on hotel and transportation services in major cities."
+      },
+      "family": {
+        "level": "high",
+        "detail": "Families with children face risks from violent crime and limited access to pediatric healthcare outside major urban centers, necessitating heightened vigilance."
+      },
+      "remote": {
+        "level": "moderate",
+        "detail": "Remote workers may find reliable internet in urban areas, but should avoid traveling to informal housing developments and remain cautious about personal safety."
+      }
+    },
+    "consularSupport": {
+      "availability": "limited",
+      "evacuation": "limited",
+      "limited": true
+    },
+    "severity": {
+      "crime": 6,
+      "terrorism": 0,
+      "kidnapping": 5,
+      "overall": 4.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Brazil"
+        },
+        {
+          "name": "COVID-19",
+          "who": ""
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        },
+        {
+          "name": "Yellow Fever",
+          "who": "travelers ≥9 months old going to certain states in Brazil"
+        }
+      ],
+      "routine": [],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "Atovaquone-proguanil",
+          "doxycycline",
+          "mefloquine",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Oropouche in the Americas",
+          "level": "watch",
+          "summary": "Areas in several countries are reporting a low number of cases of Oropouche, which is spread primarily through the bites of infected midges and mosquitoes."
+        },
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the MMR vaccine."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/brazil-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "argentina": {
+    "code": "AR",
+    "name": "Argentina",
+    "flag": "🇦🇷",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Argentina - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Exercise increased caution in City of Rosario (Santa Fe province) due to crime.",
+      "Cases of Andes (Hantavirus) Virus have been reported in the region, but the risk for most travelers is extremely low."
+    ],
+    "reasons": [
+      "crime",
+      "health"
+    ],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Argentine Peso (ARS)",
+      "language": "Spanish",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers may face increased street crime, particularly in Rosario, where criminal and narcotics trafficking contribute to violence and theft."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers should be cautious in Rosario due to heightened crime risks, but major urban centers generally have reliable infrastructure and services."
+      },
+      "family": {
+        "level": "moderate",
+        "detail": "Families with children should be aware of health risks like Hantavirus and ensure access to healthcare, especially outside major cities."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find reliable WiFi in urban areas, but should avoid rural regions where connectivity may be intermittent."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 3.5,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 1.7000000000000002
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old"
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        },
+        {
+          "name": "Yellow Fever",
+          "who": "all travelers ≥9 months old going to Corrientes and Misiones Provinces"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/argentina-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "uruguay": {
+    "code": "UY",
+    "name": "Uruguay",
+    "flag": "🇺🇾",
+    "level": 2,
+    "label": "Exercise Increased Caution",
+    "headline": "Uruguay - Level 2: Exercise Increased Caution",
+    "summaryPoints": [
+      "Exercise increased caution in Uruguay due to crime, particularly in Montevideo, Canelones, Maldonado, and Rivera.",
+      "Violent crimes such as homicides, armed robberies, and thefts occur throughout the country and have affected U.S. citizens."
+    ],
+    "reasons": [
+      "crime"
+    ],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": false,
+      "currency": "Uruguayan Peso (UYU)",
+      "language": "Spanish",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers face significant risk of street crime, particularly in urban areas like Montevideo, where armed robberies and thefts are common."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter operational disruptions due to crime, especially in urban centers, but can generally rely on hotel security and organized transport."
+      },
+      "family": {
+        "level": "moderate",
+        "detail": "Families with children should be cautious, as violent crime can occur unexpectedly, and healthcare access outside major cities may be limited."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find decent connectivity in urban areas, but should avoid displaying wealth and remain vigilant in public spaces."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 6,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 3
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Uruguay. Infants 6 to 11 months old should also be vaccinated against Hepatitis A."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers of all ages traveling to Uruguay."
+        },
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers should be up to date with their COVID-19 vaccines."
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas."
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/uruguay-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "costa rica": {
+    "code": "CR",
+    "name": "Costa Rica",
+    "flag": "🇨🇷",
+    "level": 2,
+    "label": "Exercise Increased Caution",
+    "headline": "Costa Rica - Level 2: Exercise Increased Caution",
+    "summaryPoints": [
+      "Exercise increased caution in Costa Rica due to crime.",
+      "Petty crime is common throughout Costa Rica, and violent crime also affects tourists."
+    ],
+    "reasons": [
+      "crime"
+    ],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Costa Rican Colón (CRC)",
+      "language": "Spanish",
+      "notableRestrictions": []
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers face a heightened risk of petty theft and violent crime, particularly in urban areas like San José, where street crime is prevalent after dark."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter logistical challenges due to crime but can generally rely on secure hotel accommodations and transportation options."
+      },
+      "family": {
+        "level": "moderate",
+        "detail": "Families with children should be cautious of health risks such as waterborne diseases and ensure access to reliable healthcare, particularly outside urban centers."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find good connectivity in urban areas, but should be aware of crime risks when working in public spaces."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 6,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 3.3000000000000003
+    },
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Yellow Fever",
+          "who": "travelers ≥9 months old arriving from countries with risk for YF virus transmission"
+        }
+      ],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Costa Rica"
+        },
+        {
+          "name": "COVID-19",
+          "who": ""
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        }
+      ],
+      "routine": [],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "Atovaquone-proguanil",
+          "chloroquine",
+          "doxycycline",
+          "mefloquine",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.cri.html",
+    "updatedAt": "2026-04-01T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "panama": {
+    "code": "PA",
+    "name": "Panama",
+    "flag": "🇵🇦",
+    "level": 2,
+    "label": "Exercise Increased Caution",
+    "headline": "Panama - Level 2: Exercise Increased Caution",
+    "summaryPoints": [
+      "Exercise increased caution in Panama due to crime and potential for civil unrest.",
+      "Crime occurs in Panama, including theft and residential break-ins, particularly in tourist areas."
+    ],
+    "reasons": [
+      "crime",
+      "civil_unrest"
+    ],
+    "doNotTravel": [
+      "Mosquito Gulf",
+      "Darién Region"
+    ],
+    "restrictions": [
+      "U.S. government personnel must obtain approval before traveling to certain regions.",
+      "U.S. government personnel face additional restrictions before travel is approved."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Balboa / US Dollar (PAB/USD)",
+      "language": "Spanish",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers face significant risks from street crime, particularly theft and pickpocketing in tourist areas like Panama City; caution is advised when navigating these locations alone."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter operational disruptions due to civil unrest and must remain vigilant about security in urban areas, especially during protests."
+      },
+      "family": {
+        "level": "moderate",
+        "detail": "Families with children should be cautious of health risks, including moderate malaria risk in certain regions, and ensure access to healthcare, which can be limited outside major cities."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find reliable internet in urban areas like Panama City, but should avoid rural regions where connectivity may be inconsistent."
+      }
+    },
+    "consularSupport": {
+      "availability": "limited",
+      "evacuation": "limited",
+      "limited": true
+    },
+    "severity": {
+      "crime": 6,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 4.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Panama"
+        },
+        {
+          "name": "COVID-19",
+          "who": ""
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        },
+        {
+          "name": "Yellow Fever",
+          "who": "all travelers ≥9 months old going to all mainland areas east of the Canal Zone"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "Atovaquone-proguanil",
+          "doxycycline",
+          "mefloquine",
+          "primaquine",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Oropouche in the Americas",
+          "level": "watch",
+          "summary": "Areas in several countries are reporting a low number of cases of Oropouche, which is spread primarily through the bites of infected midges and mosquitoes."
+        },
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the MMR vaccine."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/panama-travel-advisory.html",
+    "updatedAt": "2024-09-22T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "colombia": {
+    "code": "CO",
+    "name": "Colombia",
+    "flag": "🇨🇴",
+    "level": 3,
+    "label": "Reconsider Travel",
+    "headline": "Colombia - Level 3: Reconsider Travel",
+    "summaryPoints": [
+      "Violent crime, including murder, assault, and robbery, is common in many areas of Colombia.",
+      "There is a risk of terrorist violence, including attacks on U.S. government facilities and tourist areas.",
+      "Political demonstrations can disrupt travel and may become violent.",
+      "Natural disasters such as earthquakes and landslides pose additional risks."
+    ],
+    "reasons": [
+      "crime",
+      "terrorism",
+      "civil_unrest",
+      "kidnapping",
+      "natural_disaster"
+    ],
+    "doNotTravel": [
+      "Arauca, Cauca (excluding Popayán), Valle del Cauca (excluding Cali), and Norte de Santander departments",
+      "The Colombia-Venezuela border region (Within 10 km/6 miles)"
+    ],
+    "restrictions": [
+      "May not travel to Colombia’s land borders with neighboring countries without special authorization.",
+      "May not use motorcycles.",
+      "May not hail taxis from the street or use any form of public transportation."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Colombian Peso (COP)",
+      "language": "Spanish",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers face significant risks from violent street crime, particularly in urban areas like Bogotá and Medellín, where robbery and assault are common."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter operational disruptions due to civil unrest and must navigate a weak rule of law that can complicate legal and logistical matters."
+      },
+      "family": {
+        "level": "high",
+        "detail": "Families with children face challenges including limited healthcare access outside major cities and a high risk of violent crime, making travel particularly risky."
+      },
+      "remote": {
+        "level": "moderate",
+        "detail": "Remote workers may find good connectivity in urban centers but should avoid rural areas where internet access is unreliable and safety is a concern."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 8,
+      "terrorism": 5,
+      "kidnapping": 3,
+      "overall": 7.5
+    },
+    "vaccinations": {
+      "required": [
+        {
+          "name": "Yellow Fever",
+          "who": "all travelers ≥1 year old"
+        }
+      ],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Colombia"
+        },
+        {
+          "name": "Typhoid",
+          "who": ""
+        },
+        {
+          "name": "COVID-19",
+          "who": "all eligible travelers"
+        }
+      ],
+      "routine": [
+        "Measles, Mumps, Rubella (MMR)"
+      ],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "Atovaquone-proguanil",
+          "doxycycline",
+          "mefloquine",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Yellow Fever in Colombia",
+          "level": "alert",
+          "summary": "An increased number of cases of yellow fever have been reported in Colombia."
+        },
+        {
+          "title": "Global Dengue",
+          "level": "watch",
+          "summary": "Dengue is a year-round risk in many parts of the world, with outbreaks commonly occurring every 2–5 years. Travelers to risk areas should prevent mosquito bites."
+        },
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.col.html",
+    "updatedAt": "2026-03-30T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "malaysia": {
+    "code": "MY",
+    "name": "Malaysia",
+    "flag": "🇲🇾",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Malaysia - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Malaysia is generally a safe destination for travelers.",
+      "Exercise increased caution on islands and maritime areas off the coast of Eastern Sabah from Kudat in the north to Tawau in the south due to risk of kidnapping."
+    ],
+    "reasons": [
+      "crime",
+      "kidnapping"
+    ],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Malaysian Ringgit (MYR)",
+      "language": "Malay",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers may face increased risks of petty crime and potential kidnapping in remote areas, particularly in Eastern Sabah, where caution is advised."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers should be aware of potential disruptions due to crime and should exercise caution in certain regions, especially in maritime areas off Eastern Sabah."
+      },
+      "family": {
+        "level": "moderate",
+        "detail": "Families with children may encounter health risks such as dengue and limited access to pediatric care in rural areas; precautions against mosquito bites are essential."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find reliable internet in urban centers, but should avoid rural areas where connectivity may be intermittent."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 3.5,
+      "terrorism": 0,
+      "kidnapping": 3.5,
+      "overall": 1.1
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Malaysia"
+        },
+        {
+          "name": "Japanese Encephalitis",
+          "who": "travelers who are moving to an area with Japanese encephalitis to live, spending long periods of time, or frequently traveling to areas with Japanese encephalitis"
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        },
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers should be up to date with their COVID-19 vaccines."
+        }
+      ],
+      "routine": [],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "atovaquone-proguanil",
+          "doxycycline",
+          "mefloquine",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.mys.html",
+    "updatedAt": "2026-02-21T19:00:00-05:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "indonesia": {
+    "code": "ID",
+    "name": "Indonesia",
+    "flag": "🇮🇩",
+    "level": 2,
+    "label": "Exercise Increased Caution",
+    "headline": "Indonesia - Level 2: Exercise Increased Caution",
+    "summaryPoints": [
+      "Exercise increased caution in Indonesia due to terrorism and natural disasters.",
+      "Do not travel to Central Papua and Highland Papua due to civil unrest."
+    ],
+    "reasons": [
+      "terrorism",
+      "natural_disaster",
+      "civil_unrest"
+    ],
+    "doNotTravel": [
+      "Central Papua (Papua Tengah)",
+      "Highland Papua (Papua Pegunungan)"
+    ],
+    "restrictions": [
+      "U.S. government employees must obtain special authorization before traveling to Central Papua and Highland Papua."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Rupiah (IDR)",
+      "language": "Indonesian",
+      "notableRestrictions": [
+        "Armed separatists may kidnap foreign nationals."
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "high",
+        "detail": "Solo travelers face significant risks from petty crime and potential terrorism, particularly in urban areas and tourist hotspots where attacks may occur with little warning."
+      },
+      "business": {
+        "level": "moderate",
+        "detail": "Business travelers may encounter operational disruptions due to natural disasters and civil unrest, particularly in the restricted areas of Central and Highland Papua."
+      },
+      "family": {
+        "level": "high",
+        "detail": "Families with children should be cautious due to limited healthcare access in rural areas and the risk of natural disasters affecting safety and services."
+      },
+      "remote": {
+        "level": "moderate",
+        "detail": "Remote workers may find reliable internet in urban centers but should avoid rural areas where connectivity is inconsistent and health risks are higher."
+      }
+    },
+    "consularSupport": {
+      "availability": "limited",
+      "evacuation": "limited",
+      "limited": true
+    },
+    "severity": {
+      "crime": 4,
+      "terrorism": 5,
+      "kidnapping": 0,
+      "overall": 4.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers of all ages traveling to Indonesia"
+        },
+        {
+          "name": "Japanese Encephalitis",
+          "who": "travelers who are moving to an area with Japanese encephalitis to live or spend long periods of time, such as a month or more, in areas with Japanese encephalitis"
+        },
+        {
+          "name": "COVID-19",
+          "who": "all eligible travelers"
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas"
+        }
+      ],
+      "routine": [],
+      "malaria": {
+        "riskLevel": "moderate",
+        "medications": [
+          "Atovaquone-proguanil",
+          "doxycycline",
+          "mefloquine",
+          "tafenoquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/indonesia-travel-advisory.html",
+    "updatedAt": "2025-04-29T20:00:00-04:00",
+    "fetchedAt": "2026-07-07"
+  },
+  "vietnam": {
+    "code": "VN",
+    "name": "Vietnam",
+    "flag": "🇻🇳",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "Vietnam - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Vietnam is generally a safe destination for travelers.",
+      "Petty crime is common, especially in popular tourist locations. Stay aware of your surroundings.",
+      "Landmines and unexploded ordnance exist in Vietnam, particularly at construction sites."
+    ],
+    "reasons": [
+      "other"
+    ],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Dong (VND)",
+      "language": "Vietnamese",
+      "notableRestrictions": [
+        "drug possession illegal including medical marijuana",
+        "e-cigarettes prohibited"
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "moderate",
+        "detail": "Petty theft is common in tourist areas, requiring solo travelers to remain vigilant and avoid less populated areas after dark."
+      },
+      "business": {
+        "level": "low",
+        "detail": "Business travelers may face minor disruptions due to petty crime but generally find reliable infrastructure in urban centers."
+      },
+      "family": {
+        "level": "moderate",
+        "detail": "Families with children should be cautious of petty crime and ensure access to healthcare, particularly in rural areas where services may be limited."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers can find reliable WiFi in urban areas, but should avoid rural locations where connectivity may be inconsistent."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 3.5,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 1.2
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Vietnam. Infants 6 to 11 months old should also be vaccinated against Hepatitis A."
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers of all ages traveling to Vietnam."
+        },
+        {
+          "name": "Japanese Encephalitis",
+          "who": "travelers who are moving to an area with Japanese encephalitis to live, spending long periods of time, or frequently traveling to areas with Japanese encephalitis."
+        },
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers should be up to date with their COVID-19 vaccines."
+        },
+        {
+          "name": "Typhoid",
+          "who": "most travelers, especially those staying with friends or relatives or visiting smaller cities or rural areas."
+        }
+      ],
+      "routine": [],
+      "malaria": {
+        "riskLevel": "low",
+        "medications": [
+          "Atovaquone-proguanil",
+          "doxycycline",
+          "tafenoquine",
+          "mefloquine"
+        ]
+      },
+      "healthNotices": [
+        {
+          "title": "Global Dengue",
+          "level": "watch",
+          "summary": "Dengue is a year-round risk in many parts of the world, with outbreaks commonly occurring every 2–5 years. Travelers to risk areas should prevent mosquito bites."
+        },
+        {
+          "title": "Global Measles",
+          "level": "alert",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/vietnam-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "new zealand": {
+    "code": "NZ",
+    "name": "New Zealand",
+    "flag": "🇳🇿",
+    "level": 1,
+    "label": "Exercise Normal Precautions",
+    "headline": "New Zealand - Level 1: Exercise Normal Precautions",
+    "summaryPoints": [
+      "Exercise normal precautions in New Zealand.",
+      "New Zealand is generally a safe destination for travelers.",
+      "Enroll in the Smart Traveler Enrollment Program (STEP) to get important updates and alerts from the U.S. embassy or consulate.",
+      "Review the Country Security Report for New Zealand."
+    ],
+    "reasons": [],
+    "doNotTravel": [],
+    "restrictions": [],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "New Zealand Dollar (NZD)",
+      "language": "English / Māori",
+      "notableRestrictions": []
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "low",
+        "detail": "Solo travelers should remain vigilant in remote areas where emergency services may be limited, particularly in outdoor adventure settings."
+      },
+      "business": {
+        "level": "safe",
+        "detail": "Business travelers can expect reliable infrastructure and low corruption, facilitating smooth operations in urban centers."
+      },
+      "family": {
+        "level": "low",
+        "detail": "Families with children should be aware of limited pediatric care outside major cities, but overall health risks are manageable with standard precautions."
+      },
+      "remote": {
+        "level": "low",
+        "detail": "Remote workers will find good connectivity in urban areas, but should avoid rural regions where internet access may be inconsistent."
+      }
+    },
+    "consularSupport": {
+      "availability": "normal",
+      "evacuation": "available",
+      "limited": false
+    },
+    "severity": {
+      "crime": 1,
+      "terrorism": 0,
+      "kidnapping": 0,
+      "overall": 0.5
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "Hepatitis A",
+          "who": "travelers who will be doing higher risk activities, such as visiting smaller cities, villages, or rural areas where a traveler might get infected through food or water"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to New Zealand"
+        },
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories/new-zealand-travel-advisory.html",
+    "updatedAt": "2023-10-01",
+    "fetchedAt": "2026-07-07"
+  },
+  "russia": {
+    "code": "RU",
+    "name": "Russia",
+    "flag": "🇷🇺",
+    "level": 4,
+    "label": "Do Not Travel",
+    "headline": "Russia - Level 4: Do Not Travel",
+    "summaryPoints": [
+      "Do not travel to Russia for any reason due to terrorism, unrest, wrongful detention, and other risks.",
+      "U.S. citizens in Russia should leave immediately as the U.S. government has limited ability to assist them, especially outside of Moscow.",
+      "All U.S. consulates in Russia have suspended operations, including consular services.",
+      "The risk of wrongful detention of U.S. citizens remains high, and there is no guarantee of consular access if detained."
+    ],
+    "reasons": [
+      "terrorism",
+      "wrongful_detention",
+      "civil_unrest",
+      "other"
+    ],
+    "doNotTravel": [
+      "Russia"
+    ],
+    "restrictions": [
+      "U.S. government personnel are prohibited from traveling to the North Caucasus, including Chechnya and Mt. Elbrus.",
+      "U.S. citizens should follow the same restrictions as government employees regarding travel in Russia."
+    ],
+    "stateOfEmergency": false,
+    "entryExit": {
+      "visaRequired": null,
+      "currency": "Russian Ruble (RUB)",
+      "language": "Russian",
+      "notableRestrictions": [
+        "U.S. credit and debit cards no longer work in Russia due to sanctions.",
+        "Sending electronic money transfers from the United States to Russia is nearly impossible."
+      ]
+    },
+    "travelerImpact": {
+      "solo": {
+        "level": "very_high",
+        "detail": "Solo travelers face extreme risks of wrongful detention and harassment, with limited consular support and a high likelihood of arbitrary enforcement by authorities."
+      },
+      "business": {
+        "level": "very_high",
+        "detail": "Business travelers are at extreme risk due to the high potential for wrongful detention, lack of consular assistance, and the unstable political environment that can disrupt operations."
+      },
+      "family": {
+        "level": "very_high",
+        "detail": "Families traveling with children face extreme risks, including potential wrongful detention and limited access to healthcare, making travel unsafe for minors."
+      },
+      "remote": {
+        "level": "very_high",
+        "detail": "Remote workers face extreme risks due to the likelihood of wrongful detention and harassment, with no reliable consular support or legal protections."
+      }
+    },
+    "consularSupport": {
+      "availability": "limited",
+      "evacuation": "limited",
+      "limited": true
+    },
+    "severity": {
+      "crime": 8,
+      "terrorism": 9,
+      "kidnapping": 5,
+      "overall": 9.9
+    },
+    "vaccinations": {
+      "required": [],
+      "recommended": [
+        {
+          "name": "COVID-19",
+          "who": "All eligible travelers"
+        },
+        {
+          "name": "Hepatitis A",
+          "who": "unvaccinated travelers one year old or older going to Russia; infants 6 to 11 months old should also be vaccinated"
+        },
+        {
+          "name": "Hepatitis B",
+          "who": "unvaccinated travelers younger than 60 years old traveling to Russia; unvaccinated travelers 60 years and older may get vaccinated before traveling"
+        },
+        {
+          "name": "Japanese Encephalitis",
+          "who": "travelers who are moving to an area with Japanese encephalitis to live or spending long periods of time, such as a month or more, in areas with Japanese encephalitis"
+        }
+      ],
+      "routine": [
+        "Measles-Mumps-Rubella (MMR)"
+      ],
+      "malaria": null,
+      "healthNotices": [
+        {
+          "title": "Global Measles",
+          "level": "watch",
+          "summary": "Measles cases are rising in many countries around the world. All international travelers should be fully vaccinated against measles with the measles-mumps-rubella (MMR) vaccine, according to CDC's measles vaccination recommendations for international travel."
+        }
+      ]
+    },
+    "stateDeptUrl": "https://travel.state.gov/content/tsg_aem/us/en/home/international-travel/travel-advisories/destination.rus.html",
+    "updatedAt": "2024-03-01",
+    "fetchedAt": "2026-07-07"
   }
 };

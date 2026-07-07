@@ -42,6 +42,7 @@ const DATA: Record<string, StaticCountryData> = {
   thailand: { internetMbps: 230, plugTypes: ["A", "B", "C", "O"], voltage: "230V", english: "low" },
   japan: { internetMbps: 180, plugTypes: ["A", "B"], voltage: "100V", english: "low" },
   singapore: { internetMbps: 340, plugTypes: ["G"], voltage: "230V", english: "very high" },
+  russia: { internetMbps: 90, plugTypes: ["C", "F"], voltage: "230V", english: "low" },
 };
 
 const BY_NAME: Record<string, StaticCountryData> = Object.fromEntries(

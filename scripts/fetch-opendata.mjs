@@ -62,6 +62,7 @@ const DESTINATIONS = [
   { name: "Indonesia", iso2: "ID", iso3: "IDN", capital: "Jakarta", lat: -6.21, lon: 106.85, drive: "left", eu: false },
   { name: "Vietnam", iso2: "VN", iso3: "VNM", capital: "Hanoi", lat: 21.03, lon: 105.85, drive: "right", eu: false },
   { name: "New Zealand", iso2: "NZ", iso3: "NZL", capital: "Wellington", lat: -41.29, lon: 174.78, drive: "left", eu: false },
+  { name: "Russia", iso2: "RU", iso3: "RUS", capital: "Moscow", lat: 55.75, lon: 37.62, drive: "right", eu: false },
 ];
 
 async function getJson(url, headers = {}) {
