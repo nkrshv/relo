@@ -17,7 +17,7 @@ export default function CompareIndexPage() {
           href="/"
           className="text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
         >
-          ← ReloChecklist
+          ← Reloka
         </Link>
         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
           Compare two countries before you move
@@ -55,7 +55,7 @@ export default function CompareIndexPage() {
       </section>
 
       <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400">
-        ReloChecklist · Not legal, tax or immigration advice. Always verify
+        Reloka · Not legal, tax or immigration advice. Always verify
         official requirements.
       </footer>
     </main>

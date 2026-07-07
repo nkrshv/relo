@@ -344,7 +344,7 @@ export default async function ComparePage({
       </section>
 
       <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400">
-        ReloChecklist · Not legal, tax or immigration advice. Always verify
+        Reloka · Not legal, tax or immigration advice. Always verify
         official requirements.
       </footer>
     </main>

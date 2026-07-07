@@ -44,7 +44,7 @@ const DESTINATIONS = [
 ];
 
 async function getJson(url) {
-  const res = await fetch(url, { headers: { "User-Agent": "relochecklist-fetch" } });
+  const res = await fetch(url, { headers: { "User-Agent": "reloka-fetch" } });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return res.json();
 }
