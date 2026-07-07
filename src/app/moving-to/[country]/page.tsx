@@ -10,6 +10,7 @@ import { staticDataForCountry } from "@/lib/staticCountryData";
 import { advisoryForCountry } from "@/lib/countryAdvisory";
 import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { currencyForCountry } from "@/lib/countryCurrency";
+import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
   country: string;
@@ -36,6 +37,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `/moving-to/${dest.slug}` },
     openGraph: { title, description, url: `/moving-to/${dest.slug}` },
+    other: { "article:modified_time": OPEN_DATA_UPDATED_AT },
   };
 }
 
@@ -191,14 +193,39 @@ export default async function MovingToPage({
   const facts = quickFacts(dest.name);
   const regimes = taxRegimesForCountry(dest.name);
   const faqs = faqFor(dest.name);
+  const pageUrl = `${SITE_URL}/moving-to/${dest.slug}`;
   const faqJsonLd = {
     "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqs.map((f) => ({
-      "@type": "Question",
-      name: f.q,
-      acceptedAnswer: { "@type": "Answer", text: f.a },
-    })),
+    "@graph": [
+      {
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Reloka", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: `Moving to ${dest.name}`,
+            item: pageUrl,
+          },
+        ],
+      },
+      {
+        "@type": "WebPage",
+        "@id": pageUrl,
+        name: `Moving to ${dest.name}: relocation checklist`,
+        url: pageUrl,
+        dateModified: OPEN_DATA_UPDATED_AT,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+      },
+    ],
   };
 
   return (
