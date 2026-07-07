@@ -3,7 +3,6 @@ import { put } from "@vercel/blob";
 
 export const runtime = "nodejs";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_LEN = 200;
 
 const RATE_LIMIT = 10;
@@ -50,7 +49,8 @@ async function store(type: string, value: string): Promise<void> {
   }
 }
 
-// Lightweight intake for email signups and country requests.
+// Lightweight intake for country requests. No PII is stored: the changelog
+// email signup was removed, so only requested country names land in Blob.
 export async function POST(req: NextRequest) {
   const ip =
     req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -61,25 +61,15 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { type?: string; email?: string; country?: string };
+  let body: { type?: string; country?: string };
   try {
     body = (await req.json()) as typeof body;
   } catch {
     return Response.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const type = body.type === "subscribe" || body.type === "request-country" ? body.type : null;
-  if (!type) {
+  if (body.type !== "request-country") {
     return Response.json({ error: "Unknown feedback type." }, { status: 400 });
-  }
-
-  if (type === "subscribe") {
-    const email = (body.email ?? "").trim().slice(0, MAX_LEN);
-    if (!EMAIL_RE.test(email)) {
-      return Response.json({ error: "Enter a valid email." }, { status: 400 });
-    }
-    await store("subscribe", email);
-    return Response.json({ ok: true });
   }
 
   const country = (body.country ?? "").trim().slice(0, MAX_LEN);

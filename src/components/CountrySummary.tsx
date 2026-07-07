@@ -759,7 +759,7 @@ export default function CountrySummary({
                           {r.statusNote ? ` ${r.statusNote}.` : ""}
                         </p>
                         <p className="mt-1.5 text-[11px] text-stone-400">
-                          Verified {r.verified} ·{" "}
+                          Verified {formatMonth(r.verified)} ·{" "}
                           <a
                             href={r.sourceUrl}
                             target="_blank"
