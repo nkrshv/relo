@@ -56,6 +56,12 @@ ws.send(json.dumps({"id":1,"method":"Runtime.evaluate","params":{"expression":"l
 print(ws.recv())
 ```
 
+## Scroll road decoration (landing page, PR #40)
+- `ScrollRoad` renders a decorative SVG road + car behind the landing page content (desktop ≥1024px only, skipped for `prefers-reduced-motion`). It starts under the hero CTA (`a[href='/plan']`) and fades in via a gradient mask — at scroll 0 NO road should be visible in the hero viewport; a visible stub mid-page means the mask/startY wiring regressed.
+- To test: scroll from top to bottom checking (1) fade-in below CTA, (2) car on the path rotating with curves, traveled segment darker, (3) road occluded by white cards, never over text, (4) car gone under the footer at full scroll.
+- Narrow-viewport regression: resize the window below 1024px with `wmctrl -r :ACTIVE: -e 0,100,50,800,700` and confirm no road SVG in the DOM (the stripped page HTML in /tmp is handy). Re-maximize with `wmctrl -r :ACTIVE: -b add,maximized_vert,maximized_horz` afterwards.
+- The road geometry is measured on mount/resize; if the page height changes (new landing sections), the path recomputes — a road ending far above the footer suggests the resize observer broke.
+
 ## Same-country guard
 - Picking a country in one combobox hides it from the other's suggestions (`exclude` prop). Typing the same country manually shows "You're already there — pick a different destination." and blocks submit; /api/generate also 400s equal countries.
 
