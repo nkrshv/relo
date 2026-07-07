@@ -9,6 +9,13 @@ import { staticDataForCountry } from "@/lib/staticCountryData";
 import { advisoryForCountry } from "@/lib/countryAdvisory";
 import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { currencyForCountry } from "@/lib/countryCurrency";
+import {
+  censorshipForCountry,
+  allMessengersReachable,
+  disruptedMessengers,
+  type CountryCensorship,
+} from "@/lib/countryCensorship";
+import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
 import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
@@ -83,6 +90,18 @@ function buildRows(a: Destination, b: Destination): Row[] {
   const advB = advisoryForCountry(b.name);
   const regA = taxRegimesForCountry(a.name);
   const regB = taxRegimesForCountry(b.name);
+  const cenA = censorshipForCountry(a.name);
+  const cenB = censorshipForCountry(b.name);
+  const salA = salaryForCountry(a.name);
+  const salB = salaryForCountry(b.name);
+
+  const messengerSummary = (c: CountryCensorship | null): string | null => {
+    if (!c || c.messengers.length === 0) return null;
+    if (allMessengersReachable(c)) return "All measured apps work";
+    return disruptedMessengers(c)
+      .map((m) => `${m.app}: interference`)
+      .join(" · ");
+  };
 
   const aqiTone = (aqi: number | undefined | null): string | undefined => {
     if (aqi == null) return undefined;
@@ -146,6 +165,18 @@ function buildRows(a: Destination, b: Destination): Row[] {
       source: `Official tax authorities, verified ${regA[0]?.verified ?? regB[0]?.verified ?? INSIGHTS_UPDATED_AT.slice(0, 7)}`,
     },
     {
+      label: "Avg advertised salary",
+      a:
+        salA?.avgAnnual && salB?.avgAnnual
+          ? `${formatSalary(salA.avgAnnual, salA.currency)} / yr (${salA.avgMonth})`
+          : null,
+      b:
+        salA?.avgAnnual && salB?.avgAnnual
+          ? `${formatSalary(salB.avgAnnual, salB.currency)} / yr (${salB.avgMonth})`
+          : null,
+      source: "Adzuna job listings, local currency",
+    },
+    {
       label: "Inflation",
       a: insA?.inflation
         ? `${insA.inflation.value.toFixed(1)}% / yr (${insA.inflation.year})`
@@ -168,12 +199,32 @@ function buildRows(a: Destination, b: Destination): Row[] {
       source: "EF English Proficiency Index",
     },
     {
+      label: "Messenger apps",
+      a: messengerSummary(cenA) && messengerSummary(cenB) ? messengerSummary(cenA) : null,
+      b: messengerSummary(cenA) && messengerSummary(cenB) ? messengerSummary(cenB) : null,
+      aTone:
+        cenA && !allMessengersReachable(cenA) ? "text-amber-700" : undefined,
+      bTone:
+        cenB && !allMessengersReachable(cenB) ? "text-amber-700" : undefined,
+      source: "OONI network measurements, 6-month window",
+    },
+    {
       label: "Safety advisory",
       a: advA ? `Level ${advA.level} · ${advA.label}` : null,
       b: advB ? `Level ${advB.level} · ${advB.label}` : null,
       aTone: advA && advA.level >= 3 ? "text-red-700" : undefined,
       bTone: advB && advB.level >= 3 ? "text-red-700" : undefined,
       source: "U.S. State Department travel advisory",
+    },
+    {
+      label: "Foreign-born residents",
+      a: insA?.migrantShare
+        ? `${insA.migrantShare.value.toFixed(1)}% of population (${insA.migrantShare.year})`
+        : null,
+      b: insB?.migrantShare
+        ? `${insB.migrantShare.value.toFixed(1)}% of population (${insB.migrantShare.year})`
+        : null,
+      source: "World Bank migrant stock",
     },
     {
       label: "Life expectancy",

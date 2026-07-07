@@ -1,0 +1,181 @@
+// Offline fetcher for a per-destination messenger reachability layer.
+//
+// Source: OONI (Open Observatory of Network Interference) aggregation API,
+// https://api.ooni.org/api/v1/aggregation. Free, keyless, 200+ countries.
+// For each messenger we read the last ~6 months of measurements and compute
+// an anomaly rate = anomaly_count / measurement_count. OONI separates
+// "anomaly" (probe saw interference, likely blocked) from "confirmed"
+// (block page / DNS tampering proven), so we surface a graded SIGNAL, never a
+// hard "blocked", and always link the OONI country page with the window.
+//
+// Buckets (conservative on purpose: OONI messenger tests have a nonzero
+// false-anomaly floor, so mild rates are treated as reachable):
+//   reachable          anomaly rate < 20%
+//   disrupted          20%..60%  (throttling / partial blocking)
+//   heavily-disrupted  > 60%     (widespread interference)
+// Messengers with too few measurements are omitted entirely (scalable logic:
+// no data -> no claim, never a "0" or "-").
+//
+// Usage: node scripts/fetch-censorship.mjs
+
+import { writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, "..");
+
+// Must match src/lib/countries.ts.
+const DESTINATIONS = [
+  { name: "Portugal", iso2: "PT" },
+  { name: "Spain", iso2: "ES" },
+  { name: "Germany", iso2: "DE" },
+  { name: "Netherlands", iso2: "NL" },
+  { name: "France", iso2: "FR" },
+  { name: "Italy", iso2: "IT" },
+  { name: "Ireland", iso2: "IE" },
+  { name: "United Kingdom", iso2: "GB" },
+  { name: "United States", iso2: "US" },
+  { name: "Canada", iso2: "CA" },
+  { name: "Australia", iso2: "AU" },
+  { name: "United Arab Emirates", iso2: "AE" },
+  { name: "Estonia", iso2: "EE" },
+  { name: "Poland", iso2: "PL" },
+  { name: "Mexico", iso2: "MX" },
+  { name: "Thailand", iso2: "TH" },
+  { name: "Japan", iso2: "JP" },
+  { name: "Singapore", iso2: "SG" },
+  { name: "Greece", iso2: "GR" },
+  { name: "Cyprus", iso2: "CY" },
+  { name: "Malta", iso2: "MT" },
+  { name: "Switzerland", iso2: "CH" },
+  { name: "Austria", iso2: "AT" },
+  { name: "Czechia", iso2: "CZ" },
+  { name: "Georgia", iso2: "GE" },
+  { name: "Armenia", iso2: "AM" },
+  { name: "Turkey", iso2: "TR" },
+  { name: "Brazil", iso2: "BR" },
+  { name: "Argentina", iso2: "AR" },
+  { name: "Uruguay", iso2: "UY" },
+  { name: "Costa Rica", iso2: "CR" },
+  { name: "Panama", iso2: "PA" },
+  { name: "Colombia", iso2: "CO" },
+  { name: "Malaysia", iso2: "MY" },
+  { name: "Indonesia", iso2: "ID" },
+  { name: "Vietnam", iso2: "VN" },
+  { name: "New Zealand", iso2: "NZ" },
+];
+
+// OONI test_name -> label shown to the user.
+const MESSENGERS = [
+  { test: "telegram", label: "Telegram" },
+  { test: "whatsapp", label: "WhatsApp" },
+  { test: "signal", label: "Signal" },
+  { test: "facebook_messenger", label: "Facebook Messenger" },
+];
+
+// Minimum measurements before we trust a rate; below this we omit the row.
+const MIN_MEASUREMENTS = 40;
+
+function bucket(rate) {
+  if (rate < 0.2) return "reachable";
+  if (rate < 0.6) return "disrupted";
+  return "heavily-disrupted";
+}
+
+async function getJson(url) {
+  const res = await fetch(url, { headers: { "User-Agent": "reloka-fetch" } });
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  return res.json();
+}
+
+async function fetchMessenger(iso2, test, since, until) {
+  try {
+    const json = await getJson(
+      `https://api.ooni.org/api/v1/aggregation?probe_cc=${iso2}` +
+        `&test_name=${test}&since=${since}&until=${until}`,
+    );
+    const r = json?.result;
+    const measurements = r?.measurement_count ?? 0;
+    if (!r || measurements < MIN_MEASUREMENTS) return null;
+    const anomalies = r.anomaly_count ?? 0;
+    const rate = anomalies / measurements;
+    return {
+      rate: Number(rate.toFixed(3)),
+      status: bucket(rate),
+      measurements,
+    };
+  } catch {
+    return null;
+  }
+}
+
+function ymd(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+async function main() {
+  const now = new Date();
+  const until = ymd(now);
+  const since = ymd(new Date(now.getTime() - 183 * 24 * 60 * 60 * 1000));
+
+  const out = {};
+  for (const d of DESTINATIONS) {
+    process.stdout.write(`Fetching ${d.name}... `);
+    const results = await Promise.all(
+      MESSENGERS.map((m) => fetchMessenger(d.iso2, m.test, since, until)),
+    );
+    const messengers = [];
+    MESSENGERS.forEach((m, i) => {
+      const r = results[i];
+      if (r) messengers.push({ app: m.label, ...r });
+    });
+    // Scalable logic: only record a country when at least one messenger has
+    // enough data. Countries with no measurements get no entry at all.
+    if (messengers.length > 0) {
+      out[d.name] = {
+        iso2: d.iso2,
+        ooniUrl: `https://explorer.ooni.org/country/${d.iso2}`,
+        window: { since, until },
+        messengers,
+      };
+    }
+    console.log(messengers.length ? `done (${messengers.length})` : "no data");
+  }
+
+  const header = `// AUTO-GENERATED by scripts/fetch-censorship.mjs — do not edit by hand.
+// Source: OONI aggregation API (https://api.ooni.org). anomaly rate =
+// anomaly_count / measurement_count over the trailing ~6 months. This is a
+// graded signal of interference, not proof of a block; always shown with the
+// OONI link and window. Regenerate with: node scripts/fetch-censorship.mjs
+
+export type Reachability = "reachable" | "disrupted" | "heavily-disrupted";
+
+export interface MessengerReachability {
+  /** Human label, e.g. "Telegram". */
+  app: string;
+  /** Anomaly rate 0..1 over the window. */
+  rate: number;
+  status: Reachability;
+  /** Number of OONI measurements the rate is based on. */
+  measurements: number;
+}
+
+export interface CountryCensorship {
+  iso2: string;
+  /** OONI Explorer country page. */
+  ooniUrl: string;
+  window: { since: string; until: string };
+  messengers: MessengerReachability[];
+}
+
+export const CENSORSHIP_UPDATED_AT = ${JSON.stringify(until)};
+
+export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = ${JSON.stringify(out, null, 2)};
+`;
+
+  writeFileSync(join(ROOT, "src/lib/countryCensorship.generated.ts"), header);
+  console.log(`Wrote censorship data for ${Object.keys(out).length} destinations.`);
+}
+
+main();
