@@ -111,8 +111,9 @@ SPECIFICITY IS MANDATORY. This is the whole product — generic advice is worthl
 - "steps": 2 to 4 concrete sub-actions describing HOW to actually complete this item, in order — where exactly to go or which portal/form to use, what to book or request, what happens next. Each step is one short imperative sentence with real names (offices, forms, portals). Never restate the title; never pad with filler. Use [] only when the item genuinely has a single trivial action.
 - "documents": the exact papers/artifacts to bring or prepare for this item (e.g. "Passport", "Proof of address (rental contract)", "Apostilled birth certificate", "3 months of bank statements"). Use [] when none are needed.
 - "deadline": the hard legal or practical deadline if one exists (e.g. "Within 14 days of moving in", "Within 30 days of arrival", "Before your visa appointment"), otherwise "".
-- "commonMistake": the single most common way people get this step wrong and its consequence, one sentence (e.g. "Booking the Anmeldung appointment after arrival: slots in big cities are gone weeks ahead, blocking your bank account and tax ID"). Use "" only if there is genuinely no notable pitfall.
-- "url": the official website for the specific institution, portal, or scheme named in this item (e.g. the tax authority, immigration agency, health service, or the housing/banking portal). RULES for url: (1) only a real, well-established OFFICIAL domain you are confident exists — prefer government sites (.gov, .gob, country TLDs) or the well-known official portal; (2) use the site's ROOT homepage (https://domain/) NOT a deep path, since deep links go stale and 404; (3) if you are not confident of the exact real domain, use an empty string "" — NEVER guess, invent, or approximate a URL. A wrong link is far worse than no link.
+- "commonMistake": the single most PAINFUL, non-obvious way people get THIS specific step wrong, plus the concrete consequence. It must contain both (a) the exact wrong action or wrong order of operations, and (b) what it costs in the real world: which later step it blocks, how many weeks it adds, how much money it wastes, or the specific penalty/threshold that disqualifies them. BANNED as commonMistake (these are worthless filler that fit any step in any country): "don't forget X", "delaying this can cause problems/complications", "not doing it on time", "failing to register can result in fines", "waiting too long", "not researching enough", "not being prepared". If your commonMistake would still read true for almost any other task, it is wrong: rewrite it around the trap unique to THIS step (a prerequisite people skip, a document that must be apostilled/sworn-translated first, an appointment booked months ahead, an order-of-operations people reverse). Good: "Trying to open the bank account before the Anmeldung: most German banks reject applicants without a registered address, so this only works after registration, not before"; "Booking the Anmeldung after arrival: slots in big cities are gone weeks ahead, blocking your bank account and tax ID". Bad: "Delaying account setup, which can complicate payments"; "Forgetting to register can result in fines". Use "" only if there is genuinely no notable pitfall.
+- NEUTRALITY (no advertising): stay impartial. For government bodies, official portals and statutory schemes, always name the exact real one (that is required specificity, not advertising). For a PRIVATE/commercial service (a bank, broker, insurer, mobile carrier, relocation agency, comparison site), do NOT steer the user to one company as "the" choice: either name the neutral category plus the concrete selection criteria that matter for this person (e.g. "a current account that opens with a non-EU address, has no monthly fee, and supports SEPA transfers"), OR name 2 to 3 well-known options together and say how to compare them and that they are examples, not endorsements. Never name exactly ONE private company ("consider X", "use X", "X is popular") as the answer. Never imply one provider is best, sponsored, or recommended.
+- "url": the official website for the specific PUBLIC institution, portal, or scheme named in this item (the tax authority, immigration agency, municipal office, public health service, statutory scheme). RULES for url: (1) only a real, well-established OFFICIAL government or public-institution domain you are confident exists; NEVER link a private company's website (a bank, insurer, housing portal, carrier, agency) — if the item is about choosing a private-sector service, use ""; (2) use the site's ROOT homepage (https://domain/) NOT a deep path, since deep links go stale and 404; (3) if you are not confident of the exact real domain, use an empty string "" — NEVER guess, invent, or approximate a URL. A wrong link is far worse than no link.
 
 PROFILE MODULES — mandatory extra coverage depending on who is moving:
 - "family" profile: MUST include at least one item on school/kindergarten enrolment (real system names, application windows, catchment/registration rules) and one on registering children for healthcare/vaccination records.
@@ -139,7 +140,8 @@ For EVERY item in the draft:
 1. If the title, why, tip, steps or commonMistake could apply to more than one country, rewrite them with destination-specific substance: the real office/portal/form name, the actual fee or threshold (approximate is fine — add "verify the current figure on [named authority]" if it changes yearly), the real waiting time, the real order of operations.
 2. If "steps" is empty, too short, or just restates the title — write 2–4 real sub-actions (which office/portal, which form, what to book, what happens after).
 3. If "documents" is empty but the process obviously requires papers — list the exact documents.
-4. If "deadline" is empty but a legal deadline exists — add it. If "commonMistake" is empty or bland — replace it with the real pitfall people hit for this exact step.
+4. If "deadline" is empty but a legal deadline exists — add it. commonMistake audit: any commonMistake that would read true for almost any task ("don't forget", "delaying causes complications", "not doing it on time", "failing to register results in fines", "waiting too long", "not being prepared") is filler and MUST be replaced with the real, step-specific trap and its concrete consequence: the exact wrong action or reversed order of operations, and which later step it blocks / how many weeks or how much money it costs / the penalty or disqualifying threshold.
+4b. Neutrality audit (no advertising): if an item steers the user to ONE private company as the choice (a single named bank, broker, insurer, mobile carrier, relocation agency, or comparison site), rewrite it either as the neutral category plus the concrete selection criteria that matter here, or as 2 to 3 options framed as examples to compare, not endorsements. If "url" points at a private company's website, replace it with the relevant official/government site or "". Keep exact naming ONLY for government offices, official portals and statutory schemes.
 5. Replace filler items ("join communities", "explore the city", "familiarize yourself with X") with concrete, destination-specific items. Do NOT shrink the plan: every phase must keep at least 4 items — when you cut filler, add a real missing task for this move (e.g. SIM/eSIM registration rules, utility contracts, license exchange, apostilles) instead.
 6. Personalization audit: re-read the user's message and verify every concrete detail they gave (budget or rent cap, savings, children's ages, pets, spouse's work plans, employer situation, timeline) is reflected in at least one item. If any detail is missing from the draft, weave it into the most relevant item or add a dedicated item for it. If the user gave no visa/status info, ensure the plan compares realistic visa routes rather than assuming one.
 7. Keep everything consistent with the VERIFIED FACTS and OFFICIAL TRAVEL ADVISORY blocks if they were provided — they are ground truth. Never invent office names, laws, or URLs; for url keep the same rules (official root domain or "").
@@ -181,6 +183,37 @@ function str(v: unknown): string {
   return typeof v === "string" ? v.trim() : "";
 }
 
+// The prompt forbids linking private companies (banks, insurers, housing
+// portals, carriers), but the model still occasionally does. Safety net for
+// the providers it names most often; the prompt remains the primary guard.
+const COMMERCIAL_HOSTS = [
+  "n26.com",
+  "revolut.com",
+  "wise.com",
+  "bunq.com",
+  "deutsche-bank.de",
+  "commerzbank.de",
+  "sparkasse.de",
+  "tk.de",
+  "aok.de",
+  "barmer.de",
+  "immobilienscout24.de",
+  "immoscout24.de",
+  "wg-gesucht.de",
+  "idealista.com",
+  "idealista.pt",
+  "funda.nl",
+  "rightmove.co.uk",
+  "zoopla.co.uk",
+  "seloger.com",
+  "immoweb.be",
+  "numbeo.com",
+  "airbnb.com",
+  "booking.com",
+  "vodafone.com",
+  "telekom.de",
+];
+
 function normalizeUrl(v: unknown): string | undefined {
   const s = str(v);
   if (!s) return undefined;
@@ -188,10 +221,29 @@ function normalizeUrl(v: unknown): string | undefined {
     const u = new URL(s);
     if (u.protocol !== "https:" && u.protocol !== "http:") return undefined;
     if (!u.hostname.includes(".")) return undefined;
+    const host = u.hostname.replace(/^www\./, "").toLowerCase();
+    if (COMMERCIAL_HOSTS.some((c) => host === c || host.endsWith(`.${c}`)))
+      return undefined;
     return u.toString();
   } catch {
     return undefined;
   }
+}
+
+// A commonMistake is only worth showing when it names something concrete (a
+// number, threshold, office, form or document). Generic "delaying this can
+// cause problems" filler is dropped: the cell simply does not render.
+function normalizeMistake(v: unknown): string | undefined {
+  const s = str(v);
+  if (!s) return undefined;
+  const hasDigit = /\d/.test(s);
+  const hasProperNoun = /\s[A-Z\u00c0-\u00dc]/.test(s);
+  const genericConsequence =
+    /(delays?|delaying|complicat|affect(ing|s)?|problems?|issues?|penalt|fines?|important documents|on time|in time|early enough|too long|be prepared)/i.test(
+      s,
+    );
+  if (!hasDigit && !hasProperNoun && genericConsequence) return undefined;
+  return s;
 }
 
 function strList(v: unknown): string[] | undefined {
@@ -215,7 +267,7 @@ function normalizeItem(raw: RawItem): ChecklistItem | null {
     steps: strList(raw.steps),
     documents: strList(raw.documents),
     deadline: str(raw.deadline) || undefined,
-    commonMistake: str(raw.commonMistake) || undefined,
+    commonMistake: normalizeMistake(raw.commonMistake),
   };
 }
 

@@ -485,7 +485,7 @@ function AdvancedTable({
                         )}
                       </div>
                       {isOpen && hasDetails && (
-                        <div className="space-y-2.5 border-t border-stone-100 bg-stone-50/60 px-3 py-3 pl-[76px] text-sm leading-relaxed text-stone-600">
+                        <div className="space-y-2.5 border-t border-stone-100 bg-stone-50/60 px-3 py-3 pl-[102px] text-sm leading-relaxed text-stone-600">
                           {row.item.why && <p>{row.item.why}</p>}
                           {deps.length > 0 && (
                             <p className="text-xs text-stone-500">

@@ -33,23 +33,25 @@ const STEPS = [
   },
   {
     title: "Get a plan that's actually yours",
-    body: "Not another generic “moving abroad” list. Your route, your deadlines, the actual offices in your new city. The weeks of research, already done.",
+    body: "Not another generic moving abroad list. Your visa route, the real offices in your new city, and the tasks laid out in the order they unlock: what has to happen before what, so you never sit waiting on a step you could have started weeks earlier.",
   },
   {
     title: "Check things off, not your sanity",
-    body: "From “before you book flights” to “your first 90 days”: what to bring, where to go, and the mistake everyone makes at each step, so you don't.",
+    body: "From before you book flights to your first 90 days: what to bring, where to go, what each country actually pays and whether your messengers even work there, plus the costly mistake people make at each step, so you skip it.",
   },
 ];
 
 const FEATURES = [
   "Real institution names: Finanças, AIMA, Bürgeramt, not \"the local authority\"",
-  "Exact documents to bring to every appointment",
-  "Hard legal deadlines flagged on each step",
-  "The common mistake that trips people up, per step",
-  "Family, student and remote-worker specific modules",
-  "Pet import rules with real lead times",
+  "The exact documents to bring to every appointment",
+  "What has to happen before what, so nothing blocks you",
+  "The costly mistake people make at each step, and its real consequence",
+  "Family, student and remote-worker modules that reshape the plan",
+  "Pet import rules with real microchip and rabies lead times",
+  "A country snapshot: visa verdict, cost of living, salaries and safety",
+  "Whether WhatsApp, Telegram and Signal actually work there",
   "Official safety levels and health notices per country",
-  "Print or save your plan as a PDF",
+  "Print or save the whole plan as a PDF",
 ];
 
 const FAQ = [
@@ -258,7 +260,7 @@ export default function Home() {
           {FAQ.map((f) => (
             <details
               key={f.q}
-              className="group border-b border-stone-200/70 py-4"
+              className="faq-details group border-b border-stone-200/70 py-4"
             >
               <summary className="cursor-pointer list-none text-sm font-medium text-stone-900 marker:content-none">
                 <span className="flex items-center justify-between gap-2">

@@ -12,7 +12,6 @@ import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { currencyForCountry } from "@/lib/countryCurrency";
 import {
   censorshipForCountry,
-  reachabilityLabel,
   allMessengersReachable,
   disruptedMessengers,
   CENSORSHIP_UPDATED_AT,
@@ -139,11 +138,7 @@ function quickFacts(name: string): QuickFact[] {
     cen && cen.messengers.length > 0
       ? {
           label: "Messengers",
-          value: allMessengersReachable(cen)
-            ? "All work"
-            : disruptedMessengers(cen)
-                .map((m) => `${m.app}: ${reachabilityLabel(m.status).text.toLowerCase()}`)
-                .join(", "),
+          value: allMessengersReachable(cen) ? "No known issues" : "",
           source: `OONI, 6 months to ${formatMonth(cen.window.until)}`,
           messengers: cen.messengers,
         }
