@@ -3,6 +3,11 @@ import { SITE_URL, allSiteUrls } from "@/lib/siteUrls";
 
 export const runtime = "nodejs";
 
+// At most one upstream submission per window per instance; the weekly cron is
+// the only intended caller, so anything more frequent is dropped.
+const SUBMIT_WINDOW_MS = 60 * 60 * 1000;
+let lastSubmittedAt = 0;
+
 // Submits every site URL to IndexNow (Bing, Yandex, Seznam, Naver share the
 // endpoint). Triggered by the Vercel cron in vercel.json; harmless to re-run.
 export async function GET(request: Request): Promise<Response> {
@@ -13,6 +18,12 @@ export async function GET(request: Request): Promise<Response> {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
   }
+
+  const now = Date.now();
+  if (now - lastSubmittedAt < SUBMIT_WINDOW_MS) {
+    return Response.json({ error: "Too many requests" }, { status: 429 });
+  }
+  lastSubmittedAt = now;
 
   const urlList = allSiteUrls();
   const res = await fetch("https://api.indexnow.org/indexnow", {
