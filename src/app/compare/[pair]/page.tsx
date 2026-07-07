@@ -9,6 +9,7 @@ import { staticDataForCountry } from "@/lib/staticCountryData";
 import { advisoryForCountry } from "@/lib/countryAdvisory";
 import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { currencyForCountry } from "@/lib/countryCurrency";
+import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
   pair: string;
@@ -58,6 +59,7 @@ export async function generateMetadata({
     description,
     alternates: { canonical: `/compare/${pair}` },
     openGraph: { title, description, url: `/compare/${pair}` },
+    other: { "article:modified_time": OPEN_DATA_UPDATED_AT },
   };
 }
 
@@ -210,9 +212,45 @@ export default async function ComparePage({
     ...taxRegimesForCountry(a.name).map((r) => ({ country: a, r })),
     ...taxRegimesForCountry(b.name).map((r) => ({ country: b, r })),
   ];
+  const pageUrl = `${SITE_URL}/compare/${pair}`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Reloka", item: SITE_URL },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Compare countries",
+            item: `${SITE_URL}/compare`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: `${a.name} vs ${b.name}`,
+            item: pageUrl,
+          },
+        ],
+      },
+      {
+        "@type": "WebPage",
+        "@id": pageUrl,
+        name: `${a.name} vs ${b.name}: cost, climate, taxes, safety`,
+        url: pageUrl,
+        dateModified: OPEN_DATA_UPDATED_AT,
+        isPartOf: { "@id": `${SITE_URL}/#website` },
+      },
+    ],
+  };
 
   return (
     <main className="flex-1">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <section className="mx-auto max-w-3xl px-4 pt-14 pb-8 text-center">
         <Link
           href="/compare"
