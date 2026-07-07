@@ -205,7 +205,7 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <div className="mt-10 max-w-3xl text-center">
+        <div className="mt-10 text-center">
           <CtaButton label="Build my checklist now" />
         </div>
       </section>
