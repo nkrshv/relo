@@ -61,6 +61,7 @@ h3 {
 
 html {
   scroll-behavior: smooth;
+  scrollbar-gutter: stable;
 }
 
 /* Tabular figures for data-heavy rows and tiles. */
