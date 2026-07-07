@@ -125,7 +125,7 @@ export default function Home() {
       </section>
 
       {/* Pain */}
-      <section className="mx-auto max-w-3xl px-4 py-16">
+      <section className="mx-auto max-w-5xl px-4 py-16">
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           Planning a move abroad usually looks like this
         </h2>
@@ -179,11 +179,11 @@ export default function Home() {
       </section>
 
       {/* Features */}
-      <section className="mx-auto max-w-3xl px-4 py-16">
+      <section className="mx-auto max-w-5xl px-4 py-16">
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           What&apos;s inside every plan
         </h2>
-        <ul className="mt-8 grid gap-x-8 sm:grid-cols-2">
+        <ul className="mt-8 grid max-w-3xl gap-x-8 sm:grid-cols-2">
           {FEATURES.map((f) => (
             <li
               key={f}
@@ -205,7 +205,7 @@ export default function Home() {
             </li>
           ))}
         </ul>
-        <div className="mt-10 text-center">
+        <div className="mt-10 max-w-3xl text-center">
           <CtaButton label="Build my checklist now" />
         </div>
       </section>
@@ -245,11 +245,11 @@ export default function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="mx-auto max-w-2xl px-4 py-16">
+      <section className="mx-auto max-w-5xl px-4 py-16">
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           Frequently asked questions
         </h2>
-        <div className="mt-6">
+        <div className="mt-6 max-w-2xl">
           {FAQ.map((f) => (
             <details
               key={f.q}
