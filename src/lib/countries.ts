@@ -44,6 +44,7 @@ export const DESTINATIONS: Destination[] = [
   { slug: "indonesia", name: "Indonesia", emoji: "🇮🇩" },
   { slug: "vietnam", name: "Vietnam", emoji: "🇻🇳" },
   { slug: "new-zealand", name: "New Zealand", emoji: "🇳🇿" },
+  { slug: "russia", name: "Russia", emoji: "🇷🇺" },
 ];
 
 export function findDestination(slug: string): Destination | undefined {

@@ -16,51 +16,10 @@
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { buildCountryCatalog } from "./countryCatalog.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
-
-// Curated destinations (must match src/lib/countries.ts) with ISO codes and
-// capital coordinates for climate lookups.
-const DESTINATIONS = [
-  { name: "Portugal", iso2: "PT", iso3: "PRT", capital: "Lisbon", lat: 38.72, lon: -9.14 },
-  { name: "Spain", iso2: "ES", iso3: "ESP", capital: "Madrid", lat: 40.42, lon: -3.7 },
-  { name: "Germany", iso2: "DE", iso3: "DEU", capital: "Berlin", lat: 52.52, lon: 13.4 },
-  { name: "Netherlands", iso2: "NL", iso3: "NLD", capital: "Amsterdam", lat: 52.37, lon: 4.9 },
-  { name: "France", iso2: "FR", iso3: "FRA", capital: "Paris", lat: 48.86, lon: 2.35 },
-  { name: "Italy", iso2: "IT", iso3: "ITA", capital: "Rome", lat: 41.9, lon: 12.5 },
-  { name: "Ireland", iso2: "IE", iso3: "IRL", capital: "Dublin", lat: 53.35, lon: -6.26 },
-  { name: "United Kingdom", iso2: "GB", iso3: "GBR", capital: "London", lat: 51.51, lon: -0.13 },
-  { name: "United States", iso2: "US", iso3: "USA", capital: "Washington, D.C.", lat: 38.9, lon: -77.04 },
-  { name: "Canada", iso2: "CA", iso3: "CAN", capital: "Ottawa", lat: 45.42, lon: -75.7 },
-  { name: "Australia", iso2: "AU", iso3: "AUS", capital: "Canberra", lat: -35.28, lon: 149.13 },
-  { name: "United Arab Emirates", iso2: "AE", iso3: "ARE", capital: "Abu Dhabi", lat: 24.45, lon: 54.38 },
-  { name: "Estonia", iso2: "EE", iso3: "EST", capital: "Tallinn", lat: 59.44, lon: 24.75 },
-  { name: "Poland", iso2: "PL", iso3: "POL", capital: "Warsaw", lat: 52.23, lon: 21.01 },
-  { name: "Mexico", iso2: "MX", iso3: "MEX", capital: "Mexico City", lat: 19.43, lon: -99.13 },
-  { name: "Thailand", iso2: "TH", iso3: "THA", capital: "Bangkok", lat: 13.76, lon: 100.5 },
-  { name: "Japan", iso2: "JP", iso3: "JPN", capital: "Tokyo", lat: 35.68, lon: 139.69 },
-  { name: "Singapore", iso2: "SG", iso3: "SGP", capital: "Singapore", lat: 1.35, lon: 103.82 },
-  { name: "Greece", iso2: "GR", iso3: "GRC", capital: "Athens", lat: 37.98, lon: 23.73 },
-  { name: "Cyprus", iso2: "CY", iso3: "CYP", capital: "Nicosia", lat: 35.19, lon: 33.38 },
-  { name: "Malta", iso2: "MT", iso3: "MLT", capital: "Valletta", lat: 35.9, lon: 14.51 },
-  { name: "Switzerland", iso2: "CH", iso3: "CHE", capital: "Bern", lat: 46.95, lon: 7.45 },
-  { name: "Austria", iso2: "AT", iso3: "AUT", capital: "Vienna", lat: 48.21, lon: 16.37 },
-  { name: "Czechia", iso2: "CZ", iso3: "CZE", capital: "Prague", lat: 50.08, lon: 14.44 },
-  { name: "Georgia", iso2: "GE", iso3: "GEO", capital: "Tbilisi", lat: 41.72, lon: 44.79 },
-  { name: "Armenia", iso2: "AM", iso3: "ARM", capital: "Yerevan", lat: 40.18, lon: 44.51 },
-  { name: "Turkey", iso2: "TR", iso3: "TUR", capital: "Ankara", lat: 39.93, lon: 32.86 },
-  { name: "Brazil", iso2: "BR", iso3: "BRA", capital: "Brasília", lat: -15.79, lon: -47.88 },
-  { name: "Argentina", iso2: "AR", iso3: "ARG", capital: "Buenos Aires", lat: -34.6, lon: -58.38 },
-  { name: "Uruguay", iso2: "UY", iso3: "URY", capital: "Montevideo", lat: -34.9, lon: -56.19 },
-  { name: "Costa Rica", iso2: "CR", iso3: "CRI", capital: "San José", lat: 9.93, lon: -84.08 },
-  { name: "Panama", iso2: "PA", iso3: "PAN", capital: "Panama City", lat: 8.98, lon: -79.52 },
-  { name: "Colombia", iso2: "CO", iso3: "COL", capital: "Bogotá", lat: 4.71, lon: -74.07 },
-  { name: "Malaysia", iso2: "MY", iso3: "MYS", capital: "Kuala Lumpur", lat: 3.14, lon: 101.69 },
-  { name: "Indonesia", iso2: "ID", iso3: "IDN", capital: "Jakarta", lat: -6.21, lon: 106.85 },
-  { name: "Vietnam", iso2: "VN", iso3: "VNM", capital: "Hanoi", lat: 21.03, lon: 105.85 },
-  { name: "New Zealand", iso2: "NZ", iso3: "NZL", capital: "Wellington", lat: -41.29, lon: 174.78 },
-];
 
 async function getJson(url) {
   const res = await fetch(url, { headers: { "User-Agent": "reloka-fetch" } });
@@ -167,31 +126,54 @@ async function main() {
   const holidayYear = now.getUTCFullYear();
   const bigMac = await fetchBigMac();
 
+  // Climate + migrant share are keyless world-wide layers, so cover every
+  // officially-assigned country, not just the curated destinations. Countries
+  // where a given source has no data keep null for that field (scalable logic).
+  process.stdout.write("Building country catalog... ");
+  const countries = await buildCountryCatalog();
+  console.log(`${countries.length} countries`);
+
   const insights = {};
-  for (const d of DESTINATIONS) {
-    process.stdout.write(`Fetching ${d.name}... `);
-    const [climate, holidays, inflation, lifeExpectancy, migrantShare] =
-      await Promise.all([
-        fetchClimate(d, lastFullYear).catch(() => []),
-        fetchHolidays(d, holidayYear),
-        fetchWorldBank(d, "FP.CPI.TOTL.ZG"),
-        fetchLifeExpectancy(d),
-        fetchWorldBank(d, "SM.POP.TOTL.ZS"),
-      ]);
-    // The Economist prices the euro area as a single "EUZ" entry.
-    const bm = bigMac[d.iso3] ?? (EUROZONE.has(d.iso3) ? bigMac.EUZ : null) ?? null;
-    insights[d.name] = {
-      iso2: d.iso2,
-      capital: d.capital,
-      climate: { city: d.capital, year: String(lastFullYear), months: climate },
-      holidays: holidays ? { year: String(holidayYear), ...holidays } : null,
-      inflation,
-      lifeExpectancy,
-      migrantShare,
-      bigMacUsd: bm ? { value: Number(bm.price.toFixed(2)), date: bm.date } : null,
-    };
-    console.log("done");
+  const CONCURRENCY = 6;
+  let i = 0;
+  let done = 0;
+  async function worker() {
+    while (i < countries.length) {
+      const d = countries[i++];
+      const [climate, holidays, inflation, lifeExpectancy, migrantShare] =
+        await Promise.all([
+          d.lat != null && d.lon != null
+            ? fetchClimate(d, lastFullYear).catch(() => [])
+            : Promise.resolve([]),
+          fetchHolidays(d, holidayYear),
+          fetchWorldBank(d, "FP.CPI.TOTL.ZG"),
+          fetchLifeExpectancy(d),
+          fetchWorldBank(d, "SM.POP.TOTL.ZS"),
+        ]);
+      // The Economist prices the euro area as a single "EUZ" entry.
+      const bm = bigMac[d.iso3] ?? (EUROZONE.has(d.iso3) ? bigMac.EUZ : null) ?? null;
+      const hasClimate = climate.some((m) => m.t != null);
+      // Skip countries with nothing worth showing at all.
+      if (!hasClimate && !inflation && !lifeExpectancy && !migrantShare && !bm && !holidays) {
+        done += 1;
+        continue;
+      }
+      insights[d.name] = {
+        iso2: d.iso2,
+        capital: d.capital,
+        climate: { city: d.capital, year: String(lastFullYear), months: climate },
+        holidays: holidays ? { year: String(holidayYear), ...holidays } : null,
+        inflation,
+        lifeExpectancy,
+        migrantShare,
+        bigMacUsd: bm ? { value: Number(bm.price.toFixed(2)), date: bm.date } : null,
+      };
+      done += 1;
+      if (done % 25 === 0)
+        console.log(`  ${done}/${countries.length} fetched...`);
+    }
   }
+  await Promise.all(Array.from({ length: CONCURRENCY }, worker));
 
   const header = `// AUTO-GENERATED by scripts/fetch-insights.mjs — do not edit by hand.
 // Sources (all free, keyless): Open-Meteo historical weather (climate),

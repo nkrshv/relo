@@ -134,17 +134,11 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 34,
+      "aqi": 50,
       "dominant": "pm25",
       "station": "Berlin, Germany"
     },
-    "offices": [
-      "Rathaus Treptow",
-      "Rathaus Mitte",
-      "Rathaus Tempelhof",
-      "Rathaus Schmargendorf",
-      "Rathaus Reinickendorf"
-    ]
+    "offices": null
   },
   "Netherlands": {
     "iso2": "NL",
@@ -174,7 +168,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 29,
+      "aqi": 28,
       "dominant": "o3",
       "station": "Amsterdam"
     },
@@ -214,11 +208,17 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 42,
+      "aqi": 43,
       "dominant": "o3",
       "station": "Paris"
     },
-    "offices": null
+    "offices": [
+      "Mairie de Clamart",
+      "Mairie de Joinville-le-Pont",
+      "Mairie Annexe",
+      "Mairie annexe Les Hauts d'Asnières",
+      "Mairie de Quartier de Bécon"
+    ]
   },
   "Italy": {
     "iso2": "IT",
@@ -252,7 +252,13 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       "dominant": "pm25",
       "station": "Arenula, Roma, Lazio, Italy"
     },
-    "offices": null
+    "offices": [
+      "Municipio IV",
+      "Municipio Roma XIV",
+      "LabPuzzle!",
+      "Municipio II",
+      "Municipio Roma I"
+    ]
   },
   "Ireland": {
     "iso2": "IE",
@@ -282,7 +288,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 29,
+      "aqi": 35,
       "dominant": "pm25",
       "station": "Pearse Street, Dublin 2, Ireland"
     },
@@ -318,8 +324,8 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 46,
-      "dominant": "pm25",
+      "aqi": 35,
+      "dominant": "o3",
       "station": "London"
     },
     "offices": [
@@ -355,7 +361,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 36,
+      "aqi": 45,
       "dominant": "pm25",
       "station": "Aurora Hills Visitor Center, Northern Virginia, USA"
     },
@@ -392,7 +398,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 46,
+      "aqi": 42,
       "dominant": "pm25",
       "station": "Ottawa"
     },
@@ -429,11 +435,13 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 4,
+      "aqi": 2,
       "dominant": "o3",
       "station": "Civic, Canberra"
     },
-    "offices": null
+    "offices": [
+      "Canberra Bridge Club"
+    ]
   },
   "United Arab Emirates": {
     "iso2": "AE",
@@ -491,11 +499,17 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 24,
+      "aqi": 10,
       "dominant": "o3",
       "station": "Liivalaia, Estonia"
     },
-    "offices": null
+    "offices": [
+      "Linnavolikogu",
+      "Tallinna Linnavalitsus",
+      "Haabersti Linnaosa Valitsus",
+      "Nõmme linnaosa valitsus",
+      "Pirita Linnaosa Valitsus"
+    ]
   },
   "Poland": {
     "iso2": "PL",
@@ -525,7 +539,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 32,
+      "aqi": 52,
       "dominant": "pm25",
       "station": "Targówek, Warszawa, Mazowieckie, Poland"
     },
@@ -562,8 +576,8 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 89,
-      "dominant": "pm25",
+      "aqi": 83,
+      "dominant": "o3",
       "station": "Merced, México, Mexico"
     },
     "offices": [
@@ -596,7 +610,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 44,
+      "aqi": 57,
       "dominant": "pm25",
       "station": "Bangkok"
     },
@@ -633,11 +647,17 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 17,
+      "aqi": 25,
       "dominant": "pm25",
       "station": "Meguro (目黒)"
     },
-    "offices": null
+    "offices": [
+      "Kita City Office",
+      "世田谷区 桜丘区民センター",
+      "都税事務所",
+      "杉並区高井戸駅前事務所宮前分室",
+      "新宿区立元気館"
+    ]
   },
   "Singapore": {
     "iso2": "SG",
@@ -661,11 +681,15 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 42,
+      "aqi": 50,
       "dominant": "pm25",
       "station": "South, Singapore"
     },
-    "offices": null
+    "offices": [
+      "Bukit Merah Branch Office",
+      "Holland-Bukit Panjang Town Council (Bangkit Office)",
+      "Ang Mo Kio Town Council (Avenue 1 Office)"
+    ]
   },
   "Greece": {
     "iso2": "GR",
@@ -695,7 +719,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 50,
+      "aqi": 42,
       "dominant": "pm25",
       "station": "Aristotelous, Greece"
     },
@@ -762,8 +786,8 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 47,
-      "dominant": "pm10",
+      "aqi": 38,
+      "dominant": "pm25",
       "station": "Msida, Malta"
     },
     "offices": null
@@ -793,7 +817,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 35,
+      "aqi": 29,
       "dominant": "o3",
       "station": "Bern Bollwerk, Switzerland"
     },
@@ -833,7 +857,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 9,
+      "aqi": 7,
       "dominant": "pm10",
       "station": "Ecke Taborstraße - Glockengasse, Austria"
     },
@@ -864,17 +888,11 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
     },
     "universities": null,
     "airQuality": {
-      "aqi": 35,
-      "dominant": "pm10",
+      "aqi": 30,
+      "dominant": "o3",
       "station": "Pha8-Karlin, Prague, Czech Republic"
     },
-    "offices": [
-      "Úřad městské části Praha 18",
-      "Úřad městské části Praha 19",
-      "Úřad městské části Praha 9",
-      "Odbor hospodářské správy.",
-      "Úřad městské části Praha 6"
-    ]
+    "offices": null
   },
   "Georgia": {
     "iso2": "GE",
@@ -898,7 +916,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 17,
+      "aqi": 18,
       "dominant": "pm25",
       "station": "David Agmashenebeli Avenue 73a, Tbilisi, Georgia"
     },
@@ -957,7 +975,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
     },
     "universities": null,
     "airQuality": {
-      "aqi": 52,
+      "aqi": 55,
       "dominant": "pm10",
       "station": "Sıhhıye, Turkey"
     },
@@ -1018,13 +1036,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": null,
-    "offices": [
-      "Sede Comunal 2",
-      "Sede comunal 15",
-      "Sede Comunal 6",
-      "Sede Comunal 4",
-      "Sede Comunal 3"
-    ]
+    "offices": null
   },
   "Uruguay": {
     "iso2": "UY",
@@ -1048,7 +1060,10 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": null,
-    "offices": null
+    "offices": [
+      "Centro Comunal Zonal 16",
+      "Intendencia de Montevideo"
+    ]
   },
   "Costa Rica": {
     "iso2": "CR",
@@ -1075,7 +1090,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 20,
+      "aqi": 21,
       "dominant": "o3",
       "station": "San Jose - Jackson St, Santa Clara, California"
     },
@@ -1109,7 +1124,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 14,
+      "aqi": 13,
       "dominant": "o3",
       "station": "St. Andrews State Park, Bay, Florida, USA"
     },
@@ -1146,11 +1161,17 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 21,
+      "aqi": 9,
       "dominant": "pm25",
       "station": "San Cristobal, Bogota, Colombia"
     },
-    "offices": null
+    "offices": [
+      "Alcaldía Local de Usaquén",
+      "Junta Administradora Local de Suba",
+      "Spring Wireless",
+      "Salón comunal de San Fernando",
+      "Alcaldía Local de Chapinero"
+    ]
   },
   "Malaysia": {
     "iso2": "MY",
@@ -1174,7 +1195,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 64,
+      "aqi": 66,
       "dominant": "pm25",
       "station": "Kuala Lumpur"
     },
@@ -1206,7 +1227,7 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 120,
+      "aqi": 100,
       "dominant": "pm25",
       "station": "Kemayoran, Indonesia"
     },
@@ -1240,32 +1261,20 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       ]
     },
     "airQuality": {
-      "aqi": 87,
+      "aqi": 75,
       "dominant": "pm25",
       "station": "United Nations International School of Hanoi, Vietnam (Trường Quốc tế Liên Hợp Quốc Hà Nội)"
     },
-    "offices": [
-      "UBND phường Xuân Tảo",
-      "Đảng uỷ-HĐND-UBND phường Hàng Buồm",
-      "Đảng uỷ - UBND phường Đội Cấn",
-      "Đảng uỷ - HĐND phường Văn Miếu - Quốc Tử Giám",
-      "Đảng ủy - HĐND - UBND phường Đống Đa"
-    ]
+    "offices": null
   },
   "New Zealand": {
     "iso2": "NZ",
     "capital": "Wellington",
     "drivingSide": "left",
     "callingCode": "+64",
-    "timezone": {
-      "name": "Pacific/Auckland",
-      "offset": "UTC+12"
-    },
+    "timezone": null,
     "priceLevelEU": null,
-    "taxWedge": {
-      "value": 20.8,
-      "year": "2025"
-    },
+    "taxWedge": null,
     "universities": {
       "count": 12,
       "sample": [
@@ -1282,6 +1291,31 @@ export const COUNTRY_OPEN_DATA: Record<string, CountryOpenData> = {
       "Wellington Town Hall",
       "Ngaio Town Hall",
       "Newlands Centennial Hall"
+    ]
+  },
+  "Russia": {
+    "iso2": "RU",
+    "capital": "Moscow",
+    "drivingSide": "right",
+    "callingCode": "+7",
+    "timezone": {
+      "name": "Europe/Moscow",
+      "offset": "UTC+3"
+    },
+    "priceLevelEU": null,
+    "taxWedge": null,
+    "universities": null,
+    "airQuality": {
+      "aqi": 30,
+      "dominant": "pm25",
+      "station": "Spirid, Moscow, Moscow, Russia (Спиридоновка, Москва)"
+    },
+    "offices": [
+      "Префектура ЦАО",
+      "Управа района \"Рязанский\"",
+      "Префектура Северного Административного округа г.Москвы",
+      "Префектура ЮАО",
+      "Муниципалитет Тимирязевский"
     ]
   }
 };

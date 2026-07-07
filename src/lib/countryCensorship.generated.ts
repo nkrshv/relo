@@ -61,9 +61,9 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "Spain": {
-    "iso2": "ES",
-    "ooniUrl": "https://explorer.ooni.org/country/ES",
+  "Ireland": {
+    "iso2": "IE",
+    "ooniUrl": "https://explorer.ooni.org/country/IE",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -71,33 +71,33 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.007,
+        "rate": 0.035,
         "status": "reachable",
-        "measurements": 267301
+        "measurements": 8327
       },
       {
         "app": "WhatsApp",
-        "rate": 0.062,
+        "rate": 0.04,
         "status": "reachable",
-        "measurements": 267121
+        "measurements": 8328
       },
       {
         "app": "Signal",
-        "rate": 0.007,
+        "rate": 0.036,
         "status": "reachable",
-        "measurements": 266866
+        "measurements": 8360
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.022,
+        "rate": 0.047,
         "status": "reachable",
-        "measurements": 266694
+        "measurements": 8410
       }
     ]
   },
-  "Germany": {
-    "iso2": "DE",
-    "ooniUrl": "https://explorer.ooni.org/country/DE",
+  "Italy": {
+    "iso2": "IT",
+    "ooniUrl": "https://explorer.ooni.org/country/IT",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -105,27 +105,27 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.021,
+        "rate": 0.003,
         "status": "reachable",
-        "measurements": 184409
+        "measurements": 37528
       },
       {
         "app": "WhatsApp",
-        "rate": 0.057,
+        "rate": 0.052,
         "status": "reachable",
-        "measurements": 184407
+        "measurements": 37566
       },
       {
         "app": "Signal",
-        "rate": 0.023,
+        "rate": 0.004,
         "status": "reachable",
-        "measurements": 183680
+        "measurements": 37493
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.14,
+        "rate": 0.011,
         "status": "reachable",
-        "measurements": 184923
+        "measurements": 37529
       }
     ]
   },
@@ -197,9 +197,9 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "Italy": {
-    "iso2": "IT",
-    "ooniUrl": "https://explorer.ooni.org/country/IT",
+  "Canada": {
+    "iso2": "CA",
+    "ooniUrl": "https://explorer.ooni.org/country/CA",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -207,61 +207,27 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.003,
+        "rate": 0.087,
         "status": "reachable",
-        "measurements": 37528
+        "measurements": 85186
       },
       {
         "app": "WhatsApp",
-        "rate": 0.052,
+        "rate": 0.029,
         "status": "reachable",
-        "measurements": 37566
+        "measurements": 85166
       },
       {
         "app": "Signal",
-        "rate": 0.004,
+        "rate": 0.123,
         "status": "reachable",
-        "measurements": 37493
+        "measurements": 85130
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.011,
+        "rate": 0.018,
         "status": "reachable",
-        "measurements": 37529
-      }
-    ]
-  },
-  "Ireland": {
-    "iso2": "IE",
-    "ooniUrl": "https://explorer.ooni.org/country/IE",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.035,
-        "status": "reachable",
-        "measurements": 8327
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.04,
-        "status": "reachable",
-        "measurements": 8328
-      },
-      {
-        "app": "Signal",
-        "rate": 0.036,
-        "status": "reachable",
-        "measurements": 8360
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.047,
-        "status": "reachable",
-        "measurements": 8410
+        "measurements": 86059
       }
     ]
   },
@@ -299,9 +265,9 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "United States": {
-    "iso2": "US",
-    "ooniUrl": "https://explorer.ooni.org/country/US",
+  "Germany": {
+    "iso2": "DE",
+    "ooniUrl": "https://explorer.ooni.org/country/DE",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -309,33 +275,33 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.009,
+        "rate": 0.021,
         "status": "reachable",
-        "measurements": 427205
+        "measurements": 184409
       },
       {
         "app": "WhatsApp",
-        "rate": 0.025,
+        "rate": 0.057,
         "status": "reachable",
-        "measurements": 429035
+        "measurements": 184407
       },
       {
         "app": "Signal",
-        "rate": 0.008,
+        "rate": 0.023,
         "status": "reachable",
-        "measurements": 428505
+        "measurements": 183680
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.059,
+        "rate": 0.14,
         "status": "reachable",
-        "measurements": 430629
+        "measurements": 184923
       }
     ]
   },
-  "Canada": {
-    "iso2": "CA",
-    "ooniUrl": "https://explorer.ooni.org/country/CA",
+  "Spain": {
+    "iso2": "ES",
+    "ooniUrl": "https://explorer.ooni.org/country/ES",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -343,61 +309,27 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.087,
+        "rate": 0.007,
         "status": "reachable",
-        "measurements": 85186
+        "measurements": 267301
       },
       {
         "app": "WhatsApp",
-        "rate": 0.029,
+        "rate": 0.062,
         "status": "reachable",
-        "measurements": 85166
+        "measurements": 267121
       },
       {
         "app": "Signal",
-        "rate": 0.123,
+        "rate": 0.007,
         "status": "reachable",
-        "measurements": 85130
+        "measurements": 266866
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.018,
+        "rate": 0.022,
         "status": "reachable",
-        "measurements": 86059
-      }
-    ]
-  },
-  "Australia": {
-    "iso2": "AU",
-    "ooniUrl": "https://explorer.ooni.org/country/AU",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.008,
-        "status": "reachable",
-        "measurements": 33997
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.025,
-        "status": "reachable",
-        "measurements": 34110
-      },
-      {
-        "app": "Signal",
-        "rate": 0.003,
-        "status": "reachable",
-        "measurements": 33952
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.005,
-        "status": "reachable",
-        "measurements": 34055
+        "measurements": 266694
       }
     ]
   },
@@ -435,6 +367,74 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
+  "United States": {
+    "iso2": "US",
+    "ooniUrl": "https://explorer.ooni.org/country/US",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 427205
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 429035
+      },
+      {
+        "app": "Signal",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 428505
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.059,
+        "status": "reachable",
+        "measurements": 430629
+      }
+    ]
+  },
+  "Malta": {
+    "iso2": "MT",
+    "ooniUrl": "https://explorer.ooni.org/country/MT",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 767
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.031,
+        "status": "reachable",
+        "measurements": 767
+      },
+      {
+        "app": "Signal",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 767
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 767
+      }
+    ]
+  },
   "Estonia": {
     "iso2": "EE",
     "ooniUrl": "https://explorer.ooni.org/country/EE",
@@ -469,9 +469,9 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "Poland": {
-    "iso2": "PL",
-    "ooniUrl": "https://explorer.ooni.org/country/PL",
+  "Australia": {
+    "iso2": "AU",
+    "ooniUrl": "https://explorer.ooni.org/country/AU",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -479,129 +479,61 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.012,
-        "status": "reachable",
-        "measurements": 17910
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.049,
-        "status": "reachable",
-        "measurements": 18487
-      },
-      {
-        "app": "Signal",
-        "rate": 0.029,
-        "status": "reachable",
-        "measurements": 18089
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.037,
-        "status": "reachable",
-        "measurements": 19133
-      }
-    ]
-  },
-  "Mexico": {
-    "iso2": "MX",
-    "ooniUrl": "https://explorer.ooni.org/country/MX",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.009,
-        "status": "reachable",
-        "measurements": 21978
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.024,
-        "status": "reachable",
-        "measurements": 22103
-      },
-      {
-        "app": "Signal",
-        "rate": 0.025,
-        "status": "reachable",
-        "measurements": 22309
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.057,
-        "status": "reachable",
-        "measurements": 22354
-      }
-    ]
-  },
-  "Thailand": {
-    "iso2": "TH",
-    "ooniUrl": "https://explorer.ooni.org/country/TH",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.007,
-        "status": "reachable",
-        "measurements": 9970
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.033,
-        "status": "reachable",
-        "measurements": 9979
-      },
-      {
-        "app": "Signal",
-        "rate": 0.004,
-        "status": "reachable",
-        "measurements": 9944
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.039,
-        "status": "reachable",
-        "measurements": 9960
-      }
-    ]
-  },
-  "Japan": {
-    "iso2": "JP",
-    "ooniUrl": "https://explorer.ooni.org/country/JP",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.015,
-        "status": "reachable",
-        "measurements": 21476
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.025,
-        "status": "reachable",
-        "measurements": 21444
-      },
-      {
-        "app": "Signal",
         "rate": 0.008,
         "status": "reachable",
-        "measurements": 20372
+        "measurements": 33997
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 34110
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 33952
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.024,
+        "rate": 0.005,
         "status": "reachable",
-        "measurements": 21509
+        "measurements": 34055
+      }
+    ]
+  },
+  "Cyprus": {
+    "iso2": "CY",
+    "ooniUrl": "https://explorer.ooni.org/country/CY",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 4163
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.042,
+        "status": "reachable",
+        "measurements": 4173
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 4159
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 4165
       }
     ]
   },
@@ -673,77 +605,9 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "Cyprus": {
-    "iso2": "CY",
-    "ooniUrl": "https://explorer.ooni.org/country/CY",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.002,
-        "status": "reachable",
-        "measurements": 4163
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.042,
-        "status": "reachable",
-        "measurements": 4173
-      },
-      {
-        "app": "Signal",
-        "rate": 0,
-        "status": "reachable",
-        "measurements": 4159
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.015,
-        "status": "reachable",
-        "measurements": 4165
-      }
-    ]
-  },
-  "Malta": {
-    "iso2": "MT",
-    "ooniUrl": "https://explorer.ooni.org/country/MT",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.001,
-        "status": "reachable",
-        "measurements": 767
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.031,
-        "status": "reachable",
-        "measurements": 767
-      },
-      {
-        "app": "Signal",
-        "rate": 0.004,
-        "status": "reachable",
-        "measurements": 767
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.005,
-        "status": "reachable",
-        "measurements": 767
-      }
-    ]
-  },
-  "Switzerland": {
-    "iso2": "CH",
-    "ooniUrl": "https://explorer.ooni.org/country/CH",
+  "Thailand": {
+    "iso2": "TH",
+    "ooniUrl": "https://explorer.ooni.org/country/TH",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -753,25 +617,195 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
         "app": "Telegram",
         "rate": 0.007,
         "status": "reachable",
-        "measurements": 22920
+        "measurements": 9970
       },
       {
         "app": "WhatsApp",
-        "rate": 0.053,
+        "rate": 0.033,
         "status": "reachable",
-        "measurements": 22942
+        "measurements": 9979
       },
       {
         "app": "Signal",
-        "rate": 0.021,
+        "rate": 0.004,
         "status": "reachable",
-        "measurements": 22908
+        "measurements": 9944
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.018,
+        "rate": 0.039,
         "status": "reachable",
-        "measurements": 22929
+        "measurements": 9960
+      }
+    ]
+  },
+  "Poland": {
+    "iso2": "PL",
+    "ooniUrl": "https://explorer.ooni.org/country/PL",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 17910
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.049,
+        "status": "reachable",
+        "measurements": 18487
+      },
+      {
+        "app": "Signal",
+        "rate": 0.029,
+        "status": "reachable",
+        "measurements": 18089
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.037,
+        "status": "reachable",
+        "measurements": 19133
+      }
+    ]
+  },
+  "Mexico": {
+    "iso2": "MX",
+    "ooniUrl": "https://explorer.ooni.org/country/MX",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 21978
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 22103
+      },
+      {
+        "app": "Signal",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 22309
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.057,
+        "status": "reachable",
+        "measurements": 22354
+      }
+    ]
+  },
+  "Japan": {
+    "iso2": "JP",
+    "ooniUrl": "https://explorer.ooni.org/country/JP",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 21476
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 21444
+      },
+      {
+        "app": "Signal",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 20372
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 21509
+      }
+    ]
+  },
+  "Uruguay": {
+    "iso2": "UY",
+    "ooniUrl": "https://explorer.ooni.org/country/UY",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 1149
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 1153
+      },
+      {
+        "app": "Signal",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 1154
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.486,
+        "status": "disrupted",
+        "measurements": 1156
+      }
+    ]
+  },
+  "Armenia": {
+    "iso2": "AM",
+    "ooniUrl": "https://explorer.ooni.org/country/AM",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 5741
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.061,
+        "status": "reachable",
+        "measurements": 5733
+      },
+      {
+        "app": "Signal",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 5713
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 5719
       }
     ]
   },
@@ -806,6 +840,74 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
         "rate": 0.013,
         "status": "reachable",
         "measurements": 15657
+      }
+    ]
+  },
+  "Costa Rica": {
+    "iso2": "CR",
+    "ooniUrl": "https://explorer.ooni.org/country/CR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 509
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 506
+      },
+      {
+        "app": "Signal",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 510
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 510
+      }
+    ]
+  },
+  "Switzerland": {
+    "iso2": "CH",
+    "ooniUrl": "https://explorer.ooni.org/country/CH",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 22920
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.053,
+        "status": "reachable",
+        "measurements": 22942
+      },
+      {
+        "app": "Signal",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 22908
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.018,
+        "status": "reachable",
+        "measurements": 22929
       }
     ]
   },
@@ -877,9 +979,9 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "Armenia": {
-    "iso2": "AM",
-    "ooniUrl": "https://explorer.ooni.org/country/AM",
+  "Panama": {
+    "iso2": "PA",
+    "ooniUrl": "https://explorer.ooni.org/country/PA",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -887,95 +989,27 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.012,
+        "rate": 0,
         "status": "reachable",
-        "measurements": 5741
+        "measurements": 280
       },
       {
         "app": "WhatsApp",
-        "rate": 0.061,
-        "status": "reachable",
-        "measurements": 5733
-      },
-      {
-        "app": "Signal",
-        "rate": 0.005,
-        "status": "reachable",
-        "measurements": 5713
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.003,
-        "status": "reachable",
-        "measurements": 5719
-      }
-    ]
-  },
-  "Turkey": {
-    "iso2": "TR",
-    "ooniUrl": "https://explorer.ooni.org/country/TR",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.005,
-        "status": "reachable",
-        "measurements": 24392
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.051,
-        "status": "reachable",
-        "measurements": 24370
-      },
-      {
-        "app": "Signal",
         "rate": 0.007,
         "status": "reachable",
-        "measurements": 24383
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.025,
-        "status": "reachable",
-        "measurements": 24350
-      }
-    ]
-  },
-  "Brazil": {
-    "iso2": "BR",
-    "ooniUrl": "https://explorer.ooni.org/country/BR",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0.018,
-        "status": "reachable",
-        "measurements": 123580
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.02,
-        "status": "reachable",
-        "measurements": 123876
+        "measurements": 281
       },
       {
         "app": "Signal",
-        "rate": 0.007,
+        "rate": 0.004,
         "status": "reachable",
-        "measurements": 123027
+        "measurements": 279
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.06,
+        "rate": 0.004,
         "status": "reachable",
-        "measurements": 123735
+        "measurements": 280
       }
     ]
   },
@@ -1013,9 +1047,9 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "Uruguay": {
-    "iso2": "UY",
-    "ooniUrl": "https://explorer.ooni.org/country/UY",
+  "Turkey": {
+    "iso2": "TR",
+    "ooniUrl": "https://explorer.ooni.org/country/TR",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -1023,95 +1057,163 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0,
+        "rate": 0.005,
         "status": "reachable",
-        "measurements": 1149
+        "measurements": 24392
       },
       {
         "app": "WhatsApp",
-        "rate": 0.008,
+        "rate": 0.051,
         "status": "reachable",
-        "measurements": 1153
+        "measurements": 24370
       },
       {
         "app": "Signal",
-        "rate": 0.002,
-        "status": "reachable",
-        "measurements": 1154
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.486,
-        "status": "disrupted",
-        "measurements": 1156
-      }
-    ]
-  },
-  "Costa Rica": {
-    "iso2": "CR",
-    "ooniUrl": "https://explorer.ooni.org/country/CR",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0,
-        "status": "reachable",
-        "measurements": 509
-      },
-      {
-        "app": "WhatsApp",
-        "rate": 0.004,
-        "status": "reachable",
-        "measurements": 506
-      },
-      {
-        "app": "Signal",
-        "rate": 0.004,
-        "status": "reachable",
-        "measurements": 510
-      },
-      {
-        "app": "Facebook Messenger",
-        "rate": 0.008,
-        "status": "reachable",
-        "measurements": 510
-      }
-    ]
-  },
-  "Panama": {
-    "iso2": "PA",
-    "ooniUrl": "https://explorer.ooni.org/country/PA",
-    "window": {
-      "since": "2026-01-05",
-      "until": "2026-07-07"
-    },
-    "messengers": [
-      {
-        "app": "Telegram",
-        "rate": 0,
-        "status": "reachable",
-        "measurements": 280
-      },
-      {
-        "app": "WhatsApp",
         "rate": 0.007,
         "status": "reachable",
-        "measurements": 281
-      },
-      {
-        "app": "Signal",
-        "rate": 0.004,
-        "status": "reachable",
-        "measurements": 279
+        "measurements": 24383
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.004,
+        "rate": 0.025,
         "status": "reachable",
-        "measurements": 280
+        "measurements": 24350
+      }
+    ]
+  },
+  "Afghanistan": {
+    "iso2": "AF",
+    "ooniUrl": "https://explorer.ooni.org/country/AF",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.016,
+        "status": "reachable",
+        "measurements": 183
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 188
+      },
+      {
+        "app": "Signal",
+        "rate": 0.066,
+        "status": "reachable",
+        "measurements": 181
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.059,
+        "status": "reachable",
+        "measurements": 185
+      }
+    ]
+  },
+  "Angola": {
+    "iso2": "AO",
+    "ooniUrl": "https://explorer.ooni.org/country/AO",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 447
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.04,
+        "status": "reachable",
+        "measurements": 448
+      },
+      {
+        "app": "Signal",
+        "rate": 0.016,
+        "status": "reachable",
+        "measurements": 448
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 451
+      }
+    ]
+  },
+  "Brazil": {
+    "iso2": "BR",
+    "ooniUrl": "https://explorer.ooni.org/country/BR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.018,
+        "status": "reachable",
+        "measurements": 123580
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 123876
+      },
+      {
+        "app": "Signal",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 123027
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.06,
+        "status": "reachable",
+        "measurements": 123735
+      }
+    ]
+  },
+  "New Zealand": {
+    "iso2": "NZ",
+    "ooniUrl": "https://explorer.ooni.org/country/NZ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.066,
+        "status": "reachable",
+        "measurements": 5557
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.036,
+        "status": "reachable",
+        "measurements": 5569
+      },
+      {
+        "app": "Signal",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 5549
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.028,
+        "status": "reachable",
+        "measurements": 5576
       }
     ]
   },
@@ -1149,6 +1251,40 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
+  "Vietnam": {
+    "iso2": "VN",
+    "ooniUrl": "https://explorer.ooni.org/country/VN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 12823
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 12805
+      },
+      {
+        "app": "Signal",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 12813
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 12829
+      }
+    ]
+  },
   "Malaysia": {
     "iso2": "MY",
     "ooniUrl": "https://explorer.ooni.org/country/MY",
@@ -1180,6 +1316,40 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
         "rate": 0.021,
         "status": "reachable",
         "measurements": 19485
+      }
+    ]
+  },
+  "Andorra": {
+    "iso2": "AD",
+    "ooniUrl": "https://explorer.ooni.org/country/AD",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 225
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.04,
+        "status": "reachable",
+        "measurements": 225
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 221
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.018,
+        "status": "reachable",
+        "measurements": 223
       }
     ]
   },
@@ -1217,9 +1387,43 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
       }
     ]
   },
-  "Vietnam": {
-    "iso2": "VN",
-    "ooniUrl": "https://explorer.ooni.org/country/VN",
+  "Benin": {
+    "iso2": "BJ",
+    "ooniUrl": "https://explorer.ooni.org/country/BJ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.013,
+        "status": "reachable",
+        "measurements": 75
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.04,
+        "status": "reachable",
+        "measurements": 75
+      },
+      {
+        "app": "Signal",
+        "rate": 0.027,
+        "status": "reachable",
+        "measurements": 75
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 74
+      }
+    ]
+  },
+  "Albania": {
+    "iso2": "AL",
+    "ooniUrl": "https://explorer.ooni.org/country/AL",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -1229,31 +1433,31 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
         "app": "Telegram",
         "rate": 0.006,
         "status": "reachable",
-        "measurements": 12823
+        "measurements": 5110
       },
       {
         "app": "WhatsApp",
-        "rate": 0.023,
+        "rate": 0.054,
         "status": "reachable",
-        "measurements": 12805
+        "measurements": 5102
       },
       {
         "app": "Signal",
-        "rate": 0.004,
+        "rate": 0.006,
         "status": "reachable",
-        "measurements": 12813
+        "measurements": 5098
       },
       {
         "app": "Facebook Messenger",
-        "rate": 0.011,
+        "rate": 0.012,
         "status": "reachable",
-        "measurements": 12829
+        "measurements": 5101
       }
     ]
   },
-  "New Zealand": {
-    "iso2": "NZ",
-    "ooniUrl": "https://explorer.ooni.org/country/NZ",
+  "Azerbaijan": {
+    "iso2": "AZ",
+    "ooniUrl": "https://explorer.ooni.org/country/AZ",
     "window": {
       "since": "2026-01-05",
       "until": "2026-07-07"
@@ -1261,27 +1465,4213 @@ export const COUNTRY_CENSORSHIP: Record<string, CountryCensorship> = {
     "messengers": [
       {
         "app": "Telegram",
-        "rate": 0.066,
+        "rate": 0.013,
         "status": "reachable",
-        "measurements": 5557
+        "measurements": 1268
       },
       {
         "app": "WhatsApp",
-        "rate": 0.036,
+        "rate": 0.082,
         "status": "reachable",
-        "measurements": 5569
+        "measurements": 1262
+      },
+      {
+        "app": "Signal",
+        "rate": 0.027,
+        "status": "reachable",
+        "measurements": 1263
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.04,
+        "status": "reachable",
+        "measurements": 1371
+      }
+    ]
+  },
+  "Bahrain": {
+    "iso2": "BH",
+    "ooniUrl": "https://explorer.ooni.org/country/BH",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 1157
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.037,
+        "status": "reachable",
+        "measurements": 1156
+      },
+      {
+        "app": "Signal",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 1147
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 1155
+      }
+    ]
+  },
+  "Burkina Faso": {
+    "iso2": "BF",
+    "ooniUrl": "https://explorer.ooni.org/country/BF",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 289
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.143,
+        "status": "reachable",
+        "measurements": 300
+      },
+      {
+        "app": "Signal",
+        "rate": 0.017,
+        "status": "reachable",
+        "measurements": 294
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 293
+      }
+    ]
+  },
+  "Bosnia and Herzegovina": {
+    "iso2": "BA",
+    "ooniUrl": "https://explorer.ooni.org/country/BA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 716
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 717
+      },
+      {
+        "app": "Signal",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 719
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 719
+      }
+    ]
+  },
+  "Bulgaria": {
+    "iso2": "BG",
+    "ooniUrl": "https://explorer.ooni.org/country/BG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 3653
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.046,
+        "status": "reachable",
+        "measurements": 3655
+      },
+      {
+        "app": "Signal",
+        "rate": 0.068,
+        "status": "reachable",
+        "measurements": 3712
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.095,
+        "status": "reachable",
+        "measurements": 3761
+      }
+    ]
+  },
+  "Russia": {
+    "iso2": "RU",
+    "ooniUrl": "https://explorer.ooni.org/country/RU",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.622,
+        "status": "heavily-disrupted",
+        "measurements": 181111
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.87,
+        "status": "heavily-disrupted",
+        "measurements": 191661
+      },
+      {
+        "app": "Signal",
+        "rate": 0.863,
+        "status": "heavily-disrupted",
+        "measurements": 488970
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.404,
+        "status": "disrupted",
+        "measurements": 589956
+      }
+    ]
+  },
+  "Caribbean Netherlands": {
+    "iso2": "BQ",
+    "ooniUrl": "https://explorer.ooni.org/country/BQ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 41
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.122,
+        "status": "reachable",
+        "measurements": 41
+      },
+      {
+        "app": "Signal",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 41
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 41
+      }
+    ]
+  },
+  "Bolivia": {
+    "iso2": "BO",
+    "ooniUrl": "https://explorer.ooni.org/country/BO",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 496
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.052,
+        "status": "reachable",
+        "measurements": 501
+      },
+      {
+        "app": "Signal",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 499
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.042,
+        "status": "reachable",
+        "measurements": 502
+      }
+    ]
+  },
+  "Bangladesh": {
+    "iso2": "BD",
+    "ooniUrl": "https://explorer.ooni.org/country/BD",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 7833
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.059,
+        "status": "reachable",
+        "measurements": 7811
+      },
+      {
+        "app": "Signal",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 7818
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.033,
+        "status": "reachable",
+        "measurements": 7867
+      }
+    ]
+  },
+  "Brunei": {
+    "iso2": "BN",
+    "ooniUrl": "https://explorer.ooni.org/country/BN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 165
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 165
+      },
+      {
+        "app": "Signal",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 165
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 165
+      }
+    ]
+  },
+  "Botswana": {
+    "iso2": "BW",
+    "ooniUrl": "https://explorer.ooni.org/country/BW",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 253
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.047,
+        "status": "reachable",
+        "measurements": 254
+      },
+      {
+        "app": "Signal",
+        "rate": 0.016,
+        "status": "reachable",
+        "measurements": 253
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 256
+      }
+    ]
+  },
+  "Congo": {
+    "iso2": "CG",
+    "ooniUrl": "https://explorer.ooni.org/country/CG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.042,
+        "status": "reachable",
+        "measurements": 48
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 49
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 48
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 48
+      }
+    ]
+  },
+  "Belarus": {
+    "iso2": "BY",
+    "ooniUrl": "https://explorer.ooni.org/country/BY",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 15758
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.073,
+        "status": "reachable",
+        "measurements": 15685
+      },
+      {
+        "app": "Signal",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 15632
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 15755
+      }
+    ]
+  },
+  "Ivory Coast": {
+    "iso2": "CI",
+    "ooniUrl": "https://explorer.ooni.org/country/CI",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 1934
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.066,
+        "status": "reachable",
+        "measurements": 1943
+      },
+      {
+        "app": "Signal",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 1931
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.016,
+        "status": "reachable",
+        "measurements": 1950
+      }
+    ]
+  },
+  "Belgium": {
+    "iso2": "BE",
+    "ooniUrl": "https://explorer.ooni.org/country/BE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 52094
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.037,
+        "status": "reachable",
+        "measurements": 52112
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 52086
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 52081
+      }
+    ]
+  },
+  "DR Congo": {
+    "iso2": "CD",
+    "ooniUrl": "https://explorer.ooni.org/country/CD",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.086,
+        "status": "reachable",
+        "measurements": 350
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.112,
+        "status": "reachable",
+        "measurements": 347
+      },
+      {
+        "app": "Signal",
+        "rate": 0.017,
+        "status": "reachable",
+        "measurements": 349
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.043,
+        "status": "reachable",
+        "measurements": 349
+      }
+    ]
+  },
+  "Cape Verde": {
+    "iso2": "CV",
+    "ooniUrl": "https://explorer.ooni.org/country/CV",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 75
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.039,
+        "status": "reachable",
+        "measurements": 76
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 76
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.013,
+        "status": "reachable",
+        "measurements": 76
+      }
+    ]
+  },
+  "Chile": {
+    "iso2": "CL",
+    "ooniUrl": "https://explorer.ooni.org/country/CL",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 3978
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.018,
+        "status": "reachable",
+        "measurements": 3998
+      },
+      {
+        "app": "Signal",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 3969
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 3982
+      }
+    ]
+  },
+  "Djibouti": {
+    "iso2": "DJ",
+    "ooniUrl": "https://explorer.ooni.org/country/DJ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 104
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.125,
+        "status": "reachable",
+        "measurements": 104
+      },
+      {
+        "app": "Signal",
+        "rate": 0.029,
+        "status": "reachable",
+        "measurements": 103
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 104
+      }
+    ]
+  },
+  "Cuba": {
+    "iso2": "CU",
+    "ooniUrl": "https://explorer.ooni.org/country/CU",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.027,
+        "status": "reachable",
+        "measurements": 1287
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.063,
+        "status": "reachable",
+        "measurements": 1268
+      },
+      {
+        "app": "Signal",
+        "rate": 0.04,
+        "status": "reachable",
+        "measurements": 1307
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.054,
+        "status": "reachable",
+        "measurements": 1308
+      }
+    ]
+  },
+  "China": {
+    "iso2": "CN",
+    "ooniUrl": "https://explorer.ooni.org/country/CN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.98,
+        "status": "heavily-disrupted",
+        "measurements": 10575
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.978,
+        "status": "heavily-disrupted",
+        "measurements": 10890
+      },
+      {
+        "app": "Signal",
+        "rate": 0.975,
+        "status": "heavily-disrupted",
+        "measurements": 11014
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.982,
+        "status": "heavily-disrupted",
+        "measurements": 10460
+      }
+    ]
+  },
+  "Dominican Republic": {
+    "iso2": "DO",
+    "ooniUrl": "https://explorer.ooni.org/country/DO",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.013,
+        "status": "reachable",
+        "measurements": 1163
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 1176
+      },
+      {
+        "app": "Signal",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 1163
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 1165
+      }
+    ]
+  },
+  "Denmark": {
+    "iso2": "DK",
+    "ooniUrl": "https://explorer.ooni.org/country/DK",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 6842
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.065,
+        "status": "reachable",
+        "measurements": 6856
+      },
+      {
+        "app": "Signal",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 6832
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.063,
+        "status": "reachable",
+        "measurements": 6848
+      }
+    ]
+  },
+  "Ecuador": {
+    "iso2": "EC",
+    "ooniUrl": "https://explorer.ooni.org/country/EC",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.057,
+        "status": "reachable",
+        "measurements": 5590
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.077,
+        "status": "reachable",
+        "measurements": 5583
+      },
+      {
+        "app": "Signal",
+        "rate": 0.061,
+        "status": "reachable",
+        "measurements": 5583
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.061,
+        "status": "reachable",
+        "measurements": 5592
+      }
+    ]
+  },
+  "Egypt": {
+    "iso2": "EG",
+    "ooniUrl": "https://explorer.ooni.org/country/EG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.094,
+        "status": "reachable",
+        "measurements": 6202
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.073,
+        "status": "reachable",
+        "measurements": 6341
+      },
+      {
+        "app": "Signal",
+        "rate": 0.11,
+        "status": "reachable",
+        "measurements": 6328
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 7196
+      }
+    ]
+  },
+  "Algeria": {
+    "iso2": "DZ",
+    "ooniUrl": "https://explorer.ooni.org/country/DZ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.017,
+        "status": "reachable",
+        "measurements": 8600
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.084,
+        "status": "reachable",
+        "measurements": 8620
+      },
+      {
+        "app": "Signal",
+        "rate": 0.031,
+        "status": "reachable",
+        "measurements": 8575
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.095,
+        "status": "reachable",
+        "measurements": 8612
+      }
+    ]
+  },
+  "Gabon": {
+    "iso2": "GA",
+    "ooniUrl": "https://explorer.ooni.org/country/GA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.158,
+        "status": "reachable",
+        "measurements": 633
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.494,
+        "status": "disrupted",
+        "measurements": 631
+      },
+      {
+        "app": "Signal",
+        "rate": 0.043,
+        "status": "reachable",
+        "measurements": 628
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.545,
+        "status": "disrupted",
+        "measurements": 628
+      }
+    ]
+  },
+  "Ethiopia": {
+    "iso2": "ET",
+    "ooniUrl": "https://explorer.ooni.org/country/ET",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.03,
+        "status": "reachable",
+        "measurements": 7127
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.064,
+        "status": "reachable",
+        "measurements": 7104
+      },
+      {
+        "app": "Signal",
+        "rate": 0.05,
+        "status": "reachable",
+        "measurements": 7135
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.016,
+        "status": "reachable",
+        "measurements": 7145
+      }
+    ]
+  },
+  "Gibraltar": {
+    "iso2": "GI",
+    "ooniUrl": "https://explorer.ooni.org/country/GI",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.022,
+        "status": "reachable",
+        "measurements": 46
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.064,
+        "status": "reachable",
+        "measurements": 47
+      },
+      {
+        "app": "Signal",
+        "rate": 0.042,
+        "status": "reachable",
+        "measurements": 48
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.277,
+        "status": "disrupted",
+        "measurements": 47
+      }
+    ]
+  },
+  "Ghana": {
+    "iso2": "GH",
+    "ooniUrl": "https://explorer.ooni.org/country/GH",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.079,
+        "status": "reachable",
+        "measurements": 509
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.092,
+        "status": "reachable",
+        "measurements": 511
+      },
+      {
+        "app": "Signal",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 513
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.062,
+        "status": "reachable",
+        "measurements": 514
+      }
+    ]
+  },
+  "Cameroon": {
+    "iso2": "CM",
+    "ooniUrl": "https://explorer.ooni.org/country/CM",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 87279
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.091,
+        "status": "reachable",
+        "measurements": 86599
+      },
+      {
+        "app": "Signal",
+        "rate": 0.059,
+        "status": "reachable",
+        "measurements": 87043
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.031,
+        "status": "reachable",
+        "measurements": 87966
+      }
+    ]
+  },
+  "Guinea-Bissau": {
+    "iso2": "GW",
+    "ooniUrl": "https://explorer.ooni.org/country/GW",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 207
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.067,
+        "status": "reachable",
+        "measurements": 210
+      },
+      {
+        "app": "Signal",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 211
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 210
+      }
+    ]
+  },
+  "Finland": {
+    "iso2": "FI",
+    "ooniUrl": "https://explorer.ooni.org/country/FI",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 13034
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.062,
+        "status": "reachable",
+        "measurements": 12960
+      },
+      {
+        "app": "Signal",
+        "rate": 0.035,
+        "status": "reachable",
+        "measurements": 13158
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.064,
+        "status": "reachable",
+        "measurements": 13599
+      }
+    ]
+  },
+  "Guadeloupe": {
+    "iso2": "GP",
+    "ooniUrl": "https://explorer.ooni.org/country/GP",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 892
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 895
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 892
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 893
+      }
+    ]
+  },
+  "French Guiana": {
+    "iso2": "GF",
+    "ooniUrl": "https://explorer.ooni.org/country/GF",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 142
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 142
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 142
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 142
+      }
+    ]
+  },
+  "Guatemala": {
+    "iso2": "GT",
+    "ooniUrl": "https://explorer.ooni.org/country/GT",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 971
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.031,
+        "status": "reachable",
+        "measurements": 970
+      },
+      {
+        "app": "Signal",
+        "rate": 0.106,
+        "status": "reachable",
+        "measurements": 511
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 513
+      }
+    ]
+  },
+  "Guinea": {
+    "iso2": "GN",
+    "ooniUrl": "https://explorer.ooni.org/country/GN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 5714
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.27,
+        "status": "disrupted",
+        "measurements": 5692
+      },
+      {
+        "app": "Signal",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 5692
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.037,
+        "status": "reachable",
+        "measurements": 5727
+      }
+    ]
+  },
+  "Honduras": {
+    "iso2": "HN",
+    "ooniUrl": "https://explorer.ooni.org/country/HN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 1106
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 1112
+      },
+      {
+        "app": "Signal",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 1100
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.156,
+        "status": "reachable",
+        "measurements": 1140
+      }
+    ]
+  },
+  "Isle of Man": {
+    "iso2": "IM",
+    "ooniUrl": "https://explorer.ooni.org/country/IM",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 308
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.153,
+        "status": "reachable",
+        "measurements": 308
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 307
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 308
+      }
+    ]
+  },
+  "Croatia": {
+    "iso2": "HR",
+    "ooniUrl": "https://explorer.ooni.org/country/HR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 1596
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.074,
+        "status": "reachable",
+        "measurements": 1802
+      },
+      {
+        "app": "Signal",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 1592
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 1594
+      }
+    ]
+  },
+  "Hong Kong": {
+    "iso2": "HK",
+    "ooniUrl": "https://explorer.ooni.org/country/HK",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.053,
+        "status": "reachable",
+        "measurements": 4194
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 4182
+      },
+      {
+        "app": "Signal",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 4205
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.342,
+        "status": "disrupted",
+        "measurements": 4214
+      }
+    ]
+  },
+  "Jersey": {
+    "iso2": "JE",
+    "ooniUrl": "https://explorer.ooni.org/country/JE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 1289
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.075,
+        "status": "reachable",
+        "measurements": 1287
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 1283
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 1289
+      }
+    ]
+  },
+  "Hungary": {
+    "iso2": "HU",
+    "ooniUrl": "https://explorer.ooni.org/country/HU",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 8042
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.051,
+        "status": "reachable",
+        "measurements": 7953
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 8049
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.038,
+        "status": "reachable",
+        "measurements": 7906
+      }
+    ]
+  },
+  "Jamaica": {
+    "iso2": "JM",
+    "ooniUrl": "https://explorer.ooni.org/country/JM",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 3596
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.041,
+        "status": "reachable",
+        "measurements": 3587
+      },
+      {
+        "app": "Signal",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 3595
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 3594
+      }
+    ]
+  },
+  "Iceland": {
+    "iso2": "IS",
+    "ooniUrl": "https://explorer.ooni.org/country/IS",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.038,
+        "status": "reachable",
+        "measurements": 4003
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 3985
+      },
+      {
+        "app": "Signal",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 3983
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.709,
+        "status": "heavily-disrupted",
+        "measurements": 3997
+      }
+    ]
+  },
+  "Iran": {
+    "iso2": "IR",
+    "ooniUrl": "https://explorer.ooni.org/country/IR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.929,
+        "status": "heavily-disrupted",
+        "measurements": 14849
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.863,
+        "status": "heavily-disrupted",
+        "measurements": 14897
+      },
+      {
+        "app": "Signal",
+        "rate": 0.875,
+        "status": "heavily-disrupted",
+        "measurements": 14740
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.783,
+        "status": "heavily-disrupted",
+        "measurements": 15077
+      }
+    ]
+  },
+  "Israel": {
+    "iso2": "IL",
+    "ooniUrl": "https://explorer.ooni.org/country/IL",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 4339
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.045,
+        "status": "reachable",
+        "measurements": 4324
       },
       {
         "app": "Signal",
         "rate": 0.008,
         "status": "reachable",
-        "measurements": 5549
+        "measurements": 4305
       },
       {
         "app": "Facebook Messenger",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 4316
+      }
+    ]
+  },
+  "Iraq": {
+    "iso2": "IQ",
+    "ooniUrl": "https://explorer.ooni.org/country/IQ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.215,
+        "status": "disrupted",
+        "measurements": 8778
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.064,
+        "status": "reachable",
+        "measurements": 8690
+      },
+      {
+        "app": "Signal",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 8643
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 8644
+      }
+    ]
+  },
+  "Jordan": {
+    "iso2": "JO",
+    "ooniUrl": "https://explorer.ooni.org/country/JO",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 4406
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.056,
+        "status": "reachable",
+        "measurements": 4347
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 4345
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 4348
+      }
+    ]
+  },
+  "Kuwait": {
+    "iso2": "KW",
+    "ooniUrl": "https://explorer.ooni.org/country/KW",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 371
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.099,
+        "status": "reachable",
+        "measurements": 372
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 371
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.081,
+        "status": "reachable",
+        "measurements": 372
+      }
+    ]
+  },
+  "Laos": {
+    "iso2": "LA",
+    "ooniUrl": "https://explorer.ooni.org/country/LA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.01,
+        "status": "reachable",
+        "measurements": 204
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 204
+      },
+      {
+        "app": "Signal",
+        "rate": 0.01,
+        "status": "reachable",
+        "measurements": 204
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 201
+      }
+    ]
+  },
+  "India": {
+    "iso2": "IN",
+    "ooniUrl": "https://explorer.ooni.org/country/IN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.056,
+        "status": "reachable",
+        "measurements": 37875
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 39115
+      },
+      {
+        "app": "Signal",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 37708
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 39164
+      }
+    ]
+  },
+  "Kyrgyzstan": {
+    "iso2": "KG",
+    "ooniUrl": "https://explorer.ooni.org/country/KG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 2014
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.061,
+        "status": "reachable",
+        "measurements": 2008
+      },
+      {
+        "app": "Signal",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 2003
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 2014
+      }
+    ]
+  },
+  "Liberia": {
+    "iso2": "LR",
+    "ooniUrl": "https://explorer.ooni.org/country/LR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.223,
+        "status": "disrupted",
+        "measurements": 197
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.128,
+        "status": "reachable",
+        "measurements": 196
+      },
+      {
+        "app": "Signal",
+        "rate": 0.528,
+        "status": "disrupted",
+        "measurements": 197
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 200
+      }
+    ]
+  },
+  "Lebanon": {
+    "iso2": "LB",
+    "ooniUrl": "https://explorer.ooni.org/country/LB",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 913
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.082,
+        "status": "reachable",
+        "measurements": 914
+      },
+      {
+        "app": "Signal",
+        "rate": 0.03,
+        "status": "reachable",
+        "measurements": 913
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.022,
+        "status": "reachable",
+        "measurements": 918
+      }
+    ]
+  },
+  "Cambodia": {
+    "iso2": "KH",
+    "ooniUrl": "https://explorer.ooni.org/country/KH",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 3269
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.184,
+        "status": "reachable",
+        "measurements": 3356
+      },
+      {
+        "app": "Signal",
+        "rate": 0.128,
+        "status": "reachable",
+        "measurements": 3349
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.247,
+        "status": "disrupted",
+        "measurements": 3362
+      }
+    ]
+  },
+  "Kazakhstan": {
+    "iso2": "KZ",
+    "ooniUrl": "https://explorer.ooni.org/country/KZ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 25093
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.082,
+        "status": "reachable",
+        "measurements": 25087
+      },
+      {
+        "app": "Signal",
+        "rate": 0.027,
+        "status": "reachable",
+        "measurements": 25135
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.046,
+        "status": "reachable",
+        "measurements": 25174
+      }
+    ]
+  },
+  "Kenya": {
+    "iso2": "KE",
+    "ooniUrl": "https://explorer.ooni.org/country/KE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.01,
+        "status": "reachable",
+        "measurements": 15762
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.057,
+        "status": "reachable",
+        "measurements": 15749
+      },
+      {
+        "app": "Signal",
+        "rate": 0.013,
+        "status": "reachable",
+        "measurements": 15718
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 15747
+      }
+    ]
+  },
+  "Lesotho": {
+    "iso2": "LS",
+    "ooniUrl": "https://explorer.ooni.org/country/LS",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 550
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.044,
+        "status": "reachable",
+        "measurements": 546
+      },
+      {
+        "app": "Signal",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 550
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 547
+      }
+    ]
+  },
+  "Sri Lanka": {
+    "iso2": "LK",
+    "ooniUrl": "https://explorer.ooni.org/country/LK",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 890
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.064,
+        "status": "reachable",
+        "measurements": 924
+      },
+      {
+        "app": "Signal",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 885
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 894
+      }
+    ]
+  },
+  "Libya": {
+    "iso2": "LY",
+    "ooniUrl": "https://explorer.ooni.org/country/LY",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.1,
+        "status": "reachable",
+        "measurements": 2238
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.133,
+        "status": "reachable",
+        "measurements": 2237
+      },
+      {
+        "app": "Signal",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 2244
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.291,
+        "status": "disrupted",
+        "measurements": 2245
+      }
+    ]
+  },
+  "South Korea": {
+    "iso2": "KR",
+    "ooniUrl": "https://explorer.ooni.org/country/KR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.017,
+        "status": "reachable",
+        "measurements": 8288
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 8297
+      },
+      {
+        "app": "Signal",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 8275
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.043,
+        "status": "reachable",
+        "measurements": 8318
+      }
+    ]
+  },
+  "Maldives": {
+    "iso2": "MV",
+    "ooniUrl": "https://explorer.ooni.org/country/MV",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.051,
+        "status": "reachable",
+        "measurements": 158
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.18,
+        "status": "reachable",
+        "measurements": 161
+      },
+      {
+        "app": "Signal",
+        "rate": 0.083,
+        "status": "reachable",
+        "measurements": 156
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.12,
+        "status": "reachable",
+        "measurements": 158
+      }
+    ]
+  },
+  "North Macedonia": {
+    "iso2": "MK",
+    "ooniUrl": "https://explorer.ooni.org/country/MK",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "WhatsApp",
+        "rate": 0.016,
+        "status": "reachable",
+        "measurements": 61
+      }
+    ]
+  },
+  "Madagascar": {
+    "iso2": "MG",
+    "ooniUrl": "https://explorer.ooni.org/country/MG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 476
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.061,
+        "status": "reachable",
+        "measurements": 477
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 477
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 478
+      }
+    ]
+  },
+  "Luxembourg": {
+    "iso2": "LU",
+    "ooniUrl": "https://explorer.ooni.org/country/LU",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 3516
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.064,
+        "status": "reachable",
+        "measurements": 3531
+      },
+      {
+        "app": "Signal",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 3525
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.013,
+        "status": "reachable",
+        "measurements": 3578
+      }
+    ]
+  },
+  "Lithuania": {
+    "iso2": "LT",
+    "ooniUrl": "https://explorer.ooni.org/country/LT",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 4248
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.055,
+        "status": "reachable",
+        "measurements": 4210
+      },
+      {
+        "app": "Signal",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 4236
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.081,
+        "status": "reachable",
+        "measurements": 4540
+      }
+    ]
+  },
+  "Latvia": {
+    "iso2": "LV",
+    "ooniUrl": "https://explorer.ooni.org/country/LV",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 7073
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.042,
+        "status": "reachable",
+        "measurements": 7188
+      },
+      {
+        "app": "Signal",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 7080
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.03,
+        "status": "reachable",
+        "measurements": 7070
+      }
+    ]
+  },
+  "Moldova": {
+    "iso2": "MD",
+    "ooniUrl": "https://explorer.ooni.org/country/MD",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 3853
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.06,
+        "status": "reachable",
+        "measurements": 3864
+      },
+      {
+        "app": "Signal",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 3860
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 3880
+      }
+    ]
+  },
+  "Mozambique": {
+    "iso2": "MZ",
+    "ooniUrl": "https://explorer.ooni.org/country/MZ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.039,
+        "status": "reachable",
+        "measurements": 180
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.077,
+        "status": "reachable",
+        "measurements": 182
+      },
+      {
+        "app": "Signal",
+        "rate": 0.05,
+        "status": "reachable",
+        "measurements": 179
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.16,
+        "status": "reachable",
+        "measurements": 181
+      }
+    ]
+  },
+  "Mauritania": {
+    "iso2": "MR",
+    "ooniUrl": "https://explorer.ooni.org/country/MR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 133
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.038,
+        "status": "reachable",
+        "measurements": 133
+      },
+      {
+        "app": "Signal",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 133
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 133
+      }
+    ]
+  },
+  "Morocco": {
+    "iso2": "MA",
+    "ooniUrl": "https://explorer.ooni.org/country/MA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 6236
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.067,
+        "status": "reachable",
+        "measurements": 6240
+      },
+      {
+        "app": "Signal",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 6220
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.016,
+        "status": "reachable",
+        "measurements": 6253
+      }
+    ]
+  },
+  "Montenegro": {
+    "iso2": "ME",
+    "ooniUrl": "https://explorer.ooni.org/country/ME",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 1836
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.037,
+        "status": "reachable",
+        "measurements": 1828
+      },
+      {
+        "app": "Signal",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 1833
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 1842
+      }
+    ]
+  },
+  "Malawi": {
+    "iso2": "MW",
+    "ooniUrl": "https://explorer.ooni.org/country/MW",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 216
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.047,
+        "status": "reachable",
+        "measurements": 214
+      },
+      {
+        "app": "Signal",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 213
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 215
+      }
+    ]
+  },
+  "Myanmar": {
+    "iso2": "MM",
+    "ooniUrl": "https://explorer.ooni.org/country/MM",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.069,
+        "status": "reachable",
+        "measurements": 4002
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.829,
+        "status": "heavily-disrupted",
+        "measurements": 4000
+      },
+      {
+        "app": "Signal",
+        "rate": 0.829,
+        "status": "heavily-disrupted",
+        "measurements": 3967
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.811,
+        "status": "heavily-disrupted",
+        "measurements": 3994
+      }
+    ]
+  },
+  "Namibia": {
+    "iso2": "NA",
+    "ooniUrl": "https://explorer.ooni.org/country/NA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 84
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.049,
+        "status": "reachable",
+        "measurements": 81
+      },
+      {
+        "app": "Signal",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 83
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 84
+      }
+    ]
+  },
+  "New Caledonia": {
+    "iso2": "NC",
+    "ooniUrl": "https://explorer.ooni.org/country/NC",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 233
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.094,
+        "status": "reachable",
+        "measurements": 233
+      },
+      {
+        "app": "Signal",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 232
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 233
+      }
+    ]
+  },
+  "Niger": {
+    "iso2": "NE",
+    "ooniUrl": "https://explorer.ooni.org/country/NE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 205
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.092,
+        "status": "reachable",
+        "measurements": 207
+      },
+      {
+        "app": "Signal",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 206
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.029,
+        "status": "reachable",
+        "measurements": 205
+      }
+    ]
+  },
+  "Mauritius": {
+    "iso2": "MU",
+    "ooniUrl": "https://explorer.ooni.org/country/MU",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 2976
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.031,
+        "status": "reachable",
+        "measurements": 2973
+      },
+      {
+        "app": "Signal",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 2967
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 2975
+      }
+    ]
+  },
+  "Nicaragua": {
+    "iso2": "NI",
+    "ooniUrl": "https://explorer.ooni.org/country/NI",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 1530
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 1531
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 1524
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 1535
+      }
+    ]
+  },
+  "Nigeria": {
+    "iso2": "NG",
+    "ooniUrl": "https://explorer.ooni.org/country/NG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.035,
+        "status": "reachable",
+        "measurements": 1956
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.054,
+        "status": "reachable",
+        "measurements": 1954
+      },
+      {
+        "app": "Signal",
         "rate": 0.028,
         "status": "reachable",
-        "measurements": 5576
+        "measurements": 1946
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.018,
+        "status": "reachable",
+        "measurements": 1949
+      }
+    ]
+  },
+  "Oman": {
+    "iso2": "OM",
+    "ooniUrl": "https://explorer.ooni.org/country/OM",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.072,
+        "status": "reachable",
+        "measurements": 1542
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.148,
+        "status": "reachable",
+        "measurements": 1551
+      },
+      {
+        "app": "Signal",
+        "rate": 0.994,
+        "status": "heavily-disrupted",
+        "measurements": 1539
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.1,
+        "status": "reachable",
+        "measurements": 1550
+      }
+    ]
+  },
+  "Papua New Guinea": {
+    "iso2": "PG",
+    "ooniUrl": "https://explorer.ooni.org/country/PG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 143
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 139
+      },
+      {
+        "app": "Signal",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 151
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 149
+      }
+    ]
+  },
+  "Nepal": {
+    "iso2": "NP",
+    "ooniUrl": "https://explorer.ooni.org/country/NP",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.111,
+        "status": "reachable",
+        "measurements": 2911
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.017,
+        "status": "reachable",
+        "measurements": 2918
+      },
+      {
+        "app": "Signal",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 2916
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 2909
+      }
+    ]
+  },
+  "Peru": {
+    "iso2": "PE",
+    "ooniUrl": "https://explorer.ooni.org/country/PE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 2963
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 2882
+      },
+      {
+        "app": "Signal",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 2888
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 2887
+      }
+    ]
+  },
+  "Palestine": {
+    "iso2": "PS",
+    "ooniUrl": "https://explorer.ooni.org/country/PS",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 1259
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.069,
+        "status": "reachable",
+        "measurements": 1265
+      },
+      {
+        "app": "Signal",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 1255
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 1258
+      }
+    ]
+  },
+  "Paraguay": {
+    "iso2": "PY",
+    "ooniUrl": "https://explorer.ooni.org/country/PY",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 1431
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.012,
+        "status": "reachable",
+        "measurements": 1431
+      },
+      {
+        "app": "Signal",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 1430
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.01,
+        "status": "reachable",
+        "measurements": 1432
+      }
+    ]
+  },
+  "Pakistan": {
+    "iso2": "PK",
+    "ooniUrl": "https://explorer.ooni.org/country/PK",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.994,
+        "status": "heavily-disrupted",
+        "measurements": 11396
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.072,
+        "status": "reachable",
+        "measurements": 11451
+      },
+      {
+        "app": "Signal",
+        "rate": 0.966,
+        "status": "heavily-disrupted",
+        "measurements": 11362
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.062,
+        "status": "reachable",
+        "measurements": 11380
+      }
+    ]
+  },
+  "Qatar": {
+    "iso2": "QA",
+    "ooniUrl": "https://explorer.ooni.org/country/QA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 967
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.051,
+        "status": "reachable",
+        "measurements": 962
+      },
+      {
+        "app": "Signal",
+        "rate": 0.031,
+        "status": "reachable",
+        "measurements": 974
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 971
+      }
+    ]
+  },
+  "Rwanda": {
+    "iso2": "RW",
+    "ooniUrl": "https://explorer.ooni.org/country/RW",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 146
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.054,
+        "status": "reachable",
+        "measurements": 148
+      },
+      {
+        "app": "Signal",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 147
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.405,
+        "status": "disrupted",
+        "measurements": 148
+      }
+    ]
+  },
+  "Puerto Rico": {
+    "iso2": "PR",
+    "ooniUrl": "https://explorer.ooni.org/country/PR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 5524
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 5519
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 5558
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 5527
+      }
+    ]
+  },
+  "Norway": {
+    "iso2": "NO",
+    "ooniUrl": "https://explorer.ooni.org/country/NO",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 17267
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.069,
+        "status": "reachable",
+        "measurements": 17317
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 17267
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 17354
+      }
+    ]
+  },
+  "Sudan": {
+    "iso2": "SD",
+    "ooniUrl": "https://explorer.ooni.org/country/SD",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 208
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.139,
+        "status": "reachable",
+        "measurements": 209
+      },
+      {
+        "app": "Signal",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 209
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.029,
+        "status": "reachable",
+        "measurements": 210
+      }
+    ]
+  },
+  "Philippines": {
+    "iso2": "PH",
+    "ooniUrl": "https://explorer.ooni.org/country/PH",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 17028
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.022,
+        "status": "reachable",
+        "measurements": 17043
+      },
+      {
+        "app": "Signal",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 17004
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.261,
+        "status": "disrupted",
+        "measurements": 17117
+      }
+    ]
+  },
+  "Sierra Leone": {
+    "iso2": "SL",
+    "ooniUrl": "https://explorer.ooni.org/country/SL",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 1211
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 1212
+      },
+      {
+        "app": "Signal",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 1222
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 1212
+      }
+    ]
+  },
+  "Somalia": {
+    "iso2": "SO",
+    "ooniUrl": "https://explorer.ooni.org/country/SO",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 201
+      },
+      {
+        "app": "Signal",
+        "rate": 0.065,
+        "status": "reachable",
+        "measurements": 199
+      }
+    ]
+  },
+  "Romania": {
+    "iso2": "RO",
+    "ooniUrl": "https://explorer.ooni.org/country/RO",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 7920
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.058,
+        "status": "reachable",
+        "measurements": 7890
+      },
+      {
+        "app": "Signal",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 7894
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 7920
+      }
+    ]
+  },
+  "South Sudan": {
+    "iso2": "SS",
+    "ooniUrl": "https://explorer.ooni.org/country/SS",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.017,
+        "status": "reachable",
+        "measurements": 234
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.177,
+        "status": "reachable",
+        "measurements": 237
+      },
+      {
+        "app": "Signal",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 233
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 233
+      }
+    ]
+  },
+  "Saudi Arabia": {
+    "iso2": "SA",
+    "ooniUrl": "https://explorer.ooni.org/country/SA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 5381
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.052,
+        "status": "reachable",
+        "measurements": 5419
+      },
+      {
+        "app": "Signal",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 5393
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.013,
+        "status": "reachable",
+        "measurements": 5421
+      }
+    ]
+  },
+  "Senegal": {
+    "iso2": "SN",
+    "ooniUrl": "https://explorer.ooni.org/country/SN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.005,
+        "status": "reachable",
+        "measurements": 9786
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.073,
+        "status": "reachable",
+        "measurements": 9750
+      },
+      {
+        "app": "Signal",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 9738
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 9808
+      }
+    ]
+  },
+  "Eswatini": {
+    "iso2": "SZ",
+    "ooniUrl": "https://explorer.ooni.org/country/SZ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 299
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.053,
+        "status": "reachable",
+        "measurements": 300
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 300
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 301
+      }
+    ]
+  },
+  "Seychelles": {
+    "iso2": "SC",
+    "ooniUrl": "https://explorer.ooni.org/country/SC",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 150
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 146
+      },
+      {
+        "app": "Signal",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 146
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.22,
+        "status": "disrupted",
+        "measurements": 150
+      }
+    ]
+  },
+  "Serbia": {
+    "iso2": "RS",
+    "ooniUrl": "https://explorer.ooni.org/country/RS",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 4544
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.046,
+        "status": "reachable",
+        "measurements": 4529
+      },
+      {
+        "app": "Signal",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 4526
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.009,
+        "status": "reachable",
+        "measurements": 4546
+      }
+    ]
+  },
+  "Suriname": {
+    "iso2": "SR",
+    "ooniUrl": "https://explorer.ooni.org/country/SR",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 1543
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 1543
+      },
+      {
+        "app": "Signal",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 1540
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.001,
+        "status": "reachable",
+        "measurements": 1542
+      }
+    ]
+  },
+  "El Salvador": {
+    "iso2": "SV",
+    "ooniUrl": "https://explorer.ooni.org/country/SV",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 8018
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.026,
+        "status": "reachable",
+        "measurements": 8032
+      },
+      {
+        "app": "Signal",
+        "rate": 0.036,
+        "status": "reachable",
+        "measurements": 7939
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.047,
+        "status": "reachable",
+        "measurements": 8001
+      }
+    ]
+  },
+  "Slovakia": {
+    "iso2": "SK",
+    "ooniUrl": "https://explorer.ooni.org/country/SK",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.003,
+        "status": "reachable",
+        "measurements": 3234
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.039,
+        "status": "reachable",
+        "measurements": 3254
+      },
+      {
+        "app": "Signal",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 3249
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.002,
+        "status": "reachable",
+        "measurements": 3251
+      }
+    ]
+  },
+  "Chad": {
+    "iso2": "TD",
+    "ooniUrl": "https://explorer.ooni.org/country/TD",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.058,
+        "status": "reachable",
+        "measurements": 156
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.155,
+        "status": "reachable",
+        "measurements": 155
+      },
+      {
+        "app": "Signal",
+        "rate": 0.102,
+        "status": "reachable",
+        "measurements": 157
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.126,
+        "status": "reachable",
+        "measurements": 159
+      }
+    ]
+  },
+  "Tajikistan": {
+    "iso2": "TJ",
+    "ooniUrl": "https://explorer.ooni.org/country/TJ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 43
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.089,
+        "status": "reachable",
+        "measurements": 45
+      },
+      {
+        "app": "Signal",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 43
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 44
+      }
+    ]
+  },
+  "Timor-Leste": {
+    "iso2": "TL",
+    "ooniUrl": "https://explorer.ooni.org/country/TL",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 354
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.037,
+        "status": "reachable",
+        "measurements": 353
+      },
+      {
+        "app": "Signal",
+        "rate": 0.113,
+        "status": "reachable",
+        "measurements": 353
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.301,
+        "status": "disrupted",
+        "measurements": 355
+      }
+    ]
+  },
+  "Slovenia": {
+    "iso2": "SI",
+    "ooniUrl": "https://explorer.ooni.org/country/SI",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.006,
+        "status": "reachable",
+        "measurements": 8212
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.068,
+        "status": "reachable",
+        "measurements": 8218
+      },
+      {
+        "app": "Signal",
+        "rate": 0.01,
+        "status": "reachable",
+        "measurements": 8223
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 8214
+      }
+    ]
+  },
+  "Syria": {
+    "iso2": "SY",
+    "ooniUrl": "https://explorer.ooni.org/country/SY",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.013,
+        "status": "reachable",
+        "measurements": 1788
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.076,
+        "status": "reachable",
+        "measurements": 1797
+      },
+      {
+        "app": "Signal",
+        "rate": 0.053,
+        "status": "reachable",
+        "measurements": 1783
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.048,
+        "status": "reachable",
+        "measurements": 1797
+      }
+    ]
+  },
+  "Trinidad and Tobago": {
+    "iso2": "TT",
+    "ooniUrl": "https://explorer.ooni.org/country/TT",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 823
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 829
+      },
+      {
+        "app": "Signal",
+        "rate": 0.084,
+        "status": "reachable",
+        "measurements": 817
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0,
+        "status": "reachable",
+        "measurements": 821
+      }
+    ]
+  },
+  "Tunisia": {
+    "iso2": "TN",
+    "ooniUrl": "https://explorer.ooni.org/country/TN",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.024,
+        "status": "reachable",
+        "measurements": 1201
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.06,
+        "status": "reachable",
+        "measurements": 1206
+      },
+      {
+        "app": "Signal",
+        "rate": 0.026,
+        "status": "reachable",
+        "measurements": 1203
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.008,
+        "status": "reachable",
+        "measurements": 1204
+      }
+    ]
+  },
+  "Sweden": {
+    "iso2": "SE",
+    "ooniUrl": "https://explorer.ooni.org/country/SE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.033,
+        "status": "reachable",
+        "measurements": 17748
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.068,
+        "status": "reachable",
+        "measurements": 17725
+      },
+      {
+        "app": "Signal",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 17774
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.082,
+        "status": "reachable",
+        "measurements": 18468
+      }
+    ]
+  },
+  "Togo": {
+    "iso2": "TG",
+    "ooniUrl": "https://explorer.ooni.org/country/TG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.007,
+        "status": "reachable",
+        "measurements": 8129
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.085,
+        "status": "reachable",
+        "measurements": 8871
+      },
+      {
+        "app": "Signal",
+        "rate": 0.018,
+        "status": "reachable",
+        "measurements": 8138
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.025,
+        "status": "reachable",
+        "measurements": 8911
+      }
+    ]
+  },
+  "Uganda": {
+    "iso2": "UG",
+    "ooniUrl": "https://explorer.ooni.org/country/UG",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.011,
+        "status": "reachable",
+        "measurements": 1745
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.099,
+        "status": "reachable",
+        "measurements": 1738
+      },
+      {
+        "app": "Signal",
+        "rate": 0.045,
+        "status": "reachable",
+        "measurements": 1747
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.584,
+        "status": "disrupted",
+        "measurements": 1748
+      }
+    ]
+  },
+  "Uzbekistan": {
+    "iso2": "UZ",
+    "ooniUrl": "https://explorer.ooni.org/country/UZ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.01,
+        "status": "reachable",
+        "measurements": 3268
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 3264
+      },
+      {
+        "app": "Signal",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 3256
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.023,
+        "status": "reachable",
+        "measurements": 3260
+      }
+    ]
+  },
+  "Tanzania": {
+    "iso2": "TZ",
+    "ooniUrl": "https://explorer.ooni.org/country/TZ",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.767,
+        "status": "heavily-disrupted",
+        "measurements": 7980
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.064,
+        "status": "reachable",
+        "measurements": 8085
+      },
+      {
+        "app": "Signal",
+        "rate": 0.676,
+        "status": "heavily-disrupted",
+        "measurements": 8052
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.017,
+        "status": "reachable",
+        "measurements": 8007
+      }
+    ]
+  },
+  "Taiwan": {
+    "iso2": "TW",
+    "ooniUrl": "https://explorer.ooni.org/country/TW",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.004,
+        "status": "reachable",
+        "measurements": 23248
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.062,
+        "status": "reachable",
+        "measurements": 23218
+      },
+      {
+        "app": "Signal",
+        "rate": 0.036,
+        "status": "reachable",
+        "measurements": 24413
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.102,
+        "status": "reachable",
+        "measurements": 23305
+      }
+    ]
+  },
+  "Yemen": {
+    "iso2": "YE",
+    "ooniUrl": "https://explorer.ooni.org/country/YE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.019,
+        "status": "reachable",
+        "measurements": 2205
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.075,
+        "status": "reachable",
+        "measurements": 2209
+      },
+      {
+        "app": "Signal",
+        "rate": 0.03,
+        "status": "reachable",
+        "measurements": 2209
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.041,
+        "status": "reachable",
+        "measurements": 2204
+      }
+    ]
+  },
+  "Zimbabwe": {
+    "iso2": "ZW",
+    "ooniUrl": "https://explorer.ooni.org/country/ZW",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 1890
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.086,
+        "status": "reachable",
+        "measurements": 1887
+      },
+      {
+        "app": "Signal",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 1890
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.015,
+        "status": "reachable",
+        "measurements": 1893
+      }
+    ]
+  },
+  "Ukraine": {
+    "iso2": "UA",
+    "ooniUrl": "https://explorer.ooni.org/country/UA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.014,
+        "status": "reachable",
+        "measurements": 26471
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.061,
+        "status": "reachable",
+        "measurements": 26574
+      },
+      {
+        "app": "Signal",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 26989
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.018,
+        "status": "reachable",
+        "measurements": 27211
+      }
+    ]
+  },
+  "Zambia": {
+    "iso2": "ZM",
+    "ooniUrl": "https://explorer.ooni.org/country/ZM",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.02,
+        "status": "reachable",
+        "measurements": 4392
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.075,
+        "status": "reachable",
+        "measurements": 4370
+      },
+      {
+        "app": "Signal",
+        "rate": 0.032,
+        "status": "reachable",
+        "measurements": 4407
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.04,
+        "status": "reachable",
+        "measurements": 4404
+      }
+    ]
+  },
+  "Venezuela": {
+    "iso2": "VE",
+    "ooniUrl": "https://explorer.ooni.org/country/VE",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.021,
+        "status": "reachable",
+        "measurements": 25990
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.033,
+        "status": "reachable",
+        "measurements": 26115
+      },
+      {
+        "app": "Signal",
+        "rate": 0.616,
+        "status": "heavily-disrupted",
+        "measurements": 26084
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.049,
+        "status": "reachable",
+        "measurements": 26570
+      }
+    ]
+  },
+  "South Africa": {
+    "iso2": "ZA",
+    "ooniUrl": "https://explorer.ooni.org/country/ZA",
+    "window": {
+      "since": "2026-01-05",
+      "until": "2026-07-07"
+    },
+    "messengers": [
+      {
+        "app": "Telegram",
+        "rate": 0.034,
+        "status": "reachable",
+        "measurements": 8914
+      },
+      {
+        "app": "WhatsApp",
+        "rate": 0.08,
+        "status": "reachable",
+        "measurements": 8968
+      },
+      {
+        "app": "Signal",
+        "rate": 0.026,
+        "status": "reachable",
+        "measurements": 8913
+      },
+      {
+        "app": "Facebook Messenger",
+        "rate": 0.022,
+        "status": "reachable",
+        "measurements": 8974
       }
     ]
   }
