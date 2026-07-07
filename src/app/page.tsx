@@ -3,6 +3,7 @@ import { DESTINATIONS } from "@/lib/countries";
 import Spotlight from "@/components/Spotlight";
 import Typewriter from "@/components/Typewriter";
 import PipelineDiagram from "@/components/PipelineDiagram";
+import TrustBlock from "@/components/TrustBlock";
 
 const TYPE_CITIES = [
   "Lisbon",
@@ -209,6 +210,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Trust: why we built this, changelog signup, request a country */}
+      <TrustBlock />
+
       {/* Destinations (SEO internal links) */}
       <section className="mx-auto max-w-5xl px-4 py-16">
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
@@ -228,6 +232,16 @@ export default function Home() {
             </Link>
           ))}
         </div>
+        <p className="mt-4 text-sm text-stone-500">
+          Torn between two countries?{" "}
+          <Link
+            href="/compare"
+            className="underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
+          >
+            Compare them side by side
+          </Link>
+          .
+        </p>
       </section>
 
       {/* FAQ */}

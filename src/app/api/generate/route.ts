@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { factsForCountry } from "@/lib/countryFacts";
+import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { advisoryForCountry, impactForProfile } from "@/lib/countryAdvisory";
 import { visaRequirementBetween } from "@/lib/visaMatrix";
 import {
@@ -413,6 +414,18 @@ function buildUserContent(input: ReloInput): string {
       ...facts.map((f) => `- ${f}`),
     ].join("\n");
     blocks.push(factBlock);
+  }
+
+  const regimes = taxRegimesForCountry(input.toCountry);
+  if (regimes.length > 0) {
+    const regimeBlock = [
+      `SPECIAL TAX & RESIDENCY REGIMES in ${input.toCountry} (verified ${regimes[0].verified}) — current as of that date and OVERRIDE your training data (many older regimes were closed or reworked). Mention the relevant one in tax-related tasks and tell the user to verify eligibility on the official source; never recommend a regime marked closed.`,
+      ...regimes.map(
+        (r) =>
+          `- ${r.name} (${r.status}${r.statusNote ? `: ${r.statusNote}` : ""}): ${r.headline}. ${r.detail} Source: ${r.sourceLabel}.`,
+      ),
+    ].join("\n");
+    blocks.push(regimeBlock);
   }
 
   return blocks.join("\n\n");
