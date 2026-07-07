@@ -55,7 +55,7 @@ function InlineForm({
 
   return (
     <form
-      className="flex w-full max-w-sm gap-2"
+      className="flex w-full max-w-sm flex-wrap gap-2"
       onSubmit={(e) => {
         e.preventDefault();
         if (value.trim()) void submit(value);
