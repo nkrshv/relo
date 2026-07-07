@@ -4,6 +4,7 @@ import Spotlight from "@/components/Spotlight";
 import Typewriter from "@/components/Typewriter";
 import PipelineDiagram from "@/components/PipelineDiagram";
 import TrustBlock from "@/components/TrustBlock";
+import ScrollRoad from "@/components/ScrollRoad";
 
 const TYPE_CITIES = [
   "Lisbon",
@@ -93,7 +94,8 @@ const FAQ_JSON_LD = {
 
 export default function Home() {
   return (
-    <main className="flex-1">
+    <main className="relative isolate flex-1">
+      <ScrollRoad />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_JSON_LD) }}
