@@ -208,13 +208,16 @@ function faqFor(name: string): { q: string; a: string }[] {
   }
   if (cen && cen.messengers.length > 0) {
     const disrupted = disruptedMessengers(cen);
+    const reachable = cen.messengers.filter((m) => m.status === "reachable");
     const measured = cen.messengers.map((m) => m.app).join(", ");
     faqs.push({
       q: `Can I use WhatsApp and Telegram in ${name}?`,
       a:
         disrupted.length === 0
           ? `Network measurements over the last six months show ${measured} working normally in ${name} (OONI, ${cen.window.since} to ${cen.window.until}). This reflects measured reachability, not an official policy statement.`
-          : `Mostly, but with caveats: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${cen.window.since} to ${cen.window.until}). The rest of the measured apps (${cen.messengers.filter((m) => m.status === "reachable").map((m) => m.app).join(", ")}) work normally. This reflects measured reachability, not an official policy statement.`,
+          : reachable.length > 0
+            ? `Mostly, but with caveats: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${cen.window.since} to ${cen.window.until}). The rest of the measured apps (${reachable.map((m) => m.app).join(", ")}) work normally. This reflects measured reachability, not an official policy statement.`
+            : `Expect problems: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${cen.window.since} to ${cen.window.until}). Many residents rely on VPNs. This reflects measured reachability, not an official policy statement.`,
     });
   }
   if (sal?.avgAnnual) {
