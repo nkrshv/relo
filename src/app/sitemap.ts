@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { DESTINATIONS } from "@/lib/countries";
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://relochecklist.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://reloka.to";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

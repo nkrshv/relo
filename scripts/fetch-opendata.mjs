@@ -47,7 +47,7 @@ const DESTINATIONS = [
 
 async function getJson(url, headers = {}) {
   const res = await fetch(url, {
-    headers: { "User-Agent": "relochecklist-fetch", ...headers },
+    headers: { "User-Agent": "reloka-fetch", ...headers },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return res.json();
@@ -243,7 +243,7 @@ async function fetchOffices(d) {
       const res = await fetch(endpoint, {
         method: "POST",
         headers: {
-          "User-Agent": "relochecklist-fetch",
+          "User-Agent": "reloka-fetch",
           "Content-Type": "application/x-www-form-urlencoded",
         },
         body: `data=${encodeURIComponent(query)}`,

@@ -12,18 +12,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://relochecklist.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://reloka.to";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ReloChecklist: your personalized relocation checklist",
-    template: "%s · ReloChecklist",
+    default: "Reloka: your personalized relocation checklist",
+    template: "%s · Reloka",
   },
   description:
     "Get a personalized, step-by-step relocation checklist for moving to any country: visa, housing, banking, healthcare and more, tailored to your situation.",
   openGraph: {
-    title: "ReloChecklist: your personalized relocation checklist",
+    title: "Reloka: your personalized relocation checklist",
     description:
       "A step-by-step relocation plan tailored to where you're moving, your visa status, and your family situation.",
     type: "website",

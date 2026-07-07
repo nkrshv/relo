@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Fill in where you're moving from and to, your visa status, family and budget. Get a personalized step-by-step relocation checklist in about a minute.",
   alternates: { canonical: "/plan" },
   openGraph: {
-    title: "Build your relocation plan · ReloChecklist",
+    title: "Build your relocation plan · Reloka",
     description:
       "A personalized, step-by-step relocation checklist based on your route, visa status, family and budget.",
     url: "/plan",
@@ -23,7 +23,7 @@ export default function PlanPage() {
           href="/"
           className="text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
         >
-          ← ReloChecklist
+          ← Reloka
         </Link>
       </section>
 
@@ -32,7 +32,7 @@ export default function PlanPage() {
       </section>
 
       <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400 print:hidden">
-        ReloChecklist · Not legal or immigration advice. Always verify official
+        Reloka · Not legal or immigration advice. Always verify official
         requirements.
       </footer>
     </main>

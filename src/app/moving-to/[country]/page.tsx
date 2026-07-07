@@ -208,7 +208,7 @@ export default async function MovingToPage({
           href="/"
           className="text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
         >
-          ← ReloChecklist
+          ← Reloka
         </Link>
         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
           Moving to {dest.name}: your relocation checklist
@@ -383,7 +383,7 @@ export default async function MovingToPage({
       </section>
 
       <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400 print:hidden">
-        ReloChecklist · Not legal or immigration advice. Always verify official
+        Reloka · Not legal or immigration advice. Always verify official
         requirements.
       </footer>
     </main>
