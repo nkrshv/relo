@@ -11,360 +11,360 @@ export interface CountryOrigin {
 }
 
 export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
-  "Åland Islands": {
-    "capital": "Mariehamn",
-    "offsetHours": 3,
-    "aqi": 21
-  },
-  "Andorra": {
-    "capital": "Andorra la Vella",
-    "offsetHours": 2,
-    "aqi": 41
-  },
   "Anguilla": {
     "capital": "The Valley",
     "offsetHours": -4,
-    "aqi": 15
-  },
-  "Angola": {
-    "capital": "Luanda",
-    "offsetHours": 1,
-    "aqi": 93
-  },
-  "Afghanistan": {
-    "capital": "Kabul",
-    "offsetHours": 4.5,
-    "aqi": 97
-  },
-  "Albania": {
-    "capital": "Tirana",
-    "offsetHours": 2,
-    "aqi": 29
+    "aqi": 14
   },
   "Aruba": {
     "capital": "Oranjestad",
     "offsetHours": -4,
     "aqi": 50
   },
+  "Afghanistan": {
+    "capital": "Kabul",
+    "offsetHours": 4.5,
+    "aqi": 93
+  },
+  "Angola": {
+    "capital": "Luanda",
+    "offsetHours": 1,
+    "aqi": 198
+  },
   "United Arab Emirates": {
     "capital": "Abu Dhabi",
     "offsetHours": 4,
     "aqi": 85
   },
+  "Albania": {
+    "capital": "Tirana",
+    "offsetHours": 2,
+    "aqi": 30
+  },
+  "Andorra": {
+    "capital": "Andorra la Vella",
+    "offsetHours": 2,
+    "aqi": 62
+  },
+  "Åland Islands": {
+    "capital": "Mariehamn",
+    "offsetHours": 3,
+    "aqi": 20
+  },
   "Argentina": {
     "capital": "Buenos Aires",
     "offsetHours": -3,
-    "aqi": 43
+    "aqi": 106
   },
   "Armenia": {
     "capital": "Yerevan",
     "offsetHours": 4,
-    "aqi": 53
-  },
-  "American Samoa": {
-    "capital": "Pago Pago",
-    "offsetHours": -11,
-    "aqi": 17
-  },
-  "Australia": {
-    "capital": "Canberra",
-    "offsetHours": 10,
-    "aqi": 4
+    "aqi": 57
   },
   "French Southern and Antarctic Lands": {
     "capital": "Port-aux-Français",
     "offsetHours": 5,
-    "aqi": 22
+    "aqi": 14
   },
-  "Azerbaijan": {
-    "capital": "Baku",
-    "offsetHours": 4,
-    "aqi": 53
-  },
-  "Antigua and Barbuda": {
-    "capital": "Saint John's",
-    "offsetHours": -4,
-    "aqi": 27
+  "American Samoa": {
+    "capital": "Pago Pago",
+    "offsetHours": -11,
+    "aqi": 42
   },
   "Austria": {
     "capital": "Vienna",
     "offsetHours": 2,
-    "aqi": 7
+    "aqi": 8
+  },
+  "Azerbaijan": {
+    "capital": "Baku",
+    "offsetHours": 4,
+    "aqi": 57
+  },
+  "Australia": {
+    "capital": "Canberra",
+    "offsetHours": 10,
+    "aqi": 2
+  },
+  "Antigua and Barbuda": {
+    "capital": "Saint John's",
+    "offsetHours": -4,
+    "aqi": 38
   },
   "Burundi": {
     "capital": "Gitega",
     "offsetHours": 2,
-    "aqi": 36
+    "aqi": 66
   },
   "Belgium": {
     "capital": "Brussels",
     "offsetHours": 2,
-    "aqi": 32
-  },
-  "Burkina Faso": {
-    "capital": "Ouagadougou",
-    "offsetHours": 0,
-    "aqi": 42
+    "aqi": 31
   },
   "Benin": {
     "capital": "Porto-Novo",
     "offsetHours": 1,
-    "aqi": 42
+    "aqi": 34
+  },
+  "Burkina Faso": {
+    "capital": "Ouagadougou",
+    "offsetHours": 0,
+    "aqi": 34
   },
   "Bangladesh": {
     "capital": "Dhaka",
     "offsetHours": 6,
     "aqi": null
   },
-  "Bulgaria": {
-    "capital": "Sofia",
-    "offsetHours": 3,
-    "aqi": 37
-  },
   "Bahrain": {
     "capital": "Manama",
     "offsetHours": 3,
-    "aqi": 120
+    "aqi": 85
+  },
+  "Bulgaria": {
+    "capital": "Sofia",
+    "offsetHours": 3,
+    "aqi": 22
   },
   "Bahamas": {
     "capital": "Nassau",
     "offsetHours": -4,
-    "aqi": 52
+    "aqi": 65
   },
   "Bosnia and Herzegovina": {
     "capital": "Sarajevo",
     "offsetHours": 2,
-    "aqi": 38
+    "aqi": 55
   },
   "Saint Barthélemy": {
     "capital": "Gustavia",
     "offsetHours": -4,
-    "aqi": 15
+    "aqi": 14
   },
   "Saint Helena, Ascension and Tristan da Cunha": {
     "capital": "Jamestown",
     "offsetHours": 0,
     "aqi": 10
   },
-  "Belize": {
-    "capital": "Belmopan",
-    "offsetHours": -6,
-    "aqi": 50
-  },
-  "Bermuda": {
-    "capital": "Hamilton",
-    "offsetHours": -4,
-    "aqi": 23
-  },
   "Belarus": {
     "capital": "Minsk",
     "offsetHours": 3,
-    "aqi": 25
+    "aqi": 18
+  },
+  "Belize": {
+    "capital": "Belmopan",
+    "offsetHours": -6,
+    "aqi": 34
   },
   "Bolivia": {
     "capital": "Sucre",
     "offsetHours": -4,
-    "aqi": 25
+    "aqi": 51
+  },
+  "Bermuda": {
+    "capital": "Hamilton",
+    "offsetHours": -4,
+    "aqi": 22
   },
   "Caribbean Netherlands": {
     "capital": "Kralendijk",
     "offsetHours": -4,
-    "aqi": 50
+    "aqi": 18
   },
   "Brazil": {
     "capital": "Brasília",
     "offsetHours": -3,
-    "aqi": 31
+    "aqi": 46
   },
   "Barbados": {
     "capital": "Bridgetown",
     "offsetHours": -4,
-    "aqi": 52
+    "aqi": 57
   },
   "Brunei": {
     "capital": "Bandar Seri Begawan",
     "offsetHours": 8,
     "aqi": 3
   },
-  "Central African Republic": {
-    "capital": "Bangui",
-    "offsetHours": 1,
-    "aqi": 93
-  },
-  "Botswana": {
-    "capital": "Gaborone",
-    "offsetHours": 2,
-    "aqi": 58
-  },
-  "Canada": {
-    "capital": "Ottawa",
-    "offsetHours": -4,
-    "aqi": 50
-  },
   "Bhutan": {
     "capital": "Thimphu",
     "offsetHours": 6,
     "aqi": null
   },
+  "Botswana": {
+    "capital": "Gaborone",
+    "offsetHours": 2,
+    "aqi": 52
+  },
+  "Central African Republic": {
+    "capital": "Bangui",
+    "offsetHours": 1,
+    "aqi": 198
+  },
+  "Canada": {
+    "capital": "Ottawa",
+    "offsetHours": -4,
+    "aqi": 42
+  },
   "Cocos (Keeling) Islands": {
     "capital": "West Island",
     "offsetHours": 6.5,
-    "aqi": 144
+    "aqi": 88
   },
   "Switzerland": {
     "capital": "Bern",
     "offsetHours": 2,
-    "aqi": 35
+    "aqi": 29
   },
   "Chile": {
     "capital": "Santiago",
     "offsetHours": -4,
-    "aqi": 122
-  },
-  "Ivory Coast": {
-    "capital": "Yamoussoukro",
-    "offsetHours": 0,
-    "aqi": 42
-  },
-  "Cameroon": {
-    "capital": "Yaoundé",
-    "offsetHours": 1,
-    "aqi": 93
-  },
-  "Congo": {
-    "capital": "Brazzaville",
-    "offsetHours": 1,
-    "aqi": 93
+    "aqi": 59
   },
   "China": {
     "capital": "Beijing",
     "offsetHours": 8,
-    "aqi": 80
+    "aqi": 74
+  },
+  "Ivory Coast": {
+    "capital": "Yamoussoukro",
+    "offsetHours": 0,
+    "aqi": 34
+  },
+  "Congo": {
+    "capital": "Brazzaville",
+    "offsetHours": 1,
+    "aqi": 198
+  },
+  "Cameroon": {
+    "capital": "Yaoundé",
+    "offsetHours": 1,
+    "aqi": 198
   },
   "DR Congo": {
     "capital": "Kinshasa",
     "offsetHours": 1,
-    "aqi": 93
+    "aqi": 198
   },
   "Cook Islands": {
     "capital": "Avarua",
     "offsetHours": -10,
-    "aqi": 17
+    "aqi": 42
   },
   "Colombia": {
     "capital": "Bogotá",
     "offsetHours": -5,
-    "aqi": 17
+    "aqi": 6
   },
   "Comoros": {
     "capital": "Moroni",
     "offsetHours": 3,
-    "aqi": 36
+    "aqi": 66
   },
   "Cape Verde": {
     "capital": "Praia",
     "offsetHours": -1,
-    "aqi": 53
-  },
-  "Cuba": {
-    "capital": "Havana",
-    "offsetHours": -4,
-    "aqi": 47
-  },
-  "Christmas Island": {
-    "capital": "Flying Fish Cove",
-    "offsetHours": 7,
-    "aqi": 120
+    "aqi": 42
   },
   "Costa Rica": {
     "capital": "San José",
     "offsetHours": -6,
     "aqi": 42
   },
+  "Cuba": {
+    "capital": "Havana",
+    "offsetHours": -4,
+    "aqi": 52
+  },
+  "Christmas Island": {
+    "capital": "Flying Fish Cove",
+    "offsetHours": 7,
+    "aqi": 100
+  },
   "Curaçao": {
     "capital": "Willemstad",
     "offsetHours": -4,
-    "aqi": 50
+    "aqi": 18
   },
   "Cayman Islands": {
     "capital": "George Town",
     "offsetHours": -5,
-    "aqi": 52
-  },
-  "Cyprus": {
-    "capital": "Nicosia",
-    "offsetHours": 3,
     "aqi": 65
-  },
-  "Germany": {
-    "capital": "Berlin",
-    "offsetHours": 2,
-    "aqi": 34
   },
   "Czechia": {
     "capital": "Prague",
     "offsetHours": 2,
-    "aqi": 43
+    "aqi": 36
+  },
+  "Cyprus": {
+    "capital": "Nicosia",
+    "offsetHours": 3,
+    "aqi": 63
+  },
+  "Germany": {
+    "capital": "Berlin",
+    "offsetHours": 2,
+    "aqi": 50
   },
   "Djibouti": {
     "capital": "Djibouti",
     "offsetHours": 3,
-    "aqi": 177
+    "aqi": 134
+  },
+  "Dominica": {
+    "capital": "Roseau",
+    "offsetHours": -4,
+    "aqi": 52
+  },
+  "Dominican Republic": {
+    "capital": "Santo Domingo",
+    "offsetHours": -4,
+    "aqi": 23
+  },
+  "Denmark": {
+    "capital": "Copenhagen",
+    "offsetHours": 2,
+    "aqi": 39
   },
   "Algeria": {
     "capital": "Algiers",
     "offsetHours": 1,
     "aqi": 51
   },
-  "Dominica": {
-    "capital": "Roseau",
-    "offsetHours": -4,
-    "aqi": 39
-  },
-  "Denmark": {
-    "capital": "Copenhagen",
-    "offsetHours": 2,
-    "aqi": 33
-  },
-  "Dominican Republic": {
-    "capital": "Santo Domingo",
-    "offsetHours": -4,
-    "aqi": 42
+  "Egypt": {
+    "capital": "Cairo",
+    "offsetHours": 3,
+    "aqi": 58
   },
   "Ecuador": {
     "capital": "Quito",
     "offsetHours": -5,
-    "aqi": 37
-  },
-  "Estonia": {
-    "capital": "Tallinn",
-    "offsetHours": 3,
-    "aqi": 24
+    "aqi": 28
   },
   "Eritrea": {
     "capital": "Asmara",
     "offsetHours": 3,
-    "aqi": 21
+    "aqi": 47
   },
   "Spain": {
     "capital": "Madrid",
     "offsetHours": 2,
     "aqi": 93
   },
-  "Egypt": {
-    "capital": "Cairo",
-    "offsetHours": 3,
-    "aqi": 57
-  },
   "Ethiopia": {
     "capital": "Addis Ababa",
     "offsetHours": 3,
-    "aqi": 152
+    "aqi": 99
+  },
+  "Estonia": {
+    "capital": "Tallinn",
+    "offsetHours": 3,
+    "aqi": 16
   },
   "Finland": {
     "capital": "Helsinki",
     "offsetHours": 3,
-    "aqi": 18
+    "aqi": 13
   },
   "Fiji": {
     "capital": "Suva",
@@ -374,162 +374,162 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Falkland Islands": {
     "capital": "Stanley",
     "offsetHours": -3,
-    "aqi": 87
-  },
-  "Micronesia": {
-    "capital": "Palikir",
-    "offsetHours": 11,
-    "aqi": 25
-  },
-  "Faroe Islands": {
-    "capital": "Tórshavn",
-    "offsetHours": 1,
-    "aqi": 4
+    "aqi": 65
   },
   "France": {
     "capital": "Paris",
     "offsetHours": 2,
-    "aqi": 42
+    "aqi": 43
   },
-  "Gabon": {
-    "capital": "Libreville",
+  "Faroe Islands": {
+    "capital": "Tórshavn",
     "offsetHours": 1,
-    "aqi": 93
-  },
-  "United Kingdom": {
-    "capital": "London",
-    "offsetHours": 1,
-    "aqi": 46
+    "aqi": 7
   },
   "Georgia": {
     "capital": "Tbilisi",
     "offsetHours": 4,
     "aqi": 17
   },
+  "Micronesia": {
+    "capital": "Palikir",
+    "offsetHours": 11,
+    "aqi": 11
+  },
+  "Gabon": {
+    "capital": "Libreville",
+    "offsetHours": 1,
+    "aqi": 198
+  },
+  "United Kingdom": {
+    "capital": "London",
+    "offsetHours": 1,
+    "aqi": 35
+  },
   "Ghana": {
     "capital": "Accra",
     "offsetHours": 0,
-    "aqi": 42
+    "aqi": 34
   },
   "Gibraltar": {
     "capital": "Gibraltar",
     "offsetHours": 2,
-    "aqi": 18
-  },
-  "Guadeloupe": {
-    "capital": "Basse-Terre",
-    "offsetHours": -4,
-    "aqi": 42
-  },
-  "Equatorial Guinea": {
-    "capital": "Malabo",
-    "offsetHours": 1,
-    "aqi": 43
+    "aqi": 22
   },
   "Guinea": {
     "capital": "Conakry",
     "offsetHours": 0,
-    "aqi": 63
+    "aqi": 77
+  },
+  "Guadeloupe": {
+    "capital": "Basse-Terre",
+    "offsetHours": -4,
+    "aqi": 23
   },
   "Gambia": {
     "capital": "Banjul",
     "offsetHours": 0,
-    "aqi": 63
-  },
-  "Guinea-Bissau": {
-    "capital": "Bissau",
-    "offsetHours": 0,
-    "aqi": 63
+    "aqi": 77
   },
   "Greece": {
     "capital": "Athens",
     "offsetHours": 3,
-    "aqi": 38
+    "aqi": 42
+  },
+  "Guinea-Bissau": {
+    "capital": "Bissau",
+    "offsetHours": 0,
+    "aqi": 77
+  },
+  "Equatorial Guinea": {
+    "capital": "Malabo",
+    "offsetHours": 1,
+    "aqi": 37
   },
   "Grenada": {
     "capital": "St. George's",
     "offsetHours": -4,
-    "aqi": 50
-  },
-  "French Guiana": {
-    "capital": "Cayenne",
-    "offsetHours": -3,
-    "aqi": 46
+    "aqi": 18
   },
   "Greenland": {
     "capital": "Nuuk",
     "offsetHours": -1,
-    "aqi": 44
+    "aqi": 51
   },
   "Guatemala": {
     "capital": "Guatemala City",
     "offsetHours": -6,
-    "aqi": 50
+    "aqi": 34
   },
-  "Guam": {
-    "capital": "Hagåtña",
-    "offsetHours": 10,
-    "aqi": 51
-  },
-  "Guyana": {
-    "capital": "Georgetown",
-    "offsetHours": -4,
-    "aqi": 22
+  "French Guiana": {
+    "capital": "Cayenne",
+    "offsetHours": -3,
+    "aqi": 48
   },
   "Hong Kong": {
     "capital": "City of Victoria",
     "offsetHours": -5,
-    "aqi": 33
+    "aqi": 40
+  },
+  "Guyana": {
+    "capital": "Georgetown",
+    "offsetHours": -4,
+    "aqi": 18
+  },
+  "Guam": {
+    "capital": "Hagåtña",
+    "offsetHours": 10,
+    "aqi": 14
   },
   "Honduras": {
     "capital": "Tegucigalpa",
     "offsetHours": -6,
-    "aqi": 50
-  },
-  "Croatia": {
-    "capital": "Zagreb",
-    "offsetHours": 2,
-    "aqi": 35
+    "aqi": 34
   },
   "Haiti": {
     "capital": "Port-au-Prince",
     "offsetHours": -4,
-    "aqi": 52
+    "aqi": 65
+  },
+  "Croatia": {
+    "capital": "Zagreb",
+    "offsetHours": 2,
+    "aqi": 34
   },
   "Hungary": {
     "capital": "Budapest",
     "offsetHours": 2,
-    "aqi": 13
+    "aqi": 11
   },
   "Indonesia": {
     "capital": "Jakarta",
     "offsetHours": 7,
-    "aqi": 120
+    "aqi": 100
   },
   "Isle of Man": {
     "capital": "Douglas",
     "offsetHours": 1,
-    "aqi": 18
+    "aqi": 16
   },
   "India": {
     "capital": "New Delhi",
     "offsetHours": 5.5,
-    "aqi": 56
+    "aqi": 76
   },
   "Ireland": {
     "capital": "Dublin",
     "offsetHours": 1,
-    "aqi": 29
+    "aqi": 35
   },
   "Iran": {
     "capital": "Tehran",
     "offsetHours": 3.5,
-    "aqi": 53
+    "aqi": 57
   },
   "Iraq": {
     "capital": "Baghdad",
     "offsetHours": 3,
-    "aqi": 55
+    "aqi": 51
   },
   "Iceland": {
     "capital": "Reykjavik",
@@ -539,7 +539,7 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Israel": {
     "capital": "Jerusalem",
     "offsetHours": 3,
-    "aqi": 53
+    "aqi": 55
   },
   "Italy": {
     "capital": "Rome",
@@ -549,16 +549,16 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Jamaica": {
     "capital": "Kingston",
     "offsetHours": -5,
-    "aqi": 52
-  },
-  "Jersey": {
-    "capital": "Saint Helier",
-    "offsetHours": 1,
-    "aqi": 30
+    "aqi": 65
   },
   "Jordan": {
     "capital": "Amman",
     "offsetHours": 3,
+    "aqi": 29
+  },
+  "Jersey": {
+    "capital": "Saint Helier",
+    "offsetHours": 1,
     "aqi": 29
   },
   "Japan": {
@@ -569,42 +569,42 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Kazakhstan": {
     "capital": "Astana",
     "offsetHours": 5,
-    "aqi": 3
+    "aqi": 4
   },
   "Kenya": {
     "capital": "Nairobi",
     "offsetHours": 3,
-    "aqi": 36
+    "aqi": 66
   },
   "Kyrgyzstan": {
     "capital": "Bishkek",
     "offsetHours": 6,
-    "aqi": 2
+    "aqi": 4
   },
   "Cambodia": {
     "capital": "Phnom Penh",
     "offsetHours": 7,
-    "aqi": 36
+    "aqi": 30
   },
   "Saint Kitts and Nevis": {
     "capital": "Basseterre",
     "offsetHours": -4,
-    "aqi": 15
+    "aqi": 14
   },
   "South Korea": {
     "capital": "Seoul",
     "offsetHours": 9,
-    "aqi": 57
+    "aqi": 53
   },
   "Kuwait": {
     "capital": "Kuwait City",
     "offsetHours": 3,
-    "aqi": 78
+    "aqi": 139
   },
   "Laos": {
     "capital": "Vientiane",
     "offsetHours": 7,
-    "aqi": 55
+    "aqi": 54
   },
   "Lebanon": {
     "capital": "Beirut",
@@ -614,27 +614,27 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Liberia": {
     "capital": "Monrovia",
     "offsetHours": 0,
-    "aqi": 63
+    "aqi": 77
   },
   "Libya": {
     "capital": "Tripoli",
     "offsetHours": 2,
-    "aqi": 43
+    "aqi": 38
   },
   "Saint Lucia": {
     "capital": "Castries",
     "offsetHours": -4,
-    "aqi": 52
+    "aqi": 57
   },
   "Liechtenstein": {
     "capital": "Vaduz",
     "offsetHours": 2,
-    "aqi": 9
+    "aqi": 8
   },
   "Sri Lanka": {
     "capital": "Colombo",
     "offsetHours": 5.5,
-    "aqi": 21
+    "aqi": 34
   },
   "Lesotho": {
     "capital": "Maseru",
@@ -644,147 +644,147 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Lithuania": {
     "capital": "Vilnius",
     "offsetHours": 3,
-    "aqi": 25
+    "aqi": 18
   },
   "Luxembourg": {
     "capital": "Luxembourg",
     "offsetHours": 2,
-    "aqi": 35
+    "aqi": 38
   },
   "Latvia": {
     "capital": "Riga",
     "offsetHours": 3,
-    "aqi": 22
+    "aqi": 14
   },
   "Saint Martin": {
     "capital": "Marigot",
     "offsetHours": -4,
-    "aqi": 15
+    "aqi": 14
   },
   "Morocco": {
     "capital": "Rabat",
     "offsetHours": 1,
-    "aqi": 45
+    "aqi": 51
   },
   "Monaco": {
     "capital": "Monaco",
     "offsetHours": 2,
-    "aqi": 31
+    "aqi": 33
   },
   "Moldova": {
     "capital": "Chișinău",
     "offsetHours": 3,
-    "aqi": 28
+    "aqi": 27
   },
   "Madagascar": {
     "capital": "Antananarivo",
     "offsetHours": 3,
-    "aqi": 25
+    "aqi": 23
   },
   "Maldives": {
     "capital": "Malé",
     "offsetHours": 5,
-    "aqi": 21
+    "aqi": 34
   },
   "Mexico": {
     "capital": "Mexico City",
     "offsetHours": -6,
-    "aqi": 72
+    "aqi": 83
   },
   "Marshall Islands": {
     "capital": "Majuro",
     "offsetHours": 12,
-    "aqi": 7
-  },
-  "Malta": {
-    "capital": "Valletta",
-    "offsetHours": 2,
-    "aqi": 47
+    "aqi": 14
   },
   "North Macedonia": {
     "capital": "Skopje",
     "offsetHours": 2,
-    "aqi": 29
+    "aqi": 49
   },
   "Mali": {
     "capital": "Bamako",
     "offsetHours": 0,
-    "aqi": 50
+    "aqi": 57
+  },
+  "Malta": {
+    "capital": "Valletta",
+    "offsetHours": 2,
+    "aqi": 35
   },
   "Myanmar": {
     "capital": "Naypyidaw",
     "offsetHours": 6.5,
-    "aqi": 51
+    "aqi": 33
   },
   "Montenegro": {
     "capital": "Podgorica",
     "offsetHours": 2,
-    "aqi": 37
-  },
-  "Northern Mariana Islands": {
-    "capital": "Saipan",
-    "offsetHours": 10,
-    "aqi": 42
+    "aqi": 40
   },
   "Mongolia": {
     "capital": "Ulan Bator",
     "offsetHours": 8,
-    "aqi": 64
+    "aqi": 38
+  },
+  "Northern Mariana Islands": {
+    "capital": "Saipan",
+    "offsetHours": 10,
+    "aqi": 17
   },
   "Mozambique": {
     "capital": "Maputo",
     "offsetHours": 2,
-    "aqi": 163
+    "aqi": 170
   },
   "Mauritania": {
     "capital": "Nouakchott",
     "offsetHours": 0,
-    "aqi": 63
+    "aqi": 77
   },
   "Montserrat": {
     "capital": "Plymouth",
     "offsetHours": -4,
-    "aqi": 15
+    "aqi": 14
   },
   "Martinique": {
     "capital": "Fort-de-France",
     "offsetHours": -4,
-    "aqi": 37
+    "aqi": 35
   },
   "Mauritius": {
     "capital": "Port Louis",
     "offsetHours": 4,
-    "aqi": 28
+    "aqi": 29
   },
   "Malawi": {
     "capital": "Lilongwe",
     "offsetHours": 2,
-    "aqi": 69
+    "aqi": 54
   },
   "Malaysia": {
     "capital": "Kuala Lumpur",
     "offsetHours": 8,
-    "aqi": 72
+    "aqi": 61
   },
   "Mayotte": {
     "capital": "Mamoudzou",
     "offsetHours": 3,
-    "aqi": 25
+    "aqi": 23
   },
   "Namibia": {
     "capital": "Windhoek",
     "offsetHours": 2,
-    "aqi": 58
+    "aqi": 52
   },
   "New Caledonia": {
     "capital": "Nouméa",
     "offsetHours": 11,
-    "aqi": 30
+    "aqi": 27
   },
   "Niger": {
     "capital": "Niamey",
     "offsetHours": 1,
-    "aqi": 42
+    "aqi": 34
   },
   "Norfolk Island": {
     "capital": "Kingston",
@@ -794,22 +794,22 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Nigeria": {
     "capital": "Abuja",
     "offsetHours": 1,
-    "aqi": 43
+    "aqi": 37
   },
   "Nicaragua": {
     "capital": "Managua",
     "offsetHours": -6,
-    "aqi": 50
-  },
-  "Netherlands": {
-    "capital": "Amsterdam",
-    "offsetHours": 2,
-    "aqi": 29
+    "aqi": 34
   },
   "Niue": {
     "capital": "Alofi",
     "offsetHours": -11,
-    "aqi": 17
+    "aqi": 42
+  },
+  "Netherlands": {
+    "capital": "Amsterdam",
+    "offsetHours": 2,
+    "aqi": 28
   },
   "Norway": {
     "capital": "Oslo",
@@ -824,347 +824,342 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Nauru": {
     "capital": "Yaren",
     "offsetHours": 12,
-    "aqi": 7
+    "aqi": 14
   },
   "New Zealand": {
     "capital": "Wellington",
     "offsetHours": 12,
-    "aqi": 14
+    "aqi": 65
   },
   "Oman": {
     "capital": "Muscat",
     "offsetHours": 4,
-    "aqi": 60
+    "aqi": 80
   },
   "Pakistan": {
     "capital": "Islamabad",
     "offsetHours": 5,
-    "aqi": 137
-  },
-  "Pitcairn Islands": {
-    "capital": "Adamstown",
-    "offsetHours": -8,
-    "aqi": 34
+    "aqi": 124
   },
   "Panama": {
     "capital": "Panama City",
     "offsetHours": -5,
     "aqi": 42
   },
+  "Pitcairn Islands": {
+    "capital": "Adamstown",
+    "offsetHours": -8,
+    "aqi": 30
+  },
   "Peru": {
     "capital": "Lima",
     "offsetHours": -5,
-    "aqi": 44
-  },
-  "Poland": {
-    "capital": "Warsaw",
-    "offsetHours": 2,
-    "aqi": 42
-  },
-  "Puerto Rico": {
-    "capital": "San Juan",
-    "offsetHours": -4,
-    "aqi": 15
+    "aqi": 32
   },
   "Philippines": {
     "capital": "Manila",
     "offsetHours": 8,
-    "aqi": 11
+    "aqi": 14
   },
   "Palau": {
     "capital": "Ngerulmud",
     "offsetHours": 9,
-    "aqi": 51
+    "aqi": 14
   },
   "Papua New Guinea": {
     "capital": "Port Moresby",
     "offsetHours": 10,
-    "aqi": 25
+    "aqi": 11
+  },
+  "Poland": {
+    "capital": "Warsaw",
+    "offsetHours": 2,
+    "aqi": 52
+  },
+  "Puerto Rico": {
+    "capital": "San Juan",
+    "offsetHours": -4,
+    "aqi": 14
   },
   "North Korea": {
     "capital": "Pyongyang",
     "offsetHours": 9,
-    "aqi": 63
-  },
-  "Paraguay": {
-    "capital": "Asunción",
-    "offsetHours": -3,
-    "aqi": 25
+    "aqi": 38
   },
   "Portugal": {
     "capital": "Lisbon",
     "offsetHours": 1,
     "aqi": 50
   },
-  "Qatar": {
-    "capital": "Doha",
-    "offsetHours": 3,
-    "aqi": 120
+  "Paraguay": {
+    "capital": "Asunción",
+    "offsetHours": -3,
+    "aqi": 46
   },
   "Palestine": {
     "capital": "Ramallah",
     "offsetHours": 3,
-    "aqi": 53
+    "aqi": 55
   },
   "French Polynesia": {
     "capital": "Papeetē",
     "offsetHours": -10,
-    "aqi": 17
+    "aqi": 42
   },
-  "Russia": {
-    "capital": "Moscow",
+  "Qatar": {
+    "capital": "Doha",
     "offsetHours": 3,
-    "aqi": 46
-  },
-  "Rwanda": {
-    "capital": "Kigali",
-    "offsetHours": 2,
-    "aqi": 36
-  },
-  "Romania": {
-    "capital": "Bucharest",
-    "offsetHours": 3,
-    "aqi": 20
-  },
-  "Saudi Arabia": {
-    "capital": "Riyadh",
-    "offsetHours": 3,
-    "aqi": 91
+    "aqi": 85
   },
   "Réunion": {
     "capital": "Saint-Denis",
     "offsetHours": 4,
-    "aqi": 28
+    "aqi": 29
+  },
+  "Romania": {
+    "capital": "Bucharest",
+    "offsetHours": 3,
+    "aqi": 21
+  },
+  "Russia": {
+    "capital": "Moscow",
+    "offsetHours": 3,
+    "aqi": 38
+  },
+  "Rwanda": {
+    "capital": "Kigali",
+    "offsetHours": 2,
+    "aqi": 66
+  },
+  "Saudi Arabia": {
+    "capital": "Riyadh",
+    "offsetHours": 3,
+    "aqi": 85
   },
   "Sudan": {
     "capital": "Khartoum",
     "offsetHours": 2,
-    "aqi": 21
+    "aqi": 47
   },
   "Senegal": {
     "capital": "Dakar",
     "offsetHours": 0,
-    "aqi": 53
-  },
-  "South Georgia": {
-    "capital": "King Edward Point",
-    "offsetHours": -2,
-    "aqi": 38
+    "aqi": 42
   },
   "Singapore": {
     "capital": "Singapore",
     "offsetHours": 8,
-    "aqi": 42
+    "aqi": 46
+  },
+  "South Georgia": {
+    "capital": "King Edward Point",
+    "offsetHours": -2,
+    "aqi": 26
   },
   "Svalbard and Jan Mayen": {
     "capital": "Longyearbyen",
     "offsetHours": 2,
-    "aqi": 10
+    "aqi": 8
   },
   "Solomon Islands": {
     "capital": "Honiara",
     "offsetHours": 11,
-    "aqi": 7
+    "aqi": 14
   },
   "Sierra Leone": {
     "capital": "Freetown",
     "offsetHours": 0,
-    "aqi": 63
+    "aqi": 77
   },
   "El Salvador": {
     "capital": "San Salvador",
     "offsetHours": -6,
-    "aqi": 50
+    "aqi": 34
   },
   "Somalia": {
     "capital": "Mogadishu",
     "offsetHours": 3,
-    "aqi": 36
+    "aqi": 66
   },
   "Saint Pierre and Miquelon": {
     "capital": "Saint-Pierre",
     "offsetHours": -2,
-    "aqi": 25
+    "aqi": 31
   },
   "Serbia": {
     "capital": "Belgrade",
     "offsetHours": 2,
-    "aqi": 37
+    "aqi": 56
   },
   "South Sudan": {
     "capital": "Juba",
     "offsetHours": 2,
-    "aqi": 36
+    "aqi": 66
   },
   "São Tomé and Príncipe": {
     "capital": "São Tomé",
     "offsetHours": 0,
-    "aqi": 93
+    "aqi": 198
+  },
+  "Suriname": {
+    "capital": "Paramaribo",
+    "offsetHours": -3,
+    "aqi": 25
   },
   "Slovakia": {
     "capital": "Bratislava",
     "offsetHours": 2,
     "aqi": 38
   },
-  "Suriname": {
-    "capital": "Paramaribo",
-    "offsetHours": -3,
-    "aqi": 28
+  "Slovenia": {
+    "capital": "Ljubljana",
+    "offsetHours": 2,
+    "aqi": 21
   },
   "Sweden": {
     "capital": "Stockholm",
     "offsetHours": 2,
-    "aqi": 9
-  },
-  "Slovenia": {
-    "capital": "Ljubljana",
-    "offsetHours": 2,
-    "aqi": 25
+    "aqi": 10
   },
   "Eswatini": {
     "capital": "Lobamba",
     "offsetHours": 2,
-    "aqi": 163
+    "aqi": 170
   },
   "Sint Maarten": {
     "capital": "Philipsburg",
     "offsetHours": -4,
-    "aqi": 15
+    "aqi": 14
   },
   "Seychelles": {
     "capital": "Victoria",
     "offsetHours": -3,
-    "aqi": 13
-  },
-  "Syria": {
-    "capital": "Damascus",
-    "offsetHours": 3,
-    "aqi": 17
+    "aqi": 22
   },
   "Turks and Caicos Islands": {
     "capital": "Cockburn Town",
     "offsetHours": -4,
-    "aqi": 52
+    "aqi": 65
+  },
+  "Syria": {
+    "capital": "Damascus",
+    "offsetHours": 3,
+    "aqi": 15
   },
   "Chad": {
     "capital": "N'Djamena",
     "offsetHours": 1,
-    "aqi": 43
+    "aqi": 37
   },
   "Togo": {
     "capital": "Lomé",
     "offsetHours": 0,
-    "aqi": 42
+    "aqi": 34
   },
   "Thailand": {
     "capital": "Bangkok",
     "offsetHours": 7,
-    "aqi": 44
+    "aqi": 57
   },
   "Tajikistan": {
     "capital": "Dushanbe",
     "offsetHours": 5,
-    "aqi": 97
+    "aqi": 93
   },
   "Turkmenistan": {
     "capital": "Ashgabat",
     "offsetHours": 5,
-    "aqi": 53
+    "aqi": 57
   },
   "Timor-Leste": {
     "capital": "Dili",
     "offsetHours": 9,
-    "aqi": 128
+    "aqi": 160
   },
   "Tonga": {
     "capital": "Nuku'alofa",
     "offsetHours": 13,
-    "aqi": 17
+    "aqi": 42
   },
   "Trinidad and Tobago": {
     "capital": "Port of Spain",
     "offsetHours": -4,
-    "aqi": 50
+    "aqi": 18
   },
   "Tunisia": {
     "capital": "Tunis",
     "offsetHours": 1,
-    "aqi": 48
-  },
-  "Türkiye": {
-    "capital": "Ankara",
-    "offsetHours": 3,
-    "aqi": 51
+    "aqi": 43
   },
   "Taiwan": {
     "capital": "Taipei",
     "offsetHours": 8,
-    "aqi": 70
+    "aqi": 42
   },
   "Tanzania": {
     "capital": "Dodoma",
     "offsetHours": 3,
-    "aqi": 36
+    "aqi": 66
+  },
+  "Türkiye": {
+    "capital": "Ankara",
+    "offsetHours": 3,
+    "aqi": 54
   },
   "Uganda": {
     "capital": "Kampala",
     "offsetHours": 3,
-    "aqi": 36
+    "aqi": 66
   },
   "Ukraine": {
     "capital": "Kyiv",
     "offsetHours": 3,
-    "aqi": 28
+    "aqi": 27
   },
   "Uruguay": {
     "capital": "Montevideo",
     "offsetHours": -3,
-    "aqi": 25
+    "aqi": 46
   },
   "United States": {
     "capital": "Washington D.C.",
     "offsetHours": -4,
-    "aqi": 34
+    "aqi": 45
   },
   "Uzbekistan": {
     "capital": "Tashkent",
     "offsetHours": 5,
-    "aqi": 74
-  },
-  "Vatican City": {
-    "capital": "Vatican City",
-    "offsetHours": 2,
-    "aqi": 1
+    "aqi": 87
   },
   "Tuvalu": {
     "capital": "Funafuti",
     "offsetHours": 12,
     "aqi": 6
   },
+  "Vatican City": {
+    "capital": "Vatican City",
+    "offsetHours": 2,
+    "aqi": 1
+  },
   "Saint Vincent and the Grenadines": {
     "capital": "Kingstown",
     "offsetHours": -4,
-    "aqi": 52
+    "aqi": 57
   },
   "Venezuela": {
     "capital": "Caracas",
     "offsetHours": -4,
-    "aqi": 50
+    "aqi": 18
   },
   "British Virgin Islands": {
     "capital": "Road Town",
     "offsetHours": -4,
-    "aqi": 15
+    "aqi": 14
   },
   "United States Virgin Islands": {
     "capital": "Charlotte Amalie",
     "offsetHours": -4,
-    "aqi": 15
-  },
-  "Vietnam": {
-    "capital": "Hanoi",
-    "offsetHours": 7,
-    "aqi": 9
+    "aqi": 14
   },
   "Vanuatu": {
     "capital": "Port Vila",
@@ -1174,31 +1169,36 @@ export const COUNTRY_ORIGIN: Record<string, CountryOrigin> = {
   "Wallis and Futuna": {
     "capital": "Mata-Utu",
     "offsetHours": 12,
-    "aqi": 17
+    "aqi": 42
   },
   "Samoa": {
     "capital": "Apia",
     "offsetHours": 13,
-    "aqi": 17
-  },
-  "Yemen": {
-    "capital": "Sana'a",
-    "offsetHours": 3,
-    "aqi": 152
+    "aqi": 42
   },
   "South Africa": {
     "capital": "Pretoria",
     "offsetHours": 2,
-    "aqi": 62
+    "aqi": 83
+  },
+  "Yemen": {
+    "capital": "Sana'a",
+    "offsetHours": 3,
+    "aqi": 99
   },
   "Zambia": {
     "capital": "Lusaka",
     "offsetHours": 2,
-    "aqi": 93
+    "aqi": 198
   },
   "Zimbabwe": {
     "capital": "Harare",
     "offsetHours": 2,
-    "aqi": 69
+    "aqi": 54
+  },
+  "Vietnam": {
+    "capital": "Hanoi",
+    "offsetHours": 7,
+    "aqi": 80
   }
 };
