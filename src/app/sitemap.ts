@@ -20,5 +20,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
+    {
+      url: `${SITE_URL}/compare`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    },
+    ...DESTINATIONS.flatMap((a, i) =>
+      DESTINATIONS.slice(i + 1).map((b) => ({
+        url: `${SITE_URL}/compare/${a.slug}-vs-${b.slug}`,
+        lastModified: now,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      })),
+    ),
   ];
 }

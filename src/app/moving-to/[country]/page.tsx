@@ -3,6 +3,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import ReloApp from "@/components/ReloApp";
 import { DESTINATIONS, findDestination } from "@/lib/countries";
+import { insightsForCountry, climateSummary, INSIGHTS_UPDATED_AT } from "@/lib/countryInsights";
+import { openDataForCountry, aqiLabel } from "@/lib/countryOpenData";
+import { OPEN_DATA_UPDATED_AT } from "@/lib/countryOpenData.generated";
+import { staticDataForCountry } from "@/lib/staticCountryData";
+import { advisoryForCountry } from "@/lib/countryAdvisory";
+import { taxRegimesForCountry } from "@/lib/taxRegimes";
+import { currencyForCountry } from "@/lib/countryCurrency";
 
 interface Params {
   country: string;
@@ -71,6 +78,108 @@ const OUTLINE: { phase: string; items: string[] }[] = [
   },
 ];
 
+function quickFacts(name: string): { label: string; value: string; source: string }[] {
+  const ins = insightsForCountry(name);
+  const od = openDataForCountry(name);
+  const st = staticDataForCountry(name);
+  const adv = advisoryForCountry(name);
+  const currency = currencyForCountry(name);
+  const facts: ({ label: string; value: string; source: string } | null)[] = [
+    ins && climateSummary(ins)
+      ? {
+          label: `Climate · ${ins.capital}`,
+          value: climateSummary(ins) as string,
+          source: "Open-Meteo",
+        }
+      : null,
+    od?.airQuality
+      ? {
+          label: `Air quality · ${od.capital}`,
+          value: `AQI ${od.airQuality.aqi} · ${aqiLabel(od.airQuality.aqi).text}`,
+          source: "WAQI",
+        }
+      : null,
+    od?.priceLevelEU
+      ? {
+          label: "Prices vs EU average",
+          value: `${od.priceLevelEU.value >= 100 ? "+" : "−"}${Math.abs(Math.round(od.priceLevelEU.value - 100))}%`,
+          source: `Eurostat ${od.priceLevelEU.year}`,
+        }
+      : null,
+    od?.taxWedge
+      ? {
+          label: "Taxes on salary",
+          value: `~${Math.round(od.taxWedge.value)}% of labour cost`,
+          source: `OECD ${od.taxWedge.year}`,
+        }
+      : null,
+    st
+      ? {
+          label: "Internet",
+          value: `~${st.internetMbps} Mbps median`,
+          source: "Ookla",
+        }
+      : null,
+    st
+      ? {
+          label: "English proficiency",
+          value: st.english,
+          source: "EF EPI",
+        }
+      : null,
+    adv
+      ? {
+          label: "Safety advisory",
+          value: `Level ${adv.level} · ${adv.label}`,
+          source: "U.S. State Dept",
+        }
+      : null,
+    currency
+      ? { label: "Currency", value: currency, source: "ISO 4217" }
+      : null,
+    od?.timezone
+      ? { label: "Timezone", value: od.timezone.offset, source: "Open-Meteo" }
+      : null,
+  ];
+  return facts.filter((f): f is { label: string; value: string; source: string } => f !== null);
+}
+
+function faqFor(name: string): { q: string; a: string }[] {
+  const ins = insightsForCountry(name);
+  const od = openDataForCountry(name);
+  const regimes = taxRegimesForCountry(name);
+  const faqs: { q: string; a: string }[] = [
+    {
+      q: `Do I need a visa to move to ${name}?`,
+      a: `It depends on your passport and why you are moving: tourist entry rules are different from working, studying or joining family. Generate a free plan above and we check the visa route for your exact passport and situation, using a 238-country visa matrix.`,
+    },
+  ];
+  if (regimes.length > 0) {
+    const r = regimes[0];
+    faqs.push({
+      q: `Does ${name} have a special tax regime for newcomers?`,
+      a: `Yes: ${r.name}. ${r.headline}. ${r.detail} Status: ${r.status === "active" ? "active" : r.status === "closed" ? "closed to new applicants" : "recently changed"}, verified ${r.verified} against ${r.sourceLabel}.`,
+    });
+  }
+  if (ins && climateSummary(ins)) {
+    faqs.push({
+      q: `What is the weather like in ${name}?`,
+      a: `In ${ins.capital}, average daily temperatures run about ${climateSummary(ins)} (Open-Meteo historical data, ${ins.climate.year}). Regional climates can differ a lot; a city-level plan uses data for your exact destination city.`,
+    });
+  }
+  if (od?.taxWedge) {
+    faqs.push({
+      q: `How high are taxes on salaries in ${name}?`,
+      a: `The OECD tax wedge is about ${Math.round(od.taxWedge.value)}% (${od.taxWedge.year}): that is the share of what a job costs an employer that goes to income tax and social contributions for a single average worker. It is not your personal income-tax rate, but it is the honest way to compare countries.`,
+    });
+  }
+  faqs.push({
+    q: `How current is this data?`,
+    a: `Climate, inflation and life expectancy were refreshed ${INSIGHTS_UPDATED_AT}; prices, taxes and air quality ${OPEN_DATA_UPDATED_AT}. Tax regimes are hand-verified against official government sources. Every fact on this page shows its source.`,
+  });
+  return faqs;
+}
+
 export default async function MovingToPage({
   params,
 }: {
@@ -79,6 +188,18 @@ export default async function MovingToPage({
   const { country } = await params;
   const dest = findDestination(country);
   if (!dest) notFound();
+  const facts = quickFacts(dest.name);
+  const regimes = taxRegimesForCountry(dest.name);
+  const faqs = faqFor(dest.name);
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.q,
+      acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
 
   return (
     <main className="flex-1">
@@ -102,6 +223,73 @@ export default async function MovingToPage({
       <section className="pb-10">
         <ReloApp initialTo={dest.name} />
       </section>
+
+      {facts.length > 0 && (
+        <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
+          <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
+            {dest.name} at a glance
+          </h2>
+          <p className="mt-1 text-sm text-stone-500">
+            Live and regularly refreshed data, each fact with its source.
+          </p>
+          <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {facts.map((f) => (
+              <div
+                key={f.label}
+                className="rounded-lg border border-stone-200 bg-white px-3 py-3"
+              >
+                <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                  {f.label}
+                </p>
+                <p className="tnum mt-1 text-sm font-semibold text-stone-900">
+                  {f.value}
+                </p>
+                <p className="mt-0.5 text-[11px] text-stone-400">{f.source}</p>
+              </div>
+            ))}
+          </div>
+          {regimes.length > 0 && (
+            <div className="mt-4 space-y-2">
+              {regimes.map((r) => (
+                <div
+                  key={r.name}
+                  className="rounded-lg border border-stone-200 bg-white px-4 py-3"
+                >
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                      Special tax regime
+                    </span>
+                    {r.status !== "active" && (
+                      <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700">
+                        {r.status === "closed" ? "Closed" : "Recently changed"}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-sm font-semibold text-stone-900">
+                    {r.name}
+                  </p>
+                  <p className="mt-0.5 text-sm text-stone-700">{r.headline}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-stone-500">
+                    {r.detail}
+                    {r.statusNote ? ` ${r.statusNote}.` : ""}
+                  </p>
+                  <p className="mt-1.5 text-[11px] text-stone-400">
+                    Verified {r.verified} ·{" "}
+                    <a
+                      href={r.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-700"
+                    >
+                      {r.sourceLabel}
+                    </a>
+                  </p>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
       <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
@@ -132,6 +320,49 @@ export default async function MovingToPage({
           situation. Always verify official requirements: this is not legal or
           immigration advice.
         </p>
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
+          Frequently asked questions
+        </h2>
+        <div className="mt-5 divide-y divide-stone-200/70">
+          {faqs.map((f) => (
+            <div key={f.q} className="py-4">
+              <h3 className="text-sm font-semibold text-stone-900">{f.q}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-stone-600">
+                {f.a}
+              </p>
+            </div>
+          ))}
+        </div>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      </section>
+
+      <section className="mx-auto max-w-5xl px-4 py-10 print:hidden">
+        <h2 className="text-center text-lg font-semibold text-stone-900">
+          Compare {dest.name} with another country
+        </h2>
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
+          {DESTINATIONS.filter((d) => d.slug !== dest.slug).map((d) => {
+            const ai = DESTINATIONS.findIndex((x) => x.slug === dest.slug);
+            const bi = DESTINATIONS.findIndex((x) => x.slug === d.slug);
+            const pair =
+              ai < bi ? `${dest.slug}-vs-${d.slug}` : `${d.slug}-vs-${dest.slug}`;
+            return (
+              <Link
+                key={d.slug}
+                href={`/compare/${pair}`}
+                className="rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-50 hover:text-stone-900"
+              >
+                vs {d.emoji} {d.name}
+              </Link>
+            );
+          })}
+        </div>
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-10 print:hidden">

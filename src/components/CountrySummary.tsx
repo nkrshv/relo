@@ -15,6 +15,7 @@ import { normalizeName } from "@/lib/countryFacts";
 import type { Profile, VisaSummary } from "@/lib/types";
 import { insightsForCountry, climateSummary } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
+import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { openDataForCountry, aqiLabel } from "@/lib/countryOpenData";
 import { useCityContext } from "@/lib/useCityContext";
 
@@ -275,12 +276,14 @@ export default function CountrySummary({
           vac.malaria ||
           vac.healthNotices.length > 0)),
   );
+  const regimes = taxRegimesForCountry(country);
   const hasCost = Boolean(
     insights?.inflation ||
       priceLevel ||
       insights?.lifeExpectancy ||
       openData?.priceLevelEU ||
-      openData?.taxWedge,
+      openData?.taxWedge ||
+      regimes.length > 0,
   );
   const hasPractical = Boolean(
     staticData || nextHolidays.length > 0 || openData,
@@ -682,6 +685,48 @@ export default function CountrySummary({
                   label="Life expectancy"
                   value={`${insights.lifeExpectancy.value.toFixed(0)} yrs`}
                 />
+              )}
+              {regimes.length > 0 && (
+                <div className="col-span-2 sm:col-span-3">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                    Special tax regimes for newcomers
+                  </p>
+                  <div className="mt-1.5 space-y-2">
+                    {regimes.map((r) => (
+                      <div
+                        key={r.name}
+                        className="rounded-lg border border-stone-200 bg-stone-50 px-3 py-2.5"
+                      >
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          <span className="text-sm font-semibold text-stone-900">
+                            {r.name}
+                          </span>
+                          {r.status !== "active" && (
+                            <span className="rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[10px] font-medium text-amber-700">
+                              {r.status === "closed" ? "Closed" : "Recently changed"}
+                            </span>
+                          )}
+                        </div>
+                        <p className="mt-0.5 text-sm text-stone-700">{r.headline}</p>
+                        <p className="mt-1 text-xs leading-relaxed text-stone-500">
+                          {r.detail}
+                          {r.statusNote ? ` ${r.statusNote}.` : ""}
+                        </p>
+                        <p className="mt-1.5 text-[11px] text-stone-400">
+                          Verified {r.verified} ·{" "}
+                          <a
+                            href={r.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-700"
+                          >
+                            {r.sourceLabel}
+                          </a>
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           )}
