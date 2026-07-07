@@ -35,8 +35,26 @@ Pick an adversarial route where capital data would visibly differ from the city,
 - Known nuance: the short loading page may drop the scrollbar, shifting centered content ~4px vs other stages. `scrollbar-gutter: stable` is the fix if pixel-perfection is requested.
 - When comparing stepper positions across stages, compare screenshot pixel coordinates of the circles, not impressions.
 
-## Unlocking locked phases (First week/month/90 days)
-Registration tasks with OSM office-link chips live in locked phases. Without a Stripe key configured, clicking "Unlock full plan — $9" performs a dev unlock instantly — use it to expand "How to do it" and check "Offices near <city>" chips.
+## Tax regimes, /compare and /moving-to pages (PR #37)
+- Regime data lives in `src/lib/taxRegimes.ts` (~30 countries, each with status active/changed/closed, sourceUrl, `verified: "2026-06"`). Rendered in: snapshot Cost tab ("Special tax regimes for newcomers"), /moving-to/[country], and /compare/[pair]; also injected into the generation prompt — a generated Spain plan should include a Beckham-regime task.
+- /compare index groups 18 curated destinations into 153 canonical pairs (alphabetical A-vs-B only; reversed slugs 404/redirect). Pair pages show ~13 rows, each with a source subtext; regime cards carry amber "Recently changed" / "Closed" badges and "Verified 2026-06 · <official source>" links.
+- /moving-to/[country] for curated countries: "at a glance" grid of 9 sourced live facts, regime card, FAQ with schema.org FAQPage JSON-LD (verify via curl/grep of page source, not screenshots), and canonical compare-link chips.
+- TrustBlock on the landing page (after Features): email subscribe and "request a country" forms POST to /api/feedback; success replaces the form with green text ("You're in…" / "Noted…"). /api/feedback is rate-limited per IP (10/hour → 429), same pattern as /api/generate.
+
+## Freemium locks (First week/month/90 days)
+- Locked phases render blurred (`blur-sm pointer-events-none`) with a "Locked" label, an "Unlock the full plan to see this phase" overlay, and a bottom "Unlock full plan for $9" CTA. Phase 1 is never locked.
+- GOTCHA: the dev unlock persists in localStorage under `relochecklist:unlocked` — a previous test session's unlock makes locks silently disappear and look broken. Clear it before testing locks (see CDP snippet below), then reload.
+- Without a Stripe key configured, clicking "Unlock full plan — $9" performs a dev unlock instantly — use it to expand "How to do it" and check "Offices near <city>" chips in registration tasks.
+
+## Scripting the live browser via CDP (no Playwright needed)
+Playwright isn't installed; the fastest way to poke the running Chrome (e.g. clear localStorage) is python `websocket-client` with `suppress_origin=True` (Chrome rejects the default Origin header with 403):
+```python
+import json, urllib.request, websocket
+tab = next(t for t in json.load(urllib.request.urlopen('http://localhost:29229/json')) if t['type']=='page' and 'localhost:3100' in t.get('url',''))
+ws = websocket.create_connection(tab['webSocketDebuggerUrl'], suppress_origin=True)
+ws.send(json.dumps({"id":1,"method":"Runtime.evaluate","params":{"expression":"localStorage.removeItem('relochecklist:unlocked')","returnByValue":True}}))
+print(ws.recv())
+```
 
 ## Same-country guard
 - Picking a country in one combobox hides it from the other's suggestions (`exclude` prop). Typing the same country manually shows "You're already there — pick a different destination." and blocks submit; /api/generate also 400s equal countries.
