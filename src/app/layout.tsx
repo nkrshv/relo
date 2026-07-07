@@ -30,6 +30,10 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "Reloka",
   },
+  verification: {
+    google: "hBokM3_MXEoaXjh8r4e5MC0ditw2s81ef9OfiYTKxkM",
+    other: { "msvalidate.01": "53BEF374BC42F93B4DFEE3EBBC359ED6" },
+  },
   twitter: {
     card: "summary_large_image",
     title: "Reloka: your personalized relocation checklist",
