@@ -1,0 +1,170 @@
+// Offline fetcher for a per-destination salary layer, for work-movers.
+//
+// Source: Adzuna Jobs API (https://developer.adzuna.com). Requires a free
+// app_id + app_key (env ADZUNA_APP_ID / ADZUNA_APP_KEY). Adzuna only covers a
+// subset of countries, so this layer is intentionally sparse: countries Adzuna
+// does not support get no entry at all (scalable logic: no data -> no claim,
+// never a "0" or "-").
+//
+// Endpoints used (the "/salary" endpoint the docs hint at does NOT exist):
+//   /v1/api/jobs/{cc}/history            -> average advertised salary by month
+//   /v1/api/jobs/{cc}/histogram?what=... -> salary distribution by band
+// We take the most recent monthly average and a rough median from the
+// histogram for a single benchmark role ("software engineer") so the number is
+// comparable across countries rather than skewed by each country's job mix.
+//
+// Usage: ADZUNA_APP_ID=... ADZUNA_APP_KEY=... node scripts/fetch-salaries.mjs
+
+import { writeFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, "..");
+
+const APP_ID = process.env.ADZUNA_APP_ID;
+const APP_KEY = process.env.ADZUNA_APP_KEY;
+
+if (!APP_ID || !APP_KEY) {
+  console.error("Missing ADZUNA_APP_ID / ADZUNA_APP_KEY env vars.");
+  process.exit(1);
+}
+
+// name -> Adzuna country code + local currency. Only Adzuna-supported
+// countries from our destination list are listed; others are omitted on purpose.
+const ADZUNA_COUNTRIES = {
+  "United States": { cc: "us", currency: "USD" },
+  Canada: { cc: "ca", currency: "CAD" },
+  "United Kingdom": { cc: "gb", currency: "GBP" },
+  Germany: { cc: "de", currency: "EUR" },
+  France: { cc: "fr", currency: "EUR" },
+  Italy: { cc: "it", currency: "EUR" },
+  Spain: { cc: "es", currency: "EUR" },
+  Netherlands: { cc: "nl", currency: "EUR" },
+  Austria: { cc: "at", currency: "EUR" },
+  Switzerland: { cc: "ch", currency: "CHF" },
+  Poland: { cc: "pl", currency: "PLN" },
+  Singapore: { cc: "sg", currency: "SGD" },
+  Brazil: { cc: "br", currency: "BRL" },
+  Mexico: { cc: "mx", currency: "MXN" },
+  Australia: { cc: "au", currency: "AUD" },
+  "New Zealand": { cc: "nz", currency: "NZD" },
+};
+
+// One benchmark role so numbers are comparable across countries.
+const BENCHMARK = "software engineer";
+
+async function getJson(url) {
+  const res = await fetch(url, { headers: { "User-Agent": "reloka-fetch" } });
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  return res.json();
+}
+
+function auth() {
+  return `app_id=${APP_ID}&app_key=${APP_KEY}`;
+}
+
+async function fetchHistory(cc) {
+  try {
+    const json = await getJson(
+      `https://api.adzuna.com/v1/api/jobs/${cc}/history?${auth()}`,
+    );
+    const months = json?.month ?? {};
+    const keys = Object.keys(months).sort();
+    if (!keys.length) return null;
+    const latestMonth = keys[keys.length - 1];
+    const value = months[latestMonth];
+    if (typeof value !== "number") return null;
+    return { avgAnnual: Math.round(value), month: latestMonth };
+  } catch {
+    return null;
+  }
+}
+
+async function fetchHistogram(cc) {
+  try {
+    const json = await getJson(
+      `https://api.adzuna.com/v1/api/jobs/${cc}/histogram?${auth()}` +
+        `&what=${encodeURIComponent(BENCHMARK)}`,
+    );
+    const hist = json?.histogram ?? {};
+    const bands = Object.keys(hist)
+      .map((b) => ({ floor: Number(b), count: hist[b] }))
+      .filter((b) => Number.isFinite(b.floor) && b.count > 0)
+      .sort((a, b) => a.floor - b.floor);
+    const total = bands.reduce((s, b) => s + b.count, 0);
+    if (total < 20) return null;
+    // Median band floor: the band where the cumulative count crosses half.
+    let cum = 0;
+    let medianFloor = bands[0].floor;
+    for (const b of bands) {
+      cum += b.count;
+      if (cum >= total / 2) {
+        medianFloor = b.floor;
+        break;
+      }
+    }
+    return { benchmarkMedian: medianFloor, sampleSize: total };
+  } catch {
+    return null;
+  }
+}
+
+async function main() {
+  const out = {};
+  for (const [name, meta] of Object.entries(ADZUNA_COUNTRIES)) {
+    process.stdout.write(`Fetching ${name}... `);
+    const [history, histogram] = await Promise.all([
+      fetchHistory(meta.cc),
+      fetchHistogram(meta.cc),
+    ]);
+    if (!history && !histogram) {
+      console.log("no data");
+      continue;
+    }
+    out[name] = {
+      currency: meta.currency,
+      avgAnnual: history?.avgAnnual ?? null,
+      avgMonth: history?.month ?? null,
+      benchmarkRole: BENCHMARK,
+      benchmarkMedian: histogram?.benchmarkMedian ?? null,
+      sampleSize: histogram?.sampleSize ?? null,
+      source: `https://www.adzuna.com`,
+    };
+    console.log("done");
+  }
+
+  const now = new Date().toISOString().slice(0, 10);
+  const header = `// AUTO-GENERATED by scripts/fetch-salaries.mjs — do not edit by hand.
+// Source: Adzuna Jobs API (https://developer.adzuna.com). avgAnnual is the most
+// recent monthly average advertised salary across all roles; benchmarkMedian is
+// the median salary band for "${BENCHMARK}" so figures are comparable across
+// countries. Only Adzuna-supported countries appear here. Regenerate with:
+// ADZUNA_APP_ID=... ADZUNA_APP_KEY=... node scripts/fetch-salaries.mjs
+
+export interface CountrySalary {
+  /** Local currency of the figures (ISO 4217). */
+  currency: string;
+  /** Most recent monthly average advertised salary, annualised, or null. */
+  avgAnnual: number | null;
+  /** Month the average is from, e.g. "2026-05". */
+  avgMonth: string | null;
+  /** Benchmark role the median is computed for. */
+  benchmarkRole: string;
+  /** Median salary band floor for the benchmark role, or null. */
+  benchmarkMedian: number | null;
+  /** Number of postings behind the median. */
+  sampleSize: number | null;
+  source: string;
+}
+
+export const SALARIES_UPDATED_AT = ${JSON.stringify(now)};
+
+export const COUNTRY_SALARIES: Record<string, CountrySalary> = ${JSON.stringify(out, null, 2)};
+`;
+
+  writeFileSync(join(ROOT, "src/lib/countrySalaries.generated.ts"), header);
+  console.log(`Wrote salary data for ${Object.keys(out).length} destinations.`);
+}
+
+main();

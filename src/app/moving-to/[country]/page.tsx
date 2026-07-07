@@ -10,6 +10,14 @@ import { staticDataForCountry } from "@/lib/staticCountryData";
 import { advisoryForCountry } from "@/lib/countryAdvisory";
 import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { currencyForCountry } from "@/lib/countryCurrency";
+import {
+  censorshipForCountry,
+  reachabilityLabel,
+  allMessengersReachable,
+  disruptedMessengers,
+  CENSORSHIP_UPDATED_AT,
+} from "@/lib/countryCensorship";
+import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
 import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
@@ -86,6 +94,8 @@ function quickFacts(name: string): { label: string; value: string; source: strin
   const st = staticDataForCountry(name);
   const adv = advisoryForCountry(name);
   const currency = currencyForCountry(name);
+  const cen = censorshipForCountry(name);
+  const sal = salaryForCountry(name);
   const facts: ({ label: string; value: string; source: string } | null)[] = [
     ins && climateSummary(ins)
       ? {
@@ -122,6 +132,31 @@ function quickFacts(name: string): { label: string; value: string; source: strin
           source: "Ookla",
         }
       : null,
+    cen && cen.messengers.length > 0
+      ? {
+          label: "Messengers",
+          value: allMessengersReachable(cen)
+            ? "WhatsApp, Telegram, Signal all work"
+            : disruptedMessengers(cen)
+                .map((m) => `${m.app}: ${reachabilityLabel(m.status).text.toLowerCase()}`)
+                .join(" · "),
+          source: "OONI, 6-month window",
+        }
+      : null,
+    ins?.migrantShare
+      ? {
+          label: "Foreign-born residents",
+          value: `${ins.migrantShare.value.toFixed(1)}% of population`,
+          source: `World Bank ${ins.migrantShare.year}`,
+        }
+      : null,
+    sal?.avgAnnual
+      ? {
+          label: "Avg advertised salary",
+          value: `${formatSalary(sal.avgAnnual, sal.currency)} / yr`,
+          source: `Adzuna ${sal.avgMonth ?? ""}`.trim(),
+        }
+      : null,
     st
       ? {
           label: "English proficiency",
@@ -150,6 +185,8 @@ function faqFor(name: string): { q: string; a: string }[] {
   const ins = insightsForCountry(name);
   const od = openDataForCountry(name);
   const regimes = taxRegimesForCountry(name);
+  const cen = censorshipForCountry(name);
+  const sal = salaryForCountry(name);
   const faqs: { q: string; a: string }[] = [
     {
       q: `Do I need a visa to move to ${name}?`,
@@ -169,6 +206,23 @@ function faqFor(name: string): { q: string; a: string }[] {
       a: `In ${ins.capital}, average daily temperatures run about ${climateSummary(ins)} (Open-Meteo historical data, ${ins.climate.year}). Regional climates can differ a lot; a city-level plan uses data for your exact destination city.`,
     });
   }
+  if (cen && cen.messengers.length > 0) {
+    const disrupted = disruptedMessengers(cen);
+    const measured = cen.messengers.map((m) => m.app).join(", ");
+    faqs.push({
+      q: `Can I use WhatsApp and Telegram in ${name}?`,
+      a:
+        disrupted.length === 0
+          ? `Network measurements over the last six months show ${measured} working normally in ${name} (OONI, ${cen.window.since} to ${cen.window.until}). This reflects measured reachability, not an official policy statement.`
+          : `Mostly, but with caveats: OONI network measurements over the last six months report interference with ${disrupted.map((m) => m.app).join(" and ")} in ${name} (${cen.window.since} to ${cen.window.until}). The rest of the measured apps (${cen.messengers.filter((m) => m.status === "reachable").map((m) => m.app).join(", ")}) work normally. This reflects measured reachability, not an official policy statement.`,
+    });
+  }
+  if (sal?.avgAnnual) {
+    faqs.push({
+      q: `What do jobs pay in ${name}?`,
+      a: `The average advertised salary is about ${formatSalary(sal.avgAnnual, sal.currency)} a year (Adzuna job listings, ${sal.avgMonth}).${sal.benchmarkMedian ? ` For a benchmark role like ${sal.benchmarkRole}, the median advertised band starts around ${formatSalary(sal.benchmarkMedian, sal.currency)}.` : ""} Advertised salaries skew toward roles that are posted online, so treat this as a signal, not a guarantee.`,
+    });
+  }
   if (od?.taxWedge) {
     faqs.push({
       q: `How high are taxes on salaries in ${name}?`,
@@ -177,7 +231,7 @@ function faqFor(name: string): { q: string; a: string }[] {
   }
   faqs.push({
     q: `How current is this data?`,
-    a: `Climate, inflation and life expectancy were refreshed ${INSIGHTS_UPDATED_AT}; prices, taxes and air quality ${OPEN_DATA_UPDATED_AT}. Tax regimes are hand-verified against official government sources. Every fact on this page shows its source.`,
+    a: `Climate, inflation and life expectancy were refreshed ${INSIGHTS_UPDATED_AT}; prices, taxes and air quality ${OPEN_DATA_UPDATED_AT}; messenger reachability ${CENSORSHIP_UPDATED_AT}. Tax regimes are hand-verified against official government sources. Every fact on this page shows its source.`,
   });
   return faqs;
 }
