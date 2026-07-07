@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 
-function useSubmit(type: "subscribe" | "request-country") {
+function useSubmit(type: "request-country") {
   const [state, setState] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [message, setMessage] = useState("");
 
@@ -13,9 +13,7 @@ function useSubmit(type: "subscribe" | "request-country") {
       const res = await fetch("/api/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(
-          type === "subscribe" ? { type, email: value } : { type, country: value },
-        ),
+        body: JSON.stringify({ type, country: value }),
       });
       const data = (await res.json()) as { error?: string };
       if (!res.ok) {
@@ -40,7 +38,7 @@ function InlineForm({
   doneText,
   inputType,
 }: {
-  type: "subscribe" | "request-country";
+  type: "request-country";
   placeholder: string;
   cta: string;
   doneText: string;
@@ -115,25 +113,7 @@ export default function TrustBlock() {
           </p>
         </div>
         <div className="flex flex-col gap-4">
-          <div className="rounded-xl border border-stone-200 bg-white p-6">
-            <h3 className="text-sm font-semibold text-stone-900">
-              Get the monthly changelog
-            </h3>
-            <p className="mt-1 text-xs leading-relaxed text-stone-500">
-              One email a month: which visa rules, tax regimes and thresholds
-              actually changed. No listicles.
-            </p>
-            <div className="mt-3">
-              <InlineForm
-                type="subscribe"
-                inputType="email"
-                placeholder="you@example.com"
-                cta="Subscribe"
-                doneText="You're in. First changelog next month."
-              />
-            </div>
-          </div>
-          <div className="rounded-xl border border-stone-200 bg-white p-6">
+          <div className="flex-1 rounded-xl border border-stone-200 bg-white p-6">
             <h3 className="text-sm font-semibold text-stone-900">
               Missing your destination?
             </h3>

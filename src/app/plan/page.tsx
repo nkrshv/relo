@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ReloApp from "@/components/ReloApp";
+import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Build your relocation plan",
@@ -31,10 +32,7 @@ export default function PlanPage() {
         <ReloApp showHeading />
       </section>
 
-      <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400 print:hidden">
-        Reloka · Not legal or immigration advice. Always verify official
-        requirements.
-      </footer>
+      <SiteFooter />
     </main>
   );
 }

@@ -17,6 +17,16 @@ import { insightsForCountry, climateSummary } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
 import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { openDataForCountry, aqiLabel } from "@/lib/countryOpenData";
+import {
+  censorshipForCountry,
+  reachabilityLabel,
+  allMessengersReachable,
+  disruptedMessengers,
+  type MessengerReachability,
+} from "@/lib/countryCensorship";
+import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
+import { formatMonth, formatDate } from "@/lib/dates";
+import MessengerIcons from "@/components/MessengerIcons";
 import { useCityContext } from "@/lib/useCityContext";
 
 const FLAG_BY_NAME: Record<string, string> = Object.fromEntries(
@@ -109,6 +119,9 @@ type IconName =
   | "air"
   | "prices"
   | "tax"
+  | "chat"
+  | "people"
+  | "salary"
   | "clock";
 
 const ICON_PATHS: Record<IconName, string> = {
@@ -119,6 +132,9 @@ const ICON_PATHS: Record<IconName, string> = {
   air: "M2 5.5h7a2 2 0 1 0-2-2M2 8.5h10a2 2 0 1 1-2 2M2 11.5h4.5a1.8 1.8 0 1 1-1.8 1.8",
   prices: "M2.8 8.6 8.6 2.8a1 1 0 0 1 .7-.3h3.2a1 1 0 0 1 1 1v3.2a1 1 0 0 1-.3.7l-5.8 5.8a1 1 0 0 1-1.4 0L2.8 10a1 1 0 0 1 0-1.4ZM11 5h.01",
   tax: "M3.5 12.5 12.5 3.5M5 3.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z",
+  chat: "M2.5 4.5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H7l-3 2.5V11.5h-.5a2 2 0 0 1-2-2v-5Z",
+  people: "M6 4.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-3.5 9a3.5 3.5 0 0 1 7 0M11 5a1.8 1.8 0 1 1 0 3.6m1 4.9a3.2 3.2 0 0 0-2.4-3.1",
+  salary: "M2.5 5.5h11a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1Zm5.5 1.8a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Z",
   clock: "M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2Zm0 2.5V8l2.5 1.5",
 };
 
@@ -148,6 +164,7 @@ interface BentoCell {
   accent?: string;
   hint?: string;
   wide?: boolean;
+  messengers?: MessengerReachability[];
 }
 
 type TabKey = "practical" | "cost" | "health" | "safety";
@@ -348,7 +365,7 @@ export default function CountrySummary({
       label: "Money",
       value: moneyValue,
       sub: fx
-        ? `${currencyValue && currencyValue !== fx.toCode ? `${currencyValue} · ` : ""}Rate as of ${fx.updatedAt}`
+        ? `${currencyValue && currencyValue !== fx.toCode ? `${currencyValue} · ` : ""}Rate as of ${formatDate(fx.updatedAt)}`
         : undefined,
       wide: true,
     });
@@ -428,14 +445,42 @@ export default function CountrySummary({
       value: `${openData.priceLevelEU.value >= 100 ? "+" : "−"}${Math.abs(Math.round(openData.priceLevelEU.value - 100))}%`,
       hint: `Eurostat price level index ${openData.priceLevelEU.year}: EU27 = 100`,
     });
-  if (openData?.taxWedge)
+  const censorship = censorshipForCountry(country);
+  if (censorship && censorship.messengers.length > 0)
     cells.push({
-      key: "tax",
-      icon: "tax",
-      label: "Tax on wages",
-      value: `~${Math.round(openData.taxWedge.value)}%`,
-      sub: "of labour cost (OECD)",
-      hint: "OECD tax wedge: income tax + social contributions, single worker at the average wage, % of total labour cost",
+      key: "messengers",
+      icon: "chat",
+      label: "Messengers",
+      value: allMessengersReachable(censorship)
+        ? "All work"
+        : disruptedMessengers(censorship)
+            .map((m) => `${m.app}: ${reachabilityLabel(m.status).text.toLowerCase()}`)
+            .join(", "),
+      sub: `OONI, 6 months to ${formatMonth(censorship.window.until)}`,
+      accent: allMessengersReachable(censorship) ? undefined : "text-amber-700",
+      messengers: censorship.messengers,
+      hint: censorship.messengers
+        .map((m) => `${m.app}: ${reachabilityLabel(m.status).text}`)
+        .join(", "),
+    });
+  const salary = salaryForCountry(country);
+  if (salary?.avgAnnual)
+    cells.push({
+      key: "salary",
+      icon: "salary",
+      label: "Avg advertised salary",
+      value: `${formatSalary(salary.avgAnnual, salary.currency)} / yr`,
+      sub: salary.avgMonth ? `Adzuna, ${formatMonth(salary.avgMonth)}` : "Adzuna",
+      hint: "Average advertised salary across Adzuna job listings, local currency",
+    });
+  if (insights?.migrantShare)
+    cells.push({
+      key: "migrants",
+      icon: "people",
+      label: "Foreign-born",
+      value: `${insights.migrantShare.value.toFixed(1)}%`,
+      sub: `World Bank ${insights.migrantShare.year}`,
+      hint: "International migrants as a share of the population (World Bank)",
     });
   const destTimezone =
     destCity?.offsetHours != null
@@ -484,7 +529,7 @@ export default function CountrySummary({
 
   // Keep the grid gapless: stretch the trailing cells of an incomplete last
   // row of small cells across the remaining columns.
-  const visibleCells = cells.slice(0, 8);
+  const visibleCells = cells.slice(0, 12);
   const smallCount = visibleCells.filter((c) => !c.wide).length;
   const rem = smallCount % 4;
   const spanClass = (c: BentoCell, i: number): string => {
@@ -548,9 +593,10 @@ export default function CountrySummary({
                 </p>
               </div>
               <p
-                className={`tnum mt-1.5 truncate text-sm font-semibold ${c.wide ? "sm:text-base" : ""} ${c.accent ?? "text-stone-900"}`}
+                className={`tnum mt-1.5 flex items-center gap-1.5 text-sm font-semibold ${c.wide ? "sm:text-base" : ""} ${c.accent ?? "text-stone-900"}`}
               >
-                {c.value}
+                {c.messengers && <MessengerIcons messengers={c.messengers} />}
+                <span className="truncate">{c.value}</span>
               </p>
               {c.sub && (
                 <p className="mt-0.5 truncate text-xs text-stone-400">{c.sub}</p>
@@ -668,7 +714,7 @@ export default function CountrySummary({
               )}
               {openData?.taxWedge && (
                 <Tile
-                  label={`Taxes on salary · ${openData.taxWedge.year}`}
+                  label={`Employment taxes · ${openData.taxWedge.year}`}
                   value={`~${Math.round(openData.taxWedge.value)}%`}
                   sub="of what your job costs goes to tax & social security, not your income-tax rate"
                   hint="OECD tax wedge: income tax + employee and employer social contributions for a single worker at the average wage, as a share of total labour cost"
@@ -713,7 +759,7 @@ export default function CountrySummary({
                           {r.statusNote ? ` ${r.statusNote}.` : ""}
                         </p>
                         <p className="mt-1.5 text-[11px] text-stone-400">
-                          Verified {r.verified} ·{" "}
+                          Verified {formatMonth(r.verified)} ·{" "}
                           <a
                             href={r.sourceUrl}
                             target="_blank"
@@ -871,8 +917,8 @@ export default function CountrySummary({
           {visa ? " · Passport Index" : ""}
           {insights ? " · Open-Meteo · World Bank" : ""}
           {openData ? " · Eurostat · OECD" : ""}
-          {advisory?.updatedAt ? ` · updated ${advisory.updatedAt}` : ""}
-          {fx && fx.updatedAt ? ` · FX ${fx.updatedAt}` : ""}
+          {advisory?.updatedAt ? ` · updated ${formatDate(advisory.updatedAt)}` : ""}
+          {fx && fx.updatedAt ? ` · FX ${formatDate(fx.updatedAt)}` : ""}
         </span>
       </div>
     </section>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DESTINATIONS } from "@/lib/countries";
+import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Compare countries for relocation: cost, taxes, climate, safety",
@@ -54,10 +55,7 @@ export default function CompareIndexPage() {
         })}
       </section>
 
-      <footer className="border-t border-stone-200 py-8 text-center text-sm text-stone-400">
-        Reloka · Not legal, tax or immigration advice. Always verify
-        official requirements.
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
