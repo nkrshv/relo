@@ -237,7 +237,12 @@ function normalizeMistake(v: unknown): string | undefined {
   const s = str(v);
   if (!s) return undefined;
   const hasDigit = /\d/.test(s);
-  const hasProperNoun = /\s[A-Z\u00c0-\u00dc]/.test(s);
+  // Mid-sentence capital, or a leading acronym / accented word (AIMA,
+  // Bürgeramt); a plain leading sentence capital does not count.
+  const hasProperNoun =
+    /\s[A-Z\u00c0-\u00dc]/.test(s) ||
+    /^[A-Z]{2,}/.test(s) ||
+    /^\S*[\u00c0-\u00ff]/.test(s);
   const genericConsequence =
     /(delays?|delaying|complicat|affect(ing|s)?|problems?|issues?|penalt|fines?|important documents|on time|in time|early enough|too long|be prepared)/i.test(
       s,
