@@ -22,12 +22,27 @@ interface CompareCell {
   hint?: string;
 }
 
-function buildCells(home: ClimatePoint, dest: ClimatePoint): CompareCell[] {
+function buildCells(
+  home: ClimatePoint,
+  dest: ClimatePoint,
+  aqi?: { home: number | null; dest: number | null },
+): CompareCell[] {
   const cells: CompareCell[] = [];
   // Each city keeps its own month, so cross-hemisphere pairs read correctly
   // (Utrecht's coldest month is January, Sydney's is June).
   const temp = (c: number, m: number | null) =>
     `${c}°${m ? ` in ${monthName(m).slice(0, 3)}` : ""}`;
+
+  // Live air-quality index sits with the climate comparison so home and
+  // destination read side by side (moved out of the Health tab).
+  if (aqi && aqi.home != null && aqi.dest != null)
+    cells.push({
+      key: "aqi",
+      label: "Air quality",
+      home: `AQI ${aqi.home}`,
+      dest: `AQI ${aqi.dest}`,
+      hint: "Live air quality index from the nearest WAQI station (lower is cleaner)",
+    });
 
   if (home.coldestC !== null && dest.coldestC !== null)
     cells.push({
@@ -90,9 +105,15 @@ function buildCells(home: ClimatePoint, dest: ClimatePoint): CompareCell[] {
  * bento-tile language as the rest of the snapshot, with home and destination
  * stacked inside each tile so the comparison reads at a glance.
  */
-export default function ClimateTwinPanel({ twin }: { twin: ClimateTwin }) {
+export default function ClimateTwinPanel({
+  twin,
+  aqi,
+}: {
+  twin: ClimateTwin;
+  aqi?: { home: number | null; dest: number | null };
+}) {
   const { home, dest, aiSummary, verdicts, sources } = twin;
-  const cells = buildCells(home, dest);
+  const cells = buildCells(home, dest, aqi);
 
   return (
     <div className="mt-2.5 space-y-2.5">
@@ -153,7 +174,11 @@ export default function ClimateTwinPanel({ twin }: { twin: ClimateTwin }) {
 
       <p className="text-[11px] text-stone-400">
         {home.label} versus {dest.label}, historical normals from{" "}
-        {dest.year ?? home.year}. Sources: {sources.join(", ")}.
+        {dest.year ?? home.year}. Sources:{" "}
+        {[...sources, aqi && aqi.home != null && aqi.dest != null ? "WAQI" : null]
+          .filter(Boolean)
+          .join(", ")}
+        .
       </p>
     </div>
   );

@@ -17,11 +17,12 @@ import {
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
 import {
-  cryptoCompareLabel,
+  cryptoShortStatus,
   cryptoTaxForCountry,
-  cryptoTaxTone,
+  formatCryptoRate,
   CRYPTO_TAX_DATASET_URL,
   CRYPTO_TAX_UPDATED_AT,
+  type CryptoTaxRegime,
 } from "@/lib/cryptoTax";
 import { formatMonth, formatDate } from "@/lib/dates";
 import SiteFooter from "@/components/SiteFooter";
@@ -104,8 +105,6 @@ function buildRows(a: Destination, b: Destination): Row[] {
   const cenB = censorshipForCountry(b.name);
   const salA = salaryForCountry(a.name);
   const salB = salaryForCountry(b.name);
-  const cryptoA = cryptoTaxForCountry(a.name);
-  const cryptoB = cryptoTaxForCountry(b.name);
 
   const messengerSummary = (c: CountryCensorship | null): string | null => {
     if (!c || c.messengers.length === 0) return null;
@@ -170,7 +169,8 @@ function buildRows(a: Destination, b: Destination): Row[] {
       label: "Big Mac price",
       a: insA?.bigMacUsd ? `$${insA.bigMacUsd.value.toFixed(2)}` : null,
       b: insB?.bigMacUsd ? `$${insB.bigMacUsd.value.toFixed(2)}` : null,
-      source: "The Economist Big Mac index",
+      source:
+        "The Economist Big Mac index (euro-area countries share one euro-area price)",
     },
     {
       label: "Employment taxes (not your rate)",
@@ -181,15 +181,6 @@ function buildRows(a: Destination, b: Destination): Row[] {
         ? `~${Math.round(odB.taxWedge.value)}% of what a job costs goes to tax (${odB.taxWedge.year})`
         : null,
       source: "OECD tax wedge, single average worker",
-    },
-    {
-      label: "Crypto taxes",
-      a: cryptoA ? cryptoCompareLabel(cryptoA) : null,
-      b: cryptoB ? cryptoCompareLabel(cryptoB) : null,
-      aTone: cryptoA ? cryptoTaxTone(cryptoA) : undefined,
-      bTone: cryptoB ? cryptoTaxTone(cryptoB) : undefined,
-      source: `CryptoNomadHub, updated ${formatDate(CRYPTO_TAX_UPDATED_AT)} · CC BY 4.0`,
-      sourceUrl: CRYPTO_TAX_DATASET_URL,
     },
     {
       label: "Special tax regimes",
@@ -292,6 +283,38 @@ export default async function ComparePage({
   if (!parsed) notFound();
   const { a, b } = parsed;
   const rows = buildRows(a, b);
+  const cryptoA = cryptoTaxForCountry(a.name);
+  const cryptoB = cryptoTaxForCountry(b.name);
+  const cryptoHold = cryptoA?.holdingPeriodMonths ?? cryptoB?.holdingPeriodMonths ?? 12;
+  const cryptoField = (
+    r: CryptoTaxRegime | null,
+    pick: (x: CryptoTaxRegime) => number | null,
+  ) => (r ? formatCryptoRate(pick(r)) : "—");
+  const cryptoRows =
+    cryptoA || cryptoB
+      ? [
+          {
+            label: `Gains under ${cryptoHold}mo`,
+            a: cryptoField(cryptoA, (x) => x.shortTermRate),
+            b: cryptoField(cryptoB, (x) => x.shortTermRate),
+          },
+          {
+            label: `Gains after ${cryptoHold}mo`,
+            a: cryptoField(cryptoA, (x) => x.longTermRate),
+            b: cryptoField(cryptoB, (x) => x.longTermRate),
+          },
+          {
+            label: "Staking income",
+            a: cryptoField(cryptoA, (x) => x.stakingRate),
+            b: cryptoField(cryptoB, (x) => x.stakingRate),
+          },
+          {
+            label: "Mining income",
+            a: cryptoField(cryptoA, (x) => x.miningRate),
+            b: cryptoField(cryptoB, (x) => x.miningRate),
+          },
+        ]
+      : [];
   const regimes = [
     ...taxRegimesForCountry(a.name).map((r) => ({ country: a, r })),
     ...taxRegimesForCountry(b.name).map((r) => ({ country: b, r })),
@@ -390,6 +413,60 @@ export default async function ComparePage({
               </p>
             </div>
           ))}
+          {cryptoRows.length > 0 && (
+            <details className="group border-b border-stone-100 last:border-b-0">
+              <summary className="grid cursor-pointer list-none grid-cols-[1.2fr_1fr_1fr] items-start px-4 py-3 marker:content-none [&::-webkit-details-marker]:hidden">
+                <div>
+                  <p className="flex items-center gap-1 text-sm font-medium text-stone-700">
+                    Crypto taxes
+                    <svg
+                      viewBox="0 0 24 24"
+                      aria-hidden
+                      className="h-3.5 w-3.5 text-stone-400 transition-transform group-open:rotate-180"
+                    >
+                      <path
+                        d="m6 9 6 6 6-6"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </p>
+                  <a
+                    href={CRYPTO_TAX_DATASET_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-0.5 block text-[11px] text-stone-400 underline decoration-stone-200 underline-offset-2 transition-colors hover:text-stone-700"
+                  >
+                    CryptoNomadHub, updated {formatDate(CRYPTO_TAX_UPDATED_AT)} · CC BY 4.0
+                  </a>
+                </div>
+                <p className="tnum pr-2 text-sm text-stone-800">
+                  {cryptoA ? cryptoShortStatus(cryptoA) : "—"}
+                </p>
+                <p className="tnum text-sm text-stone-800">
+                  {cryptoB ? cryptoShortStatus(cryptoB) : "—"}
+                </p>
+              </summary>
+              <div className="px-4 pb-3">
+                {cryptoRows.map((r) => (
+                  <div
+                    key={r.label}
+                    className="grid grid-cols-[1.2fr_1fr_1fr] items-start border-t border-stone-100 py-2"
+                  >
+                    <p className="text-xs text-stone-500">{r.label}</p>
+                    <p className="tnum pr-2 text-sm text-stone-800">{r.a}</p>
+                    <p className="tnum text-sm text-stone-800">{r.b}</p>
+                  </div>
+                ))}
+                <p className="mt-2 text-[11px] text-stone-400">
+                  General rates, not personal tax advice.
+                </p>
+              </div>
+            </details>
+          )}
         </div>
         <p className="mt-3 text-xs text-stone-400">
           Climate, inflation and life expectancy verified {formatDate(INSIGHTS_UPDATED_AT)}.
