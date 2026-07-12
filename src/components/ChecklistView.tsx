@@ -600,12 +600,13 @@ export default function ChecklistView({
 }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [view, setView] = useState<ViewMode>("simple");
-  const climateTwin = useClimateTwin(
+  const climate = useClimateTwin(
     input.fromCountry,
     input.toCountry,
     input.fromCity,
     input.toCity,
   );
+  const climateTwin = climate.twin;
   // Climate-derived packing advice is woven into the checklist as ordinary
   // tasks at the end of "Before you go" (always the free, first phase), so it
   // is not a detached block. Their checked state lives under the same
@@ -867,7 +868,7 @@ export default function ChecklistView({
           fromCity={input.fromCity}
           toCity={input.toCity}
           visa={visa ?? null}
-          climateTwin={climateTwin}
+          climate={climate}
         />
       </header>
 

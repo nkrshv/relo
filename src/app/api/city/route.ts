@@ -30,6 +30,10 @@ interface GeoResult {
 
 const cache = new Map<string, { at: number; data: CityContext | null }>();
 const TTL_MS = 6 * 60 * 60 * 1000;
+// A miss must not stick for hours: cache negatives briefly so the next view
+// retries the live sources instead of silently falling back to capital-level
+// data for a whole afternoon after one flaky request.
+const NEG_TTL_MS = 10 * 60 * 1000;
 const CACHE_MAX = 2000;
 
 function cacheSet(key: string, data: CityContext | null) {
@@ -38,6 +42,29 @@ function cacheSet(key: string, data: CityContext | null) {
     if (oldest !== undefined) cache.delete(oldest);
   }
   cache.set(key, { at: Date.now(), data });
+}
+
+function cacheFresh(hit: { at: number; data: CityContext | null }): boolean {
+  const ttl = hit.data ? TTL_MS : NEG_TTL_MS;
+  return Date.now() - hit.at < ttl;
+}
+
+// One retry for the external geo/climate/AQI sources: they occasionally time
+// out or 5xx transiently; a single retry turns most misses into hits instead
+// of poisoning the cache. 4xx (genuine "no such place") is not retried.
+async function fetchResilient(
+  url: string,
+  init: RequestInit,
+): Promise<Response | null> {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url, init);
+      if (res.ok || (res.status >= 400 && res.status < 500)) return res;
+    } catch {
+      // transport error / timeout: fall through to retry
+    }
+  }
+  return null;
 }
 
 function offsetHoursFor(tz: string): number | null {
@@ -64,11 +91,11 @@ async function geocode(
   city: string,
   country: string,
 ): Promise<GeoResult | null> {
-  const res = await fetch(
+  const res = await fetchResilient(
     `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=5&language=en&format=json`,
     { signal: AbortSignal.timeout(6000) },
   );
-  if (!res.ok) return null;
+  if (!res || !res.ok) return null;
   const json = (await res.json()) as { results?: GeoResult[] };
   const results = json.results ?? [];
   if (results.length === 0) return null;
@@ -111,10 +138,11 @@ async function fetchAqi(
   const token = process.env.WAQI_TOKEN;
   if (!token) return null;
   const feed = async (path: string): Promise<WaqiFeed | null> => {
-    const res = await fetch(`https://api.waqi.info/feed/${path}/?token=${token}`, {
-      signal: AbortSignal.timeout(6000),
-    });
-    return res.ok ? ((await res.json()) as WaqiFeed) : null;
+    const res = await fetchResilient(
+      `https://api.waqi.info/feed/${path}/?token=${token}`,
+      { signal: AbortSignal.timeout(6000) },
+    );
+    return res && res.ok ? ((await res.json()) as WaqiFeed) : null;
   };
   const byName = await feed(encodeURIComponent(city.toLowerCase())).catch(
     () => null,
@@ -136,11 +164,11 @@ async function fetchClimate(
   lon: number,
 ): Promise<{ janC: number; julC: number; year: number } | null> {
   const year = new Date().getUTCFullYear() - 1;
-  const res = await fetch(
+  const res = await fetchResilient(
     `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}&start_date=${year}-01-01&end_date=${year}-12-31&daily=temperature_2m_mean&timezone=auto`,
     { signal: AbortSignal.timeout(8000) },
   );
-  if (!res.ok) return null;
+  if (!res || !res.ok) return null;
   const json = (await res.json()) as {
     daily?: { time?: string[]; temperature_2m_mean?: (number | null)[] };
   };
@@ -173,7 +201,7 @@ export async function GET(req: NextRequest) {
 
   const key = `${country.toLowerCase()}:${city.toLowerCase()}`;
   const hit = cache.get(key);
-  if (hit && Date.now() - hit.at < TTL_MS) {
+  if (hit && cacheFresh(hit)) {
     if (!hit.data) return Response.json({ error: "not found" }, { status: 404 });
     return Response.json(hit.data, {
       headers: { "Cache-Control": "public, s-maxage=21600" },
