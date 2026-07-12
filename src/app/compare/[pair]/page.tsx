@@ -16,6 +16,13 @@ import {
   type CountryCensorship,
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
+import {
+  cryptoCompareLabel,
+  cryptoTaxForCountry,
+  cryptoTaxTone,
+  CRYPTO_TAX_DATASET_URL,
+  CRYPTO_TAX_UPDATED_AT,
+} from "@/lib/cryptoTax";
 import { formatMonth, formatDate } from "@/lib/dates";
 import SiteFooter from "@/components/SiteFooter";
 import { SITE_URL } from "@/lib/siteUrls";
@@ -79,6 +86,7 @@ interface Row {
   aTone?: string;
   bTone?: string;
   source: string;
+  sourceUrl?: string;
 }
 
 function buildRows(a: Destination, b: Destination): Row[] {
@@ -96,6 +104,8 @@ function buildRows(a: Destination, b: Destination): Row[] {
   const cenB = censorshipForCountry(b.name);
   const salA = salaryForCountry(a.name);
   const salB = salaryForCountry(b.name);
+  const cryptoA = cryptoTaxForCountry(a.name);
+  const cryptoB = cryptoTaxForCountry(b.name);
 
   const messengerSummary = (c: CountryCensorship | null): string | null => {
     if (!c || c.messengers.length === 0) return null;
@@ -171,6 +181,15 @@ function buildRows(a: Destination, b: Destination): Row[] {
         ? `~${Math.round(odB.taxWedge.value)}% of what a job costs goes to tax (${odB.taxWedge.year})`
         : null,
       source: "OECD tax wedge, single average worker",
+    },
+    {
+      label: "Crypto taxes",
+      a: cryptoA ? cryptoCompareLabel(cryptoA) : null,
+      b: cryptoB ? cryptoCompareLabel(cryptoB) : null,
+      aTone: cryptoA ? cryptoTaxTone(cryptoA) : undefined,
+      bTone: cryptoB ? cryptoTaxTone(cryptoB) : undefined,
+      source: `CryptoNomadHub, updated ${formatDate(CRYPTO_TAX_UPDATED_AT)} · CC BY 4.0`,
+      sourceUrl: CRYPTO_TAX_DATASET_URL,
     },
     {
       label: "Special tax regimes",
@@ -350,7 +369,18 @@ export default async function ComparePage({
             >
               <div>
                 <p className="text-sm font-medium text-stone-700">{row.label}</p>
-                <p className="mt-0.5 text-[11px] text-stone-400">{row.source}</p>
+                {row.sourceUrl ? (
+                  <a
+                    href={row.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-0.5 block text-[11px] text-stone-400 underline decoration-stone-200 underline-offset-2 transition-colors hover:text-stone-700"
+                  >
+                    {row.source}
+                  </a>
+                ) : (
+                  <p className="mt-0.5 text-[11px] text-stone-400">{row.source}</p>
+                )}
               </div>
               <p className={`tnum pr-2 text-sm ${row.aTone ?? "text-stone-800"}`}>
                 {row.a ?? "—"}
