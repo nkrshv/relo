@@ -28,24 +28,27 @@ function buildRows(home: ClimatePoint, dest: ClimatePoint): StatRow[] {
     if (a !== null && b !== null)
       rows.push({ label: sub ? `${label} (${sub})` : label, home: fmt(a), dest: fmt(b) });
   };
-  const deg = (n: number) => `${n}°`;
   const mm = (n: number) => `${n} mm`;
   const pct = (n: number) => `${n}%`;
+  // Each city keeps its own month, so cross-hemisphere pairs read correctly
+  // (Utrecht's coldest month is January, Sydney's is June).
+  const temp = (c: number, m: number | null) =>
+    `${c}°${m ? ` (${monthName(m).slice(0, 3)})` : ""}`;
 
-  both(
-    home.coldestC,
-    dest.coldestC,
-    deg,
-    "Coldest month",
-    dest.coldestMonth ? monthName(dest.coldestMonth) : undefined,
-  );
-  both(
-    home.warmestC,
-    dest.warmestC,
-    deg,
-    "Warmest month",
-    dest.warmestMonth ? monthName(dest.warmestMonth) : undefined,
-  );
+  if (home.coldestC !== null && dest.coldestC !== null) {
+    rows.push({
+      label: "Coldest month",
+      home: temp(home.coldestC, home.coldestMonth),
+      dest: temp(dest.coldestC, dest.coldestMonth),
+    });
+  }
+  if (home.warmestC !== null && dest.warmestC !== null) {
+    rows.push({
+      label: "Warmest month",
+      home: temp(home.warmestC, home.warmestMonth),
+      dest: temp(dest.warmestC, dest.warmestMonth),
+    });
+  }
   both(home.annualPrecipMm, dest.annualPrecipMm, mm, "Rain a year");
   both(home.humidityPct, dest.humidityPct, pct, "Humidity");
 
