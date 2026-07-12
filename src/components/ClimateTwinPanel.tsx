@@ -31,7 +31,21 @@ interface CompareCell {
   homeLabel?: string;
   destLabel?: string;
   hint?: string;
+  /** Plain-language explanation of the metric, shown behind a small info dot. */
+  info?: string;
 }
+
+// Plain-language, non-technical descriptions of each air metric, shown in a
+// hover/focus popover next to the label so movers know what SO2/O3/etc mean.
+const METRIC_INFO: Record<string, string> = {
+  aqi: "Air Quality Index: several pollutants combined into one 0-500 score. Under 50 is good, over 150 is unhealthy. Lower is cleaner.",
+  pm25: "PM2.5: microscopic particles from traffic, wood smoke and industry that reach deep into the lungs. The main health-relevant pollutant.",
+  pm10: "PM10: coarser dust and particles from roads, construction and pollen that irritate the airways.",
+  no2: "NO2 (nitrogen dioxide): mostly from car and truck exhaust, so it runs higher near busy roads.",
+  o3: "O3 (ground-level ozone): forms in sunlight from traffic fumes, peaks on hot sunny days and irritates breathing.",
+  so2: "SO2 (sulphur dioxide): from burning coal or oil and heavy industry; can trigger asthma and irritate the throat.",
+  co: "CO (carbon monoxide): from combustion such as traffic and heating; at high levels it lowers the oxygen your blood can carry.",
+};
 
 function buildCells(
   home: ClimatePoint,
@@ -45,19 +59,18 @@ function buildCells(
     `${c}°${m ? ` in ${monthName(m).slice(0, 3)}` : ""}`;
 
   // Live air-quality index sits with the climate comparison so home and
-  // destination read side by side (moved out of the Health tab). The reading
-  // is labelled with the station it came from: when the chosen city has no
-  // nearby station we fall back to the capital, so we must not silently
-  // relabel a capital reading as the city.
+  // destination read side by side (moved out of the Health tab). Labelled with
+  // the compared city (like every other tile) for a consistent read; the
+  // actual measuring station is disclosed in the info popover so a
+  // capital/nearby-station reading is never silently passed off as the city.
   if (aqi && aqi.home && aqi.dest)
     cells.push({
       key: "aqi",
       label: "Air quality",
       home: `AQI ${aqi.home.value}`,
       dest: `AQI ${aqi.dest.value}`,
-      homeLabel: aqi.home.place,
-      destLabel: aqi.dest.place,
       hint: `Live air quality index from the nearest WAQI station (lower is cleaner). Home reading from ${aqi.home.place}; destination from ${aqi.dest.place}.`,
+      info: `${METRIC_INFO.aqi} Nearest station: ${aqi.home.place} (home), ${aqi.dest.place} (destination).`,
     });
 
   if (home.coldestC != null && dest.coldestC != null)
@@ -111,9 +124,33 @@ function buildCells(
       home: `${h.value} ${h.unit}`,
       dest: `${d.value} ${d.unit}`,
       hint: `Annual average from the nearest OpenAQ sensors`,
+      info: METRIC_INFO[d.parameter],
     });
   }
   return cells;
+}
+
+// Small "i" affordance with a hover/focus popover explaining a metric in plain
+// language (what SO2/O3/AQI actually mean).
+function InfoDot({ text }: { text: string }) {
+  return (
+    <span className="group/info relative inline-flex shrink-0 align-middle">
+      <button
+        type="button"
+        aria-label={text}
+        onClick={(e) => e.preventDefault()}
+        className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-stone-300 text-[9px] font-semibold leading-none text-stone-400 transition-colors hover:border-stone-500 hover:text-stone-700"
+      >
+        i
+      </button>
+      <span
+        role="tooltip"
+        className="pointer-events-none absolute bottom-full left-1/2 z-40 mb-1.5 w-48 -translate-x-1/2 rounded-md bg-stone-900 px-2.5 py-1.5 text-[11px] font-normal normal-case leading-snug tracking-normal text-white opacity-0 shadow-lg transition-opacity duration-150 group-hover/info:opacity-100 group-focus-within/info:opacity-100"
+      >
+        {text}
+      </span>
+    </span>
+  );
 }
 
 /**
@@ -162,8 +199,9 @@ export default function ClimateTwinPanel({
               title={c.hint}
               className="rounded-md border border-stone-200 bg-stone-50 px-3 py-2.5"
             >
-              <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
-                {c.label}
+              <p className="flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                <span>{c.label}</span>
+                {c.info && <InfoDot text={c.info} />}
               </p>
               <div className="mt-1.5 space-y-1">
                 <div className="flex items-baseline justify-between gap-2">

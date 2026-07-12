@@ -71,3 +71,40 @@ export function visaRequirementBetween(
   if (code === undefined) return null;
   return { ...describe(code), updatedAt: FILE.updatedAt };
 }
+
+// Better categories rank higher; ties break on the longer visa-free stay.
+const CATEGORY_RANK: Record<VisaRequirement["category"], number> = {
+  "visa-free": 5,
+  "visa-on-arrival": 4,
+  eta: 3,
+  "e-visa": 2,
+  "visa-required": 1,
+  "no-admission": 0,
+};
+
+/**
+ * Best short-stay outcome across several passports (dual/multiple citizenship):
+ * the strongest passport for THIS destination wins, so a mover isn't told they
+ * need a visa when one of their other passports enters visa-free. Returns the
+ * winning requirement tagged with the passport it came from.
+ */
+export function bestVisaRequirement(
+  origins: string[],
+  to: string,
+): (VisaRequirement & { passport: string }) | null {
+  let best: (VisaRequirement & { passport: string }) | null = null;
+  for (const origin of origins) {
+    const req = visaRequirementBetween(origin, to);
+    if (!req) continue;
+    const candidate = { ...req, passport: origin };
+    if (
+      !best ||
+      CATEGORY_RANK[candidate.category] > CATEGORY_RANK[best.category] ||
+      (CATEGORY_RANK[candidate.category] === CATEGORY_RANK[best.category] &&
+        (candidate.days ?? 0) > (best.days ?? 0))
+    ) {
+      best = candidate;
+    }
+  }
+  return best;
+}
