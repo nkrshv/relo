@@ -30,7 +30,10 @@ export function useClimateTwin(
     });
     if (fromCity?.trim()) params.set("fromCity", fromCity.trim());
     if (toCity?.trim()) params.set("toCity", toCity.trim());
-    const key = `relochecklist:climate-twin:${params.toString().toLowerCase()}`;
+    // Bump the version segment whenever the ClimateTwin schema changes so a
+    // stale cached payload (e.g. from before sunnyDays existed) is discarded
+    // instead of surfacing undefined fields.
+    const key = `relochecklist:climate-twin:v2:${params.toString().toLowerCase()}`;
     try {
       const raw = sessionStorage.getItem(key);
       if (raw) {

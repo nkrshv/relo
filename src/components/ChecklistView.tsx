@@ -140,10 +140,30 @@ function VisaAnswer({
 const OFFICE_TASK_RE =
   /\bregist(er|ration)|town hall|city hall|municipal|rathaus|ayuntamiento|câmara municipal|gemeente|commune|anmeld/i;
 
+// Departure tasks (deregistering, cancelling home contracts, "abmeldung" in
+// Germany, "uitschrijven" in the Netherlands) are about the origin country,
+// so their office links must point home, not at the destination city.
+const DEREGISTER_RE = /\bde-?regist|abmeld|uitschrijv|unregister|deregistration/i;
+
 function officeTaskMatch(item: ChecklistItem): boolean {
   return OFFICE_TASK_RE.test(
     `${item.title} ${item.why} ${(item.steps ?? []).join(" ")}`,
   );
+}
+
+function isDepartureOfficeTask(
+  item: ChecklistItem,
+  fromCountry: string | undefined,
+): boolean {
+  const text = `${item.title} ${item.why} ${(item.steps ?? []).join(" ")}`;
+  if (DEREGISTER_RE.test(text)) return true;
+  // A task that names the origin country (e.g. "Deregister from the
+  // Netherlands") is a home-side task even without a deregister keyword.
+  return Boolean(fromCountry && new RegExp(`\\b${escapeRegExp(fromCountry)}\\b`, "i").test(text));
+}
+
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 function OfficeLinks({
@@ -607,34 +627,40 @@ export default function ChecklistView({
     }
     return { ...plan, phases };
   }, [plan, climateTwin]);
-  const destOpenData = openDataForCountry(input.toCountry);
-  // A chosen destination city overrides the capital office list: the curated
-  // names are capital-specific, so point the map search at the user's city.
-  const toCity = input.toCity?.trim();
-  const cityIsCapital =
-    toCity &&
-    destOpenData?.capital &&
-    normalizeName(toCity) === normalizeName(destOpenData.capital);
-  const destOffices =
-    toCity && !cityIsCapital
-      ? {
-          offices: [
-            { name: `Town hall / city hall, ${toCity}`, place: toCity },
-            { name: `Immigration office, ${toCity}`, place: toCity },
-          ],
-          capital: toCity,
-          curated: false,
-        }
-      : destOpenData?.offices && destOpenData.offices.length > 0
-        ? {
-            offices: destOpenData.offices.map((name) => ({
-              name,
-              place: destOpenData.capital,
-            })),
-            capital: destOpenData.capital,
-            curated: true,
-          }
-        : null;
+  // Office map links are built for both ends of the move: destination offices
+  // for arrival tasks (registration), and home-country offices for departure
+  // tasks (deregistration), so a "Deregister from the Netherlands" task never
+  // points at the destination city's town hall.
+  const officeSet = (
+    country: string | undefined,
+    cityRaw: string | undefined,
+  ) => {
+    if (!country) return null;
+    const data = openDataForCountry(country);
+    const city = cityRaw?.trim();
+    const cityIsCapital =
+      city &&
+      data?.capital &&
+      normalizeName(city) === normalizeName(data.capital);
+    if (city && !cityIsCapital)
+      return {
+        offices: [
+          { name: `Town hall / city hall, ${city}`, place: city },
+          { name: `Immigration office, ${city}`, place: city },
+        ],
+        capital: city,
+        curated: false,
+      };
+    if (data?.offices && data.offices.length > 0)
+      return {
+        offices: data.offices.map((name) => ({ name, place: data.capital })),
+        capital: data.capital,
+        curated: true,
+      };
+    return null;
+  };
+  const destOffices = officeSet(input.toCountry, input.toCity);
+  const originOffices = officeSet(input.fromCountry, input.fromCity);
   const storageKey = planStorageKey(input, plan);
   const doneRef = useRef<HTMLDivElement>(null);
 
@@ -1165,13 +1191,22 @@ export default function ChecklistView({
                                     {item.tip && (
                                       <p className="text-sm">{item.tip}</p>
                                     )}
-                                    {destOffices && officeTaskMatch(item) && (
-                                      <OfficeLinks
-                                        offices={destOffices.offices}
-                                        capital={destOffices.capital}
-                                        curated={destOffices.curated}
-                                      />
-                                    )}
+                                    {officeTaskMatch(item) &&
+                                      (() => {
+                                        const set = isDepartureOfficeTask(
+                                          item,
+                                          input.fromCountry,
+                                        )
+                                          ? originOffices
+                                          : destOffices;
+                                        return set ? (
+                                          <OfficeLinks
+                                            offices={set.offices}
+                                            capital={set.capital}
+                                            curated={set.curated}
+                                          />
+                                        ) : null;
+                                      })()}
                                   </div>
                                 </details>
                               )}
