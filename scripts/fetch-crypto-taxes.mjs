@@ -8,6 +8,16 @@ const ENDPOINT = "https://cryptonomadhub-prod-1.onrender.com/regulations";
 const DATASET_URL = "https://cryptonomadhub.io/data";
 const EXPECTED_COUNTRIES = 199;
 
+// Manual corrections for rows where the upstream structured rate fields are
+// wrong (they can even contradict the source's own text note). Each entry is
+// merged over the raw row before any derived fields are computed, so summaries,
+// tones and flags all stay consistent. Keep this list small and evidence-based.
+const OVERRIDES = {
+  // Germany: private crypto held >1 year is tax-free (0%). Upstream ships
+  // crypto_long_rate 0.25, contradicting its own note "0% if crypto held >1 year".
+  DE: { crypto_long_rate: 0, holding_period_months: 12 },
+};
+
 function validRate(value) {
   return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
@@ -51,12 +61,14 @@ async function main() {
 
   const seen = new Set();
   const regimes = {};
-  for (const row of rows.sort((a, b) => a.country_code.localeCompare(b.country_code))) {
-    const countryCode = row.country_code;
+  for (const raw of rows.sort((a, b) => a.country_code.localeCompare(b.country_code))) {
+    const countryCode = raw.country_code;
     if (!/^[A-Z]{2}$/.test(countryCode) || seen.has(countryCode)) {
       throw new Error(`Invalid or duplicate country code: ${countryCode}`);
     }
     seen.add(countryCode);
+
+    const row = OVERRIDES[countryCode] ? { ...raw, ...OVERRIDES[countryCode] } : raw;
 
     const shortTermRate = validRate(row.crypto_short_rate);
     const longTermRate = validRate(row.crypto_long_rate);
