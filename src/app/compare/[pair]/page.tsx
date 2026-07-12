@@ -285,23 +285,32 @@ export default async function ComparePage({
   const rows = buildRows(a, b);
   const cryptoA = cryptoTaxForCountry(a.name);
   const cryptoB = cryptoTaxForCountry(b.name);
-  const cryptoHold = cryptoA?.holdingPeriodMonths ?? cryptoB?.holdingPeriodMonths ?? 12;
   const cryptoField = (
     r: CryptoTaxRegime | null,
     pick: (x: CryptoTaxRegime) => number | null,
   ) => (r ? formatCryptoRate(pick(r)) : "—");
+  const cryptoHoldField = (r: CryptoTaxRegime | null) =>
+    r?.holdingPeriodMonths ? `${r.holdingPeriodMonths}mo` : "—";
+  // Each country carries its own holding period, so the boundary is shown as
+  // its own row rather than baked into a shared gains label (the periods can
+  // differ, e.g. 12mo vs 24mo).
   const cryptoRows =
     cryptoA || cryptoB
       ? [
           {
-            label: `Gains under ${cryptoHold}mo`,
+            label: "Short-term gains",
             a: cryptoField(cryptoA, (x) => x.shortTermRate),
             b: cryptoField(cryptoB, (x) => x.shortTermRate),
           },
           {
-            label: `Gains after ${cryptoHold}mo`,
+            label: "Long-term gains",
             a: cryptoField(cryptoA, (x) => x.longTermRate),
             b: cryptoField(cryptoB, (x) => x.longTermRate),
+          },
+          {
+            label: "Long-term holding period",
+            a: cryptoHoldField(cryptoA),
+            b: cryptoHoldField(cryptoB),
           },
           {
             label: "Staking income",
