@@ -1,7 +1,7 @@
 "use client";
 
 import { useClimateTwin } from "@/lib/useClimateTwin";
-import { monthName, type ClimatePoint } from "@/lib/climateTwin";
+import { monthName, pollutant, type ClimatePoint } from "@/lib/climateTwin";
 
 const COMFORT_COPY: Record<string, string> = {
   similar: "Similar climate",
@@ -31,7 +31,6 @@ function buildRows(home: ClimatePoint, dest: ClimatePoint): StatRow[] {
   const deg = (n: number) => `${n}°`;
   const mm = (n: number) => `${n} mm`;
   const pct = (n: number) => `${n}%`;
-  const ug = (n: number) => `${n} µg/m³`;
 
   both(
     home.coldestC,
@@ -49,7 +48,18 @@ function buildRows(home: ClimatePoint, dest: ClimatePoint): StatRow[] {
   );
   both(home.annualPrecipMm, dest.annualPrecipMm, mm, "Rain a year");
   both(home.humidityPct, dest.humidityPct, pct, "Humidity");
-  both(home.pm25, dest.pm25, ug, "Recent PM2.5");
+
+  // Air pollutants: annual averages, shown only where both cities measure the
+  // pollutant in the same unit (providers report NO2/CO/SO2 in µg/m³ or ppb).
+  for (const d of dest.air) {
+    const h = pollutant(home, d.parameter);
+    if (!h || h.unit !== d.unit) continue;
+    rows.push({
+      label: `${d.label} a year`,
+      home: `${h.value} ${h.unit}`,
+      dest: `${d.value} ${d.unit}`,
+    });
+  }
   return rows;
 }
 
@@ -67,7 +77,7 @@ export default function ClimateTwin({
   const twin = useClimateTwin(fromCountry, toCountry, fromCity, toCity);
   if (!twin || twin.verdicts.length === 0) return null;
 
-  const { home, dest, comfort, verdicts, packing, sources } = twin;
+  const { home, dest, comfort, verdicts, packing, aiSummary, sources } = twin;
   const rows = buildRows(home, dest);
 
   return (
@@ -98,6 +108,12 @@ export default function ClimateTwin({
         <p className="text-xs text-stone-500">
           {home.label} versus {dest.label}
         </p>
+
+        {aiSummary && (
+          <p className="mt-3 text-sm leading-relaxed text-stone-800">
+            {aiSummary}
+          </p>
+        )}
 
         <ul className="mt-3 space-y-2">
           {verdicts.map((v, i) => (

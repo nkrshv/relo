@@ -1,7 +1,21 @@
 // "Climate twin" comparison: how the destination's weather and air feel
-// against the mover's home, plus what to actually pack. Types and the pure
-// comparison logic live here; the live fetching (Open-Meteo, OpenAQ) is done
-// server-side in /api/climate-twin and the client hook in useClimateTwin.
+// against the mover's home over the same reference year, plus what to pack.
+// Types and the pure comparison logic live here; live fetching (Open-Meteo
+// for climate, OpenAQ for annual pollutant averages) is done server-side in
+// /api/climate-twin, and the client hook is useClimateTwin.
+
+export interface Pollutant {
+  /** OpenAQ parameter name, e.g. "pm25". */
+  parameter: string;
+  /** Human label, e.g. "PM2.5". */
+  label: string;
+  /** Annual mean for the reference year. */
+  value: number;
+  unit: string;
+  year: number;
+  /** Nearest measuring station name. */
+  station: string | null;
+}
 
 export interface ClimatePoint {
   /** Resolved place name (city when known, otherwise the country). */
@@ -20,9 +34,8 @@ export interface ClimatePoint {
   annualPrecipMm: number | null;
   /** Mean daily relative humidity (%). */
   humidityPct: number | null;
-  /** Most recent PM2.5 reading (µg/m³) from the nearest sensor. */
-  pm25: number | null;
-  airStation: string | null;
+  /** Annual pollutant averages from the nearest OpenAQ sensors. */
+  air: Pollutant[];
   /** Reference year for the climate normals. */
   year: number | null;
 }
@@ -37,6 +50,8 @@ export interface ClimateTwin {
   verdicts: string[];
   /** What to pack, derived from the destination's absolute values + deltas. */
   packing: string[];
+  /** Optional 1-2 sentence plain-language read, grounded in the numbers. */
+  aiSummary: string | null;
   /** Attribution labels for the data sources actually used. */
   sources: string[];
 }
@@ -64,9 +79,16 @@ function round(n: number): number {
   return Math.round(n);
 }
 
-// WHO 2021 air-quality guideline: annual mean PM2.5 should stay at or below
-// 5 µg/m³; a single reading around 35+ is a genuinely bad-air day.
-const PM25_BAD = 35;
+export function pollutant(
+  point: ClimatePoint,
+  parameter: string,
+): Pollutant | null {
+  return point.air.find((p) => p.parameter === parameter) ?? null;
+}
+
+// WHO 2021 air-quality guideline: annual mean PM2.5 at or below 5 µg/m³; an
+// annual average above ~25 is genuinely unhealthy air to live in.
+const PM25_UNHEALTHY = 25;
 
 /**
  * Turn two resolved climate points into plain-language verdicts and a packing
@@ -145,32 +167,32 @@ export function buildTwinComparison(
     }
   }
 
-  // Air quality (recent PM2.5).
-  let airHarsher = false;
-  if (dest.pm25 !== null) {
-    if (home.pm25 !== null) {
-      const d = dest.pm25 - home.pm25;
-      if (Math.abs(d) >= 5) {
-        airHarsher = d > 0;
+  // Air quality (annual PM2.5 average, the health-relevant headline).
+  const airHarsher = airIsHarsher(home, dest);
+  const homePm = pollutant(home, "pm25");
+  const destPm = pollutant(dest, "pm25");
+  if (destPm) {
+    if (homePm && homePm.unit === destPm.unit) {
+      const d = destPm.value - homePm.value;
+      if (Math.abs(d) >= 3) {
         verdicts.push(
-          `Recent air is ${d > 0 ? "dirtier" : "cleaner"} than home: PM2.5 around ${round(
-            dest.pm25,
-          )} versus ${round(home.pm25)} µg/m³${
-            dest.pm25 >= PM25_BAD ? ", above healthy levels" : ""
+          `Yearly air is ${d > 0 ? "dirtier" : "cleaner"} than home: PM2.5 averages ${round(
+            destPm.value,
+          )} versus ${round(homePm.value)} ${destPm.unit}${
+            destPm.value >= PM25_UNHEALTHY ? ", above healthy levels" : ""
           }.`,
         );
       } else {
         verdicts.push(
-          `Recent air quality is similar to home (PM2.5 around ${round(dest.pm25)} µg/m³).`,
+          `Yearly air quality is similar to home (PM2.5 around ${round(destPm.value)} ${destPm.unit}).`,
         );
       }
     } else {
       verdicts.push(
-        `Recent PM2.5 near ${destName} is around ${round(dest.pm25)} µg/m³${
-          dest.pm25 >= PM25_BAD ? ", above healthy levels" : ""
+        `PM2.5 near ${destName} averages ${round(destPm.value)} ${destPm.unit} a year${
+          destPm.value >= PM25_UNHEALTHY ? ", above healthy levels" : ""
         }.`,
       );
-      airHarsher = dest.pm25 >= PM25_BAD;
     }
   }
 
@@ -189,6 +211,25 @@ export function buildTwinComparison(
   }
 
   return { comfort, verdicts, packing };
+}
+
+// Compare the pollutants both cities share: destination air counts as harsher
+// when clearly more of them are elevated (>=25% higher) than are lower.
+function airIsHarsher(home: ClimatePoint, dest: ClimatePoint): boolean {
+  let worse = 0;
+  let better = 0;
+  for (const d of dest.air) {
+    const h = pollutant(home, d.parameter);
+    if (!h || h.value <= 0 || h.unit !== d.unit) continue;
+    const ratio = d.value / h.value;
+    if (ratio >= 1.25) worse += 1;
+    else if (ratio <= 0.8) better += 1;
+  }
+  const destPm = pollutant(dest, "pm25");
+  if (worse === 0 && better === 0 && destPm) {
+    return destPm.value >= PM25_UNHEALTHY;
+  }
+  return worse > better;
 }
 
 function buildPacking(
@@ -233,7 +274,8 @@ function buildPacking(
     );
   }
 
-  if (dest.pm25 !== null && dest.pm25 >= PM25_BAD && airHarsher) {
+  const destPm = pollutant(dest, "pm25");
+  if (destPm && destPm.value >= PM25_UNHEALTHY && airHarsher) {
     packing.push(
       `A few N95 masks for high-pollution days if you are sensitive to air quality.`,
     );
