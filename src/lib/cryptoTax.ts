@@ -24,7 +24,7 @@ export function cryptoTaxForCountry(country: string): CryptoTaxRegime | null {
 }
 
 export function formatCryptoRate(rate: number | null): string {
-  if (rate === null) return "Not listed";
+  if (rate === null) return "—";
   const percentage = rate * 100;
   return `${Number.isInteger(percentage) ? percentage : percentage.toFixed(1)}%`;
 }
