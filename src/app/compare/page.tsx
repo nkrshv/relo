@@ -4,7 +4,7 @@ import { DESTINATIONS } from "@/lib/countries";
 import SiteFooter from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "Compare countries for relocation: cost, taxes, climate, safety",
+  title: "Compare countries for relocation: cost, taxes, climate",
   description:
     "Side-by-side country comparisons for movers: cost of living signals, taxes and special regimes, climate, air quality, internet and safety. Live data with sources and verification dates.",
   alternates: { canonical: "/compare" },
