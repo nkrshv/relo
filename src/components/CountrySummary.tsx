@@ -464,8 +464,8 @@ export default function CountrySummary({
     });
   if (
     climateTwin &&
-    climateTwin.dest.sunnyDays !== null &&
-    climateTwin.home.sunnyDays !== null
+    climateTwin.dest.sunnyDays != null &&
+    climateTwin.home.sunnyDays != null
   ) {
     const diff = climateTwin.dest.sunnyDays - climateTwin.home.sunnyDays;
     cells.push({
@@ -489,6 +489,27 @@ export default function CountrySummary({
     destCity?.aqi != null
       ? { aqi: destCity.aqi, station: destCity.station ?? destCity.city }
       : air;
+  // Air-quality readings for the Climate twin, each carrying the station it
+  // actually came from so a capital-level fallback (e.g. Canberra) is never
+  // relabelled as the compared city (e.g. Sydney).
+  const originAqiValue = originCity?.aqi ?? origin?.aqi ?? null;
+  const homeAqiSide =
+    !sameCountry && originAqiValue != null
+      ? {
+          value: originAqiValue,
+          place:
+            (originCity?.aqi != null
+              ? originCity.station ?? originCity.city
+              : origin?.capital) ??
+            fromCity ??
+            fromCountry ??
+            "home",
+        }
+      : null;
+  const destAqiSide =
+    cityAir != null
+      ? { value: cityAir.aqi, place: cityAir.station ?? toCity ?? name }
+      : null;
   const cityAirBand = cityAir ? aqiLabel(cityAir.aqi) : null;
   if (cityAir && cityAirBand) {
     const originAqi = originCity?.aqi ?? origin?.aqi ?? null;
@@ -922,10 +943,7 @@ export default function CountrySummary({
           {openTab === "climate" && hasClimateTwin && (
             <ClimateTwinPanel
               twin={climateTwin!}
-              aqi={{
-                home: sameCountry ? null : originCity?.aqi ?? origin?.aqi ?? null,
-                dest: cityAir?.aqi ?? null,
-              }}
+              aqi={{ home: homeAqiSide, dest: destAqiSide }}
             />
           )}
 

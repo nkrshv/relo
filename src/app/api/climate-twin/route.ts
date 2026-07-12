@@ -368,10 +368,22 @@ async function buildPoint(
 // model but strictly grounded: it is only fed the verified facts and told not
 // to invent, advise medically, or use em dashes. Falls back to null on any
 // failure so the deterministic verdicts still carry the block.
+const COMFORT_GUIDANCE: Record<string, string> = {
+  similar:
+    "the computed verdict is that the climate is broadly SIMILAR to home, so reassure them it will feel familiar",
+  milder:
+    "the computed verdict is that the destination is MILDER overall than home",
+  harsher:
+    "the computed verdict is that the destination is HARSHER overall than home",
+  mixed:
+    "the computed verdict is that the climate is a REAL CHANGE from home (notably different)",
+};
+
 async function aiSummary(
   home: ClimatePoint,
   dest: ClimatePoint,
   verdicts: string[],
+  comfort: string,
 ): Promise<string | null> {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return null;
@@ -380,15 +392,19 @@ async function aiSummary(
     home: pointFacts(home),
     destination: pointFacts(dest),
     computedComparisons: verdicts,
+    overallVerdict: comfort,
   };
   const prompt =
     "You are helping someone relocate understand how the destination's climate and air " +
     "quality compare to their home city, so they feel less anxious about the move. " +
-    "Using ONLY the verified facts below, write 1 to 2 short sentences in plain English " +
-    "about how physically comfortable the destination is likely to feel relative to home " +
-    "(temperature, rain, humidity, sunshine, air quality). When both places have a sunny " +
-    "day count, mention how many more or fewer sunny days the destination gets. Be specific and honest. Do not invent " +
-    "numbers, do not give medical advice, do not guarantee comfort, and do not use em dashes. " +
+    "Using ONLY the verified facts below, write 2 to 3 short sentences in plain English. " +
+    "First, describe how physically comfortable the destination is likely to feel relative " +
+    "to home (temperature, rain, humidity, sunshine, air quality). When both places have a " +
+    "sunny day count, mention how many more or fewer sunny days the destination gets. " +
+    `Then add ONE clear sentence assessing the overall climate fit: ${COMFORT_GUIDANCE[comfort] ?? COMFORT_GUIDANCE.similar}. ` +
+    "Say plainly whether they should expect roughly the same climate as home or prepare for a " +
+    "real adjustment, and name the single biggest thing to get used to. Be specific and honest. " +
+    "Do not invent numbers, do not give medical advice, do not guarantee comfort, and do not use em dashes. " +
     "Return JSON: {\"summary\": string}.\n\nFacts:\n" +
     JSON.stringify(facts);
 
@@ -415,7 +431,7 @@ async function aiSummary(
     if (!content) return null;
     const parsed = JSON.parse(content) as { summary?: unknown };
     const summary = typeof parsed.summary === "string" ? parsed.summary.trim() : "";
-    return summary.replace(/\u2014/g, ", ").slice(0, 400) || null;
+    return summary.replace(/\u2014/g, ", ").slice(0, 600) || null;
   } catch {
     return null;
   }
@@ -476,7 +492,9 @@ export async function GET(req: NextRequest) {
 
   const { comfort, verdicts, packing } = buildTwinComparison(home, dest);
   const usedAir = home.air.length > 0 || dest.air.length > 0;
-  const summary = await aiSummary(home, dest, verdicts).catch(() => null);
+  const summary = await aiSummary(home, dest, verdicts, comfort).catch(
+    () => null,
+  );
   const data: ClimateTwin = {
     home,
     dest,

@@ -14,18 +14,29 @@ export const COMFORT_COPY: Record<string, string> = {
   mixed: "A real change",
 };
 
+interface AqiSide {
+  value: number;
+  /** Station / place the reading actually came from (may be a capital when
+   *  the chosen city has no nearby station), so it is never mislabelled. */
+  place: string;
+}
+
 interface CompareCell {
   key: string;
   label: string;
   home: string;
   dest: string;
+  /** Per-row overrides for the side labels (used by air quality, whose
+   *  reading can come from a different place than the compared city). */
+  homeLabel?: string;
+  destLabel?: string;
   hint?: string;
 }
 
 function buildCells(
   home: ClimatePoint,
   dest: ClimatePoint,
-  aqi?: { home: number | null; dest: number | null },
+  aqi?: { home: AqiSide | null; dest: AqiSide | null },
 ): CompareCell[] {
   const cells: CompareCell[] = [];
   // Each city keeps its own month, so cross-hemisphere pairs read correctly
@@ -34,17 +45,22 @@ function buildCells(
     `${c}°${m ? ` in ${monthName(m).slice(0, 3)}` : ""}`;
 
   // Live air-quality index sits with the climate comparison so home and
-  // destination read side by side (moved out of the Health tab).
-  if (aqi && aqi.home != null && aqi.dest != null)
+  // destination read side by side (moved out of the Health tab). The reading
+  // is labelled with the station it came from: when the chosen city has no
+  // nearby station we fall back to the capital, so we must not silently
+  // relabel a capital reading as the city.
+  if (aqi && aqi.home && aqi.dest)
     cells.push({
       key: "aqi",
       label: "Air quality",
-      home: `AQI ${aqi.home}`,
-      dest: `AQI ${aqi.dest}`,
-      hint: "Live air quality index from the nearest WAQI station (lower is cleaner)",
+      home: `AQI ${aqi.home.value}`,
+      dest: `AQI ${aqi.dest.value}`,
+      homeLabel: aqi.home.place,
+      destLabel: aqi.dest.place,
+      hint: `Live air quality index from the nearest WAQI station (lower is cleaner). Home reading from ${aqi.home.place}; destination from ${aqi.dest.place}.`,
     });
 
-  if (home.coldestC !== null && dest.coldestC !== null)
+  if (home.coldestC != null && dest.coldestC != null)
     cells.push({
       key: "coldest",
       label: "Coldest month",
@@ -52,7 +68,7 @@ function buildCells(
       dest: temp(dest.coldestC, dest.coldestMonth),
       hint: "Mean daily temperature of each city's own coldest month",
     });
-  if (home.warmestC !== null && dest.warmestC !== null)
+  if (home.warmestC != null && dest.warmestC != null)
     cells.push({
       key: "warmest",
       label: "Warmest month",
@@ -60,7 +76,7 @@ function buildCells(
       dest: temp(dest.warmestC, dest.warmestMonth),
       hint: "Mean daily temperature of each city's own warmest month",
     });
-  if (home.sunnyDays !== null && dest.sunnyDays !== null)
+  if (home.sunnyDays != null && dest.sunnyDays != null)
     cells.push({
       key: "sunny",
       label: "Sunny days",
@@ -68,14 +84,14 @@ function buildCells(
       dest: `${dest.sunnyDays} / yr`,
       hint: "Days with more than 4.5 hours of sunshine over the year",
     });
-  if (home.annualPrecipMm !== null && dest.annualPrecipMm !== null)
+  if (home.annualPrecipMm != null && dest.annualPrecipMm != null)
     cells.push({
       key: "rain",
       label: "Rain a year",
       home: `${home.annualPrecipMm} mm`,
       dest: `${dest.annualPrecipMm} mm`,
     });
-  if (home.humidityPct !== null && dest.humidityPct !== null)
+  if (home.humidityPct != null && dest.humidityPct != null)
     cells.push({
       key: "humidity",
       label: "Humidity",
@@ -110,7 +126,7 @@ export default function ClimateTwinPanel({
   aqi,
 }: {
   twin: ClimateTwin;
-  aqi?: { home: number | null; dest: number | null };
+  aqi?: { home: AqiSide | null; dest: AqiSide | null };
 }) {
   const { home, dest, aiSummary, verdicts, sources } = twin;
   const cells = buildCells(home, dest, aqi);
@@ -152,7 +168,7 @@ export default function ClimateTwinPanel({
               <div className="mt-1.5 space-y-1">
                 <div className="flex items-baseline justify-between gap-2">
                   <span className="truncate text-[11px] text-stone-400">
-                    {home.label}
+                    {c.homeLabel ?? home.label}
                   </span>
                   <span className="tnum shrink-0 text-sm text-stone-500">
                     {c.home}
@@ -160,7 +176,7 @@ export default function ClimateTwinPanel({
                 </div>
                 <div className="flex items-baseline justify-between gap-2">
                   <span className="truncate text-[11px] text-stone-500">
-                    {dest.label}
+                    {c.destLabel ?? dest.label}
                   </span>
                   <span className="tnum shrink-0 text-sm font-semibold text-stone-900">
                     {c.dest}
@@ -175,7 +191,7 @@ export default function ClimateTwinPanel({
       <p className="text-[11px] text-stone-400">
         {home.label} versus {dest.label}, historical normals from{" "}
         {dest.year ?? home.year}. Sources:{" "}
-        {[...sources, aqi && aqi.home != null && aqi.dest != null ? "WAQI" : null]
+        {[...sources, aqi && aqi.home && aqi.dest ? "WAQI" : null]
           .filter(Boolean)
           .join(", ")}
         .
