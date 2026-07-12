@@ -24,6 +24,14 @@ import {
   type MessengerReachability,
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
+import {
+  capitalGainsLabel,
+  cryptoStatusLabel,
+  cryptoTaxForCountry,
+  cryptoTaxTone,
+  CRYPTO_TAX_DATASET_URL,
+  formatCryptoRate,
+} from "@/lib/cryptoTax";
 import { formatMonth, formatDate } from "@/lib/dates";
 import MessengerIcons from "@/components/MessengerIcons";
 import { useCityContext } from "@/lib/useCityContext";
@@ -169,7 +177,7 @@ interface BentoCell {
   messengers?: MessengerReachability[];
 }
 
-type TabKey = "practical" | "cost" | "climate" | "health" | "safety";
+type TabKey = "practical" | "cost" | "crypto" | "climate" | "health" | "safety";
 
 export default function CountrySummary({
   country,
@@ -195,6 +203,7 @@ export default function CountrySummary({
   const insights = insightsForCountry(country);
   const staticData = staticDataForCountry(country);
   const openData = openDataForCountry(country);
+  const cryptoTax = cryptoTaxForCountry(country);
   const climate = insights ? climateSummary(insights) : null;
   const visaValue = visa
     ? visa.days != null
@@ -249,7 +258,16 @@ export default function CountrySummary({
   };
 
   // Nothing worth showing at all.
-  if (!advisory && !fx && !currencyCode && !visa && !insights && !staticData && !openData)
+  if (
+    !advisory &&
+    !fx &&
+    !currencyCode &&
+    !visa &&
+    !insights &&
+    !staticData &&
+    !openData &&
+    !cryptoTax
+  )
     return null;
 
   const norm = normalizeName(country);
@@ -469,6 +487,16 @@ export default function CountrySummary({
       value: `${openData.priceLevelEU.value >= 100 ? "+" : "−"}${Math.abs(Math.round(openData.priceLevelEU.value - 100))}%`,
       hint: `Eurostat price level index ${openData.priceLevelEU.year}: EU27 = 100`,
     });
+  if (cryptoTax)
+    cells.push({
+      key: "crypto-tax",
+      icon: "tax",
+      label: "Crypto taxes",
+      value: capitalGainsLabel(cryptoTax),
+      sub: cryptoStatusLabel(cryptoTax),
+      accent: cryptoTaxTone(cryptoTax),
+      hint: cryptoTax.shortSummary,
+    });
   const censorship = censorshipForCountry(country);
   if (censorship && censorship.messengers.length > 0)
     cells.push({
@@ -566,6 +594,7 @@ export default function CountrySummary({
   const tabs: { key: TabKey; label: string; show: boolean }[] = [
     { key: "practical", label: "Practical", show: hasPractical },
     { key: "cost", label: "Cost of living", show: hasCost },
+    { key: "crypto", label: "Crypto", show: Boolean(cryptoTax) },
     { key: "climate", label: "Climate twin", show: hasClimateTwin },
     { key: "health", label: "Health", show: hasHealth },
     { key: "safety", label: "Safety", show: hasSafety },
@@ -798,6 +827,51 @@ export default function CountrySummary({
             </div>
           )}
 
+          {openTab === "crypto" && cryptoTax && (
+            <div className="mt-2.5">
+              <div className="flex flex-wrap items-center gap-2">
+                <span
+                  className={`rounded-full border border-stone-200 bg-stone-50 px-2.5 py-1 text-xs font-medium ${cryptoTaxTone(cryptoTax)}`}
+                >
+                  {cryptoStatusLabel(cryptoTax)}
+                </span>
+                <span className="text-xs capitalize text-stone-400">
+                  {cryptoTax.legalStatus}
+                </span>
+              </div>
+              <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                <Tile
+                  label="Capital gains"
+                  value={capitalGainsLabel(cryptoTax)}
+                  accent={cryptoTaxTone(cryptoTax)}
+                />
+                <Tile
+                  label="Staking income"
+                  value={formatCryptoRate(cryptoTax.stakingRate)}
+                />
+                <Tile
+                  label="Mining income"
+                  value={formatCryptoRate(cryptoTax.miningRate)}
+                />
+              </div>
+              <p className="mt-2.5 text-sm leading-relaxed text-stone-600">
+                {cryptoTax.shortSummary}
+              </p>
+              <p className="mt-2 text-[11px] leading-relaxed text-stone-400">
+                General rates, not personal tax advice.{" "}
+                <a
+                  href={CRYPTO_TAX_DATASET_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-700"
+                >
+                  CryptoNomadHub Global Cryptocurrency Tax Regulations Database
+                </a>{" "}
+                · CC BY 4.0 · updated {formatDate(cryptoTax.updatedAt)}
+              </p>
+            </div>
+          )}
+
           {openTab === "climate" && hasClimateTwin && (
             <ClimateTwinPanel twin={climateTwin!} />
           )}
@@ -942,6 +1016,7 @@ export default function CountrySummary({
           {visa ? " · Passport Index" : ""}
           {insights ? " · Open-Meteo · World Bank" : ""}
           {openData ? " · Eurostat · OECD" : ""}
+          {cryptoTax ? " · CryptoNomadHub" : ""}
           {advisory?.updatedAt ? ` · updated ${formatDate(advisory.updatedAt)}` : ""}
           {fx && fx.updatedAt ? ` · FX ${formatDate(fx.updatedAt)}` : ""}
         </span>
