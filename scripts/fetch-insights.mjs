@@ -31,11 +31,12 @@ async function fetchClimate(d, year) {
   const url =
     `https://archive-api.open-meteo.com/v1/archive?latitude=${d.lat}&longitude=${d.lon}` +
     `&start_date=${year}-01-01&end_date=${year}-12-31` +
-    `&daily=temperature_2m_mean,precipitation_sum&timezone=UTC`;
+    `&daily=temperature_2m_mean,precipitation_sum,sunshine_duration&timezone=UTC`;
   const json = await getJson(url);
   const dates = json.daily?.time ?? [];
   const temps = json.daily?.temperature_2m_mean ?? [];
   const precs = json.daily?.precipitation_sum ?? [];
+  const suns = json.daily?.sunshine_duration ?? [];
   const byMonth = Array.from({ length: 12 }, () => ({ tSum: 0, tN: 0, rainy: 0 }));
   dates.forEach((date, i) => {
     const m = Number(date.slice(5, 7)) - 1;
@@ -45,10 +46,20 @@ async function fetchClimate(d, year) {
     }
     if (typeof precs[i] === "number" && precs[i] >= 1) byMonth[m].rainy += 1;
   });
-  return byMonth.map((m) => ({
-    t: m.tN ? Number((m.tSum / m.tN).toFixed(1)) : null,
-    rainyDays: m.rainy,
-  }));
+  // "Sunny day": more than 4.5 hours of sunshine (16,200 s). Only trust the
+  // count when the year is reasonably complete.
+  const sunReadings = suns.filter((s) => typeof s === "number");
+  const sunnyDays =
+    sunReadings.length >= 300
+      ? sunReadings.filter((s) => s > 4.5 * 3600).length
+      : null;
+  return {
+    months: byMonth.map((m) => ({
+      t: m.tN ? Number((m.tSum / m.tN).toFixed(1)) : null,
+      rainyDays: m.rainy,
+    })),
+    sunnyDays,
+  };
 }
 
 async function fetchHolidays(d, year) {
@@ -143,8 +154,11 @@ async function main() {
       const [climate, holidays, inflation, lifeExpectancy, migrantShare] =
         await Promise.all([
           d.lat != null && d.lon != null
-            ? fetchClimate(d, lastFullYear).catch(() => [])
-            : Promise.resolve([]),
+            ? fetchClimate(d, lastFullYear).catch(() => ({
+                months: [],
+                sunnyDays: null,
+              }))
+            : Promise.resolve({ months: [], sunnyDays: null }),
           fetchHolidays(d, holidayYear),
           fetchWorldBank(d, "FP.CPI.TOTL.ZG"),
           fetchLifeExpectancy(d),
@@ -152,7 +166,7 @@ async function main() {
         ]);
       // The Economist prices the euro area as a single "EUZ" entry.
       const bm = bigMac[d.iso3] ?? (EUROZONE.has(d.iso3) ? bigMac.EUZ : null) ?? null;
-      const hasClimate = climate.some((m) => m.t != null);
+      const hasClimate = climate.months.some((m) => m.t != null);
       // Skip countries with nothing worth showing at all.
       if (!hasClimate && !inflation && !lifeExpectancy && !migrantShare && !bm && !holidays) {
         done += 1;
@@ -161,7 +175,12 @@ async function main() {
       insights[d.name] = {
         iso2: d.iso2,
         capital: d.capital,
-        climate: { city: d.capital, year: String(lastFullYear), months: climate },
+        climate: {
+          city: d.capital,
+          year: String(lastFullYear),
+          months: climate.months,
+          sunnyDays: climate.sunnyDays,
+        },
         holidays: holidays ? { year: String(holidayYear), ...holidays } : null,
         inflation,
         lifeExpectancy,
@@ -191,7 +210,13 @@ export interface ClimateMonth {
 export interface CountryInsights {
   iso2: string;
   capital: string;
-  climate: { city: string; year: string; months: ClimateMonth[] };
+  climate: {
+    city: string;
+    year: string;
+    months: ClimateMonth[];
+    /** Days in the year with more than 4.5 hours of sunshine. */
+    sunnyDays: number | null;
+  };
   holidays: {
     year: string;
     count: number;

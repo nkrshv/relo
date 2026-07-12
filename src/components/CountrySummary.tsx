@@ -27,6 +27,8 @@ import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
 import { formatMonth, formatDate } from "@/lib/dates";
 import MessengerIcons from "@/components/MessengerIcons";
 import { useCityContext } from "@/lib/useCityContext";
+import ClimateTwinPanel from "@/components/ClimateTwinPanel";
+import type { ClimateTwin } from "@/lib/climateTwin";
 
 const FLAG_BY_NAME: Record<string, string> = Object.fromEntries(
   ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
@@ -43,6 +45,7 @@ interface Props {
   fromCity?: string;
   toCity?: string;
   visa?: VisaSummary | null;
+  climateTwin?: ClimateTwin | null;
 }
 
 // Plain-language safety wording; the official label lives in the Safety tab.
@@ -166,7 +169,7 @@ interface BentoCell {
   messengers?: MessengerReachability[];
 }
 
-type TabKey = "practical" | "cost" | "health" | "safety";
+type TabKey = "practical" | "cost" | "climate" | "health" | "safety";
 
 export default function CountrySummary({
   country,
@@ -175,6 +178,7 @@ export default function CountrySummary({
   fromCity,
   toCity,
   visa,
+  climateTwin,
 }: Props) {
   const [openTab, setOpenTab] = useState<TabKey | null>(null);
   // City-level overrides: in big countries (India, Australia) capital-level
@@ -305,6 +309,7 @@ export default function CountrySummary({
     staticData || nextHolidays.length > 0 || openData,
   );
   const hasSafety = Boolean(advisory && (reasons || impact?.detail || advisory.stateDeptUrl));
+  const hasClimateTwin = Boolean(climateTwin && climateTwin.verdicts.length > 0);
 
   // One combined money tile instead of separate currency and FX tiles.
   // Lead with the destination currency ("1 EUR ≈ 70 PHP") so the rate reads
@@ -397,6 +402,26 @@ export default function CountrySummary({
       value: climate.replace(` in ${insights.climate.city}`, ""),
       sub: insights.climate.city,
     });
+  if (
+    climateTwin &&
+    climateTwin.dest.sunnyDays !== null &&
+    climateTwin.home.sunnyDays !== null
+  ) {
+    const diff = climateTwin.dest.sunnyDays - climateTwin.home.sunnyDays;
+    cells.push({
+      key: "sunny-days",
+      icon: "climate",
+      label: "Sunny days",
+      value: `${climateTwin.dest.sunnyDays} / yr`,
+      sub:
+        Math.abs(diff) >= 15
+          ? `${Math.abs(diff)} ${diff > 0 ? "more" : "fewer"} than home`
+          : "About the same as home",
+      accent:
+        diff >= 15 ? "text-amber-600" : undefined,
+      hint: `Days with over 4.5 hours of sunshine in ${climateTwin.dest.label}, ${climateTwin.dest.year} (Open-Meteo), versus ${climateTwin.home.sunnyDays} in ${climateTwin.home.label}`,
+    });
+  }
   const origin = fromCountry ? originForCountry(fromCountry) : null;
   const sameCountry =
     fromCountry && normalizeName(fromCountry) === normalizeName(country);
@@ -541,6 +566,7 @@ export default function CountrySummary({
   const tabs: { key: TabKey; label: string; show: boolean }[] = [
     { key: "practical", label: "Practical", show: hasPractical },
     { key: "cost", label: "Cost of living", show: hasCost },
+    { key: "climate", label: "Climate twin", show: hasClimateTwin },
     { key: "health", label: "Health", show: hasHealth },
     { key: "safety", label: "Safety", show: hasSafety },
   ];
@@ -770,6 +796,10 @@ export default function CountrySummary({
                 </div>
               )}
             </div>
+          )}
+
+          {openTab === "climate" && hasClimateTwin && (
+            <ClimateTwinPanel twin={climateTwin!} />
           )}
 
           {openTab === "health" && hasHealth && (
