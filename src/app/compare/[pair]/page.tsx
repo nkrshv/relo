@@ -75,7 +75,7 @@ export async function generateMetadata({
   const { pair } = await params;
   const parsed = parsePair(pair);
   if (!parsed) return {};
-  const title = `${parsed.a.name} vs ${parsed.b.name}: cost, climate, taxes, safety`;
+  const title = `${parsed.a.name} vs ${parsed.b.name}: cost, taxes, climate`;
   const description = `Compare moving to ${parsed.a.name} vs ${parsed.b.name}: cost of living signals, climate, air quality, taxes and special regimes, internet, safety. Live data with sources.`;
   return {
     title,
