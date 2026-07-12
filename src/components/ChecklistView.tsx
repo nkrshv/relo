@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type {
   ChecklistItem,
   Profile,
@@ -213,12 +213,6 @@ function itemId(phaseIndex: number, itemIndex: number): string {
   return `${phaseIndex}:${itemIndex}`;
 }
 
-// Packing tasks come from the live climate twin, not the generated plan, so
-// they get their own id namespace in the same checked-state map.
-function packId(index: number): string {
-  return `pack:${index}`;
-}
-
 function hashString(s: string): string {
   let h = 0;
   for (let i = 0; i < s.length; i++) {
@@ -258,6 +252,7 @@ const CATEGORY_DOTS: Record<string, string> = {
   taxes: "bg-violet-500",
   tax: "bg-violet-500",
   logistics: "bg-sky-500",
+  packing: "bg-teal-500",
 };
 
 function categoryDot(category: string) {
@@ -591,7 +586,27 @@ export default function ChecklistView({
     input.fromCity,
     input.toCity,
   );
-  const packing = climateTwin?.packing ?? [];
+  // Climate-derived packing advice is woven into the checklist as ordinary
+  // tasks at the end of "Before you go" (always the free, first phase), so it
+  // is not a detached block. Their checked state lives under the same
+  // positional keys as every other task.
+  const augmentedPlan = useMemo<ReloPlan>(() => {
+    const packing = climateTwin?.packing ?? [];
+    if (packing.length === 0) return plan;
+    const phases = plan.phases.map((p) => ({ ...p, items: [...p.items] }));
+    const target = phases.find((p) => p.key === "before") ?? phases[0];
+    if (target) {
+      packing.forEach((line, i) => {
+        target.items.push({
+          id: `pack-${i}`,
+          title: line,
+          why: "",
+          category: "Packing",
+        });
+      });
+    }
+    return { ...plan, phases };
+  }, [plan, climateTwin]);
   const destOpenData = openDataForCountry(input.toCountry);
   // A chosen destination city overrides the capital office list: the curated
   // names are capital-specific, so point the map search at the user's city.
@@ -667,14 +682,15 @@ export default function ChecklistView({
     });
   }
 
-  const totalItems =
-    plan.phases.reduce((n, p) => n + p.items.length, 0) + packing.length;
-  const doneItems =
-    plan.phases.reduce(
-      (n, p, pi) =>
-        n + p.items.filter((_, ii) => checked[itemId(pi, ii)]).length,
-      0,
-    ) + packing.filter((_, i) => checked[packId(i)]).length;
+  const totalItems = augmentedPlan.phases.reduce(
+    (n, p) => n + p.items.length,
+    0,
+  );
+  const doneItems = augmentedPlan.phases.reduce(
+    (n, p, pi) =>
+      n + p.items.filter((_, ii) => checked[itemId(pi, ii)]).length,
+    0,
+  );
   const pct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0;
   const allDone = totalItems > 0 && doneItems >= totalItems;
 
@@ -686,9 +702,9 @@ export default function ChecklistView({
 
   // First unchecked step in an unlocked phase gets the "Up next" spotlight.
   let nextId: string | null = null;
-  outer: for (let pi = 0; pi < plan.phases.length; pi++) {
+  outer: for (let pi = 0; pi < augmentedPlan.phases.length; pi++) {
     if (!unlocked && pi > 0) break;
-    for (let ii = 0; ii < plan.phases[pi].items.length; ii++) {
+    for (let ii = 0; ii < augmentedPlan.phases[pi].items.length; ii++) {
       if (!checked[itemId(pi, ii)]) {
         nextId = itemId(pi, ii);
         break outer;
@@ -933,7 +949,7 @@ export default function ChecklistView({
 
       {view === "advanced" && (
         <AdvancedTable
-          plan={plan}
+          plan={augmentedPlan}
           checked={checked}
           toggle={toggle}
           unlocked={unlocked}
@@ -950,7 +966,7 @@ export default function ChecklistView({
         >
           <div className="timeline-ink absolute inset-0 bg-stone-900" />
         </div>
-        {plan.phases.map((phase, pi) => {
+        {augmentedPlan.phases.map((phase, pi) => {
           const locked = !unlocked && pi > 0;
           const phaseDone = phase.items.filter((_, ii) => checked[itemId(pi, ii)]).length;
           const phaseComplete = phase.items.length > 0 && phaseDone >= phase.items.length;
@@ -1181,76 +1197,15 @@ export default function ChecklistView({
         })}
       </div>
 
-      {packing.length > 0 && climateTwin && (
-        <section className="mt-10 rounded-lg border border-stone-200 bg-white p-4 sm:p-5">
-          <div className="flex items-center gap-2">
-            <svg
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-4 w-4 text-stone-400"
-              aria-hidden
-            >
-              <path d="M5.5 5V3.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V5M2.5 5h11a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
-            </svg>
-            <h2 className="text-lg font-semibold tracking-tight text-stone-900">
-              What to pack
-            </h2>
-            <span className="ml-1 text-xs font-medium tabular-nums text-stone-400">
-              {packing.filter((_, i) => checked[packId(i)]).length}/
-              {packing.length}
-            </span>
-          </div>
-          <p className="mt-1 text-sm text-stone-500">
-            Based on {climateTwin.dest.label}&apos;s climate versus{" "}
-            {climateTwin.home.label}.
-          </p>
-          <ul className="mt-3 space-y-2">
-            {packing.map((p, i) => {
-              const id = packId(i);
-              const isChecked = !!checked[id];
-              return (
-                <li
-                  key={id}
-                  className={`flex items-start gap-3 rounded-md border bg-white p-3 transition-colors duration-150 ${
-                    isChecked
-                      ? "border-stone-200 opacity-60"
-                      : "border-stone-200 hover:border-stone-300"
-                  }`}
-                >
-                  <CheckToggle
-                    id={id}
-                    checked={isChecked}
-                    onToggle={() => toggle(id)}
-                  />
-                  <label
-                    className={`min-w-0 flex-1 cursor-pointer text-sm leading-snug ${
-                      isChecked
-                        ? "text-stone-400 line-through"
-                        : "text-stone-700"
-                    }`}
-                    onClick={() => toggle(id)}
-                  >
-                    {p}
-                  </label>
-                </li>
-              );
-            })}
-          </ul>
-        </section>
-      )}
-
       {!unlocked && (
         <div className="reveal mt-10 rounded-xl border border-stone-200 bg-white p-8 text-center print:hidden">
           <h3 className="text-xl font-semibold tracking-tight text-stone-900">
             Unlock your full relocation plan
           </h3>
           <p className="mx-auto mt-2 max-w-md text-sm text-stone-600">
-            Get every phase (first week, first month, and first 90 days) with
-            all personalized steps, tips, and cost estimates.
+            Get every phase (wrapping up at home, first week, first month, and
+            first 90 days) with all personalized steps, tips, and cost
+            estimates.
           </p>
           <button
             onClick={onUnlock}
