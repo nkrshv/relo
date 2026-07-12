@@ -9,7 +9,7 @@ import type {
   VisaSummary,
 } from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
-import ClimateTwin from "@/components/ClimateTwin";
+import { useClimateTwin } from "@/lib/useClimateTwin";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
 import { openDataForCountry } from "@/lib/countryOpenData";
@@ -211,6 +211,12 @@ type ViewMode = "simple" | "advanced";
 
 function itemId(phaseIndex: number, itemIndex: number): string {
   return `${phaseIndex}:${itemIndex}`;
+}
+
+// Packing tasks come from the live climate twin, not the generated plan, so
+// they get their own id namespace in the same checked-state map.
+function packId(index: number): string {
+  return `pack:${index}`;
 }
 
 function hashString(s: string): string {
@@ -579,6 +585,13 @@ export default function ChecklistView({
 }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [view, setView] = useState<ViewMode>("simple");
+  const climateTwin = useClimateTwin(
+    input.fromCountry,
+    input.toCountry,
+    input.fromCity,
+    input.toCity,
+  );
+  const packing = climateTwin?.packing ?? [];
   const destOpenData = openDataForCountry(input.toCountry);
   // A chosen destination city overrides the capital office list: the curated
   // names are capital-specific, so point the map search at the user's city.
@@ -654,12 +667,14 @@ export default function ChecklistView({
     });
   }
 
-  const totalItems = plan.phases.reduce((n, p) => n + p.items.length, 0);
-  const doneItems = plan.phases.reduce(
-    (n, p, pi) =>
-      n + p.items.filter((_, ii) => checked[itemId(pi, ii)]).length,
-    0,
-  );
+  const totalItems =
+    plan.phases.reduce((n, p) => n + p.items.length, 0) + packing.length;
+  const doneItems =
+    plan.phases.reduce(
+      (n, p, pi) =>
+        n + p.items.filter((_, ii) => checked[itemId(pi, ii)]).length,
+      0,
+    ) + packing.filter((_, i) => checked[packId(i)]).length;
   const pct = totalItems ? Math.round((doneItems / totalItems) * 100) : 0;
   const allDone = totalItems > 0 && doneItems >= totalItems;
 
@@ -810,12 +825,7 @@ export default function ChecklistView({
           fromCity={input.fromCity}
           toCity={input.toCity}
           visa={visa ?? null}
-        />
-        <ClimateTwin
-          fromCountry={input.fromCountry}
-          toCountry={input.toCountry}
-          fromCity={input.fromCity}
-          toCity={input.toCity}
+          climateTwin={climateTwin}
         />
       </header>
 
@@ -1170,6 +1180,68 @@ export default function ChecklistView({
           );
         })}
       </div>
+
+      {packing.length > 0 && climateTwin && (
+        <section className="mt-10 rounded-lg border border-stone-200 bg-white p-4 sm:p-5">
+          <div className="flex items-center gap-2">
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-4 w-4 text-stone-400"
+              aria-hidden
+            >
+              <path d="M5.5 5V3.5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1V5M2.5 5h11a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" />
+            </svg>
+            <h2 className="text-lg font-semibold tracking-tight text-stone-900">
+              What to pack
+            </h2>
+            <span className="ml-1 text-xs font-medium tabular-nums text-stone-400">
+              {packing.filter((_, i) => checked[packId(i)]).length}/
+              {packing.length}
+            </span>
+          </div>
+          <p className="mt-1 text-sm text-stone-500">
+            Based on {climateTwin.dest.label}&apos;s climate versus{" "}
+            {climateTwin.home.label}.
+          </p>
+          <ul className="mt-3 space-y-2">
+            {packing.map((p, i) => {
+              const id = packId(i);
+              const isChecked = !!checked[id];
+              return (
+                <li
+                  key={id}
+                  className={`flex items-start gap-3 rounded-md border bg-white p-3 transition-colors duration-150 ${
+                    isChecked
+                      ? "border-stone-200 opacity-60"
+                      : "border-stone-200 hover:border-stone-300"
+                  }`}
+                >
+                  <CheckToggle
+                    id={id}
+                    checked={isChecked}
+                    onToggle={() => toggle(id)}
+                  />
+                  <label
+                    className={`min-w-0 flex-1 cursor-pointer text-sm leading-snug ${
+                      isChecked
+                        ? "text-stone-400 line-through"
+                        : "text-stone-700"
+                    }`}
+                    onClick={() => toggle(id)}
+                  >
+                    {p}
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
 
       {!unlocked && (
         <div className="reveal mt-10 rounded-xl border border-stone-200 bg-white p-8 text-center print:hidden">

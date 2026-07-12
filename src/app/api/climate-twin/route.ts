@@ -88,6 +88,7 @@ interface ClimateNormals {
   wettestMonth: number | null;
   annualPrecipMm: number | null;
   humidityPct: number | null;
+  sunnyDays: number | null;
   year: number;
 }
 
@@ -111,7 +112,7 @@ async function fetchClimateNormals(
   const res = await fetch(
     `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}` +
       `&start_date=${year}-01-01&end_date=${year}-12-31` +
-      `&daily=temperature_2m_mean,precipitation_sum,relative_humidity_2m_mean&timezone=auto`,
+      `&daily=temperature_2m_mean,precipitation_sum,relative_humidity_2m_mean,sunshine_duration&timezone=auto`,
     { signal: AbortSignal.timeout(9000) },
   );
   if (!res.ok) return null;
@@ -121,13 +122,26 @@ async function fetchClimateNormals(
       temperature_2m_mean?: (number | null)[];
       precipitation_sum?: (number | null)[];
       relative_humidity_2m_mean?: (number | null)[];
+      sunshine_duration?: (number | null)[];
     };
   };
   const time = json.daily?.time ?? [];
   const temps = json.daily?.temperature_2m_mean ?? [];
   const precip = json.daily?.precipitation_sum ?? [];
   const humid = json.daily?.relative_humidity_2m_mean ?? [];
+  const sunshine = json.daily?.sunshine_duration ?? [];
   if (time.length === 0) return null;
+
+  // A "sunny day" gets more than 4.5 hours of sunshine (16,200 seconds).
+  // Only trust the count when the year is reasonably complete, so a partial
+  // response cannot pass off missing days as cloudy ones.
+  const sunReadings = sunshine.filter(
+    (s): s is number => typeof s === "number",
+  );
+  const sunnyDays =
+    sunReadings.length >= 300
+      ? sunReadings.filter((s) => s > 4.5 * 3600).length
+      : null;
 
   const monthTemp: number[][] = Array.from({ length: 12 }, () => []);
   const monthPrecip: number[][] = Array.from({ length: 12 }, () => []);
@@ -172,6 +186,7 @@ async function fetchClimateNormals(
     wettestMonth: wettest ? wettest.i + 1 : null,
     annualPrecipMm: allPrecip.length > 0 ? sum(allPrecip) : null,
     humidityPct: allHumid.length > 0 ? mean(allHumid) : null,
+    sunnyDays,
     year,
   };
 }
@@ -343,6 +358,7 @@ async function buildPoint(
         : null,
     humidityPct:
       normals.humidityPct !== null ? Math.round(normals.humidityPct) : null,
+    sunnyDays: normals.sunnyDays,
     air,
     year: normals.year,
   };
@@ -370,7 +386,8 @@ async function aiSummary(
     "quality compare to their home city, so they feel less anxious about the move. " +
     "Using ONLY the verified facts below, write 1 to 2 short sentences in plain English " +
     "about how physically comfortable the destination is likely to feel relative to home " +
-    "(temperature, rain, humidity, air quality). Be specific and honest. Do not invent " +
+    "(temperature, rain, humidity, sunshine, air quality). When both places have a sunny " +
+    "day count, mention how many more or fewer sunny days the destination gets. Be specific and honest. Do not invent " +
     "numbers, do not give medical advice, do not guarantee comfort, and do not use em dashes. " +
     "Return JSON: {\"summary\": string}.\n\nFacts:\n" +
     JSON.stringify(facts);
@@ -414,6 +431,7 @@ function pointFacts(p: ClimatePoint) {
     julMeanC: p.julC,
     annualRainMm: p.annualPrecipMm,
     meanHumidityPct: p.humidityPct,
+    sunnyDaysOver4p5hSun: p.sunnyDays,
     airAnnualAverages: p.air.map((a) => ({
       pollutant: a.label,
       value: a.value,

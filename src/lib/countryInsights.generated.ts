@@ -14,7 +14,13 @@ export interface ClimateMonth {
 export interface CountryInsights {
   iso2: string;
   capital: string;
-  climate: { city: string; year: string; months: ClimateMonth[] };
+  climate: {
+    city: string;
+    year: string;
+    months: ClimateMonth[];
+    /** Days in the year with more than 4.5 hours of sunshine. */
+    sunnyDays: number | null;
+  };
   holidays: {
     year: string;
     count: number;
@@ -27,77 +33,25 @@ export interface CountryInsights {
   bigMacUsd: { value: number; date: string } | null;
 }
 
-export const INSIGHTS_UPDATED_AT = "2026-07-07";
+export const INSIGHTS_UPDATED_AT = "2026-07-12";
 
 export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
-  "Germany": {
-    "iso2": "DE",
-    "capital": "Berlin",
+  "France": {
+    "iso2": "FR",
+    "capital": "Paris",
     "climate": {
-      "city": "Berlin",
+      "city": "Paris",
       "year": "2025",
-      "months": [
-        {
-          "t": 2.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 0.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 6.2,
-          "rainyDays": 2
-        },
-        {
-          "t": 12,
-          "rainyDays": 5
-        },
-        {
-          "t": 13.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 18
-        },
-        {
-          "t": 18.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 15.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 10.3,
-          "rainyDays": 15
-        },
-        {
-          "t": 5.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 3.1,
-          "rainyDays": 4
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
-      "count": 9,
+      "count": 11,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
         },
         {
           "date": "2026-04-06",
@@ -108,6 +62,10 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Labour Day"
         },
         {
+          "date": "2026-05-08",
+          "name": "Victory in Europe Day"
+        },
+        {
           "date": "2026-05-14",
           "name": "Ascension Day"
         },
@@ -116,8 +74,92 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Whit Monday"
         },
         {
-          "date": "2026-10-03",
-          "name": "German Unity Day"
+          "date": "2026-07-14",
+          "name": "Bastille Day"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Armistice Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.94,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 81.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 13.8,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 7.05,
+      "date": "2026-01-01"
+    }
+  },
+  "Ireland": {
+    "iso2": "IE",
+    "capital": "Dublin",
+    "climate": {
+      "city": "Dublin",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-02",
+          "name": "Saint Brigid's Day"
+        },
+        {
+          "date": "2026-03-17",
+          "name": "Saint Patrick's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-04",
+          "name": "May Day"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "June Holiday"
+        },
+        {
+          "date": "2026-08-03",
+          "name": "August Holiday"
+        },
+        {
+          "date": "2026-10-26",
+          "name": "October Holiday"
         },
         {
           "date": "2026-12-25",
@@ -130,15 +172,261 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       ]
     },
     "inflation": {
-      "value": 2.17,
+      "value": 2.21,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 80.5,
+      "value": 81.6,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 19.8,
+      "value": 23.1,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 7.05,
+      "date": "2026-01-01"
+    }
+  },
+  "Spain": {
+    "iso2": "ES",
+    "capital": "Madrid",
+    "climate": {
+      "city": "Madrid",
+      "year": "2025",
+      "months": [
+        {
+          "t": 6.6,
+          "rainyDays": 10
+        },
+        {
+          "t": 8.1,
+          "rainyDays": 5
+        },
+        {
+          "t": 8.4,
+          "rainyDays": 22
+        },
+        {
+          "t": 13.3,
+          "rainyDays": 13
+        },
+        {
+          "t": 17.7,
+          "rainyDays": 10
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 3
+        },
+        {
+          "t": 27.5,
+          "rainyDays": 0
+        },
+        {
+          "t": 28.9,
+          "rainyDays": 1
+        },
+        {
+          "t": 22.2,
+          "rainyDays": 1
+        },
+        {
+          "t": 17.8,
+          "rainyDays": 3
+        },
+        {
+          "t": 9.2,
+          "rainyDays": 7
+        },
+        {
+          "t": 6.8,
+          "rainyDays": 7
+        }
+      ],
+      "sunnyDays": 317
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 10,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "National Day of Spain"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints Day"
+        },
+        {
+          "date": "2026-12-06",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Immaculate Conception"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.7,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 82.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 18.5,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 7.05,
+      "date": "2026-01-01"
+    }
+  },
+  "Netherlands": {
+    "iso2": "NL",
+    "capital": "Amsterdam",
+    "climate": {
+      "city": "Amsterdam",
+      "year": "2025",
+      "months": [
+        {
+          "t": 3.7,
+          "rainyDays": 16
+        },
+        {
+          "t": 3.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 6.9,
+          "rainyDays": 3
+        },
+        {
+          "t": 10.9,
+          "rainyDays": 6
+        },
+        {
+          "t": 13.7,
+          "rainyDays": 6
+        },
+        {
+          "t": 17.7,
+          "rainyDays": 12
+        },
+        {
+          "t": 18.7,
+          "rainyDays": 14
+        },
+        {
+          "t": 18.1,
+          "rainyDays": 8
+        },
+        {
+          "t": 15.1,
+          "rainyDays": 12
+        },
+        {
+          "t": 12.2,
+          "rainyDays": 14
+        },
+        {
+          "t": 7.7,
+          "rainyDays": 12
+        },
+        {
+          "t": 6.1,
+          "rainyDays": 6
+        }
+      ],
+      "sunnyDays": 277
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-27",
+          "name": "King's Day"
+        },
+        {
+          "date": "2026-05-05",
+          "name": "Liberation Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-24",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.26,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 81.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 16.2,
       "year": "2024"
     },
     "bigMacUsd": {
@@ -201,7 +489,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 12.2,
           "rainyDays": 17
         }
-      ]
+      ],
+      "sunnyDays": 327
     },
     "holidays": {
       "year": "2026",
@@ -282,488 +571,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Spain": {
-    "iso2": "ES",
-    "capital": "Madrid",
-    "climate": {
-      "city": "Madrid",
-      "year": "2025",
-      "months": [
-        {
-          "t": 6.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 8.1,
-          "rainyDays": 5
-        },
-        {
-          "t": 8.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 13.3,
-          "rainyDays": 13
-        },
-        {
-          "t": 17.7,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 3
-        },
-        {
-          "t": 9.2,
-          "rainyDays": 7
-        },
-        {
-          "t": 6.8,
-          "rainyDays": 7
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 10,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Epiphany"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "National Day of Spain"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints Day"
-        },
-        {
-          "date": "2026-12-06",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-12-08",
-          "name": "Immaculate Conception"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 2.7,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 82.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 18.5,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 7.05,
-      "date": "2026-01-01"
-    }
-  },
-  "United Kingdom": {
-    "iso2": "GB",
-    "capital": "London",
-    "climate": {
-      "city": "London",
-      "year": "2025",
-      "months": []
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 5,
-      "sample": [
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-05-04",
-          "name": "Early May Bank Holiday"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Spring Bank Holiday"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-28",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.88,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 80.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 17.1,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 7.08,
-      "date": "2026-01-01"
-    }
-  },
-  "Canada": {
-    "iso2": "CA",
-    "capital": "Ottawa",
-    "climate": {
-      "city": "Ottawa",
-      "year": "2025",
-      "months": []
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 8,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-05-18",
-          "name": "Victoria Day"
-        },
-        {
-          "date": "2026-07-01",
-          "name": "Canada Day"
-        },
-        {
-          "date": "2026-09-07",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-09-30",
-          "name": "National Day for Truth and Reconciliation"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "Thanksgiving"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 2.07,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 81.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 22.2,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 5.54,
-      "date": "2026-01-01"
-    }
-  },
-  "France": {
-    "iso2": "FR",
-    "capital": "Paris",
-    "climate": {
-      "city": "Paris",
-      "year": "2025",
-      "months": [
-        {
-          "t": 4.1,
-          "rainyDays": 17
-        },
-        {
-          "t": 4.9,
-          "rainyDays": 9
-        },
-        {
-          "t": 8.3,
-          "rainyDays": 7
-        },
-        {
-          "t": 13.5,
-          "rainyDays": 7
-        },
-        {
-          "t": 16,
-          "rainyDays": 9
-        },
-        {
-          "t": 21.5,
-          "rainyDays": 10
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 20.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 15.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 12.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 8.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 6.7,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-08",
-          "name": "Victory in Europe Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-07-14",
-          "name": "Bastille Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
-        },
-        {
-          "date": "2026-11-11",
-          "name": "Armistice Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.94,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 81.9,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 13.8,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 7.05,
-      "date": "2026-01-01"
-    }
-  },
-  "Netherlands": {
-    "iso2": "NL",
-    "capital": "Amsterdam",
-    "climate": {
-      "city": "Amsterdam",
-      "year": "2025",
-      "months": [
-        {
-          "t": 3.7,
-          "rainyDays": 16
-        },
-        {
-          "t": 3.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 6.9,
-          "rainyDays": 3
-        },
-        {
-          "t": 10.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 13.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 17.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 18.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 18.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 15.1,
-          "rainyDays": 12
-        },
-        {
-          "t": 12.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 7.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 6.1,
-          "rainyDays": 6
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-27",
-          "name": "King's Day"
-        },
-        {
-          "date": "2026-05-05",
-          "name": "Liberation Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-24",
-          "name": "Pentecost"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.26,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 81.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 16.2,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 7.05,
-      "date": "2026-01-01"
-    }
-  },
   "Italy": {
     "iso2": "IT",
     "capital": "Rome",
@@ -819,7 +626,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 9.1,
           "rainyDays": 8
         }
-      ]
+      ],
+      "sunnyDays": 335
     },
     "holidays": {
       "year": "2026",
@@ -896,78 +704,71 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Ireland": {
-    "iso2": "IE",
-    "capital": "Dublin",
+  "Germany": {
+    "iso2": "DE",
+    "capital": "Berlin",
     "climate": {
-      "city": "Dublin",
+      "city": "Berlin",
       "year": "2025",
       "months": [
         {
-          "t": 5.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 7.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 8.5,
-          "rainyDays": 6
-        },
-        {
-          "t": 10.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 12.9,
-          "rainyDays": 12
-        },
-        {
-          "t": 15.5,
-          "rainyDays": 19
-        },
-        {
-          "t": 17,
+          "t": 2.2,
           "rainyDays": 16
         },
         {
-          "t": 16.9,
-          "rainyDays": 17
+          "t": 0.6,
+          "rainyDays": 7
         },
         {
-          "t": 13.6,
-          "rainyDays": 20
+          "t": 6.2,
+          "rainyDays": 2
         },
         {
-          "t": 11.6,
-          "rainyDays": 13
+          "t": 12,
+          "rainyDays": 5
         },
         {
-          "t": 9.2,
-          "rainyDays": 22
+          "t": 13.8,
+          "rainyDays": 9
         },
         {
-          "t": 8.2,
-          "rainyDays": 13
+          "t": 19.7,
+          "rainyDays": 15
+        },
+        {
+          "t": 19.6,
+          "rainyDays": 18
+        },
+        {
+          "t": 18.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 15.7,
+          "rainyDays": 9
+        },
+        {
+          "t": 10.3,
+          "rainyDays": 15
+        },
+        {
+          "t": 5.2,
+          "rainyDays": 9
+        },
+        {
+          "t": 3.1,
+          "rainyDays": 4
         }
-      ]
+      ],
+      "sunnyDays": 272
     },
     "holidays": {
       "year": "2026",
-      "count": 11,
+      "count": 9,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-02",
-          "name": "Saint Brigid's Day"
-        },
-        {
-          "date": "2026-03-17",
-          "name": "Saint Patrick's Day"
         },
         {
           "date": "2026-04-03",
@@ -978,20 +779,20 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Easter Monday"
         },
         {
-          "date": "2026-05-04",
-          "name": "May Day"
+          "date": "2026-05-01",
+          "name": "Labour Day"
         },
         {
-          "date": "2026-06-01",
-          "name": "June Holiday"
+          "date": "2026-05-14",
+          "name": "Ascension Day"
         },
         {
-          "date": "2026-08-03",
-          "name": "August Holiday"
+          "date": "2026-05-25",
+          "name": "Whit Monday"
         },
         {
-          "date": "2026-10-26",
-          "name": "October Holiday"
+          "date": "2026-10-03",
+          "name": "German Unity Day"
         },
         {
           "date": "2026-12-25",
@@ -1004,15 +805,15 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       ]
     },
     "inflation": {
-      "value": 2.21,
+      "value": 2.17,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 81.6,
+      "value": 80.5,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 23.1,
+      "value": 19.8,
       "year": "2024"
     },
     "bigMacUsd": {
@@ -1020,127 +821,55 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "United States": {
-    "iso2": "US",
-    "capital": "Washington, D.C.",
+  "United Kingdom": {
+    "iso2": "GB",
+    "capital": "London",
     "climate": {
-      "city": "Washington, D.C.",
+      "city": "London",
       "year": "2025",
-      "months": [
-        {
-          "t": -1.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 2.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 9.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 14.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 18.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 20
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 21.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 14.5,
-          "rainyDays": 8
-        },
-        {
-          "t": 8.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 1.8,
-          "rainyDays": 7
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
-      "count": 11,
+      "count": 5,
       "sample": [
         {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
+          "date": "2026-04-03",
+          "name": "Good Friday"
         },
         {
-          "date": "2026-01-19",
-          "name": "Martin Luther King, Jr. Day"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Presidents Day"
+          "date": "2026-05-04",
+          "name": "Early May Bank Holiday"
         },
         {
           "date": "2026-05-25",
-          "name": "Memorial Day"
-        },
-        {
-          "date": "2026-06-19",
-          "name": "Juneteenth National Independence Day"
-        },
-        {
-          "date": "2026-07-03",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-09-07",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "Columbus Day"
-        },
-        {
-          "date": "2026-11-11",
-          "name": "Veterans Day"
-        },
-        {
-          "date": "2026-11-26",
-          "name": "Thanksgiving Day"
+          "name": "Spring Bank Holiday"
         },
         {
           "date": "2026-12-25",
           "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-28",
+          "name": "St. Stephen's Day"
         }
       ]
     },
     "inflation": {
-      "value": 2.95,
-      "year": "2024"
+      "value": 3.88,
+      "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 76.4,
+      "value": 80.1,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 15.2,
+      "value": 17.1,
       "year": "2024"
     },
     "bigMacUsd": {
-      "value": 6.12,
+      "value": 7.08,
       "date": "2026-01-01"
     }
   },
@@ -1150,7 +879,57 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Canberra",
       "year": "2025",
-      "months": []
+      "months": [
+        {
+          "t": 20.1,
+          "rainyDays": 7
+        },
+        {
+          "t": 20.1,
+          "rainyDays": 7
+        },
+        {
+          "t": 19.4,
+          "rainyDays": 5
+        },
+        {
+          "t": 14.3,
+          "rainyDays": 3
+        },
+        {
+          "t": 10.1,
+          "rainyDays": 8
+        },
+        {
+          "t": 4,
+          "rainyDays": 5
+        },
+        {
+          "t": 5.8,
+          "rainyDays": 10
+        },
+        {
+          "t": 7.5,
+          "rainyDays": 8
+        },
+        {
+          "t": 10,
+          "rainyDays": 5
+        },
+        {
+          "t": 13.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 15.4,
+          "rainyDays": 11
+        },
+        {
+          "t": 18.8,
+          "rainyDays": 8
+        }
+      ],
+      "sunnyDays": 346
     },
     "holidays": {
       "year": "2026",
@@ -1196,81 +975,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": {
       "value": 5.69,
-      "date": "2026-01-01"
-    }
-  },
-  "United Arab Emirates": {
-    "iso2": "AE",
-    "capital": "Abu Dhabi",
-    "climate": {
-      "city": "Abu Dhabi",
-      "year": "2025",
-      "months": [
-        {
-          "t": 20,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 23.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 32.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 32.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 34.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 36.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 34,
-          "rainyDays": 0
-        },
-        {
-          "t": 30.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 2
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 1.25,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 78.3,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 74,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 5.17,
       "date": "2026-01-01"
     }
   },
@@ -1329,7 +1033,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 2.2,
           "rainyDays": 14
         }
-      ]
+      ],
+      "sunnyDays": 226
     },
     "holidays": {
       "year": "2026",
@@ -1402,6 +1107,320 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
+  "United Arab Emirates": {
+    "iso2": "AE",
+    "capital": "Abu Dhabi",
+    "climate": {
+      "city": "Abu Dhabi",
+      "year": "2025",
+      "months": [
+        {
+          "t": 20,
+          "rainyDays": 0
+        },
+        {
+          "t": 21.3,
+          "rainyDays": 3
+        },
+        {
+          "t": 23.8,
+          "rainyDays": 0
+        },
+        {
+          "t": 29.2,
+          "rainyDays": 0
+        },
+        {
+          "t": 32.2,
+          "rainyDays": 0
+        },
+        {
+          "t": 32.8,
+          "rainyDays": 0
+        },
+        {
+          "t": 34.8,
+          "rainyDays": 0
+        },
+        {
+          "t": 36.3,
+          "rainyDays": 0
+        },
+        {
+          "t": 34,
+          "rainyDays": 0
+        },
+        {
+          "t": 30.7,
+          "rainyDays": 0
+        },
+        {
+          "t": 26.5,
+          "rainyDays": 0
+        },
+        {
+          "t": 22.7,
+          "rainyDays": 2
+        }
+      ],
+      "sunnyDays": 363
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 1.25,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 78.3,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 74,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 5.17,
+      "date": "2026-01-01"
+    }
+  },
+  "United States": {
+    "iso2": "US",
+    "capital": "Washington, D.C.",
+    "climate": {
+      "city": "Washington, D.C.",
+      "year": "2025",
+      "months": [
+        {
+          "t": -1.8,
+          "rainyDays": 7
+        },
+        {
+          "t": 2.6,
+          "rainyDays": 7
+        },
+        {
+          "t": 9.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 14.8,
+          "rainyDays": 9
+        },
+        {
+          "t": 18.2,
+          "rainyDays": 16
+        },
+        {
+          "t": 24.6,
+          "rainyDays": 15
+        },
+        {
+          "t": 26.7,
+          "rainyDays": 20
+        },
+        {
+          "t": 22.9,
+          "rainyDays": 10
+        },
+        {
+          "t": 21.3,
+          "rainyDays": 12
+        },
+        {
+          "t": 14.5,
+          "rainyDays": 8
+        },
+        {
+          "t": 8.8,
+          "rainyDays": 9
+        },
+        {
+          "t": 1.8,
+          "rainyDays": 7
+        }
+      ],
+      "sunnyDays": 295
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-19",
+          "name": "Martin Luther King, Jr. Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Presidents Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Memorial Day"
+        },
+        {
+          "date": "2026-06-19",
+          "name": "Juneteenth National Independence Day"
+        },
+        {
+          "date": "2026-07-03",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "Columbus Day"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Veterans Day"
+        },
+        {
+          "date": "2026-11-26",
+          "name": "Thanksgiving Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.95,
+      "year": "2024"
+    },
+    "lifeExpectancy": {
+      "value": 76.4,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 15.2,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 6.12,
+      "date": "2026-01-01"
+    }
+  },
+  "Canada": {
+    "iso2": "CA",
+    "capital": "Ottawa",
+    "climate": {
+      "city": "Ottawa",
+      "year": "2025",
+      "months": [
+        {
+          "t": -9.4,
+          "rainyDays": 8
+        },
+        {
+          "t": -10,
+          "rainyDays": 10
+        },
+        {
+          "t": -1.6,
+          "rainyDays": 17
+        },
+        {
+          "t": 5.1,
+          "rainyDays": 14
+        },
+        {
+          "t": 12.9,
+          "rainyDays": 14
+        },
+        {
+          "t": 19.7,
+          "rainyDays": 10
+        },
+        {
+          "t": 22.7,
+          "rainyDays": 8
+        },
+        {
+          "t": 21,
+          "rainyDays": 7
+        },
+        {
+          "t": 16.3,
+          "rainyDays": 5
+        },
+        {
+          "t": 10.4,
+          "rainyDays": 8
+        },
+        {
+          "t": 0.6,
+          "rainyDays": 16
+        },
+        {
+          "t": -8.4,
+          "rainyDays": 15
+        }
+      ],
+      "sunnyDays": 271
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 8,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-18",
+          "name": "Victoria Day"
+        },
+        {
+          "date": "2026-07-01",
+          "name": "Canada Day"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-09-30",
+          "name": "National Day for Truth and Reconciliation"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "Thanksgiving"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.07,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 81.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 22.2,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 5.54,
+      "date": "2026-01-01"
+    }
+  },
   "Poland": {
     "iso2": "PL",
     "capital": "Warsaw",
@@ -1457,7 +1476,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 2.3,
           "rainyDays": 7
         }
-      ]
+      ],
+      "sunnyDays": 253
     },
     "holidays": {
       "year": "2026",
@@ -1593,7 +1613,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 27.7,
           "rainyDays": 2
         }
-      ]
+      ],
+      "sunnyDays": 339
     },
     "holidays": null,
     "inflation": {
@@ -1668,7 +1689,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 14.9,
           "rainyDays": 4
         }
-      ]
+      ],
+      "sunnyDays": 359
     },
     "holidays": {
       "year": "2026",
@@ -1729,6 +1751,269 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
+  "Singapore": {
+    "iso2": "SG",
+    "capital": "Singapore",
+    "climate": {
+      "city": "Singapore",
+      "year": "2025",
+      "months": [
+        {
+          "t": 25.6,
+          "rainyDays": 26
+        },
+        {
+          "t": 26.4,
+          "rainyDays": 18
+        },
+        {
+          "t": 26.4,
+          "rainyDays": 27
+        },
+        {
+          "t": 26.3,
+          "rainyDays": 29
+        },
+        {
+          "t": 27.5,
+          "rainyDays": 26
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 16
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 25
+        },
+        {
+          "t": 26.9,
+          "rainyDays": 24
+        },
+        {
+          "t": 26.7,
+          "rainyDays": 29
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 22
+        },
+        {
+          "t": 26.8,
+          "rainyDays": 26
+        },
+        {
+          "t": 25.9,
+          "rainyDays": 23
+        }
+      ],
+      "sunnyDays": 334
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Chinese New Year"
+        },
+        {
+          "date": "2026-02-18",
+          "name": "Chinese New Year"
+        },
+        {
+          "date": "2026-03-21",
+          "name": "Hari Raya Puasa"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-27",
+          "name": "Hari Raya Haji"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "Vesak Day"
+        },
+        {
+          "date": "2026-08-10",
+          "name": "National Day"
+        },
+        {
+          "date": "2026-11-09",
+          "name": "Deepavali"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.9,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 83.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 48.7,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 5.78,
+      "date": "2026-01-01"
+    }
+  },
+  "Greece": {
+    "iso2": "GR",
+    "capital": "Athens",
+    "climate": {
+      "city": "Athens",
+      "year": "2025",
+      "months": [
+        {
+          "t": 10.9,
+          "rainyDays": 5
+        },
+        {
+          "t": 8.3,
+          "rainyDays": 9
+        },
+        {
+          "t": 13.7,
+          "rainyDays": 5
+        },
+        {
+          "t": 14.8,
+          "rainyDays": 13
+        },
+        {
+          "t": 20.7,
+          "rainyDays": 7
+        },
+        {
+          "t": 28,
+          "rainyDays": 1
+        },
+        {
+          "t": 30.6,
+          "rainyDays": 1
+        },
+        {
+          "t": 27.9,
+          "rainyDays": 1
+        },
+        {
+          "t": 24.7,
+          "rainyDays": 2
+        },
+        {
+          "t": 18.3,
+          "rainyDays": 6
+        },
+        {
+          "t": 16.7,
+          "rainyDays": 11
+        },
+        {
+          "t": 11.7,
+          "rainyDays": 6
+        }
+      ],
+      "sunnyDays": 337
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 15,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-02-23",
+          "name": "Clean Monday"
+        },
+        {
+          "date": "2026-03-25",
+          "name": "Annunciation"
+        },
+        {
+          "date": "2026-03-25",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-31",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-10-28",
+          "name": "Ochi Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.48,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 79.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 14.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Japan": {
     "iso2": "JP",
     "capital": "Tokyo",
@@ -1784,7 +2069,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 7.6,
           "rainyDays": 7
         }
-      ]
+      ],
+      "sunnyDays": 294
     },
     "holidays": {
       "year": "2026",
@@ -1873,127 +2159,273 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Singapore": {
-    "iso2": "SG",
-    "capital": "Singapore",
+  "Georgia": {
+    "iso2": "GE",
+    "capital": "Tbilisi",
     "climate": {
-      "city": "Singapore",
+      "city": "Tbilisi",
       "year": "2025",
-      "months": [
-        {
-          "t": 25.6,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 26
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 23
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
-      "count": 11,
+      "count": 17,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
         },
         {
-          "date": "2026-02-17",
-          "name": "Chinese New Year"
+          "date": "2026-01-02",
+          "name": "New Year's Day"
         },
         {
-          "date": "2026-02-18",
-          "name": "Chinese New Year"
+          "date": "2026-01-07",
+          "name": "Christmas Day (Orthodox)"
         },
         {
-          "date": "2026-03-21",
-          "name": "Hari Raya Puasa"
+          "date": "2026-01-19",
+          "name": "Epiphany (Orthodox)"
         },
         {
-          "date": "2026-04-03",
+          "date": "2026-03-03",
+          "name": "Mother's Day"
+        },
+        {
+          "date": "2026-03-08",
+          "name": "International Women's Day"
+        },
+        {
+          "date": "2026-04-09",
+          "name": "National Unity Day"
+        },
+        {
+          "date": "2026-04-10",
           "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-11",
+          "name": "Holy Saturday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-09",
+          "name": "Day of Victory over Fascism"
+        },
+        {
+          "date": "2026-05-12",
+          "name": "Saint Andrew the First-Called Day"
+        },
+        {
+          "date": "2026-05-26",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-08-28",
+          "name": "Saint Mary's Day"
+        },
+        {
+          "date": "2026-10-14",
+          "name": "Day of Svetitskhoveli Cathedra"
+        },
+        {
+          "date": "2026-11-23",
+          "name": "Saint George's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.87,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 71.2,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 2.1,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Armenia": {
+    "iso2": "AM",
+    "capital": "Yerevan",
+    "climate": {
+      "city": "Yerevan",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-05",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-01-28",
+          "name": "Army Day"
+        },
+        {
+          "date": "2026-03-08",
+          "name": "Women's Day"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-24",
+          "name": "Armenian Genocide Remembrance Day"
         },
         {
           "date": "2026-05-01",
           "name": "Labour Day"
         },
         {
-          "date": "2026-05-27",
-          "name": "Hari Raya Haji"
+          "date": "2026-05-09",
+          "name": "Victory and Peace Day"
         },
         {
-          "date": "2026-06-01",
-          "name": "Vesak Day"
+          "date": "2026-05-28",
+          "name": "Republic Day"
         },
         {
-          "date": "2026-08-10",
-          "name": "National Day"
+          "date": "2026-07-05",
+          "name": "Constitution Day"
         },
         {
-          "date": "2026-11-09",
-          "name": "Deepavali"
+          "date": "2026-09-21",
+          "name": "Independence Day"
         },
         {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
+          "date": "2026-12-31",
+          "name": "New Year's Eve"
         }
       ]
     },
     "inflation": {
-      "value": 0.9,
+      "value": 3.31,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 83.9,
+      "value": 73,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 48.7,
+      "value": 9.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Turkey": {
+    "iso2": "TR",
+    "capital": "Ankara",
+    "climate": {
+      "city": "Ankara",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-20",
+          "name": "Eid al-Fitr First Day"
+        },
+        {
+          "date": "2026-03-21",
+          "name": "Eid al-Fitr Second Day"
+        },
+        {
+          "date": "2026-03-22",
+          "name": "Eid al-Fitr Third Day"
+        },
+        {
+          "date": "2026-04-23",
+          "name": "National Independence & Children's Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-19",
+          "name": "Atatürk Commemoration & Youth Day"
+        },
+        {
+          "date": "2026-05-27",
+          "name": "Eid al-Adha First Day"
+        },
+        {
+          "date": "2026-05-28",
+          "name": "Eid al-Adha Second Day"
+        },
+        {
+          "date": "2026-05-29",
+          "name": "Eid al-Adha Third Day"
+        },
+        {
+          "date": "2026-05-30",
+          "name": "Eid al-Adha Fourth Day"
+        },
+        {
+          "date": "2026-07-15",
+          "name": "Democracy and National Unity Day"
+        },
+        {
+          "date": "2026-08-30",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-10-29",
+          "name": "Republic Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 34.88,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 75.3,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 8.1,
       "year": "2024"
     },
     "bigMacUsd": {
-      "value": 5.78,
+      "value": 5.9,
       "date": "2026-01-01"
     }
   },
@@ -2052,7 +2484,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 12.7,
           "rainyDays": 11
         }
-      ]
+      ],
+      "sunnyDays": 351
     },
     "holidays": {
       "year": "2026",
@@ -2142,239 +2575,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Switzerland": {
-    "iso2": "CH",
-    "capital": "Bern",
-    "climate": {
-      "city": "Bern",
-      "year": "2025",
-      "months": [
-        {
-          "t": 1.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 2,
-          "rainyDays": 8
-        },
-        {
-          "t": 5.8,
-          "rainyDays": 11
-        },
-        {
-          "t": 9.3,
-          "rainyDays": 10
-        },
-        {
-          "t": 12.8,
-          "rainyDays": 14
-        },
-        {
-          "t": 19.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 18.4,
-          "rainyDays": 19
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 13.8,
-          "rainyDays": 18
-        },
-        {
-          "t": 8.8,
-          "rainyDays": 12
-        },
-        {
-          "t": 3.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 1.2,
-          "rainyDays": 3
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 4,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-08-01",
-          "name": "Swiss National Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.15,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 83.3,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 31.1,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 9.08,
-      "date": "2026-01-01"
-    }
-  },
-  "Greece": {
-    "iso2": "GR",
-    "capital": "Athens",
-    "climate": {
-      "city": "Athens",
-      "year": "2025",
-      "months": [
-        {
-          "t": 10.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 8.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 13.7,
-          "rainyDays": 5
-        },
-        {
-          "t": 14.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 7
-        },
-        {
-          "t": 28,
-          "rainyDays": 1
-        },
-        {
-          "t": 30.6,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 2
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 6
-        },
-        {
-          "t": 16.7,
-          "rainyDays": 11
-        },
-        {
-          "t": 11.7,
-          "rainyDays": 6
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 15,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Epiphany"
-        },
-        {
-          "date": "2026-02-23",
-          "name": "Clean Monday"
-        },
-        {
-          "date": "2026-03-25",
-          "name": "Annunciation"
-        },
-        {
-          "date": "2026-03-25",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-04-10",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-12",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-13",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-31",
-          "name": "Pentecost"
-        },
-        {
-          "date": "2026-06-01",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-10-28",
-          "name": "Ochi Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 2.48,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 79.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 14.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Malta": {
     "iso2": "MT",
     "capital": "Valletta",
@@ -2430,7 +2630,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 15.4,
           "rainyDays": 12
         }
-      ]
+      ],
+      "sunnyDays": 350
     },
     "holidays": {
       "year": "2026",
@@ -2508,6 +2709,103 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Switzerland": {
+    "iso2": "CH",
+    "capital": "Bern",
+    "climate": {
+      "city": "Bern",
+      "year": "2025",
+      "months": [
+        {
+          "t": 1.1,
+          "rainyDays": 15
+        },
+        {
+          "t": 2,
+          "rainyDays": 8
+        },
+        {
+          "t": 5.8,
+          "rainyDays": 11
+        },
+        {
+          "t": 9.3,
+          "rainyDays": 10
+        },
+        {
+          "t": 12.8,
+          "rainyDays": 14
+        },
+        {
+          "t": 19.9,
+          "rainyDays": 11
+        },
+        {
+          "t": 18.4,
+          "rainyDays": 19
+        },
+        {
+          "t": 18.9,
+          "rainyDays": 10
+        },
+        {
+          "t": 13.8,
+          "rainyDays": 18
+        },
+        {
+          "t": 8.8,
+          "rainyDays": 12
+        },
+        {
+          "t": 3.6,
+          "rainyDays": 13
+        },
+        {
+          "t": 1.2,
+          "rainyDays": 3
+        }
+      ],
+      "sunnyDays": 297
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 4,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-08-01",
+          "name": "Swiss National Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.15,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 83.3,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 31.1,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 9.08,
+      "date": "2026-01-01"
+    }
+  },
   "Austria": {
     "iso2": "AT",
     "capital": "Vienna",
@@ -2563,7 +2861,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 2.4,
           "rainyDays": 7
         }
-      ]
+      ],
+      "sunnyDays": 276
     },
     "holidays": {
       "year": "2026",
@@ -2700,7 +2999,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 2,
           "rainyDays": 4
         }
-      ]
+      ],
+      "sunnyDays": 285
     },
     "holidays": {
       "year": "2026",
@@ -2777,207 +3077,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Georgia": {
-    "iso2": "GE",
-    "capital": "Tbilisi",
+  "Brazil": {
+    "iso2": "BR",
+    "capital": "Brasília",
     "climate": {
-      "city": "Tbilisi",
+      "city": "Brasília",
       "year": "2025",
-      "months": [
-        {
-          "t": 4.1,
-          "rainyDays": 3
-        },
-        {
-          "t": 1.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 9.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 11.9,
-          "rainyDays": 16
-        },
-        {
-          "t": 17.6,
-          "rainyDays": 17
-        },
-        {
-          "t": 21.3,
-          "rainyDays": 7
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 2
-        },
-        {
-          "t": 19.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 14.4,
-          "rainyDays": 9
-        },
-        {
-          "t": 10.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 4.5,
-          "rainyDays": 10
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 17,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-07",
-          "name": "Christmas Day (Orthodox)"
-        },
-        {
-          "date": "2026-01-19",
-          "name": "Epiphany (Orthodox)"
-        },
-        {
-          "date": "2026-03-03",
-          "name": "Mother's Day"
-        },
-        {
-          "date": "2026-03-08",
-          "name": "International Women's Day"
-        },
-        {
-          "date": "2026-04-09",
-          "name": "National Unity Day"
-        },
-        {
-          "date": "2026-04-10",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-11",
-          "name": "Holy Saturday"
-        },
-        {
-          "date": "2026-04-12",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-13",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-09",
-          "name": "Day of Victory over Fascism"
-        },
-        {
-          "date": "2026-05-12",
-          "name": "Saint Andrew the First-Called Day"
-        },
-        {
-          "date": "2026-05-26",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-08-28",
-          "name": "Saint Mary's Day"
-        },
-        {
-          "date": "2026-10-14",
-          "name": "Day of Svetitskhoveli Cathedra"
-        },
-        {
-          "date": "2026-11-23",
-          "name": "Saint George's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.87,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 71.2,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.1,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Armenia": {
-    "iso2": "AM",
-    "capital": "Yerevan",
-    "climate": {
-      "city": "Yerevan",
-      "year": "2025",
-      "months": [
-        {
-          "t": -0.5,
-          "rainyDays": 2
-        },
-        {
-          "t": -1.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 8.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 12.1,
-          "rainyDays": 20
-        },
-        {
-          "t": 18.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 23,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 20.9,
-          "rainyDays": 4
-        },
-        {
-          "t": 14.4,
-          "rainyDays": 8
-        },
-        {
-          "t": 7.6,
-          "rainyDays": 2
-        },
-        {
-          "t": 1.3,
-          "rainyDays": 7
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -2988,206 +3095,214 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "New Year's Day"
         },
         {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
+          "date": "2026-02-16",
+          "name": "Carnival"
         },
         {
-          "date": "2026-01-05",
-          "name": "Christmas Day"
+          "date": "2026-02-17",
+          "name": "Carnival"
         },
         {
-          "date": "2026-01-06",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-01-28",
-          "name": "Army Day"
-        },
-        {
-          "date": "2026-03-08",
-          "name": "Women's Day"
+          "date": "2026-04-03",
+          "name": "Good Friday"
         },
         {
           "date": "2026-04-05",
           "name": "Easter Sunday"
         },
         {
-          "date": "2026-04-24",
-          "name": "Armenian Genocide Remembrance Day"
+          "date": "2026-04-21",
+          "name": "Tiradentes"
         },
         {
           "date": "2026-05-01",
           "name": "Labour Day"
         },
         {
-          "date": "2026-05-09",
-          "name": "Victory and Peace Day"
+          "date": "2026-06-04",
+          "name": "Corpus Christi"
         },
         {
-          "date": "2026-05-28",
-          "name": "Republic Day"
-        },
-        {
-          "date": "2026-07-05",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-09-21",
+          "date": "2026-09-07",
           "name": "Independence Day"
         },
         {
-          "date": "2026-12-31",
-          "name": "New Year's Eve"
+          "date": "2026-10-12",
+          "name": "Our Lady of Aparecida"
+        },
+        {
+          "date": "2026-11-02",
+          "name": "All Souls' Day"
+        },
+        {
+          "date": "2026-11-15",
+          "name": "Republic Proclamation Day"
+        },
+        {
+          "date": "2026-11-20",
+          "name": "Black Awareness Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
         }
       ]
     },
     "inflation": {
-      "value": 3.31,
+      "value": 5.02,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 73,
+      "value": 72.4,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 9.2,
+      "value": 0.7,
       "year": "2024"
     },
-    "bigMacUsd": null
+    "bigMacUsd": {
+      "value": 4.45,
+      "date": "2026-01-01"
+    }
   },
-  "Turkey": {
-    "iso2": "TR",
-    "capital": "Ankara",
+  "Uruguay": {
+    "iso2": "UY",
+    "capital": "Montevideo",
     "climate": {
-      "city": "Ankara",
+      "city": "Montevideo",
       "year": "2025",
       "months": [
         {
-          "t": 3.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 0.3,
+          "t": 22.3,
           "rainyDays": 5
         },
         {
-          "t": 10.6,
-          "rainyDays": 4
-        },
-        {
-          "t": 10.1,
-          "rainyDays": 16
-        },
-        {
-          "t": 17.2,
+          "t": 23.8,
           "rainyDays": 10
         },
         {
-          "t": 22.2,
+          "t": 22.1,
+          "rainyDays": 13
+        },
+        {
+          "t": 17.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 15.8,
+          "rainyDays": 7
+        },
+        {
+          "t": 10.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 10,
           "rainyDays": 3
         },
         {
-          "t": 27.4,
-          "rainyDays": 0
+          "t": 11.9,
+          "rainyDays": 6
         },
         {
-          "t": 26.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 4
-        },
-        {
-          "t": 12.8,
-          "rainyDays": 11
-        },
-        {
-          "t": 9.4,
-          "rainyDays": 4
-        },
-        {
-          "t": 3.5,
+          "t": 13.6,
           "rainyDays": 12
+        },
+        {
+          "t": 16.8,
+          "rainyDays": 9
+        },
+        {
+          "t": 18.1,
+          "rainyDays": 10
+        },
+        {
+          "t": 22.7,
+          "rainyDays": 8
         }
-      ]
+      ],
+      "sunnyDays": 331
     },
     "holidays": {
       "year": "2026",
-      "count": 14,
+      "count": 15,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
         },
         {
-          "date": "2026-03-20",
-          "name": "Eid al-Fitr First Day"
+          "date": "2026-01-06",
+          "name": "Children's Day"
         },
         {
-          "date": "2026-03-21",
-          "name": "Eid al-Fitr Second Day"
+          "date": "2026-02-16",
+          "name": "Carnival"
         },
         {
-          "date": "2026-03-22",
-          "name": "Eid al-Fitr Third Day"
+          "date": "2026-02-17",
+          "name": "Carnival"
         },
         {
-          "date": "2026-04-23",
-          "name": "National Independence & Children's Day"
+          "date": "2026-04-02",
+          "name": "Maundy Thursday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-19",
+          "name": "Landing of the 33 Patriots Day"
         },
         {
           "date": "2026-05-01",
-          "name": "Labour Day"
+          "name": "International Workers' Day"
         },
         {
-          "date": "2026-05-19",
-          "name": "Atatürk Commemoration & Youth Day"
+          "date": "2026-05-18",
+          "name": "Battle of Las Piedras"
         },
         {
-          "date": "2026-05-27",
-          "name": "Eid al-Adha First Day"
+          "date": "2026-06-19",
+          "name": "Birthday of José Gervasio Artigas and Never Again Day"
         },
         {
-          "date": "2026-05-28",
-          "name": "Eid al-Adha Second Day"
+          "date": "2026-07-18",
+          "name": "Constitution Day"
         },
         {
-          "date": "2026-05-29",
-          "name": "Eid al-Adha Third Day"
+          "date": "2026-08-25",
+          "name": "Independence Day"
         },
         {
-          "date": "2026-05-30",
-          "name": "Eid al-Adha Fourth Day"
+          "date": "2026-10-12",
+          "name": "Day of the race"
         },
         {
-          "date": "2026-07-15",
-          "name": "Democracy and National Unity Day"
+          "date": "2026-11-02",
+          "name": "Deceased ones day"
         },
         {
-          "date": "2026-08-30",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-10-29",
-          "name": "Republic Day"
+          "date": "2026-12-25",
+          "name": "Christmas Day"
         }
       ]
     },
     "inflation": {
-      "value": 34.88,
+      "value": 4.65,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 75.3,
+      "value": 75,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 8.1,
+      "value": 4.7,
       "year": "2024"
     },
     "bigMacUsd": {
-      "value": 5.9,
+      "value": 8.76,
       "date": "2026-01-01"
     }
   },
@@ -3246,7 +3361,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 25.7,
           "rainyDays": 10
         }
-      ]
+      ],
+      "sunnyDays": 322
     },
     "holidays": {
       "year": "2026",
@@ -3335,406 +3451,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Brazil": {
-    "iso2": "BR",
-    "capital": "Brasília",
-    "climate": {
-      "city": "Brasília",
-      "year": "2025",
-      "months": [
-        {
-          "t": 22,
-          "rainyDays": 23
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 12
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 16
-        },
-        {
-          "t": 22.6,
-          "rainyDays": 16
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 2
-        },
-        {
-          "t": 20.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 1
-        },
-        {
-          "t": 22.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 23.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 18
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 26
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 14,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-02-17",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-21",
-          "name": "Tiradentes"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-06-04",
-          "name": "Corpus Christi"
-        },
-        {
-          "date": "2026-09-07",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "Our Lady of Aparecida"
-        },
-        {
-          "date": "2026-11-02",
-          "name": "All Souls' Day"
-        },
-        {
-          "date": "2026-11-15",
-          "name": "Republic Proclamation Day"
-        },
-        {
-          "date": "2026-11-20",
-          "name": "Black Awareness Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 5.02,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 72.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.7,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 4.45,
-      "date": "2026-01-01"
-    }
-  },
-  "Costa Rica": {
-    "iso2": "CR",
-    "capital": "San José",
-    "climate": {
-      "city": "San José",
-      "year": "2025",
-      "months": [
-        {
-          "t": 20.4,
-          "rainyDays": 10
-        },
-        {
-          "t": 20.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 27
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 29
-        },
-        {
-          "t": 20.8,
-          "rainyDays": 21
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 30
-        },
-        {
-          "t": 19.5,
-          "rainyDays": 31
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 20
-        },
-        {
-          "t": 20.2,
-          "rainyDays": 6
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-02",
-          "name": "Maundy Thursday"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-11",
-          "name": "Juan Santamaría Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-07-25",
-          "name": "Annexation of the Party of Nicoya to Costa Rica"
-        },
-        {
-          "date": "2026-08-02",
-          "name": "Feast of Our Lady of the Angels"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Mother's Day"
-        },
-        {
-          "date": "2026-09-15",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-12-01",
-          "name": "Army Abolition Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": -0.07,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 78.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 12.2,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 6.04,
-      "date": "2026-01-01"
-    }
-  },
-  "Uruguay": {
-    "iso2": "UY",
-    "capital": "Montevideo",
-    "climate": {
-      "city": "Montevideo",
-      "year": "2025",
-      "months": [
-        {
-          "t": 22.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 23.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 13
-        },
-        {
-          "t": 17.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 10.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 10,
-          "rainyDays": 3
-        },
-        {
-          "t": 11.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 13.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 16.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 18.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 15,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Children's Day"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-02-17",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-04-02",
-          "name": "Maundy Thursday"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-19",
-          "name": "Landing of the 33 Patriots Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "International Workers' Day"
-        },
-        {
-          "date": "2026-05-18",
-          "name": "Battle of Las Piedras"
-        },
-        {
-          "date": "2026-06-19",
-          "name": "Birthday of José Gervasio Artigas and Never Again Day"
-        },
-        {
-          "date": "2026-07-18",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-08-25",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "Day of the race"
-        },
-        {
-          "date": "2026-11-02",
-          "name": "Deceased ones day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4.65,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 75,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 4.7,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 8.76,
-      "date": "2026-01-01"
-    }
-  },
   "Panama": {
     "iso2": "PA",
     "capital": "Panama City",
@@ -3790,7 +3506,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 26.1,
           "rainyDays": 24
         }
-      ]
+      ],
+      "sunnyDays": 321
     },
     "holidays": {
       "year": "2026",
@@ -3919,7 +3636,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 14,
           "rainyDays": 15
         }
-      ]
+      ],
+      "sunnyDays": 364
     },
     "holidays": {
       "year": "2026",
@@ -4020,180 +3738,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Aruba": {
-    "iso2": "AW",
-    "capital": "Oranjestad",
-    "climate": {
-      "city": "Oranjestad",
-      "year": "2025",
-      "months": []
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-25",
-          "name": "Betico Croes Day"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Carnival Monday"
-        },
-        {
-          "date": "2026-03-18",
-          "name": "National Anthem and Flag Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-27",
-          "name": "King's Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4.26,
-      "year": "2019"
-    },
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 68,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Afghanistan": {
-    "iso2": "AF",
-    "capital": "Kabul",
-    "climate": {
-      "city": "Kabul",
-      "year": "2025",
-      "months": []
-    },
-    "holidays": null,
-    "inflation": {
-      "value": -6.6,
-      "year": "2024"
-    },
-    "lifeExpectancy": {
-      "value": 59.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Andorra": {
-    "iso2": "AD",
-    "capital": "Andorra la Vella",
-    "climate": {
-      "city": "Andorra la Vella",
-      "year": "2025",
-      "months": []
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 14,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Epiphany"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-03-14",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-09-08",
-          "name": "National Holiday"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
-        },
-        {
-          "date": "2026-12-08",
-          "name": "Immaculate Conception"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 59.1,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Malaysia": {
     "iso2": "MY",
     "capital": "Kuala Lumpur",
@@ -4249,7 +3793,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 26.6,
           "rainyDays": 27
         }
-      ]
+      ],
+      "sunnyDays": 336
     },
     "holidays": null,
     "inflation": {
@@ -4266,6 +3811,131 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": {
       "value": 3.39,
+      "date": "2026-01-01"
+    }
+  },
+  "Costa Rica": {
+    "iso2": "CR",
+    "capital": "San José",
+    "climate": {
+      "city": "San José",
+      "year": "2025",
+      "months": [
+        {
+          "t": 20.4,
+          "rainyDays": 10
+        },
+        {
+          "t": 20.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 21.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 21.8,
+          "rainyDays": 13
+        },
+        {
+          "t": 21.1,
+          "rainyDays": 27
+        },
+        {
+          "t": 20.4,
+          "rainyDays": 29
+        },
+        {
+          "t": 20.8,
+          "rainyDays": 21
+        },
+        {
+          "t": 20.4,
+          "rainyDays": 26
+        },
+        {
+          "t": 20.1,
+          "rainyDays": 30
+        },
+        {
+          "t": 19.5,
+          "rainyDays": 31
+        },
+        {
+          "t": 20.1,
+          "rainyDays": 20
+        },
+        {
+          "t": 20.2,
+          "rainyDays": 6
+        }
+      ],
+      "sunnyDays": 341
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-02",
+          "name": "Maundy Thursday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-11",
+          "name": "Juan Santamaría Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-07-25",
+          "name": "Annexation of the Party of Nicoya to Costa Rica"
+        },
+        {
+          "date": "2026-08-02",
+          "name": "Feast of Our Lady of the Angels"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Mother's Day"
+        },
+        {
+          "date": "2026-09-15",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-01",
+          "name": "Army Abolition Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": -0.07,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 78.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 12.2,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 6.04,
       "date": "2026-01-01"
     }
   },
@@ -4324,7 +3994,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 27.4,
           "rainyDays": 29
         }
-      ]
+      ],
+      "sunnyDays": 340
     },
     "holidays": {
       "year": "2026",
@@ -4436,7 +4107,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 20.1,
           "rainyDays": 9
         }
-      ]
+      ],
+      "sunnyDays": 256
     },
     "holidays": {
       "year": "2026",
@@ -4532,7 +4204,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 16.1,
           "rainyDays": 14
         }
-      ]
+      ],
+      "sunnyDays": 316
     },
     "holidays": {
       "year": "2026",
@@ -4656,7 +4329,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": -1.8,
           "rainyDays": 16
         }
-      ]
+      ],
+      "sunnyDays": 204
     },
     "holidays": {
       "year": "2026",
@@ -4739,7 +4413,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Luanda",
       "year": "2025",
-      "months": []
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -4817,67 +4492,431 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "French Southern and Antarctic Lands": {
-    "iso2": "TF",
-    "capital": "Port-aux-Français",
+  "Aruba": {
+    "iso2": "AW",
+    "capital": "Oranjestad",
     "climate": {
-      "city": "Port-aux-Français",
+      "city": "Oranjestad",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-25",
+          "name": "Betico Croes Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival Monday"
+        },
+        {
+          "date": "2026-03-18",
+          "name": "National Anthem and Flag Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-27",
+          "name": "King's Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 4.26,
+      "year": "2019"
+    },
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 68,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Afghanistan": {
+    "iso2": "AF",
+    "capital": "Kabul",
+    "climate": {
+      "city": "Kabul",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": -6.6,
+      "year": "2024"
+    },
+    "lifeExpectancy": {
+      "value": 59.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Andorra": {
+    "iso2": "AD",
+    "capital": "Andorra la Vella",
+    "climate": {
+      "city": "Andorra la Vella",
       "year": "2025",
       "months": [
         {
-          "t": 6.9,
-          "rainyDays": 20
+          "t": 3.8,
+          "rainyDays": 7
         },
         {
-          "t": 7.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 6.6,
-          "rainyDays": 14
-        },
-        {
-          "t": 6.5,
-          "rainyDays": 17
-        },
-        {
-          "t": 4.4,
-          "rainyDays": 19
-        },
-        {
-          "t": 2.4,
-          "rainyDays": 20
-        },
-        {
-          "t": 3.1,
-          "rainyDays": 18
-        },
-        {
-          "t": 2.6,
-          "rainyDays": 14
-        },
-        {
-          "t": 2.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 3,
-          "rainyDays": 24
+          "t": 4.9,
+          "rainyDays": 6
         },
         {
           "t": 5,
+          "rainyDays": 20
+        },
+        {
+          "t": 9.6,
+          "rainyDays": 14
+        },
+        {
+          "t": 13,
+          "rainyDays": 14
+        },
+        {
+          "t": 21.8,
+          "rainyDays": 7
+        },
+        {
+          "t": 20.2,
+          "rainyDays": 8
+        },
+        {
+          "t": 21.4,
+          "rainyDays": 6
+        },
+        {
+          "t": 15.2,
+          "rainyDays": 7
+        },
+        {
+          "t": 11.9,
+          "rainyDays": 6
+        },
+        {
+          "t": 6.2,
+          "rainyDays": 8
+        },
+        {
+          "t": 4.3,
+          "rainyDays": 7
+        }
+      ],
+      "sunnyDays": 326
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-03-14",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-09-08",
+          "name": "National Holiday"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Immaculate Conception"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 59.1,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Albania": {
+    "iso2": "AL",
+    "capital": "Tirana",
+    "climate": {
+      "city": "Tirana",
+      "year": "2025",
+      "months": [
+        {
+          "t": 8.9,
+          "rainyDays": 14
+        },
+        {
+          "t": 7.8,
+          "rainyDays": 9
+        },
+        {
+          "t": 12.2,
+          "rainyDays": 16
+        },
+        {
+          "t": 13.7,
+          "rainyDays": 14
+        },
+        {
+          "t": 17.3,
+          "rainyDays": 14
+        },
+        {
+          "t": 25.2,
+          "rainyDays": 1
+        },
+        {
+          "t": 26.7,
+          "rainyDays": 4
+        },
+        {
+          "t": 25.5,
+          "rainyDays": 6
+        },
+        {
+          "t": 21.8,
+          "rainyDays": 5
+        },
+        {
+          "t": 14.9,
+          "rainyDays": 13
+        },
+        {
+          "t": 13,
+          "rainyDays": 18
+        },
+        {
+          "t": 8.5,
+          "rainyDays": 5
+        }
+      ],
+      "sunnyDays": 328
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-16",
+          "name": "Summer Day"
+        },
+        {
+          "date": "2026-03-23",
+          "name": "Nowruz"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "May Day"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Mother Teresa Day"
+        },
+        {
+          "date": "2026-11-30",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-11-30",
+          "name": "Liberation Day"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Youth Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.15,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 76.4,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "American Samoa": {
+    "iso2": "AS",
+    "capital": "Pago Pago",
+    "climate": {
+      "city": "Pago Pago",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.2,
+          "rainyDays": 25
+        },
+        {
+          "t": 26.5,
+          "rainyDays": 25
+        },
+        {
+          "t": 26.2,
           "rainyDays": 24
         },
         {
-          "t": 6.5,
+          "t": 26.5,
+          "rainyDays": 23
+        },
+        {
+          "t": 25.9,
+          "rainyDays": 30
+        },
+        {
+          "t": 25.6,
+          "rainyDays": 23
+        },
+        {
+          "t": 25.1,
+          "rainyDays": 26
+        },
+        {
+          "t": 25.4,
+          "rainyDays": 16
+        },
+        {
+          "t": 24.9,
           "rainyDays": 21
+        },
+        {
+          "t": 25.2,
+          "rainyDays": 31
+        },
+        {
+          "t": 25.5,
+          "rainyDays": 27
+        },
+        {
+          "t": 26.3,
+          "rainyDays": 26
         }
-      ]
+      ],
+      "sunnyDays": 337
     },
     "holidays": null,
     "inflation": null,
     "lifeExpectancy": null,
-    "migrantShare": null,
+    "migrantShare": {
+      "value": 50.6,
+      "year": "2024"
+    },
     "bigMacUsd": null
   },
   "Åland Islands": {
@@ -4935,7 +4974,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 3.9,
           "rainyDays": 13
         }
-      ]
+      ],
+      "sunnyDays": 236
     },
     "holidays": {
       "year": "2026",
@@ -5067,7 +5107,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 26.6,
           "rainyDays": 9
         }
-      ]
+      ],
+      "sunnyDays": 361
     },
     "holidays": {
       "year": "2026",
@@ -5136,68 +5177,79 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
-  "American Samoa": {
-    "iso2": "AS",
-    "capital": "Pago Pago",
+  "Antigua and Barbuda": {
+    "iso2": "AG",
+    "capital": "Saint John's",
     "climate": {
-      "city": "Pago Pago",
+      "city": "Saint John's",
       "year": "2025",
-      "months": [
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
         {
-          "t": 26.2,
-          "rainyDays": 25
+          "date": "2026-01-01",
+          "name": "New Year's Day"
         },
         {
-          "t": 26.5,
-          "rainyDays": 25
+          "date": "2026-04-03",
+          "name": "Good Friday"
         },
         {
-          "t": 26.2,
-          "rainyDays": 24
+          "date": "2026-04-06",
+          "name": "Easter Monday"
         },
         {
-          "t": 26.5,
-          "rainyDays": 23
+          "date": "2026-05-04",
+          "name": "Labour Day"
         },
         {
-          "t": 25.9,
-          "rainyDays": 30
+          "date": "2026-05-25",
+          "name": "Whit Monday"
         },
         {
-          "t": 25.6,
-          "rainyDays": 23
+          "date": "2026-08-03",
+          "name": "Carnival Monday"
         },
         {
-          "t": 25.1,
-          "rainyDays": 26
+          "date": "2026-08-04",
+          "name": "Carnival Tuesday"
         },
         {
-          "t": 25.4,
-          "rainyDays": 16
+          "date": "2026-09-10",
+          "name": "National Day of Prayer"
         },
         {
-          "t": 24.9,
-          "rainyDays": 21
+          "date": "2026-11-02",
+          "name": "Independence Day"
         },
         {
-          "t": 25.2,
-          "rainyDays": 31
+          "date": "2026-12-09",
+          "name": "National Heroes' Day"
         },
         {
-          "t": 25.5,
-          "rainyDays": 27
+          "date": "2026-12-25",
+          "name": "Christmas Day"
         },
         {
-          "t": 26.3,
-          "rainyDays": 26
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
         }
       ]
     },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
+    "inflation": {
+      "value": 1.37,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 76.9,
+      "year": "2021"
+    },
     "migrantShare": {
-      "value": 50.6,
+      "value": 32.5,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -5257,7 +5309,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 8.3,
           "rainyDays": 12
         }
-      ]
+      ],
+      "sunnyDays": 292
     },
     "holidays": null,
     "inflation": {
@@ -5276,139 +5329,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "value": 3.91,
       "date": "2026-01-01"
     }
-  },
-  "Albania": {
-    "iso2": "AL",
-    "capital": "Tirana",
-    "climate": {
-      "city": "Tirana",
-      "year": "2025",
-      "months": [
-        {
-          "t": 8.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 7.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 12.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 13.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 17.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 4
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 6
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 14.9,
-          "rainyDays": 13
-        },
-        {
-          "t": 13,
-          "rainyDays": 18
-        },
-        {
-          "t": 8.5,
-          "rainyDays": 5
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 14,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-16",
-          "name": "Summer Day"
-        },
-        {
-          "date": "2026-03-23",
-          "name": "Nowruz"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-12",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-13",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "May Day"
-        },
-        {
-          "date": "2026-09-07",
-          "name": "Mother Teresa Day"
-        },
-        {
-          "date": "2026-11-30",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-11-30",
-          "name": "Liberation Day"
-        },
-        {
-          "date": "2026-12-08",
-          "name": "Youth Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 2.15,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 76.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 1.7,
-      "year": "2024"
-    },
-    "bigMacUsd": null
   },
   "Burundi": {
     "iso2": "BI",
@@ -5465,7 +5385,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 18.5,
           "rainyDays": 24
         }
-      ]
+      ],
+      "sunnyDays": 361
     },
     "holidays": null,
     "inflation": {
@@ -5537,7 +5458,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 6,
           "rainyDays": 6
         }
-      ]
+      ],
+      "sunnyDays": 261
     },
     "holidays": {
       "year": "2026",
@@ -5615,545 +5537,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Bangladesh": {
-    "iso2": "BD",
-    "capital": "Dhaka",
-    "climate": {
-      "city": "Dhaka",
-      "year": "2025",
-      "months": [
-        {
-          "t": 20.3,
-          "rainyDays": 1
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 3
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 4
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 28.7,
-          "rainyDays": 21
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 31
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 27
-        },
-        {
-          "t": 29,
-          "rainyDays": 26
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 14
-        },
-        {
-          "t": 25,
-          "rainyDays": 4
-        },
-        {
-          "t": 21,
-          "rainyDays": 0
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 7,
-      "sample": [
-        {
-          "date": "2026-02-21",
-          "name": "International Mother Language Day"
-        },
-        {
-          "date": "2026-03-26",
-          "name": "Independence and National Day"
-        },
-        {
-          "date": "2026-04-14",
-          "name": "Bengali New Year"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-08-05",
-          "name": "July Mass Uprising Day"
-        },
-        {
-          "date": "2026-12-16",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 8.77,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 73.1,
-      "year": "2021"
-    },
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
-  "Bulgaria": {
-    "iso2": "BG",
-    "capital": "Sofia",
-    "climate": {
-      "city": "Sofia",
-      "year": "2025",
-      "months": [
-        {
-          "t": 1.9,
-          "rainyDays": 5
-        },
-        {
-          "t": -0.8,
-          "rainyDays": 3
-        },
-        {
-          "t": 7.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 10,
-          "rainyDays": 12
-        },
-        {
-          "t": 14.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 21.9,
-          "rainyDays": 2
-        },
-        {
-          "t": 24.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 19.2,
-          "rainyDays": 2
-        },
-        {
-          "t": 9.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 8,
-          "rainyDays": 14
-        },
-        {
-          "t": 2.9,
-          "rainyDays": 4
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 15,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "Currency change day"
-        },
-        {
-          "date": "2026-03-03",
-          "name": "Liberation Day"
-        },
-        {
-          "date": "2026-04-10",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-11",
-          "name": "Holy Saturday"
-        },
-        {
-          "date": "2026-04-12",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-13",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "International Workers' Day"
-        },
-        {
-          "date": "2026-05-06",
-          "name": "Saint George's Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Saints Cyril and Methodius Day"
-        },
-        {
-          "date": "2026-09-07",
-          "name": "Unification Day"
-        },
-        {
-          "date": "2026-09-22",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-12-24",
-          "name": "Christmas Eve"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Second day of Christmas"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4.58,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 71.3,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 4.4,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Saint Barthélemy": {
-    "iso2": "BL",
-    "capital": "Gustavia",
-    "climate": {
-      "city": "Gustavia",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.3,
-          "rainyDays": 10
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 12
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 26,
-          "rainyDays": 15
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 4
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 12
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 15
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-08",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-07-14",
-          "name": "National Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-10-09",
-          "name": "Abolition Day"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
-        },
-        {
-          "date": "2026-11-11",
-          "name": "Armistice Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
-  "Saint Helena, Ascension and Tristan da Cunha": {
-    "iso2": "SH",
-    "capital": "Jamestown",
-    "climate": {
-      "city": "Jamestown",
-      "year": "2025",
-      "months": [
-        {
-          "t": 22.5,
-          "rainyDays": 21
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 23
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 28
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 13
-        },
-        {
-          "t": 20.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 19
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 16
-        },
-        {
-          "t": 19.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 19.1,
-          "rainyDays": 19
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 17
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
-  "Bahamas": {
-    "iso2": "BS",
-    "capital": "Nassau",
-    "climate": {
-      "city": "Nassau",
-      "year": "2025",
-      "months": [
-        {
-          "t": 22.4,
-          "rainyDays": 7
-        },
-        {
-          "t": 23.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 23.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 13
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 28.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 29.3,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 21
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 9
-        },
-        {
-          "t": 23.9,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-12",
-          "name": "Majority Rule Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Perry Christie Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-07-10",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-08-07",
-          "name": "Emancipation Day"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "National Heroes' Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.41,
-      "year": "2024"
-    },
-    "lifeExpectancy": {
-      "value": 70.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 16.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Benin": {
     "iso2": "BJ",
     "capital": "Porto-Novo",
@@ -6209,7 +5592,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 27.6,
           "rainyDays": 22
         }
-      ]
+      ],
+      "sunnyDays": 349
     },
     "holidays": {
       "year": "2026",
@@ -6342,7 +5726,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 28.6,
           "rainyDays": 0
         }
-      ]
+      ],
+      "sunnyDays": 359
     },
     "holidays": {
       "year": "2026",
@@ -6416,6 +5801,250 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Bangladesh": {
+    "iso2": "BD",
+    "capital": "Dhaka",
+    "climate": {
+      "city": "Dhaka",
+      "year": "2025",
+      "months": [
+        {
+          "t": 20.3,
+          "rainyDays": 1
+        },
+        {
+          "t": 23.5,
+          "rainyDays": 3
+        },
+        {
+          "t": 28.2,
+          "rainyDays": 4
+        },
+        {
+          "t": 28.9,
+          "rainyDays": 10
+        },
+        {
+          "t": 28.9,
+          "rainyDays": 22
+        },
+        {
+          "t": 28.7,
+          "rainyDays": 21
+        },
+        {
+          "t": 28.1,
+          "rainyDays": 31
+        },
+        {
+          "t": 28.2,
+          "rainyDays": 27
+        },
+        {
+          "t": 29,
+          "rainyDays": 26
+        },
+        {
+          "t": 28.1,
+          "rainyDays": 14
+        },
+        {
+          "t": 25,
+          "rainyDays": 4
+        },
+        {
+          "t": 21,
+          "rainyDays": 0
+        }
+      ],
+      "sunnyDays": 346
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 7,
+      "sample": [
+        {
+          "date": "2026-02-21",
+          "name": "International Mother Language Day"
+        },
+        {
+          "date": "2026-03-26",
+          "name": "Independence and National Day"
+        },
+        {
+          "date": "2026-04-14",
+          "name": "Bengali New Year"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-08-05",
+          "name": "July Mass Uprising Day"
+        },
+        {
+          "date": "2026-12-16",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 8.77,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 73.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Bulgaria": {
+    "iso2": "BG",
+    "capital": "Sofia",
+    "climate": {
+      "city": "Sofia",
+      "year": "2025",
+      "months": [
+        {
+          "t": 1.9,
+          "rainyDays": 5
+        },
+        {
+          "t": -0.8,
+          "rainyDays": 3
+        },
+        {
+          "t": 7.9,
+          "rainyDays": 7
+        },
+        {
+          "t": 10,
+          "rainyDays": 12
+        },
+        {
+          "t": 14.2,
+          "rainyDays": 11
+        },
+        {
+          "t": 21.9,
+          "rainyDays": 2
+        },
+        {
+          "t": 24.3,
+          "rainyDays": 5
+        },
+        {
+          "t": 22.2,
+          "rainyDays": 5
+        },
+        {
+          "t": 19.2,
+          "rainyDays": 2
+        },
+        {
+          "t": 9.6,
+          "rainyDays": 11
+        },
+        {
+          "t": 8,
+          "rainyDays": 14
+        },
+        {
+          "t": 2.9,
+          "rainyDays": 4
+        }
+      ],
+      "sunnyDays": 310
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 15,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "Currency change day"
+        },
+        {
+          "date": "2026-03-03",
+          "name": "Liberation Day"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-11",
+          "name": "Holy Saturday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "International Workers' Day"
+        },
+        {
+          "date": "2026-05-06",
+          "name": "Saint George's Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Saints Cyril and Methodius Day"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Unification Day"
+        },
+        {
+          "date": "2026-09-22",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-24",
+          "name": "Christmas Eve"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Second day of Christmas"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 4.58,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 71.3,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 4.4,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Bahrain": {
     "iso2": "BH",
     "capital": "Manama",
@@ -6471,7 +6100,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 20.7,
           "rainyDays": 4
         }
-      ]
+      ],
+      "sunnyDays": 357
     },
     "holidays": {
       "year": "2026",
@@ -6515,6 +6145,521 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "value": 4.77,
       "date": "2026-01-01"
     }
+  },
+  "Saint Barthélemy": {
+    "iso2": "BL",
+    "capital": "Gustavia",
+    "climate": {
+      "city": "Gustavia",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.3,
+          "rainyDays": 10
+        },
+        {
+          "t": 25.8,
+          "rainyDays": 12
+        },
+        {
+          "t": 26.1,
+          "rainyDays": 10
+        },
+        {
+          "t": 26,
+          "rainyDays": 15
+        },
+        {
+          "t": 26.8,
+          "rainyDays": 13
+        },
+        {
+          "t": 27.5,
+          "rainyDays": 4
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 14
+        },
+        {
+          "t": 28.4,
+          "rainyDays": 12
+        },
+        {
+          "t": 28.4,
+          "rainyDays": 15
+        },
+        {
+          "t": 28.1,
+          "rainyDays": 23
+        },
+        {
+          "t": 27.6,
+          "rainyDays": 13
+        },
+        {
+          "t": 26.7,
+          "rainyDays": 8
+        }
+      ],
+      "sunnyDays": 359
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-08",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-07-14",
+          "name": "National Day"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-10-09",
+          "name": "Abolition Day"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Armistice Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": null,
+    "bigMacUsd": null
+  },
+  "Bahamas": {
+    "iso2": "BS",
+    "capital": "Nassau",
+    "climate": {
+      "city": "Nassau",
+      "year": "2025",
+      "months": [
+        {
+          "t": 22.4,
+          "rainyDays": 7
+        },
+        {
+          "t": 23.7,
+          "rainyDays": 8
+        },
+        {
+          "t": 23.2,
+          "rainyDays": 10
+        },
+        {
+          "t": 24.6,
+          "rainyDays": 8
+        },
+        {
+          "t": 26.9,
+          "rainyDays": 13
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 16
+        },
+        {
+          "t": 28.7,
+          "rainyDays": 15
+        },
+        {
+          "t": 29.3,
+          "rainyDays": 19
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 28
+        },
+        {
+          "t": 26.7,
+          "rainyDays": 21
+        },
+        {
+          "t": 24.6,
+          "rainyDays": 9
+        },
+        {
+          "t": 23.9,
+          "rainyDays": 8
+        }
+      ],
+      "sunnyDays": 354
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-12",
+          "name": "Majority Rule Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Perry Christie Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-07-10",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-08-07",
+          "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "National Heroes' Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.41,
+      "year": "2024"
+    },
+    "lifeExpectancy": {
+      "value": 70.4,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 16.8,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Bosnia and Herzegovina": {
+    "iso2": "BA",
+    "capital": "Sarajevo",
+    "climate": {
+      "city": "Sarajevo",
+      "year": "2025",
+      "months": [
+        {
+          "t": 3,
+          "rainyDays": 5
+        },
+        {
+          "t": 2.8,
+          "rainyDays": 7
+        },
+        {
+          "t": 8,
+          "rainyDays": 18
+        },
+        {
+          "t": 11.1,
+          "rainyDays": 10
+        },
+        {
+          "t": 13.4,
+          "rainyDays": 9
+        },
+        {
+          "t": 21.1,
+          "rainyDays": 2
+        },
+        {
+          "t": 21.5,
+          "rainyDays": 10
+        },
+        {
+          "t": 19.5,
+          "rainyDays": 8
+        },
+        {
+          "t": 17.2,
+          "rainyDays": 7
+        },
+        {
+          "t": 10.1,
+          "rainyDays": 12
+        },
+        {
+          "t": 6.2,
+          "rainyDays": 14
+        },
+        {
+          "t": 2.9,
+          "rainyDays": 5
+        }
+      ],
+      "sunnyDays": 305
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 4,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "May Day / International Workers' Day"
+        },
+        {
+          "date": "2026-05-02",
+          "name": "May Day / International Workers' Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 6.11,
+      "year": "2023"
+    },
+    "lifeExpectancy": {
+      "value": 74.8,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.1,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Belarus": {
+    "iso2": "BY",
+    "capital": "Minsk",
+    "climate": {
+      "city": "Minsk",
+      "year": "2025",
+      "months": [
+        {
+          "t": 0.7,
+          "rainyDays": 13
+        },
+        {
+          "t": -4.7,
+          "rainyDays": 3
+        },
+        {
+          "t": 4.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 8.9,
+          "rainyDays": 8
+        },
+        {
+          "t": 10.6,
+          "rainyDays": 17
+        },
+        {
+          "t": 15.9,
+          "rainyDays": 18
+        },
+        {
+          "t": 19.6,
+          "rainyDays": 19
+        },
+        {
+          "t": 16.8,
+          "rainyDays": 6
+        },
+        {
+          "t": 14.8,
+          "rainyDays": 6
+        },
+        {
+          "t": 7,
+          "rainyDays": 15
+        },
+        {
+          "t": 3.2,
+          "rainyDays": 14
+        },
+        {
+          "t": 0.2,
+          "rainyDays": 12
+        }
+      ],
+      "sunnyDays": 211
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 10,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-07",
+          "name": "Christmas Day (Orthodox)"
+        },
+        {
+          "date": "2026-03-08",
+          "name": "International Women's Day"
+        },
+        {
+          "date": "2026-04-21",
+          "name": "Commemoration Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-09",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-07-03",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-11-07",
+          "name": "October Revolution Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Catholic Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 6.6,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 73.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 11.6,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Saint Helena, Ascension and Tristan da Cunha": {
+    "iso2": "SH",
+    "capital": "Jamestown",
+    "climate": {
+      "city": "Jamestown",
+      "year": "2025",
+      "months": [
+        {
+          "t": 22.5,
+          "rainyDays": 21
+        },
+        {
+          "t": 23.1,
+          "rainyDays": 23
+        },
+        {
+          "t": 23.1,
+          "rainyDays": 28
+        },
+        {
+          "t": 22.9,
+          "rainyDays": 14
+        },
+        {
+          "t": 21.7,
+          "rainyDays": 13
+        },
+        {
+          "t": 20.3,
+          "rainyDays": 18
+        },
+        {
+          "t": 19.6,
+          "rainyDays": 19
+        },
+        {
+          "t": 18.9,
+          "rainyDays": 16
+        },
+        {
+          "t": 19.3,
+          "rainyDays": 12
+        },
+        {
+          "t": 19.1,
+          "rainyDays": 19
+        },
+        {
+          "t": 19.8,
+          "rainyDays": 13
+        },
+        {
+          "t": 21.1,
+          "rainyDays": 17
+        }
+      ],
+      "sunnyDays": 363
+    },
+    "holidays": null,
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": null,
+    "bigMacUsd": null
   },
   "Bermuda": {
     "iso2": "BM",
@@ -6571,7 +6716,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": -3.5,
           "rainyDays": 14
         }
-      ]
+      ],
+      "sunnyDays": 273
     },
     "holidays": {
       "year": "2026",
@@ -6682,7 +6828,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 23.5,
           "rainyDays": 24
         }
-      ]
+      ],
+      "sunnyDays": 344
     },
     "holidays": {
       "year": "2026",
@@ -6764,6 +6911,54 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Brunei": {
+    "iso2": "BN",
+    "capital": "Bandar Seri Begawan",
+    "climate": {
+      "city": "Bandar Seri Begawan",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": -0.3,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 76.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 25.9,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Central African Republic": {
+    "iso2": "CF",
+    "capital": "Bangui",
+    "climate": {
+      "city": "Bangui",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 1,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 52.3,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.8,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Bolivia": {
     "iso2": "BO",
     "capital": "Sucre",
@@ -6819,7 +7014,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 15.9,
           "rainyDays": 21
         }
-      ]
+      ],
+      "sunnyDays": 344
     },
     "holidays": {
       "year": "2026",
@@ -6944,7 +7140,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 27.3,
           "rainyDays": 16
         }
-      ]
+      ],
+      "sunnyDays": 362
     },
     "holidays": {
       "year": "2026",
@@ -6995,6 +7192,79 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "inflation": null,
     "lifeExpectancy": null,
     "migrantShare": null,
+    "bigMacUsd": null
+  },
+  "Bhutan": {
+    "iso2": "BT",
+    "capital": "Thimphu",
+    "climate": {
+      "city": "Thimphu",
+      "year": "2025",
+      "months": [
+        {
+          "t": 7.7,
+          "rainyDays": 10
+        },
+        {
+          "t": 6.9,
+          "rainyDays": 23
+        },
+        {
+          "t": 10.5,
+          "rainyDays": 26
+        },
+        {
+          "t": 13,
+          "rainyDays": 26
+        },
+        {
+          "t": 15.1,
+          "rainyDays": 31
+        },
+        {
+          "t": 17.6,
+          "rainyDays": 29
+        },
+        {
+          "t": 18.7,
+          "rainyDays": 31
+        },
+        {
+          "t": 18,
+          "rainyDays": 31
+        },
+        {
+          "t": 17.3,
+          "rainyDays": 29
+        },
+        {
+          "t": 13.9,
+          "rainyDays": 24
+        },
+        {
+          "t": 11,
+          "rainyDays": 19
+        },
+        {
+          "t": 8.3,
+          "rainyDays": 8
+        }
+      ],
+      "sunnyDays": 339
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 3.56,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 74.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 7,
+      "year": "2024"
+    },
     "bigMacUsd": null
   },
   "Barbados": {
@@ -7052,7 +7322,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 26.3,
           "rainyDays": 13
         }
-      ]
+      ],
+      "sunnyDays": 361
     },
     "holidays": {
       "year": "2026",
@@ -7122,75 +7393,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Bhutan": {
-    "iso2": "BT",
-    "capital": "Thimphu",
-    "climate": {
-      "city": "Thimphu",
-      "year": "2025",
-      "months": [
-        {
-          "t": 7.7,
-          "rainyDays": 10
-        },
-        {
-          "t": 6.9,
-          "rainyDays": 23
-        },
-        {
-          "t": 10.5,
-          "rainyDays": 26
-        },
-        {
-          "t": 13,
-          "rainyDays": 26
-        },
-        {
-          "t": 15.1,
-          "rainyDays": 31
-        },
-        {
-          "t": 17.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 18.7,
-          "rainyDays": 31
-        },
-        {
-          "t": 18,
-          "rainyDays": 31
-        },
-        {
-          "t": 17.3,
-          "rainyDays": 29
-        },
-        {
-          "t": 13.9,
-          "rainyDays": 24
-        },
-        {
-          "t": 11,
-          "rainyDays": 19
-        },
-        {
-          "t": 8.3,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": {
-      "value": 74.9,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 7,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Botswana": {
     "iso2": "BW",
     "capital": "Gaborone",
@@ -7246,7 +7448,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 23.7,
           "rainyDays": 12
         }
-      ]
+      ],
+      "sunnyDays": 345
     },
     "holidays": {
       "year": "2026",
@@ -7312,394 +7515,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Brunei": {
-    "iso2": "BN",
-    "capital": "Bandar Seri Begawan",
-    "climate": {
-      "city": "Bandar Seri Begawan",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.1,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 23
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 20
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 20
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 21
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 28
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": -0.3,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 76.9,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 25.9,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Central African Republic": {
-    "iso2": "CF",
-    "capital": "Bangui",
-    "climate": {
-      "city": "Bangui",
-      "year": "2025",
-      "months": [
-        {
-          "t": 28.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 24,
-          "rainyDays": 29
-        },
-        {
-          "t": 23.8,
-          "rainyDays": 28
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 25
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 8
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 3
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 1,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 52.3,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 1.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Antigua and Barbuda": {
-    "iso2": "AG",
-    "capital": "Saint John's",
-    "climate": {
-      "city": "Saint John's",
-      "year": "2025",
-      "months": [
-        {
-          "t": -6.1,
-          "rainyDays": 8
-        },
-        {
-          "t": -4.7,
-          "rainyDays": 10
-        },
-        {
-          "t": 4.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 8.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 13,
-          "rainyDays": 12
-        },
-        {
-          "t": 20.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 23,
-          "rainyDays": 13
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 11.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 3.6,
-          "rainyDays": 7
-        },
-        {
-          "t": -3.8,
-          "rainyDays": 11
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-04",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-08-03",
-          "name": "Carnival Monday"
-        },
-        {
-          "date": "2026-08-04",
-          "name": "Carnival Tuesday"
-        },
-        {
-          "date": "2026-09-10",
-          "name": "National Day of Prayer"
-        },
-        {
-          "date": "2026-11-02",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-12-09",
-          "name": "National Heroes' Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 1.37,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 76.9,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 32.5,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Cocos (Keeling) Islands": {
-    "iso2": "CC",
-    "capital": "West Island",
-    "climate": {
-      "city": "West Island",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 21
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 20
-        },
-        {
-          "t": 27,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 17
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 14
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
   "Chile": {
     "iso2": "CL",
     "capital": "Santiago",
     "climate": {
       "city": "Santiago",
       "year": "2025",
-      "months": [
-        {
-          "t": 23,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 16.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 13.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 9.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 10.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 10.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 13.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 17.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 2
-        },
-        {
-          "t": 21.3,
-          "rainyDays": 1
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -7788,219 +7611,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "China": {
-    "iso2": "CN",
-    "capital": "Beijing",
-    "climate": {
-      "city": "Beijing",
-      "year": "2025",
-      "months": [
-        {
-          "t": -1,
-          "rainyDays": 1
-        },
-        {
-          "t": 0.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 10.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 17.4,
-          "rainyDays": 3
-        },
-        {
-          "t": 21,
-          "rainyDays": 8
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 23.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 12.5,
-          "rainyDays": 7
-        },
-        {
-          "t": 6.9,
-          "rainyDays": 1
-        },
-        {
-          "t": -0.9,
-          "rainyDays": 2
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 6,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-17",
-          "name": "Chinese New Year (Spring Festival)"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-06-19",
-          "name": "Dragon Boat Festival"
-        },
-        {
-          "date": "2026-09-25",
-          "name": "Mid-Autumn Festival"
-        },
-        {
-          "date": "2026-10-01",
-          "name": "National Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.06,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 77.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.1,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 3.66,
-      "date": "2026-01-01"
-    }
-  },
-  "Cameroon": {
-    "iso2": "CM",
-    "capital": "Yaoundé",
-    "climate": {
-      "city": "Yaoundé",
-      "year": "2025",
-      "months": [
-        {
-          "t": 24.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 17
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 22
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 23
-        },
-        {
-          "t": 22.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 30
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 28
-        },
-        {
-          "t": 22,
-          "rainyDays": 30
-        },
-        {
-          "t": 23,
-          "rainyDays": 17
-        },
-        {
-          "t": 23.7,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 8,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-11",
-          "name": "Youth Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-20",
-          "name": "National Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.4,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 61.8,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Ivory Coast": {
     "iso2": "CI",
     "capital": "Yamoussoukro",
@@ -8056,7 +7666,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 26.7,
           "rainyDays": 8
         }
-      ]
+      ],
+      "sunnyDays": 345
     },
     "holidays": {
       "year": "2026",
@@ -8118,125 +7729,173 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "DR Congo": {
-    "iso2": "CD",
-    "capital": "Kinshasa",
+  "China": {
+    "iso2": "CN",
+    "capital": "Beijing",
     "climate": {
-      "city": "Kinshasa",
+      "city": "Beijing",
       "year": "2025",
       "months": [
         {
-          "t": 26.3,
-          "rainyDays": 19
+          "t": -1,
+          "rainyDays": 1
         },
         {
-          "t": 26.5,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 21
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 25
-        },
-        {
-          "t": 26,
-          "rainyDays": 23
-        },
-        {
-          "t": 26,
-          "rainyDays": 6
-        },
-        {
-          "t": 24.9,
+          "t": 0.1,
           "rainyDays": 0
         },
         {
-          "t": 25.1,
-          "rainyDays": 0
+          "t": 10.2,
+          "rainyDays": 5
         },
         {
-          "t": 26.9,
+          "t": 17.4,
           "rainyDays": 3
         },
         {
-          "t": 27,
-          "rainyDays": 17
+          "t": 21,
+          "rainyDays": 8
         },
         {
-          "t": 25.8,
-          "rainyDays": 27
+          "t": 27.9,
+          "rainyDays": 7
         },
         {
-          "t": 25.7,
-          "rainyDays": 23
+          "t": 28.4,
+          "rainyDays": 18
+        },
+        {
+          "t": 26.1,
+          "rainyDays": 15
+        },
+        {
+          "t": 23.3,
+          "rainyDays": 3
+        },
+        {
+          "t": 12.5,
+          "rainyDays": 7
+        },
+        {
+          "t": 6.9,
+          "rainyDays": 1
+        },
+        {
+          "t": -0.9,
+          "rainyDays": 2
         }
-      ]
+      ],
+      "sunnyDays": 322
     },
     "holidays": {
       "year": "2026",
-      "count": 11,
+      "count": 6,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
         },
         {
-          "date": "2026-01-04",
-          "name": "Martyrs Day"
-        },
-        {
-          "date": "2026-01-16",
-          "name": "Laurent-Désiré Kabila Assassination"
-        },
-        {
-          "date": "2026-01-17",
-          "name": "Patrice Lumumba Assassination"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Kimbangu's Day"
+          "date": "2026-02-17",
+          "name": "Chinese New Year (Spring Festival)"
         },
         {
           "date": "2026-05-01",
           "name": "Labour Day"
         },
         {
-          "date": "2026-05-17",
-          "name": "Liberation Day"
+          "date": "2026-06-19",
+          "name": "Dragon Boat Festival"
         },
         {
-          "date": "2026-06-30",
-          "name": "Independence Day"
+          "date": "2026-09-25",
+          "name": "Mid-Autumn Festival"
         },
         {
-          "date": "2026-08-01",
-          "name": "Parents' Day"
-        },
-        {
-          "date": "2026-08-02",
-          "name": "Congolese Genocide Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
+          "date": "2026-10-01",
+          "name": "National Day"
         }
       ]
     },
     "inflation": {
-      "value": 2.89,
-      "year": "2016"
+      "value": 0.06,
+      "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 61.6,
+      "value": 77.6,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 1,
+      "value": 0.1,
       "year": "2024"
     },
+    "bigMacUsd": {
+      "value": 3.66,
+      "date": "2026-01-01"
+    }
+  },
+  "Cook Islands": {
+    "iso2": "CK",
+    "capital": "Avarua",
+    "climate": {
+      "city": "Avarua",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.1,
+          "rainyDays": 16
+        },
+        {
+          "t": 26.4,
+          "rainyDays": 18
+        },
+        {
+          "t": 26.5,
+          "rainyDays": 20
+        },
+        {
+          "t": 25.8,
+          "rainyDays": 19
+        },
+        {
+          "t": 24.5,
+          "rainyDays": 19
+        },
+        {
+          "t": 23.6,
+          "rainyDays": 10
+        },
+        {
+          "t": 22.5,
+          "rainyDays": 10
+        },
+        {
+          "t": 22.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 22.6,
+          "rainyDays": 5
+        },
+        {
+          "t": 23.4,
+          "rainyDays": 2
+        },
+        {
+          "t": 24.6,
+          "rainyDays": 14
+        },
+        {
+          "t": 25,
+          "rainyDays": 8
+        }
+      ],
+      "sunnyDays": 344
+    },
+    "holidays": null,
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": null,
     "bigMacUsd": null
   },
   "Congo": {
@@ -8294,7 +7953,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 25.8,
           "rainyDays": 22
         }
-      ]
+      ],
+      "sunnyDays": 331
     },
     "holidays": {
       "year": "2026",
@@ -8360,74 +8020,75 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Cuba": {
-    "iso2": "CU",
-    "capital": "Havana",
+  "Cameroon": {
+    "iso2": "CM",
+    "capital": "Yaoundé",
     "climate": {
-      "city": "Havana",
+      "city": "Yaoundé",
       "year": "2025",
       "months": [
         {
-          "t": 22,
-          "rainyDays": 11
+          "t": 24.7,
+          "rainyDays": 1
         },
         {
-          "t": 23.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 23.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 8
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 23
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 19
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 18
+          "t": 25.2,
+          "rainyDays": 5
         },
         {
           "t": 24.5,
-          "rainyDays": 8
+          "rainyDays": 17
         },
         {
-          "t": 23.8,
-          "rainyDays": 10
+          "t": 23.5,
+          "rainyDays": 22
+        },
+        {
+          "t": 23.1,
+          "rainyDays": 23
+        },
+        {
+          "t": 22.3,
+          "rainyDays": 27
+        },
+        {
+          "t": 21.4,
+          "rainyDays": 30
+        },
+        {
+          "t": 21.4,
+          "rainyDays": 22
+        },
+        {
+          "t": 21.8,
+          "rainyDays": 28
+        },
+        {
+          "t": 22,
+          "rainyDays": 30
+        },
+        {
+          "t": 23,
+          "rainyDays": 17
+        },
+        {
+          "t": 23.7,
+          "rainyDays": 8
         }
-      ]
+      ],
+      "sunnyDays": 340
     },
     "holidays": {
       "year": "2026",
-      "count": 9,
+      "count": 8,
       "sample": [
         {
           "date": "2026-01-01",
-          "name": "Triumph of the Revolution"
+          "name": "New Year's Day"
         },
         {
-          "date": "2026-01-02",
-          "name": "Victory of Fidel Castro"
+          "date": "2026-02-11",
+          "name": "Youth Day"
         },
         {
           "date": "2026-04-03",
@@ -8438,20 +8099,16 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Labour Day"
         },
         {
-          "date": "2026-07-25",
-          "name": "Day before the Commemoration of the Assault of the Moncada garrison"
+          "date": "2026-05-14",
+          "name": "Ascension Day"
         },
         {
-          "date": "2026-07-26",
-          "name": "Commemoration of the Assault of the Moncada garrison"
+          "date": "2026-05-20",
+          "name": "National Day"
         },
         {
-          "date": "2026-07-27",
-          "name": "Day after the Commemoration of the Assault of the Moncada garrison"
-        },
-        {
-          "date": "2026-10-10",
-          "name": "Independence Day"
+          "date": "2026-08-15",
+          "name": "Assumption Day"
         },
         {
           "date": "2026-12-25",
@@ -8459,78 +8116,140 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
         }
       ]
     },
-    "inflation": null,
+    "inflation": {
+      "value": 3.4,
+      "year": "2025"
+    },
     "lifeExpectancy": {
-      "value": 73.7,
+      "value": 61.8,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 0,
+      "value": 2.2,
       "year": "2024"
     },
     "bigMacUsd": null
   },
-  "Cook Islands": {
-    "iso2": "CK",
-    "capital": "Avarua",
+  "DR Congo": {
+    "iso2": "CD",
+    "capital": "Kinshasa",
     "climate": {
-      "city": "Avarua",
+      "city": "Kinshasa",
       "year": "2025",
       "months": [
         {
-          "t": 26.1,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 18
+          "t": 26.3,
+          "rainyDays": 19
         },
         {
           "t": 26.5,
-          "rainyDays": 20
+          "rainyDays": 18
+        },
+        {
+          "t": 26.8,
+          "rainyDays": 21
+        },
+        {
+          "t": 26.2,
+          "rainyDays": 25
+        },
+        {
+          "t": 26,
+          "rainyDays": 23
+        },
+        {
+          "t": 26,
+          "rainyDays": 6
+        },
+        {
+          "t": 24.9,
+          "rainyDays": 0
+        },
+        {
+          "t": 25.1,
+          "rainyDays": 0
+        },
+        {
+          "t": 26.9,
+          "rainyDays": 3
+        },
+        {
+          "t": 27,
+          "rainyDays": 17
         },
         {
           "t": 25.8,
-          "rainyDays": 19
+          "rainyDays": 27
         },
         {
-          "t": 24.5,
-          "rainyDays": 19
+          "t": 25.7,
+          "rainyDays": 23
+        }
+      ],
+      "sunnyDays": 333
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
         },
         {
-          "t": 23.6,
-          "rainyDays": 10
+          "date": "2026-01-04",
+          "name": "Martyrs Day"
         },
         {
-          "t": 22.5,
-          "rainyDays": 10
+          "date": "2026-01-16",
+          "name": "Laurent-Désiré Kabila Assassination"
         },
         {
-          "t": 22.8,
-          "rainyDays": 8
+          "date": "2026-01-17",
+          "name": "Patrice Lumumba Assassination"
         },
         {
-          "t": 22.6,
-          "rainyDays": 5
+          "date": "2026-04-06",
+          "name": "Kimbangu's Day"
         },
         {
-          "t": 23.4,
-          "rainyDays": 2
+          "date": "2026-05-01",
+          "name": "Labour Day"
         },
         {
-          "t": 24.6,
-          "rainyDays": 14
+          "date": "2026-05-17",
+          "name": "Liberation Day"
         },
         {
-          "t": 25,
-          "rainyDays": 8
+          "date": "2026-06-30",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-08-01",
+          "name": "Parents' Day"
+        },
+        {
+          "date": "2026-08-02",
+          "name": "Congolese Genocide Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
         }
       ]
     },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
+    "inflation": {
+      "value": 2.89,
+      "year": "2016"
+    },
+    "lifeExpectancy": {
+      "value": 61.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1,
+      "year": "2024"
+    },
     "bigMacUsd": null
   },
   "Comoros": {
@@ -8588,7 +8307,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 27.3,
           "rainyDays": 27
         }
-      ]
+      ],
+      "sunnyDays": 361
     },
     "holidays": null,
     "inflation": {
@@ -8601,6 +8321,117 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "migrantShare": {
       "value": 1.4,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Cuba": {
+    "iso2": "CU",
+    "capital": "Havana",
+    "climate": {
+      "city": "Havana",
+      "year": "2025",
+      "months": [
+        {
+          "t": 22,
+          "rainyDays": 11
+        },
+        {
+          "t": 23.8,
+          "rainyDays": 7
+        },
+        {
+          "t": 23.7,
+          "rainyDays": 6
+        },
+        {
+          "t": 24.9,
+          "rainyDays": 8
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 10
+        },
+        {
+          "t": 27.9,
+          "rainyDays": 23
+        },
+        {
+          "t": 28.5,
+          "rainyDays": 19
+        },
+        {
+          "t": 28.4,
+          "rainyDays": 22
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 26
+        },
+        {
+          "t": 26.4,
+          "rainyDays": 18
+        },
+        {
+          "t": 24.5,
+          "rainyDays": 8
+        },
+        {
+          "t": 23.8,
+          "rainyDays": 10
+        }
+      ],
+      "sunnyDays": 354
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 9,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "Triumph of the Revolution"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "Victory of Fidel Castro"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-07-25",
+          "name": "Day before the Commemoration of the Assault of the Moncada garrison"
+        },
+        {
+          "date": "2026-07-26",
+          "name": "Commemoration of the Assault of the Moncada garrison"
+        },
+        {
+          "date": "2026-07-27",
+          "name": "Day after the Commemoration of the Assault of the Moncada garrison"
+        },
+        {
+          "date": "2026-10-10",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": {
+      "value": 73.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -8660,7 +8491,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 22.8,
           "rainyDays": 4
         }
-      ]
+      ],
+      "sunnyDays": 360
     },
     "holidays": null,
     "inflation": {
@@ -8732,7 +8564,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 27.3,
           "rainyDays": 20
         }
-      ]
+      ],
+      "sunnyDays": 363
     },
     "holidays": {
       "year": "2026",
@@ -8807,6 +8640,87 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Dominican Republic": {
+    "iso2": "DO",
+    "capital": "Santo Domingo",
+    "climate": {
+      "city": "Santo Domingo",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 13,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Day of Kings"
+        },
+        {
+          "date": "2026-01-21",
+          "name": "Our Lady of Altagracia"
+        },
+        {
+          "date": "2026-01-26",
+          "name": "Duarte's Birthday"
+        },
+        {
+          "date": "2026-02-27",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-28",
+          "name": "Mother's Day"
+        },
+        {
+          "date": "2026-06-04",
+          "name": "Corpus Christi"
+        },
+        {
+          "date": "2026-08-16",
+          "name": "Restoration Day"
+        },
+        {
+          "date": "2026-09-24",
+          "name": "Our Lady of Mercy"
+        },
+        {
+          "date": "2026-11-06",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.87,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 73.3,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 6.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Cayman Islands": {
     "iso2": "KY",
     "capital": "George Town",
@@ -8862,7 +8776,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 27,
           "rainyDays": 13
         }
-      ]
+      ],
+      "sunnyDays": 363
     },
     "holidays": {
       "year": "2026",
@@ -8925,78 +8840,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Djibouti": {
-    "iso2": "DJ",
-    "capital": "Djibouti",
-    "climate": {
-      "city": "Djibouti",
-      "year": "2025",
-      "months": [
-        {
-          "t": 25,
-          "rainyDays": 2
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 2
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 2
-        },
-        {
-          "t": 32.6,
-          "rainyDays": 2
-        },
-        {
-          "t": 34.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 37.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 33.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 34.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 30.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 5
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": -0.31,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 64.9,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 10.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Christmas Island": {
     "iso2": "CX",
     "capital": "Flying Fish Cove",
@@ -9052,7 +8895,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 26.4,
           "rainyDays": 16
         }
-      ]
+      ],
+      "sunnyDays": 349
     },
     "holidays": null,
     "inflation": null,
@@ -9115,7 +8959,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 5.3,
           "rainyDays": 6
         }
-      ]
+      ],
+      "sunnyDays": 259
     },
     "holidays": {
       "year": "2026",
@@ -9196,6 +9041,79 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
+  "Djibouti": {
+    "iso2": "DJ",
+    "capital": "Djibouti",
+    "climate": {
+      "city": "Djibouti",
+      "year": "2025",
+      "months": [
+        {
+          "t": 25,
+          "rainyDays": 2
+        },
+        {
+          "t": 25.3,
+          "rainyDays": 2
+        },
+        {
+          "t": 27.1,
+          "rainyDays": 6
+        },
+        {
+          "t": 28.8,
+          "rainyDays": 2
+        },
+        {
+          "t": 32.6,
+          "rainyDays": 2
+        },
+        {
+          "t": 34.6,
+          "rainyDays": 0
+        },
+        {
+          "t": 37.7,
+          "rainyDays": 1
+        },
+        {
+          "t": 33.6,
+          "rainyDays": 11
+        },
+        {
+          "t": 34.4,
+          "rainyDays": 0
+        },
+        {
+          "t": 30.3,
+          "rainyDays": 0
+        },
+        {
+          "t": 27.3,
+          "rainyDays": 0
+        },
+        {
+          "t": 25.6,
+          "rainyDays": 5
+        }
+      ],
+      "sunnyDays": 362
+    },
+    "holidays": null,
+    "inflation": {
+      "value": -0.31,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 64.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 10.8,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Dominica": {
     "iso2": "DM",
     "capital": "Roseau",
@@ -9251,7 +9169,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 25.1,
           "rainyDays": 20
         }
-      ]
+      ],
+      "sunnyDays": 360
     },
     "holidays": {
       "year": "2026",
@@ -9324,56 +9243,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Algiers",
       "year": "2025",
-      "months": [
-        {
-          "t": 12.5,
-          "rainyDays": 13
-        },
-        {
-          "t": 12.4,
-          "rainyDays": 10
-        },
-        {
-          "t": 15.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 17.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 27,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 25,
-          "rainyDays": 3
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 15.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 12.6,
-          "rainyDays": 13
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -9411,256 +9282,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "migrantShare": {
       "value": 0.6,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Dominican Republic": {
-    "iso2": "DO",
-    "capital": "Santo Domingo",
-    "climate": {
-      "city": "Santo Domingo",
-      "year": "2025",
-      "months": [
-        {
-          "t": 24.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 24.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 19
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 18
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 23
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 23
-        },
-        {
-          "t": 27,
-          "rainyDays": 23
-        },
-        {
-          "t": 26,
-          "rainyDays": 22
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 17
-        },
-        {
-          "t": 24.3,
-          "rainyDays": 10
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 13,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Day of Kings"
-        },
-        {
-          "date": "2026-01-21",
-          "name": "Our Lady of Altagracia"
-        },
-        {
-          "date": "2026-01-26",
-          "name": "Duarte's Birthday"
-        },
-        {
-          "date": "2026-02-27",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-28",
-          "name": "Mother's Day"
-        },
-        {
-          "date": "2026-06-04",
-          "name": "Corpus Christi"
-        },
-        {
-          "date": "2026-08-16",
-          "name": "Restoration Day"
-        },
-        {
-          "date": "2026-09-24",
-          "name": "Our Lady of Mercy"
-        },
-        {
-          "date": "2026-11-06",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.87,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 73.3,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 6.5,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Ecuador": {
-    "iso2": "EC",
-    "capital": "Quito",
-    "climate": {
-      "city": "Quito",
-      "year": "2025",
-      "months": [
-        {
-          "t": 12.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 12.2,
-          "rainyDays": 28
-        },
-        {
-          "t": 12.1,
-          "rainyDays": 29
-        },
-        {
-          "t": 12.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 12.5,
-          "rainyDays": 22
-        },
-        {
-          "t": 12.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 13.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 12.9,
-          "rainyDays": 12
-        },
-        {
-          "t": 13.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 12.3,
-          "rainyDays": 26
-        },
-        {
-          "t": 12.4,
-          "rainyDays": 27
-        },
-        {
-          "t": 12.7,
-          "rainyDays": 22
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-02-17",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "International Workers' Day"
-        },
-        {
-          "date": "2026-05-24",
-          "name": "The Battle of Pichincha"
-        },
-        {
-          "date": "2026-08-10",
-          "name": "Declaration of Independence of Quito"
-        },
-        {
-          "date": "2026-10-09",
-          "name": "Independence of Guayaquil"
-        },
-        {
-          "date": "2026-11-02",
-          "name": "All Souls' Day"
-        },
-        {
-          "date": "2026-11-03",
-          "name": "Independence of Cuenca"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.71,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 74,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 4.1,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -9720,7 +9341,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 17.1,
           "rainyDays": 0
         }
-      ]
+      ],
+      "sunnyDays": 364
     },
     "holidays": {
       "year": "2026",
@@ -9772,75 +9394,6 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "value": 2.65,
       "date": "2026-01-01"
     }
-  },
-  "Eritrea": {
-    "iso2": "ER",
-    "capital": "Asmara",
-    "climate": {
-      "city": "Asmara",
-      "year": "2025",
-      "months": [
-        {
-          "t": 13.5,
-          "rainyDays": 3
-        },
-        {
-          "t": 15.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 16.9,
-          "rainyDays": 13
-        },
-        {
-          "t": 17.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 19.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 20.3,
-          "rainyDays": 2
-        },
-        {
-          "t": 17.2,
-          "rainyDays": 20
-        },
-        {
-          "t": 16.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 17.4,
-          "rainyDays": 5
-        },
-        {
-          "t": 15.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 14,
-          "rainyDays": 8
-        },
-        {
-          "t": 14.3,
-          "rainyDays": 2
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": {
-      "value": 63.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.4,
-      "year": "2024"
-    },
-    "bigMacUsd": null
   },
   "Ethiopia": {
     "iso2": "ET",
@@ -9897,7 +9450,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 15,
           "rainyDays": 1
         }
-      ]
+      ],
+      "sunnyDays": 363
     },
     "holidays": null,
     "inflation": {
@@ -9910,6 +9464,76 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "migrantShare": {
       "value": 0.9,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Eritrea": {
+    "iso2": "ER",
+    "capital": "Asmara",
+    "climate": {
+      "city": "Asmara",
+      "year": "2025",
+      "months": [
+        {
+          "t": 13.5,
+          "rainyDays": 3
+        },
+        {
+          "t": 15.2,
+          "rainyDays": 9
+        },
+        {
+          "t": 16.9,
+          "rainyDays": 13
+        },
+        {
+          "t": 17.7,
+          "rainyDays": 14
+        },
+        {
+          "t": 19.2,
+          "rainyDays": 10
+        },
+        {
+          "t": 20.3,
+          "rainyDays": 2
+        },
+        {
+          "t": 17.2,
+          "rainyDays": 20
+        },
+        {
+          "t": 16.4,
+          "rainyDays": 22
+        },
+        {
+          "t": 17.4,
+          "rainyDays": 5
+        },
+        {
+          "t": 15.7,
+          "rainyDays": 6
+        },
+        {
+          "t": 14,
+          "rainyDays": 8
+        },
+        {
+          "t": 14.3,
+          "rainyDays": 2
+        }
+      ],
+      "sunnyDays": 359
+    },
+    "holidays": null,
+    "inflation": null,
+    "lifeExpectancy": {
+      "value": 63.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.4,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -9969,7 +9593,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 1.9,
           "rainyDays": 13
         }
-      ]
+      ],
+      "sunnyDays": 225
     },
     "holidays": {
       "year": "2026",
@@ -10051,6 +9676,328 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Ecuador": {
+    "iso2": "EC",
+    "capital": "Quito",
+    "climate": {
+      "city": "Quito",
+      "year": "2025",
+      "months": [
+        {
+          "t": 12.4,
+          "rainyDays": 26
+        },
+        {
+          "t": 12.2,
+          "rainyDays": 28
+        },
+        {
+          "t": 12.1,
+          "rainyDays": 29
+        },
+        {
+          "t": 12.6,
+          "rainyDays": 29
+        },
+        {
+          "t": 12.5,
+          "rainyDays": 22
+        },
+        {
+          "t": 12.4,
+          "rainyDays": 11
+        },
+        {
+          "t": 13.5,
+          "rainyDays": 0
+        },
+        {
+          "t": 12.9,
+          "rainyDays": 12
+        },
+        {
+          "t": 13.4,
+          "rainyDays": 14
+        },
+        {
+          "t": 12.3,
+          "rainyDays": 26
+        },
+        {
+          "t": 12.4,
+          "rainyDays": 27
+        },
+        {
+          "t": 12.7,
+          "rainyDays": 22
+        }
+      ],
+      "sunnyDays": 355
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "International Workers' Day"
+        },
+        {
+          "date": "2026-05-24",
+          "name": "The Battle of Pichincha"
+        },
+        {
+          "date": "2026-08-10",
+          "name": "Declaration of Independence of Quito"
+        },
+        {
+          "date": "2026-10-09",
+          "name": "Independence of Guayaquil"
+        },
+        {
+          "date": "2026-11-02",
+          "name": "All Souls' Day"
+        },
+        {
+          "date": "2026-11-03",
+          "name": "Independence of Cuenca"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.71,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 74,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 4.1,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Ghana": {
+    "iso2": "GH",
+    "capital": "Accra",
+    "climate": {
+      "city": "Accra",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-07",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-03-06",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "May Day"
+        },
+        {
+          "date": "2026-07-01",
+          "name": "Republic Day"
+        },
+        {
+          "date": "2026-09-21",
+          "name": "Founders Day"
+        },
+        {
+          "date": "2026-12-04",
+          "name": "Farmers' Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 14.2,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 66.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Guernsey": {
+    "iso2": "GG",
+    "capital": "St. Peter Port",
+    "climate": {
+      "city": "St. Peter Port",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 9,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Early May Bank Holiday"
+        },
+        {
+          "date": "2026-05-09",
+          "name": "Liberation Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Spring Bank Holiday"
+        },
+        {
+          "date": "2026-08-31",
+          "name": "Summer Bank Holiday"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": null,
+    "bigMacUsd": null
+  },
+  "Gibraltar": {
+    "iso2": "GI",
+    "capital": "Gibraltar",
+    "climate": {
+      "city": "Gibraltar",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-09",
+          "name": "Commonwealth Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-28",
+          "name": "Workers' Memorial Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "May Day Bank Holiday"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Spring Bank Holiday"
+        },
+        {
+          "date": "2026-06-08",
+          "name": "Queen's Birthday"
+        },
+        {
+          "date": "2026-08-31",
+          "name": "Summer Bank Holiday"
+        },
+        {
+          "date": "2026-09-10",
+          "name": "Gibraltar National Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 28.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Fiji": {
     "iso2": "FJ",
     "capital": "Suva",
@@ -10106,7 +10053,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 24.9,
           "rainyDays": 22
         }
-      ]
+      ],
+      "sunnyDays": 328
     },
     "holidays": null,
     "inflation": {
@@ -10121,6 +10069,74 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "value": 1.5,
       "year": "2024"
     },
+    "bigMacUsd": null
+  },
+  "Guadeloupe": {
+    "iso2": "GP",
+    "capital": "Basse-Terre",
+    "climate": {
+      "city": "Basse-Terre",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "International Workers' Day"
+        },
+        {
+          "date": "2026-05-08",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-05-27",
+          "name": "Abolition Day"
+        },
+        {
+          "date": "2026-07-14",
+          "name": "National Day"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Armistice Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": null,
     "bigMacUsd": null
   },
   "Falkland Islands": {
@@ -10178,7 +10194,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 8.9,
           "rainyDays": 27
         }
-      ]
+      ],
+      "sunnyDays": 247
     },
     "holidays": {
       "year": "2026",
@@ -10235,59 +10252,77 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
-  "Guernsey": {
-    "iso2": "GG",
-    "capital": "St. Peter Port",
+  "Micronesia": {
+    "iso2": "FM",
+    "capital": "Palikir",
     "climate": {
-      "city": "St. Peter Port",
+      "city": "Palikir",
       "year": "2025",
-      "months": []
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 9,
-      "sample": [
+      "months": [
         {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
+          "t": 27.2,
+          "rainyDays": 27
         },
         {
-          "date": "2026-04-03",
-          "name": "Good Friday"
+          "t": 27,
+          "rainyDays": 27
         },
         {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
+          "t": 27.1,
+          "rainyDays": 28
         },
         {
-          "date": "2026-05-01",
-          "name": "Early May Bank Holiday"
+          "t": 27.1,
+          "rainyDays": 25
         },
         {
-          "date": "2026-05-09",
-          "name": "Liberation Day"
+          "t": 27.2,
+          "rainyDays": 31
         },
         {
-          "date": "2026-05-25",
-          "name": "Spring Bank Holiday"
+          "t": 27.3,
+          "rainyDays": 30
         },
         {
-          "date": "2026-08-31",
-          "name": "Summer Bank Holiday"
+          "t": 26.6,
+          "rainyDays": 29
         },
         {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
+          "t": 26.7,
+          "rainyDays": 29
         },
         {
-          "date": "2026-12-26",
-          "name": "Boxing Day"
+          "t": 26.8,
+          "rainyDays": 28
+        },
+        {
+          "t": 26.5,
+          "rainyDays": 30
+        },
+        {
+          "t": 26.6,
+          "rainyDays": 29
+        },
+        {
+          "t": 27,
+          "rainyDays": 28
         }
-      ]
+      ],
+      "sunnyDays": 318
     },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
+    "holidays": null,
+    "inflation": {
+      "value": 5.41,
+      "year": "2022"
+    },
+    "lifeExpectancy": {
+      "value": 65.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 2.6,
+      "year": "2024"
+    },
     "bigMacUsd": null
   },
   "Faroe Islands": {
@@ -10345,7 +10380,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 5.6,
           "rainyDays": 21
         }
-      ]
+      ],
+      "sunnyDays": 152
     },
     "holidays": {
       "year": "2026",
@@ -10429,62 +10465,63 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Ghana": {
-    "iso2": "GH",
-    "capital": "Accra",
+  "Gabon": {
+    "iso2": "GA",
+    "capital": "Libreville",
     "climate": {
-      "city": "Accra",
+      "city": "Libreville",
       "year": "2025",
       "months": [
         {
-          "t": 28.2,
-          "rainyDays": 13
+          "t": 26.1,
+          "rainyDays": 29
         },
         {
-          "t": 28.1,
-          "rainyDays": 11
+          "t": 26.6,
+          "rainyDays": 28
         },
         {
-          "t": 28.4,
-          "rainyDays": 18
+          "t": 26.7,
+          "rainyDays": 29
         },
         {
-          "t": 28.2,
-          "rainyDays": 17
+          "t": 26.7,
+          "rainyDays": 24
         },
         {
-          "t": 27.4,
+          "t": 26.3,
+          "rainyDays": 29
+        },
+        {
+          "t": 25.7,
           "rainyDays": 22
+        },
+        {
+          "t": 24.7,
+          "rainyDays": 3
+        },
+        {
+          "t": 24.3,
+          "rainyDays": 8
+        },
+        {
+          "t": 25.3,
+          "rainyDays": 21
+        },
+        {
+          "t": 25.5,
+          "rainyDays": 30
+        },
+        {
+          "t": 25.6,
+          "rainyDays": 30
         },
         {
           "t": 25.8,
           "rainyDays": 28
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 15
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 22
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 23
-        },
-        {
-          "t": 26,
-          "rainyDays": 25
-        },
-        {
-          "t": 27,
-          "rainyDays": 21
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 20
         }
-      ]
+      ],
+      "sunnyDays": 338
     },
     "holidays": {
       "year": "2026",
@@ -10495,270 +10532,40 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "New Year's Day"
         },
         {
-          "date": "2026-01-07",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-03-06",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
+          "date": "2026-03-12",
+          "name": "Renovation Day"
         },
         {
           "date": "2026-04-06",
           "name": "Easter Monday"
         },
         {
-          "date": "2026-05-01",
-          "name": "May Day"
-        },
-        {
-          "date": "2026-07-01",
-          "name": "Republic Day"
-        },
-        {
-          "date": "2026-09-21",
-          "name": "Founders Day"
-        },
-        {
-          "date": "2026-12-04",
-          "name": "Farmers' Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Boxing Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 14.2,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 66.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 1.5,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Guinea": {
-    "iso2": "GN",
-    "capital": "Conakry",
-    "climate": {
-      "city": "Conakry",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.5,
-          "rainyDays": 2
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 29
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 31
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 31
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 20
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 4
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 7,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
+          "date": "2026-04-17",
+          "name": "Women's Day"
         },
         {
           "date": "2026-05-01",
           "name": "Labour Day"
         },
         {
-          "date": "2026-05-25",
-          "name": "Africa Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-10-02",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.55,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 61.3,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Guadeloupe": {
-    "iso2": "GP",
-    "capital": "Basse-Terre",
-    "climate": {
-      "city": "Basse-Terre",
-      "year": "2025",
-      "months": [
-        {
-          "t": 24.9,
-          "rainyDays": 19
-        },
-        {
-          "t": 24.1,
-          "rainyDays": 27
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 23
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 22
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 27
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 22
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "International Workers' Day"
-        },
-        {
-          "date": "2026-05-08",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
+          "date": "2026-05-06",
+          "name": "Martyr's Day"
         },
         {
           "date": "2026-05-25",
           "name": "Whit Monday"
         },
         {
-          "date": "2026-05-27",
-          "name": "Abolition Day"
-        },
-        {
-          "date": "2026-07-14",
-          "name": "National Day"
-        },
-        {
           "date": "2026-08-15",
           "name": "Assumption Day"
         },
         {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
+          "date": "2026-08-17",
+          "name": "Independence Day"
         },
         {
-          "date": "2026-11-11",
-          "name": "Armistice Day"
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
         },
         {
           "date": "2026-12-25",
@@ -10766,214 +10573,16 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
         }
       ]
     },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
-  "Bosnia and Herzegovina": {
-    "iso2": "BA",
-    "capital": "Sarajevo",
-    "climate": {
-      "city": "Sarajevo",
-      "year": "2025",
-      "months": [
-        {
-          "t": 3,
-          "rainyDays": 5
-        },
-        {
-          "t": 2.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 8,
-          "rainyDays": 18
-        },
-        {
-          "t": 11.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 13.4,
-          "rainyDays": 9
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 21.5,
-          "rainyDays": 10
-        },
-        {
-          "t": 19.5,
-          "rainyDays": 8
-        },
-        {
-          "t": 17.2,
-          "rainyDays": 7
-        },
-        {
-          "t": 10.1,
-          "rainyDays": 12
-        },
-        {
-          "t": 6.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 2.9,
-          "rainyDays": 5
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 4,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "May Day / International Workers' Day"
-        },
-        {
-          "date": "2026-05-02",
-          "name": "May Day / International Workers' Day"
-        }
-      ]
-    },
     "inflation": {
-      "value": 6.11,
-      "year": "2023"
+      "value": 1.77,
+      "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 74.8,
+      "value": 65.1,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 1.1,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Belarus": {
-    "iso2": "BY",
-    "capital": "Minsk",
-    "climate": {
-      "city": "Minsk",
-      "year": "2025",
-      "months": [
-        {
-          "t": 0.7,
-          "rainyDays": 13
-        },
-        {
-          "t": -4.7,
-          "rainyDays": 3
-        },
-        {
-          "t": 4.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 8.9,
-          "rainyDays": 8
-        },
-        {
-          "t": 10.6,
-          "rainyDays": 17
-        },
-        {
-          "t": 15.9,
-          "rainyDays": 18
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 19
-        },
-        {
-          "t": 16.8,
-          "rainyDays": 6
-        },
-        {
-          "t": 14.8,
-          "rainyDays": 6
-        },
-        {
-          "t": 7,
-          "rainyDays": 15
-        },
-        {
-          "t": 3.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 0.2,
-          "rainyDays": 12
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 10,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-07",
-          "name": "Christmas Day (Orthodox)"
-        },
-        {
-          "date": "2026-03-08",
-          "name": "International Women's Day"
-        },
-        {
-          "date": "2026-04-21",
-          "name": "Commemoration Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-09",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-07-03",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-11-07",
-          "name": "October Revolution Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Catholic Christmas Day"
-        }
-      ]
-    },
-    "inflation": null,
-    "lifeExpectancy": {
-      "value": 73.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 11.6,
+      "value": 17.7,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -11033,7 +10642,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": 24.2,
           "rainyDays": 0
         }
-      ]
+      ],
+      "sunnyDays": 354
     },
     "holidays": {
       "year": "2026",
@@ -11091,222 +10701,71 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Equatorial Guinea": {
-    "iso2": "GQ",
-    "capital": "Malabo",
+  "Guinea": {
+    "iso2": "GN",
+    "capital": "Conakry",
     "climate": {
-      "city": "Malabo",
+      "city": "Conakry",
       "year": "2025",
       "months": [
         {
+          "t": 27.5,
+          "rainyDays": 2
+        },
+        {
           "t": 27.6,
-          "rainyDays": 5
-        },
-        {
-          "t": 28,
-          "rainyDays": 4
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 11
+          "rainyDays": 0
         },
         {
           "t": 27.1,
-          "rainyDays": 17
+          "rainyDays": 1
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 1
+        },
+        {
+          "t": 27.3,
+          "rainyDays": 24
         },
         {
           "t": 26.1,
-          "rainyDays": 22
+          "rainyDays": 29
+        },
+        {
+          "t": 24.9,
+          "rainyDays": 31
+        },
+        {
+          "t": 24.9,
+          "rainyDays": 31
         },
         {
           "t": 25.2,
-          "rainyDays": 27
+          "rainyDays": 30
         },
         {
-          "t": 25,
-          "rainyDays": 18
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 23
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 21
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 12
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 5
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 2.92,
-      "year": "2024"
-    },
-    "lifeExpectancy": {
-      "value": 61.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 13.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Guinea-Bissau": {
-    "iso2": "GW",
-    "capital": "Bissau",
-    "climate": {
-      "city": "Bissau",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 26,
-          "rainyDays": 29
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 26,
+          "t": 26.2,
           "rainyDays": 28
         },
         {
-          "t": 27.5,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 0
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 0.87,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 58.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.7,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Grenada": {
-    "iso2": "GD",
-    "capital": "St. George's",
-    "climate": {
-      "city": "St. George's",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.3,
-          "rainyDays": 20
-        },
-        {
-          "t": 26,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.8,
+          "t": 26.9,
           "rainyDays": 20
         },
         {
           "t": 27.3,
-          "rainyDays": 21
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 26
-        },
-        {
-          "t": 27,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 21
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 23
+          "rainyDays": 4
         }
-      ]
+      ],
+      "sunnyDays": 317
     },
     "holidays": {
       "year": "2026",
-      "count": 13,
+      "count": 7,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-07",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
         },
         {
           "date": "2026-04-06",
@@ -11317,49 +10776,33 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Labour Day"
         },
         {
-          "date": "2026-05-01",
-          "name": "Indian Arrival Day"
-        },
-        {
           "date": "2026-05-25",
-          "name": "Whit Monday"
+          "name": "Africa Day"
         },
         {
-          "date": "2026-06-04",
-          "name": "Corpus Christi"
+          "date": "2026-08-15",
+          "name": "Assumption Day"
         },
         {
-          "date": "2026-08-03",
-          "name": "Emancipation Day"
-        },
-        {
-          "date": "2026-08-11",
-          "name": "Carnival"
-        },
-        {
-          "date": "2026-10-25",
-          "name": "Thanksgiving Day"
+          "date": "2026-10-02",
+          "name": "Independence Day"
         },
         {
           "date": "2026-12-25",
           "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Boxing Day"
         }
       ]
     },
     "inflation": {
-      "value": 0.61,
+      "value": 3.55,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 72.8,
+      "value": 61.3,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 6.3,
+      "value": 0.8,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -11419,7 +10862,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "t": -2.6,
           "rainyDays": 16
         }
-      ]
+      ],
+      "sunnyDays": 171
     },
     "holidays": {
       "year": "2026",
@@ -11499,62 +10943,290 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Guinea-Bissau": {
+    "iso2": "GW",
+    "capital": "Bissau",
+    "climate": {
+      "city": "Bissau",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.8,
+          "rainyDays": 0
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 0
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 0
+        },
+        {
+          "t": 27.9,
+          "rainyDays": 0
+        },
+        {
+          "t": 28.2,
+          "rainyDays": 3
+        },
+        {
+          "t": 28.2,
+          "rainyDays": 11
+        },
+        {
+          "t": 26,
+          "rainyDays": 29
+        },
+        {
+          "t": 25.6,
+          "rainyDays": 29
+        },
+        {
+          "t": 26,
+          "rainyDays": 28
+        },
+        {
+          "t": 27.5,
+          "rainyDays": 17
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 6
+        },
+        {
+          "t": 25.5,
+          "rainyDays": 0
+        }
+      ],
+      "sunnyDays": 347
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 0.87,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 58.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Equatorial Guinea": {
+    "iso2": "GQ",
+    "capital": "Malabo",
+    "climate": {
+      "city": "Malabo",
+      "year": "2025",
+      "months": [
+        {
+          "t": 27.6,
+          "rainyDays": 5
+        },
+        {
+          "t": 28,
+          "rainyDays": 4
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 8
+        },
+        {
+          "t": 27.4,
+          "rainyDays": 11
+        },
+        {
+          "t": 27.1,
+          "rainyDays": 17
+        },
+        {
+          "t": 26.1,
+          "rainyDays": 22
+        },
+        {
+          "t": 25.2,
+          "rainyDays": 27
+        },
+        {
+          "t": 25,
+          "rainyDays": 18
+        },
+        {
+          "t": 25.4,
+          "rainyDays": 23
+        },
+        {
+          "t": 25.7,
+          "rainyDays": 21
+        },
+        {
+          "t": 26.4,
+          "rainyDays": 12
+        },
+        {
+          "t": 27.1,
+          "rainyDays": 5
+        }
+      ],
+      "sunnyDays": 312
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 2.92,
+      "year": "2024"
+    },
+    "lifeExpectancy": {
+      "value": 61.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 13.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Grenada": {
+    "iso2": "GD",
+    "capital": "St. George's",
+    "climate": {
+      "city": "St. George's",
+      "year": "2025",
+      "months": [
+        {
+          "t": 26.3,
+          "rainyDays": 20
+        },
+        {
+          "t": 26,
+          "rainyDays": 19
+        },
+        {
+          "t": 26.3,
+          "rainyDays": 18
+        },
+        {
+          "t": 26.8,
+          "rainyDays": 20
+        },
+        {
+          "t": 27.3,
+          "rainyDays": 21
+        },
+        {
+          "t": 26.8,
+          "rainyDays": 26
+        },
+        {
+          "t": 27,
+          "rainyDays": 25
+        },
+        {
+          "t": 27.7,
+          "rainyDays": 21
+        },
+        {
+          "t": 28.1,
+          "rainyDays": 19
+        },
+        {
+          "t": 27.8,
+          "rainyDays": 19
+        },
+        {
+          "t": 27.2,
+          "rainyDays": 19
+        },
+        {
+          "t": 26.2,
+          "rainyDays": 23
+        }
+      ],
+      "sunnyDays": 362
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 13,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-07",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Indian Arrival Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-06-04",
+          "name": "Corpus Christi"
+        },
+        {
+          "date": "2026-08-03",
+          "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-08-11",
+          "name": "Carnival"
+        },
+        {
+          "date": "2026-10-25",
+          "name": "Thanksgiving Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.61,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.8,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 6.3,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "French Guiana": {
     "iso2": "GF",
     "capital": "Cayenne",
     "climate": {
       "city": "Cayenne",
       "year": "2025",
-      "months": [
-        {
-          "t": 25.7,
-          "rainyDays": 25
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 31
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 20
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 13
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 18
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 26
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -11615,137 +11287,23 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
-  "Guatemala": {
-    "iso2": "GT",
-    "capital": "Guatemala City",
+  "Guam": {
+    "iso2": "GU",
+    "capital": "Hagåtña",
     "climate": {
-      "city": "Guatemala City",
+      "city": "Hagåtña",
       "year": "2025",
-      "months": [
-        {
-          "t": 17.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 18.7,
-          "rainyDays": 5
-        },
-        {
-          "t": 20.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 7
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 19
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 27
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 25
-        },
-        {
-          "t": 18.4,
-          "rainyDays": 24
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 17.4,
-          "rainyDays": 10
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
-    "holidays": {
-      "year": "2026",
-      "count": 13,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-02",
-          "name": "Maundy Thursday"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-04",
-          "name": "Holy Saturday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "International Workers' Day"
-        },
-        {
-          "date": "2026-06-30",
-          "name": "Army Day"
-        },
-        {
-          "date": "2026-09-15",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-20",
-          "name": "Revolution Day"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
-        },
-        {
-          "date": "2026-12-24",
-          "name": "Christmas Eve"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-31",
-          "name": "New Year's Eve"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 1.49,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 68.7,
-      "year": "2021"
-    },
+    "holidays": null,
+    "inflation": null,
+    "lifeExpectancy": null,
     "migrantShare": {
-      "value": 0.5,
+      "value": 50.2,
       "year": "2024"
     },
-    "bigMacUsd": {
-      "value": 4.3,
-      "date": "2026-01-01"
-    }
+    "bigMacUsd": null
   },
   "Hong Kong": {
     "iso2": "HK",
@@ -11753,56 +11311,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "City of Victoria",
       "year": "2025",
-      "months": [
-        {
-          "t": -9.8,
-          "rainyDays": 1
-        },
-        {
-          "t": -9.7,
-          "rainyDays": 7
-        },
-        {
-          "t": 2.4,
-          "rainyDays": 6
-        },
-        {
-          "t": 7.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 14.7,
-          "rainyDays": 11
-        },
-        {
-          "t": 20,
-          "rainyDays": 16
-        },
-        {
-          "t": 23,
-          "rainyDays": 12
-        },
-        {
-          "t": 21.2,
-          "rainyDays": 8
-        },
-        {
-          "t": 18.5,
-          "rainyDays": 11
-        },
-        {
-          "t": 12.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 3.1,
-          "rainyDays": 5
-        },
-        {
-          "t": -7.8,
-          "rainyDays": 12
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -11892,134 +11402,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Micronesia": {
-    "iso2": "FM",
-    "capital": "Palikir",
+  "Guyana": {
+    "iso2": "GY",
+    "capital": "Georgetown",
     "climate": {
-      "city": "Palikir",
+      "city": "Georgetown",
       "year": "2025",
-      "months": [
-        {
-          "t": 27.2,
-          "rainyDays": 27
-        },
-        {
-          "t": 27,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 28
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 31
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 27,
-          "rainyDays": 28
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 5.41,
-      "year": "2022"
-    },
-    "lifeExpectancy": {
-      "value": 65.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.6,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Gabon": {
-    "iso2": "GA",
-    "capital": "Libreville",
-    "climate": {
-      "city": "Libreville",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.1,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 29
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 3
-        },
-        {
-          "t": 24.3,
-          "rainyDays": 8
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 21
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 28
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -12030,40 +11420,197 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "New Year's Day"
         },
         {
-          "date": "2026-03-12",
-          "name": "Renovation Day"
+          "date": "2026-02-23",
+          "name": "Republic Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
         },
         {
           "date": "2026-04-06",
           "name": "Easter Monday"
         },
         {
-          "date": "2026-04-17",
-          "name": "Women's Day"
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-05",
+          "name": "Arrival Day"
+        },
+        {
+          "date": "2026-05-26",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-07-06",
+          "name": "Caricom Day"
+        },
+        {
+          "date": "2026-08-01",
+          "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.33,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 66.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 6.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Guatemala": {
+    "iso2": "GT",
+    "capital": "Guatemala City",
+    "climate": {
+      "city": "Guatemala City",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 13,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-02",
+          "name": "Maundy Thursday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-04",
+          "name": "Holy Saturday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "International Workers' Day"
+        },
+        {
+          "date": "2026-06-30",
+          "name": "Army Day"
+        },
+        {
+          "date": "2026-09-15",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-10-20",
+          "name": "Revolution Day"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-12-24",
+          "name": "Christmas Eve"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-31",
+          "name": "New Year's Eve"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 1.49,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 68.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.5,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 4.3,
+      "date": "2026-01-01"
+    }
+  },
+  "Honduras": {
+    "iso2": "HN",
+    "capital": "Tegucigalpa",
+    "climate": {
+      "city": "Tegucigalpa",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-02",
+          "name": "Maundy Thursday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-04",
+          "name": "Holy Saturday"
+        },
+        {
+          "date": "2026-04-14",
+          "name": "America's Day"
         },
         {
           "date": "2026-05-01",
           "name": "Labour Day"
         },
         {
-          "date": "2026-05-06",
-          "name": "Martyr's Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-08-17",
+          "date": "2026-09-15",
           "name": "Independence Day"
         },
         {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
+          "date": "2026-10-03",
+          "name": "Francisco Morazán's Day/Soldier's Day"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "Columbus Day"
+        },
+        {
+          "date": "2026-10-21",
+          "name": "Army Day"
         },
         {
           "date": "2026-12-25",
@@ -12072,18 +11619,21 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       ]
     },
     "inflation": {
-      "value": 1.77,
+      "value": 4.6,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 65.1,
+      "value": 69,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 17.7,
+      "value": 0.4,
       "year": "2024"
     },
-    "bigMacUsd": null
+    "bigMacUsd": {
+      "value": 5.06,
+      "date": "2026-01-01"
+    }
   },
   "Croatia": {
     "iso2": "HR",
@@ -12091,56 +11641,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Zagreb",
       "year": "2025",
-      "months": [
-        {
-          "t": 3.1,
-          "rainyDays": 7
-        },
-        {
-          "t": 2.3,
-          "rainyDays": 6
-        },
-        {
-          "t": 8.4,
-          "rainyDays": 15
-        },
-        {
-          "t": 12.6,
-          "rainyDays": 9
-        },
-        {
-          "t": 14.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 23.4,
-          "rainyDays": 2
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 22.3,
-          "rainyDays": 7
-        },
-        {
-          "t": 18.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 11.2,
-          "rainyDays": 8
-        },
-        {
-          "t": 6,
-          "rainyDays": 10
-        },
-        {
-          "t": 2.2,
-          "rainyDays": 7
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -12224,56 +11726,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Port-au-Prince",
       "year": "2025",
-      "months": [
-        {
-          "t": 27.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 30.1,
-          "rainyDays": 3
-        },
-        {
-          "t": 30.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 30.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 29.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 28,
-          "rainyDays": 14
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 3
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 2
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -12381,56 +11835,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Douglas",
       "year": "2025",
-      "months": [
-        {
-          "t": 4.8,
-          "rainyDays": 17
-        },
-        {
-          "t": 5.4,
-          "rainyDays": 9
-        },
-        {
-          "t": 7.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 9.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 12.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 13.6,
-          "rainyDays": 20
-        },
-        {
-          "t": 15.6,
-          "rainyDays": 14
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 14
-        },
-        {
-          "t": 12.7,
-          "rainyDays": 21
-        },
-        {
-          "t": 10.9,
-          "rainyDays": 16
-        },
-        {
-          "t": 8.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 7.3,
-          "rainyDays": 21
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -12492,56 +11898,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Budapest",
       "year": "2025",
-      "months": [
-        {
-          "t": 2.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 0.6,
-          "rainyDays": 4
-        },
-        {
-          "t": 7.9,
-          "rainyDays": 13
-        },
-        {
-          "t": 13.4,
-          "rainyDays": 9
-        },
-        {
-          "t": 14.9,
-          "rainyDays": 12
-        },
-        {
-          "t": 24,
-          "rainyDays": 2
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 7
-        },
-        {
-          "t": 23.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 19,
-          "rainyDays": 6
-        },
-        {
-          "t": 10.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 5.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 3.4,
-          "rainyDays": 6
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -12624,56 +11982,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "New Delhi",
       "year": "2025",
-      "months": [
-        {
-          "t": 14,
-          "rainyDays": 3
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 2
-        },
-        {
-          "t": 31.6,
-          "rainyDays": 1
-        },
-        {
-          "t": 32.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 32.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 29.8,
-          "rainyDays": 20
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 25
-        },
-        {
-          "t": 30.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 5
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 16.1,
-          "rainyDays": 0
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -12693,121 +12003,50 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Gibraltar": {
-    "iso2": "GI",
-    "capital": "Gibraltar",
+  "Iran": {
+    "iso2": "IR",
+    "capital": "Tehran",
     "climate": {
-      "city": "Gibraltar",
+      "city": "Tehran",
       "year": "2025",
-      "months": [
-        {
-          "t": 12.9,
-          "rainyDays": 9
-        },
-        {
-          "t": 13.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 14.2,
-          "rainyDays": 22
-        },
-        {
-          "t": 16.6,
-          "rainyDays": 14
-        },
-        {
-          "t": 18.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 4
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 2
-        },
-        {
-          "t": 22.5,
-          "rainyDays": 4
-        },
-        {
-          "t": 20.9,
-          "rainyDays": 12
-        },
-        {
-          "t": 15.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 12.3,
-          "rainyDays": 16
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-09",
-          "name": "Commonwealth Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-28",
-          "name": "Workers' Memorial Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "May Day Bank Holiday"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Spring Bank Holiday"
-        },
-        {
-          "date": "2026-06-08",
-          "name": "Queen's Birthday"
-        },
-        {
-          "date": "2026-08-31",
-          "name": "Summer Bank Holiday"
-        },
-        {
-          "date": "2026-09-10",
-          "name": "Gibraltar National Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Boxing Day"
-        }
-      ]
+    "holidays": null,
+    "inflation": {
+      "value": 42.17,
+      "year": "2025"
     },
-    "inflation": null,
-    "lifeExpectancy": null,
+    "lifeExpectancy": {
+      "value": 74.7,
+      "year": "2021"
+    },
     "migrantShare": {
-      "value": 28.7,
+      "value": 4.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Iraq": {
+    "iso2": "IQ",
+    "capital": "Baghdad",
+    "climate": {
+      "city": "Baghdad",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 0.3,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 71.5,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.8,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -12818,56 +12057,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Reykjavik",
       "year": "2025",
-      "months": [
-        {
-          "t": -1.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 2.8,
-          "rainyDays": 21
-        },
-        {
-          "t": 3.2,
-          "rainyDays": 19
-        },
-        {
-          "t": 5.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 8.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 8.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 11.8,
-          "rainyDays": 18
-        },
-        {
-          "t": 11.7,
-          "rainyDays": 19
-        },
-        {
-          "t": 8.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 4.7,
-          "rainyDays": 20
-        },
-        {
-          "t": 0.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 3,
-          "rainyDays": 18
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -12953,209 +12144,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Israel": {
-    "iso2": "IL",
-    "capital": "Jerusalem",
-    "climate": {
-      "city": "Jerusalem",
-      "year": "2025",
-      "months": [
-        {
-          "t": 10.5,
-          "rainyDays": 5
-        },
-        {
-          "t": 7.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 14.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 17.2,
-          "rainyDays": 4
-        },
-        {
-          "t": 21.2,
-          "rainyDays": 4
-        },
-        {
-          "t": 24,
-          "rainyDays": 0
-        },
-        {
-          "t": 26,
-          "rainyDays": 0
-        },
-        {
-          "t": 26,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 20.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 11.4,
-          "rainyDays": 9
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 3.04,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 81.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 22.3,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 6.36,
-      "date": "2026-01-01"
-    }
-  },
-  "Iran": {
-    "iso2": "IR",
-    "capital": "Tehran",
-    "climate": {
-      "city": "Tehran",
-      "year": "2025",
-      "months": [
-        {
-          "t": 5.1,
-          "rainyDays": 3
-        },
-        {
-          "t": 4.4,
-          "rainyDays": 5
-        },
-        {
-          "t": 12.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 5
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 33.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 32.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 13.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 6.6,
-          "rainyDays": 7
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 42.17,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 74.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 4.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Jersey": {
     "iso2": "JE",
     "capital": "Saint Helier",
     "climate": {
       "city": "Saint Helier",
       "year": "2025",
-      "months": [
-        {
-          "t": 6.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 7.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 9.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 11.9,
-          "rainyDays": 12
-        },
-        {
-          "t": 14.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 17.6,
-          "rainyDays": 9
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 18.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 16.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 14.3,
-          "rainyDays": 11
-        },
-        {
-          "t": 12.1,
-          "rainyDays": 18
-        },
-        {
-          "t": 9.4,
-          "rainyDays": 12
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -13204,198 +12200,26 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
-  "Honduras": {
-    "iso2": "HN",
-    "capital": "Tegucigalpa",
+  "Jamaica": {
+    "iso2": "JM",
+    "capital": "Kingston",
     "climate": {
-      "city": "Tegucigalpa",
+      "city": "Kingston",
       "year": "2025",
-      "months": [
-        {
-          "t": 20.5,
-          "rainyDays": 16
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 23.7,
-          "rainyDays": 5
-        },
-        {
-          "t": 23.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 14
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 28
-        },
-        {
-          "t": 22.5,
-          "rainyDays": 23
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 23
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 23
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 25
-        },
-        {
-          "t": 20.5,
-          "rainyDays": 15
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 15
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
-      "count": 11,
+      "count": 10,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
         },
         {
-          "date": "2026-04-02",
-          "name": "Maundy Thursday"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-04",
-          "name": "Holy Saturday"
-        },
-        {
-          "date": "2026-04-14",
-          "name": "America's Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-09-15",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-03",
-          "name": "Francisco Morazán's Day/Soldier's Day"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "Columbus Day"
-        },
-        {
-          "date": "2026-10-21",
-          "name": "Army Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4.6,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 69,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.4,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 5.06,
-      "date": "2026-01-01"
-    }
-  },
-  "Guyana": {
-    "iso2": "GY",
-    "capital": "Georgetown",
-    "climate": {
-      "city": "Georgetown",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.4,
-          "rainyDays": 17
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 31
-        },
-        {
-          "t": 26,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 29
-        },
-        {
-          "t": 27,
-          "rainyDays": 28
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 18
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 26
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-23",
-          "name": "Republic Day"
+          "date": "2026-02-18",
+          "name": "Ash Wednesday"
         },
         {
           "date": "2026-04-03",
@@ -13406,24 +12230,20 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Easter Monday"
         },
         {
-          "date": "2026-05-01",
+          "date": "2026-05-23",
           "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-05",
-          "name": "Arrival Day"
-        },
-        {
-          "date": "2026-05-26",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-07-06",
-          "name": "Caricom Day"
         },
         {
           "date": "2026-08-01",
           "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-08-06",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-10-16",
+          "name": "National Heroes Day"
         },
         {
           "date": "2026-12-25",
@@ -13431,89 +12251,77 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
         },
         {
           "date": "2026-12-26",
-          "name": "Boxing Day"
+          "name": "St. Stephen's Day"
         }
       ]
     },
     "inflation": {
-      "value": 3.33,
+      "value": 4,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 66.1,
+      "value": 70.1,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 6.5,
+      "value": 0.8,
       "year": "2024"
     },
     "bigMacUsd": null
   },
-  "Guam": {
-    "iso2": "GU",
-    "capital": "Hagåtña",
+  "Israel": {
+    "iso2": "IL",
+    "capital": "Jerusalem",
     "climate": {
-      "city": "Hagåtña",
+      "city": "Jerusalem",
       "year": "2025",
-      "months": [
-        {
-          "t": 28.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 19
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 24
-        },
-        {
-          "t": 28,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 29
-        },
-        {
-          "t": 28,
-          "rainyDays": 30
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 30
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 28
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 24
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 16
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
+    "inflation": {
+      "value": 3.04,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 81.7,
+      "year": "2021"
+    },
     "migrantShare": {
-      "value": 50.2,
+      "value": 22.3,
       "year": "2024"
     },
-    "bigMacUsd": null
+    "bigMacUsd": {
+      "value": 6.36,
+      "date": "2026-01-01"
+    }
+  },
+  "Jordan": {
+    "iso2": "JO",
+    "capital": "Amman",
+    "climate": {
+      "city": "Amman",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 1.77,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 75.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 45.7,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 3.53,
+      "date": "2026-01-01"
+    }
   },
   "Kazakhstan": {
     "iso2": "KZ",
@@ -13521,56 +12329,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Astana",
       "year": "2025",
-      "months": [
-        {
-          "t": -10.4,
-          "rainyDays": 10
-        },
-        {
-          "t": -9.7,
-          "rainyDays": 1
-        },
-        {
-          "t": -4.2,
-          "rainyDays": 7
-        },
-        {
-          "t": 10,
-          "rainyDays": 8
-        },
-        {
-          "t": 16.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 12.8,
-          "rainyDays": 4
-        },
-        {
-          "t": 2.7,
-          "rainyDays": 1
-        },
-        {
-          "t": -0.6,
-          "rainyDays": 14
-        },
-        {
-          "t": -8.8,
-          "rainyDays": 13
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -13644,62 +12404,38 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Kyrgyzstan": {
+    "iso2": "KG",
+    "capital": "Bishkek",
+    "climate": {
+      "city": "Bishkek",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 8.21,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.2,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 2.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Kenya": {
     "iso2": "KE",
     "capital": "Nairobi",
     "climate": {
       "city": "Nairobi",
       "year": "2025",
-      "months": [
-        {
-          "t": 20.5,
-          "rainyDays": 8
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 3
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 21
-        },
-        {
-          "t": 19.3,
-          "rainyDays": 24
-        },
-        {
-          "t": 19.1,
-          "rainyDays": 22
-        },
-        {
-          "t": 18.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 6
-        },
-        {
-          "t": 17.6,
-          "rainyDays": 9
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 6
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 19.2,
-          "rainyDays": 20
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 22
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -13761,134 +12497,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Kyrgyzstan": {
-    "iso2": "KG",
-    "capital": "Bishkek",
-    "climate": {
-      "city": "Bishkek",
-      "year": "2025",
-      "months": [
-        {
-          "t": -2.9,
-          "rainyDays": 7
-        },
-        {
-          "t": -1.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 5.3,
-          "rainyDays": 8
-        },
-        {
-          "t": 14.2,
-          "rainyDays": 4
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 6
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 3
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 3
-        },
-        {
-          "t": 25,
-          "rainyDays": 4
-        },
-        {
-          "t": 18.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 11.3,
-          "rainyDays": 7
-        },
-        {
-          "t": 5.1,
-          "rainyDays": 5
-        },
-        {
-          "t": 0.9,
-          "rainyDays": 10
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 8.21,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 72.2,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.7,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Cambodia": {
     "iso2": "KH",
     "capital": "Phnom Penh",
     "climate": {
       "city": "Phnom Penh",
       "year": "2025",
-      "months": [
-        {
-          "t": 26.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 28,
-          "rainyDays": 7
-        },
-        {
-          "t": 29.1,
-          "rainyDays": 9
-        },
-        {
-          "t": 29.4,
-          "rainyDays": 16
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 25
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 21
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 15
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 6
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -13990,157 +12606,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Kiribati": {
-    "iso2": "KI",
-    "capital": "South Tarawa",
-    "climate": {
-      "city": "South Tarawa",
-      "year": "2025",
-      "months": []
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 2.46,
-      "year": "2024"
-    },
-    "lifeExpectancy": {
-      "value": 60.9,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.5,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Iraq": {
-    "iso2": "IQ",
-    "capital": "Baghdad",
-    "climate": {
-      "city": "Baghdad",
-      "year": "2025",
-      "months": [
-        {
-          "t": 12.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 11.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 2
-        },
-        {
-          "t": 33.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 37.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 39.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 39,
-          "rainyDays": 0
-        },
-        {
-          "t": 34,
-          "rainyDays": 0
-        },
-        {
-          "t": 28,
-          "rainyDays": 0
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 1
-        },
-        {
-          "t": 14,
-          "rainyDays": 7
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 0.3,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 71.5,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Saint Kitts and Nevis": {
     "iso2": "KN",
     "capital": "Basseterre",
     "climate": {
       "city": "Basseterre",
       "year": "2025",
-      "months": [
-        {
-          "t": 26,
-          "rainyDays": 15
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 15
-        },
-        {
-          "t": 26,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 23
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 17
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 10
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -14211,62 +12684,38 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Kiribati": {
+    "iso2": "KI",
+    "capital": "South Tarawa",
+    "climate": {
+      "city": "South Tarawa",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 2.46,
+      "year": "2024"
+    },
+    "lifeExpectancy": {
+      "value": 60.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 2.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "South Korea": {
     "iso2": "KR",
     "capital": "Seoul",
     "climate": {
       "city": "Seoul",
       "year": "2025",
-      "months": [
-        {
-          "t": -2.2,
-          "rainyDays": 6
-        },
-        {
-          "t": -2.6,
-          "rainyDays": 3
-        },
-        {
-          "t": 5.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 11.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 16.7,
-          "rainyDays": 10
-        },
-        {
-          "t": 23.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 27,
-          "rainyDays": 18
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 12
-        },
-        {
-          "t": 15.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 7.3,
-          "rainyDays": 2
-        },
-        {
-          "t": -0.9,
-          "rainyDays": 10
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -14369,56 +12818,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Kuwait City",
       "year": "2025",
-      "months": [
-        {
-          "t": 15,
-          "rainyDays": 2
-        },
-        {
-          "t": 15.3,
-          "rainyDays": 6
-        },
-        {
-          "t": 20,
-          "rainyDays": 6
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 37.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 39.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 38.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 17.1,
-          "rainyDays": 9
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -14444,56 +12845,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Vientiane",
       "year": "2025",
-      "months": [
-        {
-          "t": 20.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 24,
-          "rainyDays": 2
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 11
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 23.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 23.4,
-          "rainyDays": 1
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -14510,255 +12863,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Liberia": {
-    "iso2": "LR",
-    "capital": "Monrovia",
-    "climate": {
-      "city": "Monrovia",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 27,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 28
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 30
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 28
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 30
-        },
-        {
-          "t": 25,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 29
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 23
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-11",
-          "name": "Armed Forces Day"
-        },
-        {
-          "date": "2026-03-11",
-          "name": "National Decoration Day"
-        },
-        {
-          "date": "2026-03-15",
-          "name": "Joseph Jenkins Roberts Birthday"
-        },
-        {
-          "date": "2026-04-10",
-          "name": "Fast and Prayer Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "National Unification Day"
-        },
-        {
-          "date": "2026-07-26",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-08-24",
-          "name": "National Flag Day"
-        },
-        {
-          "date": "2026-11-05",
-          "name": "Thanksgiving Day"
-        },
-        {
-          "date": "2026-11-29",
-          "name": "William V. S. Tubman's Birthday"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 8.32,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 63.5,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 1.3,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Libya": {
-    "iso2": "LY",
-    "capital": "Tripoli",
-    "climate": {
-      "city": "Tripoli",
-      "year": "2025",
-      "months": [
-        {
-          "t": 13.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 14.9,
-          "rainyDays": 4
-        },
-        {
-          "t": 20,
-          "rainyDays": 5
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 3
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 4
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 29.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 29,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 4
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 4
-        },
-        {
-          "t": 15.5,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 1.84,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 72.2,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 12.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Lebanon": {
     "iso2": "LB",
     "capital": "Beirut",
     "climate": {
       "city": "Beirut",
       "year": "2025",
-      "months": [
-        {
-          "t": 14.9,
-          "rainyDays": 4
-        },
-        {
-          "t": 11.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 17.2,
-          "rainyDays": 8
-        },
-        {
-          "t": 19.1,
-          "rainyDays": 7
-        },
-        {
-          "t": 23,
-          "rainyDays": 4
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 24,
-          "rainyDays": 5
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 16,
-          "rainyDays": 11
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -14778,62 +12890,38 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
+  "Libya": {
+    "iso2": "LY",
+    "capital": "Tripoli",
+    "climate": {
+      "city": "Tripoli",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 1.84,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.2,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 12.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Saint Lucia": {
     "iso2": "LC",
     "capital": "Castries",
     "climate": {
       "city": "Castries",
       "year": "2025",
-      "months": [
-        {
-          "t": 24.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 24
-        },
-        {
-          "t": 25,
-          "rainyDays": 18
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 20
-        },
-        {
-          "t": 26,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 23
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 20
-        },
-        {
-          "t": 27,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 18
-        },
-        {
-          "t": 26,
-          "rainyDays": 20
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 20
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -14909,56 +12997,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Vaduz",
       "year": "2025",
-      "months": [
-        {
-          "t": 1.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 2.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 7.3,
-          "rainyDays": 15
-        },
-        {
-          "t": 11.5,
-          "rainyDays": 9
-        },
-        {
-          "t": 13.8,
-          "rainyDays": 22
-        },
-        {
-          "t": 21,
-          "rainyDays": 13
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 24
-        },
-        {
-          "t": 19.9,
-          "rainyDays": 15
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 10.7,
-          "rainyDays": 13
-        },
-        {
-          "t": 5.5,
-          "rainyDays": 10
-        },
-        {
-          "t": 4.3,
-          "rainyDays": 6
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -15054,62 +13094,114 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Liberia": {
+    "iso2": "LR",
+    "capital": "Monrovia",
+    "climate": {
+      "city": "Monrovia",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-11",
+          "name": "Armed Forces Day"
+        },
+        {
+          "date": "2026-03-11",
+          "name": "National Decoration Day"
+        },
+        {
+          "date": "2026-03-15",
+          "name": "Joseph Jenkins Roberts Birthday"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Fast and Prayer Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "National Unification Day"
+        },
+        {
+          "date": "2026-07-26",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-08-24",
+          "name": "National Flag Day"
+        },
+        {
+          "date": "2026-11-05",
+          "name": "Thanksgiving Day"
+        },
+        {
+          "date": "2026-11-29",
+          "name": "William V. S. Tubman's Birthday"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 8.32,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 63.5,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.3,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Sri Lanka": {
+    "iso2": "LK",
+    "capital": "Colombo",
+    "climate": {
+      "city": "Colombo",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": -4.76,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 77.2,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.2,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 5.69,
+      "date": "2024-01-01"
+    }
+  },
   "Lesotho": {
     "iso2": "LS",
     "capital": "Maseru",
     "climate": {
       "city": "Maseru",
       "year": "2025",
-      "months": [
-        {
-          "t": 21.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 17.7,
-          "rainyDays": 20
-        },
-        {
-          "t": 13.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 9.7,
-          "rainyDays": 2
-        },
-        {
-          "t": 6.1,
-          "rainyDays": 4
-        },
-        {
-          "t": 6.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 10.5,
-          "rainyDays": 3
-        },
-        {
-          "t": 14.3,
-          "rainyDays": 8
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 11
-        },
-        {
-          "t": 16.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 17
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -15175,137 +13267,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Sri Lanka": {
-    "iso2": "LK",
-    "capital": "Colombo",
-    "climate": {
-      "city": "Colombo",
-      "year": "2025",
-      "months": [
-        {
-          "t": 25.7,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 31
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 21
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 19
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": -4.76,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 77.2,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.2,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 5.69,
-      "date": "2024-01-01"
-    }
-  },
   "Lithuania": {
     "iso2": "LT",
     "capital": "Vilnius",
     "climate": {
       "city": "Vilnius",
       "year": "2025",
-      "months": [
-        {
-          "t": 1.3,
-          "rainyDays": 14
-        },
-        {
-          "t": -3.6,
-          "rainyDays": 6
-        },
-        {
-          "t": 4.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 9,
-          "rainyDays": 5
-        },
-        {
-          "t": 9.9,
-          "rainyDays": 16
-        },
-        {
-          "t": 15.5,
-          "rainyDays": 17
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 20
-        },
-        {
-          "t": 16.5,
-          "rainyDays": 11
-        },
-        {
-          "t": 15,
-          "rainyDays": 9
-        },
-        {
-          "t": 6.9,
-          "rainyDays": 15
-        },
-        {
-          "t": 2.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 1,
-          "rainyDays": 12
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -15389,56 +13358,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Riga",
       "year": "2025",
-      "months": [
-        {
-          "t": 1.9,
-          "rainyDays": 18
-        },
-        {
-          "t": -2.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 4.5,
-          "rainyDays": 7
-        },
-        {
-          "t": 7.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 10.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 15.4,
-          "rainyDays": 20
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 20
-        },
-        {
-          "t": 16.6,
-          "rainyDays": 17
-        },
-        {
-          "t": 15.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 7.8,
-          "rainyDays": 15
-        },
-        {
-          "t": 3.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 2.5,
-          "rainyDays": 16
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -15524,177 +13445,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Saint Martin": {
-    "iso2": "MF",
-    "capital": "Marigot",
-    "climate": {
-      "city": "Marigot",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 6
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 28,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 13
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 9
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-08",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-05-28",
-          "name": "Abolition Day"
-        },
-        {
-          "date": "2026-07-14",
-          "name": "National Day"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
-        },
-        {
-          "date": "2026-11-11",
-          "name": "Armistice Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 0,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Luxembourg": {
     "iso2": "LU",
     "capital": "Luxembourg",
     "climate": {
       "city": "Luxembourg",
       "year": "2025",
-      "months": [
-        {
-          "t": 1.9,
-          "rainyDays": 15
-        },
-        {
-          "t": 2,
-          "rainyDays": 6
-        },
-        {
-          "t": 6.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 10.2,
-          "rainyDays": 8
-        },
-        {
-          "t": 13.6,
-          "rainyDays": 6
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 18.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 13.7,
-          "rainyDays": 17
-        },
-        {
-          "t": 10.1,
-          "rainyDays": 14
-        },
-        {
-          "t": 5.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 4.3,
-          "rainyDays": 9
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -15764,62 +13522,81 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Saint Martin": {
+    "iso2": "MF",
+    "capital": "Marigot",
+    "climate": {
+      "city": "Marigot",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-08",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-05-28",
+          "name": "Abolition Day"
+        },
+        {
+          "date": "2026-07-14",
+          "name": "National Day"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Armistice Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 0,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Morocco": {
     "iso2": "MA",
     "capital": "Rabat",
     "climate": {
       "city": "Rabat",
       "year": "2025",
-      "months": [
-        {
-          "t": 14,
-          "rainyDays": 6
-        },
-        {
-          "t": 14.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 15,
-          "rainyDays": 17
-        },
-        {
-          "t": 17.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 4
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 22.3,
-          "rainyDays": 4
-        },
-        {
-          "t": 20.9,
-          "rainyDays": 2
-        },
-        {
-          "t": 16.7,
-          "rainyDays": 7
-        },
-        {
-          "t": 13.4,
-          "rainyDays": 20
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -15881,254 +13658,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Jordan": {
-    "iso2": "JO",
-    "capital": "Amman",
-    "climate": {
-      "city": "Amman",
-      "year": "2025",
-      "months": [
-        {
-          "t": 9.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 7.5,
-          "rainyDays": 6
-        },
-        {
-          "t": 14.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 1
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 18.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 10.6,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 1.77,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 75.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 45.7,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 3.53,
-      "date": "2026-01-01"
-    }
-  },
-  "Jamaica": {
-    "iso2": "JM",
-    "capital": "Kingston",
-    "climate": {
-      "city": "Kingston",
-      "year": "2025",
-      "months": [
-        {
-          "t": 24.9,
-          "rainyDays": 9
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 20
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 27
-        },
-        {
-          "t": 26,
-          "rainyDays": 30
-        },
-        {
-          "t": 25,
-          "rainyDays": 23
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 12
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 10,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-18",
-          "name": "Ash Wednesday"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-23",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-08-01",
-          "name": "Emancipation Day"
-        },
-        {
-          "date": "2026-08-06",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-16",
-          "name": "National Heroes Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 70.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Monaco": {
     "iso2": "MC",
     "capital": "Monaco",
     "climate": {
       "city": "Monaco",
       "year": "2025",
-      "months": [
-        {
-          "t": 9.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 9.7,
-          "rainyDays": 5
-        },
-        {
-          "t": 11.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 14.5,
-          "rainyDays": 9
-        },
-        {
-          "t": 17.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 25,
-          "rainyDays": 5
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 7
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 7
-        },
-        {
-          "t": 17,
-          "rainyDays": 4
-        },
-        {
-          "t": 12,
-          "rainyDays": 8
-        },
-        {
-          "t": 10.7,
-          "rainyDays": 12
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -16192,455 +13729,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Mali": {
-    "iso2": "ML",
-    "capital": "Bamako",
-    "climate": {
-      "city": "Bamako",
-      "year": "2025",
-      "months": [
-        {
-          "t": 25.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 32.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 33.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 31.5,
-          "rainyDays": 6
-        },
-        {
-          "t": 29.3,
-          "rainyDays": 10
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 25
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 20
-        },
-        {
-          "t": 29.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 29.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 2
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 14,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-20",
-          "name": "Armed Forces Day"
-        },
-        {
-          "date": "2026-03-15",
-          "name": "Leylatoul Qadr (Roughly Date)"
-        },
-        {
-          "date": "2026-03-19",
-          "name": "Korité (Roughly Date)"
-        },
-        {
-          "date": "2026-03-25",
-          "name": "Martyrs' Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Workers' Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Africa Day"
-        },
-        {
-          "date": "2026-05-26",
-          "name": "Tabaski (Roughly Date)"
-        },
-        {
-          "date": "2026-06-25",
-          "name": "Ashura (Roughly Date)"
-        },
-        {
-          "date": "2026-08-25",
-          "name": "Mawloud (Roughly Date)"
-        },
-        {
-          "date": "2026-09-01",
-          "name": "Baptism of the Prophet (Roughly Date)"
-        },
-        {
-          "date": "2026-09-22",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.28,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 61.7,
-      "year": "2021"
-    },
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
-  "Marshall Islands": {
-    "iso2": "MH",
-    "capital": "Majuro",
-    "climate": {
-      "city": "Majuro",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 30
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 28
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 24
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 8.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Maldives": {
-    "iso2": "MV",
-    "capital": "Malé",
-    "climate": {
-      "city": "Malé",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.7,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 5
-        },
-        {
-          "t": 28,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 17
-        },
-        {
-          "t": 28.7,
-          "rainyDays": 17
-        },
-        {
-          "t": 28.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 21
-        },
-        {
-          "t": 28,
-          "rainyDays": 12
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 13
-        },
-        {
-          "t": 28,
-          "rainyDays": 15
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 13
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 4.01,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 75.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 14.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "North Macedonia": {
-    "iso2": "MK",
-    "capital": "Skopje",
-    "climate": {
-      "city": "Skopje",
-      "year": "2025",
-      "months": [
-        {
-          "t": 1.4,
-          "rainyDays": 6
-        },
-        {
-          "t": 2.9,
-          "rainyDays": 2
-        },
-        {
-          "t": 9.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 12.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 16.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 4
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 6
-        },
-        {
-          "t": 11.5,
-          "rainyDays": 13
-        },
-        {
-          "t": 9.2,
-          "rainyDays": 13
-        },
-        {
-          "t": 3.7,
-          "rainyDays": 5
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-07",
-          "name": "Christmas Day (Orthodox)"
-        },
-        {
-          "date": "2026-04-10",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-12",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-13",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-24",
-          "name": "Saints Cyril and Methodius Day"
-        },
-        {
-          "date": "2026-08-02",
-          "name": "Day of the Republic"
-        },
-        {
-          "date": "2026-09-08",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-11",
-          "name": "Revolution Day"
-        },
-        {
-          "date": "2026-10-23",
-          "name": "Day of the Macedonian Revolutionary Struggle"
-        },
-        {
-          "date": "2026-12-08",
-          "name": "Saint Clement of Ohrid Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4.07,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 73,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 8.3,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Moldova": {
     "iso2": "MD",
     "capital": "Chișinău",
     "climate": {
       "city": "Chișinău",
       "year": "2025",
-      "months": [
-        {
-          "t": 3.2,
-          "rainyDays": 4
-        },
-        {
-          "t": -2,
-          "rainyDays": 4
-        },
-        {
-          "t": 8.4,
-          "rainyDays": 8
-        },
-        {
-          "t": 11.3,
-          "rainyDays": 4
-        },
-        {
-          "t": 14.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 10.2,
-          "rainyDays": 13
-        },
-        {
-          "t": 8.4,
-          "rainyDays": 10
-        },
-        {
-          "t": 2.6,
-          "rainyDays": 4
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -16729,62 +13825,109 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
+  "Marshall Islands": {
+    "iso2": "MH",
+    "capital": "Majuro",
+    "climate": {
+      "city": "Majuro",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 8.8,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "North Macedonia": {
+    "iso2": "MK",
+    "capital": "Skopje",
+    "climate": {
+      "city": "Skopje",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-07",
+          "name": "Christmas Day (Orthodox)"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-24",
+          "name": "Saints Cyril and Methodius Day"
+        },
+        {
+          "date": "2026-08-02",
+          "name": "Day of the Republic"
+        },
+        {
+          "date": "2026-09-08",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-10-11",
+          "name": "Revolution Day"
+        },
+        {
+          "date": "2026-10-23",
+          "name": "Day of the Macedonian Revolutionary Struggle"
+        },
+        {
+          "date": "2026-12-08",
+          "name": "Saint Clement of Ohrid Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 4.07,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 73,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 8.3,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Madagascar": {
     "iso2": "MG",
     "capital": "Antananarivo",
     "climate": {
       "city": "Antananarivo",
       "year": "2025",
-      "months": [
-        {
-          "t": 21.4,
-          "rainyDays": 16
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 26
-        },
-        {
-          "t": 20.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 20.2,
-          "rainyDays": 13
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 6
-        },
-        {
-          "t": 15.7,
-          "rainyDays": 3
-        },
-        {
-          "t": 14.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 14.9,
-          "rainyDays": 4
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 19.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 20,
-          "rainyDays": 20
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 30
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -16846,62 +13989,147 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Maldives": {
+    "iso2": "MV",
+    "capital": "Malé",
+    "climate": {
+      "city": "Malé",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 4.01,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 75.4,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 14.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Mali": {
+    "iso2": "ML",
+    "capital": "Bamako",
+    "climate": {
+      "city": "Bamako",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-20",
+          "name": "Armed Forces Day"
+        },
+        {
+          "date": "2026-03-15",
+          "name": "Leylatoul Qadr (Roughly Date)"
+        },
+        {
+          "date": "2026-03-19",
+          "name": "Korité (Roughly Date)"
+        },
+        {
+          "date": "2026-03-25",
+          "name": "Martyrs' Day"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Workers' Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Africa Day"
+        },
+        {
+          "date": "2026-05-26",
+          "name": "Tabaski (Roughly Date)"
+        },
+        {
+          "date": "2026-06-25",
+          "name": "Ashura (Roughly Date)"
+        },
+        {
+          "date": "2026-08-25",
+          "name": "Mawloud (Roughly Date)"
+        },
+        {
+          "date": "2026-09-01",
+          "name": "Baptism of the Prophet (Roughly Date)"
+        },
+        {
+          "date": "2026-09-22",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.28,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 61.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 2.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Myanmar": {
+    "iso2": "MM",
+    "capital": "Naypyidaw",
+    "climate": {
+      "city": "Naypyidaw",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 8.83,
+      "year": "2019"
+    },
+    "lifeExpectancy": {
+      "value": 67.8,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.1,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Montenegro": {
     "iso2": "ME",
     "capital": "Podgorica",
     "climate": {
       "city": "Podgorica",
       "year": "2025",
-      "months": [
-        {
-          "t": 8.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 7.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 11.4,
-          "rainyDays": 18
-        },
-        {
-          "t": 14.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 17.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 27,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 14.5,
-          "rainyDays": 13
-        },
-        {
-          "t": 11.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 7.3,
-          "rainyDays": 6
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -17003,93 +14231,67 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Mauritania": {
-    "iso2": "MR",
-    "capital": "Nouakchott",
+  "Montserrat": {
+    "iso2": "MS",
+    "capital": "Plymouth",
     "climate": {
-      "city": "Nouakchott",
+      "city": "Plymouth",
       "year": "2025",
-      "months": [
-        {
-          "t": 22.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 3
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 2
-        },
-        {
-          "t": 28,
-          "rainyDays": 5
-        },
-        {
-          "t": 29.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 30.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 2
-        },
-        {
-          "t": 21.3,
-          "rainyDays": 4
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
-      "count": 4,
+      "count": 11,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
         },
         {
-          "date": "2026-05-01",
+          "date": "2026-03-17",
+          "name": "Saint Patrick's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-04",
           "name": "Labour Day"
         },
         {
           "date": "2026-05-25",
-          "name": "Africa Day"
+          "name": "Whit Monday"
         },
         {
-          "date": "2026-11-28",
-          "name": "Independence Day"
+          "date": "2026-06-08",
+          "name": "Queen's Birthday"
+        },
+        {
+          "date": "2026-08-03",
+          "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        },
+        {
+          "date": "2026-12-31",
+          "name": "Festival Day"
         }
       ]
     },
-    "inflation": {
-      "value": 1.55,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 68.9,
-      "year": "2021"
-    },
+    "inflation": null,
+    "lifeExpectancy": null,
     "migrantShare": null,
     "bigMacUsd": null
   },
@@ -17099,56 +14301,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Saipan",
       "year": "2025",
-      "months": [
-        {
-          "t": 26.6,
-          "rainyDays": 19
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 28
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 20
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": null,
@@ -17159,62 +14313,79 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Mozambique": {
+    "iso2": "MZ",
+    "capital": "Maputo",
+    "climate": {
+      "city": "Maputo",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 9,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-03",
+          "name": "Heroes's Day"
+        },
+        {
+          "date": "2026-04-07",
+          "name": "Women's Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Worker's Day"
+        },
+        {
+          "date": "2026-06-25",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Victory Day"
+        },
+        {
+          "date": "2026-09-25",
+          "name": "Revolution Day"
+        },
+        {
+          "date": "2026-10-04",
+          "name": "Day of Peace and Reconciliation"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 4.37,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 57.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Mongolia": {
     "iso2": "MN",
     "capital": "Ulan Bator",
     "climate": {
       "city": "Ulan Bator",
       "year": "2025",
-      "months": [
-        {
-          "t": -18.1,
-          "rainyDays": 2
-        },
-        {
-          "t": -17.3,
-          "rainyDays": 0
-        },
-        {
-          "t": -4.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 4.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 10.6,
-          "rainyDays": 3
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 20,
-          "rainyDays": 12
-        },
-        {
-          "t": 16.2,
-          "rainyDays": 13
-        },
-        {
-          "t": 9.9,
-          "rainyDays": 7
-        },
-        {
-          "t": -2.4,
-          "rainyDays": 4
-        },
-        {
-          "t": -9.4,
-          "rainyDays": 5
-        },
-        {
-          "t": -19.3,
-          "rainyDays": 1
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -17276,229 +14447,49 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Mozambique": {
-    "iso2": "MZ",
-    "capital": "Maputo",
+  "Mauritania": {
+    "iso2": "MR",
+    "capital": "Nouakchott",
     "climate": {
-      "city": "Maputo",
+      "city": "Nouakchott",
       "year": "2025",
-      "months": [
-        {
-          "t": 27.1,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 21
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 16
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 20.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 19.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 3
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 22.8,
-          "rainyDays": 4
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 25,
-          "rainyDays": 20
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
-      "count": 9,
+      "count": 4,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-03",
-          "name": "Heroes's Day"
-        },
-        {
-          "date": "2026-04-07",
-          "name": "Women's Day"
         },
         {
           "date": "2026-05-01",
-          "name": "Worker's Day"
-        },
-        {
-          "date": "2026-06-25",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-09-07",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-09-25",
-          "name": "Revolution Day"
-        },
-        {
-          "date": "2026-10-04",
-          "name": "Day of Peace and Reconciliation"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4.37,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 57.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 1,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Montserrat": {
-    "iso2": "MS",
-    "capital": "Plymouth",
-    "climate": {
-      "city": "Plymouth",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26,
-          "rainyDays": 11
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 15
-        },
-        {
-          "t": 27,
-          "rainyDays": 7
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 9
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 18
-        },
-        {
-          "t": 27,
-          "rainyDays": 17
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 10
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-17",
-          "name": "Saint Patrick's Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-04",
           "name": "Labour Day"
         },
         {
           "date": "2026-05-25",
-          "name": "Whit Monday"
+          "name": "Africa Day"
         },
         {
-          "date": "2026-06-08",
-          "name": "Queen's Birthday"
-        },
-        {
-          "date": "2026-08-03",
-          "name": "Emancipation Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Boxing Day"
-        },
-        {
-          "date": "2026-12-31",
-          "name": "Festival Day"
+          "date": "2026-11-28",
+          "name": "Independence Day"
         }
       ]
     },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
+    "inflation": {
+      "value": 1.55,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 68.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 3.8,
+      "year": "2024"
+    },
     "bigMacUsd": null
   },
   "Martinique": {
@@ -17507,56 +14498,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Fort-de-France",
       "year": "2025",
-      "months": [
-        {
-          "t": 25.3,
-          "rainyDays": 22
-        },
-        {
-          "t": 25,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 28
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 21
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 17
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 20
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 18
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -17621,199 +14564,313 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
-  "Mayotte": {
-    "iso2": "YT",
-    "capital": "Mamoudzou",
+  "Mauritius": {
+    "iso2": "MU",
+    "capital": "Port Louis",
     "climate": {
-      "city": "Mamoudzou",
+      "city": "Port Louis",
       "year": "2025",
-      "months": [
-        {
-          "t": 27.2,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 15
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 6
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 5
-        },
-        {
-          "t": 23.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 19
-        },
-        {
-          "t": 27,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 21
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
-  "Myanmar": {
-    "iso2": "MM",
-    "capital": "Naypyidaw",
-    "climate": {
-      "city": "Naypyidaw",
-      "year": "2025",
-      "months": [
-        {
-          "t": 22.4,
-          "rainyDays": 2
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 2
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 30
-        },
-        {
-          "t": 26,
-          "rainyDays": 31
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 20
-        },
-        {
-          "t": 25,
-          "rainyDays": 11
-        },
-        {
-          "t": 22.5,
-          "rainyDays": 0
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
-      "value": 8.83,
-      "year": "2019"
+      "value": 3.67,
+      "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 67.8,
+      "value": 73.4,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 0.1,
+      "value": 2.3,
       "year": "2024"
     },
     "bigMacUsd": null
   },
-  "Norfolk Island": {
-    "iso2": "NF",
-    "capital": "Kingston",
+  "Namibia": {
+    "iso2": "NA",
+    "capital": "Windhoek",
     "climate": {
-      "city": "Kingston",
+      "city": "Windhoek",
       "year": "2025",
-      "months": [
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 13,
+      "sample": [
         {
-          "t": 22,
-          "rainyDays": 8
+          "date": "2026-01-01",
+          "name": "New Year's Day"
         },
         {
-          "t": 22.7,
-          "rainyDays": 6
+          "date": "2026-03-21",
+          "name": "Independence Day"
         },
         {
-          "t": 22.2,
-          "rainyDays": 6
+          "date": "2026-04-03",
+          "name": "Good Friday"
         },
         {
-          "t": 22.2,
-          "rainyDays": 17
+          "date": "2026-04-06",
+          "name": "Easter Monday"
         },
         {
-          "t": 21,
-          "rainyDays": 16
+          "date": "2026-05-01",
+          "name": "Workers' Day"
         },
         {
-          "t": 19.2,
-          "rainyDays": 14
+          "date": "2026-05-04",
+          "name": "Cassinga Day"
         },
         {
-          "t": 18.4,
-          "rainyDays": 16
+          "date": "2026-05-14",
+          "name": "Ascension Day"
         },
         {
-          "t": 17.4,
-          "rainyDays": 10
+          "date": "2026-05-25",
+          "name": "Africa Day"
         },
         {
-          "t": 17.6,
-          "rainyDays": 5
+          "date": "2026-05-28",
+          "name": "Genocide Remembrance Day"
         },
         {
-          "t": 19.2,
-          "rainyDays": 10
+          "date": "2026-08-26",
+          "name": "Heroes' Day"
         },
         {
-          "t": 20.9,
-          "rainyDays": 8
+          "date": "2026-12-10",
+          "name": "Human Rights Day"
         },
         {
-          "t": 21.6,
-          "rainyDays": 7
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Day of Goodwill"
         }
       ]
     },
+    "inflation": {
+      "value": 3.51,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 60.4,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 3.8,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Malawi": {
+    "iso2": "MW",
+    "capital": "Lilongwe",
+    "climate": {
+      "city": "Lilongwe",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-15",
+          "name": "John Chilembwe Day"
+        },
+        {
+          "date": "2026-03-03",
+          "name": "Martyrs' Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "President Kamuzu Banda's Birthday"
+        },
+        {
+          "date": "2026-07-06",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-10-15",
+          "name": "Mother's Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-28",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 28.37,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 62.5,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.9,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "New Caledonia": {
+    "iso2": "NC",
+    "capital": "Nouméa",
+    "climate": {
+      "city": "Nouméa",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
     "holidays": null,
+    "inflation": {
+      "value": 0.58,
+      "year": "2016"
+    },
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 26.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Niger": {
+    "iso2": "NE",
+    "capital": "Niamey",
+    "climate": {
+      "city": "Niamey",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 7,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-24",
+          "name": "Concord Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-08-03",
+          "name": "Nigerien Independence Day"
+        },
+        {
+          "date": "2026-12-18",
+          "name": "Nigerien Republic Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": -4.45,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 60,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Niue": {
+    "iso2": "NU",
+    "capital": "Alofi",
+    "climate": {
+      "city": "Alofi",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 9,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "Takai Commission Holiday"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "King's Official Birthday"
+        },
+        {
+          "date": "2026-10-19",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-10-26",
+          "name": "Peniamina Gospel Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
     "inflation": null,
     "lifeExpectancy": null,
     "migrantShare": null,
@@ -17825,56 +14882,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Abuja",
       "year": "2025",
-      "months": [
-        {
-          "t": 29.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 30.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 31.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 8
-        },
-        {
-          "t": 27,
-          "rainyDays": 12
-        },
-        {
-          "t": 25,
-          "rainyDays": 16
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 30
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 28
-        },
-        {
-          "t": 23.8,
-          "rainyDays": 26
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 29.1,
-          "rainyDays": 0
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -17942,56 +14951,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Managua",
       "year": "2025",
-      "months": [
-        {
-          "t": 27.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 29.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 29.4,
-          "rainyDays": 5
-        },
-        {
-          "t": 29.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 20
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 30
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 16
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -18064,166 +15025,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Niue": {
-    "iso2": "NU",
-    "capital": "Alofi",
-    "climate": {
-      "city": "Alofi",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.6,
-          "rainyDays": 21
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 27,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 16
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 23.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 23.8,
-          "rainyDays": 6
-        },
-        {
-          "t": 23.2,
-          "rainyDays": 8
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 10
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 15
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 9,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "Takai Commission Holiday"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-06-01",
-          "name": "King's Official Birthday"
-        },
-        {
-          "date": "2026-10-19",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-10-26",
-          "name": "Peniamina Gospel Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
   "Norway": {
     "iso2": "NO",
     "capital": "Oslo",
     "climate": {
       "city": "Oslo",
       "year": "2025",
-      "months": [
-        {
-          "t": -3.4,
-          "rainyDays": 10
-        },
-        {
-          "t": -3.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 3.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 8.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 12,
-          "rainyDays": 8
-        },
-        {
-          "t": 15,
-          "rainyDays": 14
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 15
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 12
-        },
-        {
-          "t": 12.9,
-          "rainyDays": 15
-        },
-        {
-          "t": 7.2,
-          "rainyDays": 15
-        },
-        {
-          "t": 3.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 1.4,
-          "rainyDays": 15
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -18302,56 +15111,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Kathmandu",
       "year": "2025",
-      "months": [
-        {
-          "t": 12,
-          "rainyDays": 2
-        },
-        {
-          "t": 13.6,
-          "rainyDays": 3
-        },
-        {
-          "t": 17.5,
-          "rainyDays": 9
-        },
-        {
-          "t": 20.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 24
-        },
-        {
-          "t": 22.6,
-          "rainyDays": 27
-        },
-        {
-          "t": 23,
-          "rainyDays": 30
-        },
-        {
-          "t": 22.4,
-          "rainyDays": 31
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 30
-        },
-        {
-          "t": 19.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 15.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 11.7,
-          "rainyDays": 0
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -18374,56 +15135,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Yaren",
       "year": "2025",
-      "months": [
-        {
-          "t": 27.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 10
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 9
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 1
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 8
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 11
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -18437,212 +15150,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Oman": {
-    "iso2": "OM",
-    "capital": "Muscat",
-    "climate": {
-      "city": "Muscat",
-      "year": "2025",
-      "months": [
-        {
-          "t": 20.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 32.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 35,
-          "rainyDays": 0
-        },
-        {
-          "t": 36,
-          "rainyDays": 0
-        },
-        {
-          "t": 34.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 33.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 31.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 1
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 0.97,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 72.5,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 43.2,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 3.97,
-      "date": "2026-01-01"
-    }
-  },
-  "Pakistan": {
-    "iso2": "PK",
-    "capital": "Islamabad",
-    "climate": {
-      "city": "Islamabad",
-      "year": "2025",
-      "months": [
-        {
-          "t": 12.8,
-          "rainyDays": 4
-        },
-        {
-          "t": 14.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 18,
-          "rainyDays": 9
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 7
-        },
-        {
-          "t": 29.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 31.5,
-          "rainyDays": 12
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 27,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 11
-        },
-        {
-          "t": 21.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 16,
-          "rainyDays": 1
-        },
-        {
-          "t": 13.8,
-          "rainyDays": 4
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 3.55,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 66,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 1.7,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 3.86,
-      "date": "2026-01-01"
-    }
-  },
   "Pitcairn Islands": {
     "iso2": "PN",
     "capital": "Adamstown",
     "climate": {
       "city": "Adamstown",
       "year": "2025",
-      "months": [
-        {
-          "t": 24.5,
-          "rainyDays": 16
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 21
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 11
-        },
-        {
-          "t": 23.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 12
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 21,
-          "rainyDays": 10
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 5
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 19
-        },
-        {
-          "t": 23.3,
-          "rainyDays": 13
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -18683,62 +15198,68 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
+  "Pakistan": {
+    "iso2": "PK",
+    "capital": "Islamabad",
+    "climate": {
+      "city": "Islamabad",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 3.55,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 66,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 1.7,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 3.86,
+      "date": "2026-01-01"
+    }
+  },
+  "Oman": {
+    "iso2": "OM",
+    "capital": "Muscat",
+    "climate": {
+      "city": "Muscat",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 0.97,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.5,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 43.2,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 3.97,
+      "date": "2026-01-01"
+    }
+  },
   "Peru": {
     "iso2": "PE",
     "capital": "Lima",
     "climate": {
       "city": "Lima",
       "year": "2025",
-      "months": [
-        {
-          "t": 21.6,
-          "rainyDays": 2
-        },
-        {
-          "t": 23.4,
-          "rainyDays": 7
-        },
-        {
-          "t": 22.8,
-          "rainyDays": 4
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 18.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 17.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 16.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 16.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 16.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 17.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 18.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 0
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -18819,62 +15340,84 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
+  "Palau": {
+    "iso2": "PW",
+    "capital": "Ngerulmud",
+    "climate": {
+      "city": "Ngerulmud",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-15",
+          "name": "Youth Day"
+        },
+        {
+          "date": "2026-05-05",
+          "name": "Senior Citizens Day"
+        },
+        {
+          "date": "2026-06-01",
+          "name": "President's Day"
+        },
+        {
+          "date": "2026-07-09",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-09-07",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-10-01",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-10-24",
+          "name": "United Nations Day"
+        },
+        {
+          "date": "2026-11-26",
+          "name": "Thanksgiving Day"
+        },
+        {
+          "date": "2026-11-27",
+          "name": "Family Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": -0.42,
+      "year": "2025"
+    },
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 29.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Philippines": {
     "iso2": "PH",
     "capital": "Manila",
     "climate": {
       "city": "Manila",
       "year": "2025",
-      "months": [
-        {
-          "t": 26.6,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 30.7,
-          "rainyDays": 10
-        },
-        {
-          "t": 30.2,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 30
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 20
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -18971,298 +15514,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Palau": {
-    "iso2": "PW",
-    "capital": "Ngerulmud",
-    "climate": {
-      "city": "Ngerulmud",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.3,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 31
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 28
-        },
-        {
-          "t": 26,
-          "rainyDays": 31
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 31
-        },
-        {
-          "t": 26,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 31
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 30
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-15",
-          "name": "Youth Day"
-        },
-        {
-          "date": "2026-05-05",
-          "name": "Senior Citizens Day"
-        },
-        {
-          "date": "2026-06-01",
-          "name": "President's Day"
-        },
-        {
-          "date": "2026-07-09",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-09-07",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-10-01",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-24",
-          "name": "United Nations Day"
-        },
-        {
-          "date": "2026-11-26",
-          "name": "Thanksgiving Day"
-        },
-        {
-          "date": "2026-11-27",
-          "name": "Family Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 29.5,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Papua New Guinea": {
-    "iso2": "PG",
-    "capital": "Port Moresby",
-    "climate": {
-      "city": "Port Moresby",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.3,
-          "rainyDays": 25
-        },
-        {
-          "t": 27,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 23
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 9
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 16
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 16
-        },
-        {
-          "t": 27,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 19
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-04",
-          "name": "Holy Saturday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-06-08",
-          "name": "Queen's Birthday"
-        },
-        {
-          "date": "2026-07-23",
-          "name": "Remembrance Day"
-        },
-        {
-          "date": "2026-08-26",
-          "name": "Repentance Day"
-        },
-        {
-          "date": "2026-09-16",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Boxing Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4.42,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 65.5,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.3,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Puerto Rico": {
     "iso2": "PR",
     "capital": "San Juan",
     "climate": {
       "city": "San Juan",
       "year": "2025",
-      "months": [
-        {
-          "t": 25.4,
-          "rainyDays": 19
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 19
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 20
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 19
-        },
-        {
-          "t": 28,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 21
-        },
-        {
-          "t": 27,
-          "rainyDays": 20
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 15
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -19361,62 +15620,87 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Papua New Guinea": {
+    "iso2": "PG",
+    "capital": "Port Moresby",
+    "climate": {
+      "city": "Port Moresby",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-04",
+          "name": "Holy Saturday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-06-08",
+          "name": "Queen's Birthday"
+        },
+        {
+          "date": "2026-07-23",
+          "name": "Remembrance Day"
+        },
+        {
+          "date": "2026-08-26",
+          "name": "Repentance Day"
+        },
+        {
+          "date": "2026-09-16",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 4.42,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 65.5,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.3,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "North Korea": {
     "iso2": "KP",
     "capital": "Pyongyang",
     "climate": {
       "city": "Pyongyang",
       "year": "2025",
-      "months": [
-        {
-          "t": -4,
-          "rainyDays": 3
-        },
-        {
-          "t": -4.2,
-          "rainyDays": 2
-        },
-        {
-          "t": 4.9,
-          "rainyDays": 4
-        },
-        {
-          "t": 10.8,
-          "rainyDays": 11
-        },
-        {
-          "t": 15.9,
-          "rainyDays": 12
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 12
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 15
-        },
-        {
-          "t": 26,
-          "rainyDays": 17
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 13.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 5.6,
-          "rainyDays": 7
-        },
-        {
-          "t": -2.5,
-          "rainyDays": 7
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": null,
@@ -19436,56 +15720,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Asunción",
       "year": "2025",
-      "months": [
-        {
-          "t": 30.1,
-          "rainyDays": 7
-        },
-        {
-          "t": 29.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 22,
-          "rainyDays": 11
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 11
-        },
-        {
-          "t": 16.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 17.6,
-          "rainyDays": 4
-        },
-        {
-          "t": 18.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 22.3,
-          "rainyDays": 8
-        },
-        {
-          "t": 22.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 25,
-          "rainyDays": 9
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 14
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -19561,56 +15797,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Ramallah",
       "year": "2025",
-      "months": [
-        {
-          "t": 9.9,
-          "rainyDays": 6
-        },
-        {
-          "t": 6.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 13.3,
-          "rainyDays": 6
-        },
-        {
-          "t": 15.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 19.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 22,
-          "rainyDays": 0
-        },
-        {
-          "t": 24,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 1
-        },
-        {
-          "t": 19.3,
-          "rainyDays": 2
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 10.7,
-          "rainyDays": 13
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -19633,56 +15821,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Papeetē",
       "year": "2025",
-      "months": [
-        {
-          "t": 26.8,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 22
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 19
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 28
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 29
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 30
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": null,
@@ -19699,56 +15839,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Doha",
       "year": "2025",
-      "months": [
-        {
-          "t": 17.9,
-          "rainyDays": 1
-        },
-        {
-          "t": 18.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 29.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 33.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 36.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 36.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 34.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 21,
-          "rainyDays": 4
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -19768,125 +15860,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Réunion": {
-    "iso2": "RE",
-    "capital": "Saint-Denis",
-    "climate": {
-      "city": "Saint-Denis",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 19
-        },
-        {
-          "t": 24,
-          "rainyDays": 6
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 21,
-          "rainyDays": 10
-        },
-        {
-          "t": 21,
-          "rainyDays": 8
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 6
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 20
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
   "Romania": {
     "iso2": "RO",
     "capital": "Bucharest",
     "climate": {
       "city": "Bucharest",
       "year": "2025",
-      "months": [
-        {
-          "t": 3.7,
-          "rainyDays": 5
-        },
-        {
-          "t": -2.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 9.3,
-          "rainyDays": 8
-        },
-        {
-          "t": 12,
-          "rainyDays": 8
-        },
-        {
-          "t": 16.1,
-          "rainyDays": 14
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 4
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 3
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 5
-        },
-        {
-          "t": 11.3,
-          "rainyDays": 13
-        },
-        {
-          "t": 8.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 3.1,
-          "rainyDays": 4
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -19985,56 +15966,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Kigali",
       "year": "2025",
-      "months": [
-        {
-          "t": 20.7,
-          "rainyDays": 13
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 24
-        },
-        {
-          "t": 19.5,
-          "rainyDays": 26
-        },
-        {
-          "t": 19.2,
-          "rainyDays": 23
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 2
-        },
-        {
-          "t": 20.8,
-          "rainyDays": 6
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 19
-        },
-        {
-          "t": 19.5,
-          "rainyDays": 19
-        },
-        {
-          "t": 19.7,
-          "rainyDays": 22
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -20057,56 +15990,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Riyadh",
       "year": "2025",
-      "months": [
-        {
-          "t": 14.6,
-          "rainyDays": 2
-        },
-        {
-          "t": 16.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 5
-        },
-        {
-          "t": 31,
-          "rainyDays": 0
-        },
-        {
-          "t": 35,
-          "rainyDays": 0
-        },
-        {
-          "t": 36.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 38,
-          "rainyDays": 0
-        },
-        {
-          "t": 38.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 17.3,
-          "rainyDays": 3
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -20126,134 +16011,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
-  "Sudan": {
-    "iso2": "SD",
-    "capital": "Khartoum",
-    "climate": {
-      "city": "Khartoum",
-      "year": "2025",
-      "months": [
-        {
-          "t": 24.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 33.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 32.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 30.4,
-          "rainyDays": 5
-        },
-        {
-          "t": 32.7,
-          "rainyDays": 2
-        },
-        {
-          "t": 33.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 30.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 0
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 138.81,
-      "year": "2022"
-    },
-    "lifeExpectancy": {
-      "value": 67.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 4.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Senegal": {
     "iso2": "SN",
     "capital": "Dakar",
     "climate": {
       "city": "Dakar",
       "year": "2025",
-      "months": [
-        {
-          "t": 22.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 20.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 9
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 21
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 29,
-          "rainyDays": 5
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 2
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -20311,67 +16076,28 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "South Georgia": {
-    "iso2": "GS",
-    "capital": "King Edward Point",
+  "Sudan": {
+    "iso2": "SD",
+    "capital": "Khartoum",
     "climate": {
-      "city": "King Edward Point",
+      "city": "Khartoum",
       "year": "2025",
-      "months": [
-        {
-          "t": 5,
-          "rainyDays": 23
-        },
-        {
-          "t": 4.4,
-          "rainyDays": 24
-        },
-        {
-          "t": 3.9,
-          "rainyDays": 25
-        },
-        {
-          "t": 2.3,
-          "rainyDays": 11
-        },
-        {
-          "t": 0.9,
-          "rainyDays": 21
-        },
-        {
-          "t": -0.9,
-          "rainyDays": 20
-        },
-        {
-          "t": 0.1,
-          "rainyDays": 27
-        },
-        {
-          "t": -1.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 0.6,
-          "rainyDays": 21
-        },
-        {
-          "t": 1.9,
-          "rainyDays": 21
-        },
-        {
-          "t": 1.4,
-          "rainyDays": 20
-        },
-        {
-          "t": 2.5,
-          "rainyDays": 22
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
+    "inflation": {
+      "value": 138.81,
+      "year": "2022"
+    },
+    "lifeExpectancy": {
+      "value": 67.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 4.8,
+      "year": "2024"
+    },
     "bigMacUsd": null
   },
   "Svalbard and Jan Mayen": {
@@ -20380,56 +16106,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Longyearbyen",
       "year": "2025",
-      "months": [
-        {
-          "t": -12.2,
-          "rainyDays": 11
-        },
-        {
-          "t": -5.9,
-          "rainyDays": 15
-        },
-        {
-          "t": -13.3,
-          "rainyDays": 9
-        },
-        {
-          "t": -12.5,
-          "rainyDays": 5
-        },
-        {
-          "t": -1.5,
-          "rainyDays": 6
-        },
-        {
-          "t": 3.5,
-          "rainyDays": 8
-        },
-        {
-          "t": 8.1,
-          "rainyDays": 12
-        },
-        {
-          "t": 9.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 3.3,
-          "rainyDays": 14
-        },
-        {
-          "t": -1.9,
-          "rainyDays": 13
-        },
-        {
-          "t": -8.7,
-          "rainyDays": 15
-        },
-        {
-          "t": -7.8,
-          "rainyDays": 11
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -20490,74 +16168,30 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
-  "Namibia": {
-    "iso2": "NA",
-    "capital": "Windhoek",
+  "Sierra Leone": {
+    "iso2": "SL",
+    "capital": "Freetown",
     "climate": {
-      "city": "Windhoek",
+      "city": "Freetown",
       "year": "2025",
-      "months": [
-        {
-          "t": 24,
-          "rainyDays": 7
-        },
-        {
-          "t": 22.8,
-          "rainyDays": 14
-        },
-        {
-          "t": 20,
-          "rainyDays": 16
-        },
-        {
-          "t": 17.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 15.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 12.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 13.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 15.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 19
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
-      "count": 13,
+      "count": 9,
       "sample": [
         {
           "date": "2026-01-01",
           "name": "New Year's Day"
         },
         {
-          "date": "2026-03-21",
-          "name": "Independence Day"
+          "date": "2026-02-18",
+          "name": "Armed Forces Day"
+        },
+        {
+          "date": "2026-03-08",
+          "name": "International Women's Day"
         },
         {
           "date": "2026-04-03",
@@ -20568,32 +16202,12 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Easter Monday"
         },
         {
+          "date": "2026-04-27",
+          "name": "Independence Day"
+        },
+        {
           "date": "2026-05-01",
-          "name": "Workers' Day"
-        },
-        {
-          "date": "2026-05-04",
-          "name": "Cassinga Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Africa Day"
-        },
-        {
-          "date": "2026-05-28",
-          "name": "Genocide Remembrance Day"
-        },
-        {
-          "date": "2026-08-26",
-          "name": "Heroes' Day"
-        },
-        {
-          "date": "2026-12-10",
-          "name": "Human Rights Day"
+          "name": "Labour Day"
         },
         {
           "date": "2026-12-25",
@@ -20601,213 +16215,20 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
         },
         {
           "date": "2026-12-26",
-          "name": "Day of Goodwill"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.51,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 60.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 3.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Malawi": {
-    "iso2": "MW",
-    "capital": "Lilongwe",
-    "climate": {
-      "city": "Lilongwe",
-      "year": "2025",
-      "months": [
-        {
-          "t": 22,
-          "rainyDays": 27
-        },
-        {
-          "t": 21.9,
-          "rainyDays": 21
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 19.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 18.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 17.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 18.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 22.8,
-          "rainyDays": 17
-        },
-        {
-          "t": 22.3,
-          "rainyDays": 20
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-15",
-          "name": "John Chilembwe Day"
-        },
-        {
-          "date": "2026-03-03",
-          "name": "Martyrs' Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "President Kamuzu Banda's Birthday"
-        },
-        {
-          "date": "2026-07-06",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-10-15",
-          "name": "Mother's Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-28",
           "name": "St. Stephen's Day"
         }
       ]
     },
     "inflation": {
-      "value": 28.37,
+      "value": 7.49,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 62.5,
+      "value": 61,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 0.9,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Solomon Islands": {
-    "iso2": "SB",
-    "capital": "Honiara",
-    "climate": {
-      "city": "Honiara",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.5,
-          "rainyDays": 28
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 26,
-          "rainyDays": 22
-        },
-        {
-          "t": 26,
-          "rainyDays": 22
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 17
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 23
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 3.36,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 64.8,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.3,
+      "value": 0.6,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -20818,7 +16239,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "City of San Marino",
       "year": "2025",
-      "months": []
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -20909,1281 +16331,26 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "New Caledonia": {
-    "iso2": "NC",
-    "capital": "Nouméa",
+  "Solomon Islands": {
+    "iso2": "SB",
+    "capital": "Honiara",
     "climate": {
-      "city": "Nouméa",
+      "city": "Honiara",
       "year": "2025",
-      "months": [
-        {
-          "t": 25.2,
-          "rainyDays": 18
-        },
-        {
-          "t": 25,
-          "rainyDays": 23
-        },
-        {
-          "t": 25,
-          "rainyDays": 19
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 21
-        },
-        {
-          "t": 23,
-          "rainyDays": 20
-        },
-        {
-          "t": 21.5,
-          "rainyDays": 14
-        },
-        {
-          "t": 20.3,
-          "rainyDays": 11
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 20
-        },
-        {
-          "t": 21,
-          "rainyDays": 8
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 17
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 20
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 23
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
-      "value": 0.58,
-      "year": "2016"
-    },
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 26.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Niger": {
-    "iso2": "NE",
-    "capital": "Niamey",
-    "climate": {
-      "city": "Niamey",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 34.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 35.3,
-          "rainyDays": 2
-        },
-        {
-          "t": 32.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 22
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 31.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 29.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 0
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 7,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-24",
-          "name": "Concord Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-08-03",
-          "name": "Nigerien Independence Day"
-        },
-        {
-          "date": "2026-12-18",
-          "name": "Nigerien Republic Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": -4.45,
+      "value": 3.36,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 60,
+      "value": 64.8,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 1.7,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Mauritius": {
-    "iso2": "MU",
-    "capital": "Port Louis",
-    "climate": {
-      "city": "Port Louis",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.5,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 24
-        },
-        {
-          "t": 27,
-          "rainyDays": 18
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 23.2,
-          "rainyDays": 8
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 11
-        },
-        {
-          "t": 22,
-          "rainyDays": 10
-        },
-        {
-          "t": 22.7,
-          "rainyDays": 11
-        },
-        {
-          "t": 24.3,
-          "rainyDays": 5
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 24
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 3.67,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 73.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.3,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Somalia": {
-    "iso2": "SO",
-    "capital": "Mogadishu",
-    "climate": {
-      "city": "Mogadishu",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 21
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 21
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 15
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 15
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 6
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": {
-      "value": 54,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.4,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Saint Pierre and Miquelon": {
-    "iso2": "PM",
-    "capital": "Saint-Pierre",
-    "climate": {
-      "city": "Saint-Pierre",
-      "year": "2025",
-      "months": [
-        {
-          "t": 0.7,
-          "rainyDays": 25
-        },
-        {
-          "t": -1.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 0.3,
-          "rainyDays": 17
-        },
-        {
-          "t": 1.6,
-          "rainyDays": 16
-        },
-        {
-          "t": 4.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 8.7,
-          "rainyDays": 11
-        },
-        {
-          "t": 13.5,
-          "rainyDays": 11
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 14.9,
-          "rainyDays": 8
-        },
-        {
-          "t": 10.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 6.6,
-          "rainyDays": 24
-        },
-        {
-          "t": 1.4,
-          "rainyDays": 22
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-08",
-          "name": "Victory Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "Whit Monday"
-        },
-        {
-          "date": "2026-07-14",
-          "name": "National Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints' Day"
-        },
-        {
-          "date": "2026-11-11",
-          "name": "Armistice Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
-  "Serbia": {
-    "iso2": "RS",
-    "capital": "Belgrade",
-    "climate": {
-      "city": "Belgrade",
-      "year": "2025",
-      "months": [
-        {
-          "t": 3.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 2.1,
-          "rainyDays": 5
-        },
-        {
-          "t": 10.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 13.5,
-          "rainyDays": 16
-        },
-        {
-          "t": 16.1,
-          "rainyDays": 9
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 5
-        },
-        {
-          "t": 20.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 12,
-          "rainyDays": 9
-        },
-        {
-          "t": 8.1,
-          "rainyDays": 14
-        },
-        {
-          "t": 4.2,
-          "rainyDays": 2
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-07",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Statehood Day"
-        },
-        {
-          "date": "2026-02-17",
-          "name": "Statehood Day"
-        },
-        {
-          "date": "2026-04-10",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-12",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-13",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-02",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-11-11",
-          "name": "Armistice Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.89,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 72.8,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 10.6,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "São Tomé and Príncipe": {
-    "iso2": "ST",
-    "capital": "São Tomé",
-    "climate": {
-      "city": "São Tomé",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.5,
-          "rainyDays": 28
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 26
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 23
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 19
-        },
-        {
-          "t": 24.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 29
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 29
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 11.05,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 71.2,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.8,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "South Sudan": {
-    "iso2": "SS",
-    "capital": "Juba",
-    "climate": {
-      "city": "Juba",
-      "year": "2025",
-      "months": [
-        {
-          "t": 31.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 33.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 31.5,
-          "rainyDays": 5
-        },
-        {
-          "t": 30.1,
-          "rainyDays": 8
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 14
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 11
-        },
-        {
-          "t": 25,
-          "rainyDays": 21
-        },
-        {
-          "t": 24,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 19
-        },
-        {
-          "t": 26,
-          "rainyDays": 19
-        },
-        {
-          "t": 28.5,
-          "rainyDays": 5
-        },
-        {
-          "t": 29.6,
-          "rainyDays": 2
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 91.44,
-      "year": "2024"
-    },
-    "lifeExpectancy": {
-      "value": 58.6,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 7.7,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Suriname": {
-    "iso2": "SR",
-    "capital": "Paramaribo",
-    "climate": {
-      "city": "Paramaribo",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.2,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 28
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 31
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 29
-        },
-        {
-          "t": 26,
-          "rainyDays": 30
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 28
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 20
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 21
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 24
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 18,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Three Kings Day"
-        },
-        {
-          "date": "2026-01-18",
-          "name": "World Religion Day"
-        },
-        {
-          "date": "2026-02-17",
-          "name": "Chinese New Year"
-        },
-        {
-          "date": "2026-02-25",
-          "name": "Day of the Revolution"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-06-05",
-          "name": "Indian Arrival Day"
-        },
-        {
-          "date": "2026-07-01",
-          "name": "Keti Koti"
-        },
-        {
-          "date": "2026-08-08",
-          "name": "Javanese Arrival Day"
-        },
-        {
-          "date": "2026-08-09",
-          "name": "Indigenous People's Day"
-        },
-        {
-          "date": "2026-10-10",
-          "name": "Day of the Maroons"
-        },
-        {
-          "date": "2026-10-20",
-          "name": "Chinese Arrival day"
-        },
-        {
-          "date": "2026-11-25",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Boxing Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 9.21,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 69.8,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 8.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Slovenia": {
-    "iso2": "SI",
-    "capital": "Ljubljana",
-    "climate": {
-      "city": "Ljubljana",
-      "year": "2025",
-      "months": [
-        {
-          "t": 2.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 1.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 6.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 11.3,
-          "rainyDays": 11
-        },
-        {
-          "t": 14.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 4
-        },
-        {
-          "t": 21,
-          "rainyDays": 10
-        },
-        {
-          "t": 20.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 17,
-          "rainyDays": 11
-        },
-        {
-          "t": 9.9,
-          "rainyDays": 9
-        },
-        {
-          "t": 5.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 1.8,
-          "rainyDays": 5
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 21,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-02",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-08",
-          "name": "Prešeren Day"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-27",
-          "name": "Day of Uprising Against Occupation"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-02",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-02",
-          "name": "Primož Trubar Day"
-        },
-        {
-          "date": "2026-05-24",
-          "name": "Pentecost"
-        },
-        {
-          "date": "2026-06-25",
-          "name": "Statehood Day"
-        },
-        {
-          "date": "2026-08-14",
-          "name": "Sovereignty Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Assumption Day"
-        },
-        {
-          "date": "2026-08-15",
-          "name": "Unification of Prekmurje Slovenes with the Mother Nation"
-        },
-        {
-          "date": "2026-09-15",
-          "name": "Integration of Primorska into the Homeland"
-        },
-        {
-          "date": "2026-09-23",
-          "name": "Slovenian Sports Day"
-        },
-        {
-          "date": "2026-10-31",
-          "name": "Reformation Day"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "Day of the Dead"
-        },
-        {
-          "date": "2026-11-23",
-          "name": "Rudolf Maister Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 2.37,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 80.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 14.9,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Sweden": {
-    "iso2": "SE",
-    "capital": "Stockholm",
-    "climate": {
-      "city": "Stockholm",
-      "year": "2025",
-      "months": [
-        {
-          "t": -0.6,
-          "rainyDays": 12
-        },
-        {
-          "t": -1.4,
-          "rainyDays": 2
-        },
-        {
-          "t": 4,
-          "rainyDays": 2
-        },
-        {
-          "t": 7.4,
-          "rainyDays": 5
-        },
-        {
-          "t": 9.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 15.6,
-          "rainyDays": 10
-        },
-        {
-          "t": 19.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 16,
-          "rainyDays": 13
-        },
-        {
-          "t": 14.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 8.1,
-          "rainyDays": 10
-        },
-        {
-          "t": 3.4,
-          "rainyDays": 9
-        },
-        {
-          "t": 3.1,
-          "rainyDays": 9
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 16,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Epiphany"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "International Workers' Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-24",
-          "name": "Pentecost"
-        },
-        {
-          "date": "2026-06-06",
-          "name": "National Day of Sweden"
-        },
-        {
-          "date": "2026-06-19",
-          "name": "Midsummer Eve"
-        },
-        {
-          "date": "2026-06-20",
-          "name": "Midsummer Day"
-        },
-        {
-          "date": "2026-10-31",
-          "name": "All Saints' Day"
-        },
-        {
-          "date": "2026-12-24",
-          "name": "Christmas Eve"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        },
-        {
-          "date": "2026-12-31",
-          "name": "New Year's Eve"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.68,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 82.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 21.4,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 7.26,
-      "date": "2026-01-01"
-    }
-  },
-  "Slovakia": {
-    "iso2": "SK",
-    "capital": "Bratislava",
-    "climate": {
-      "city": "Bratislava",
-      "year": "2025",
-      "months": [
-        {
-          "t": 1.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 1.3,
-          "rainyDays": 3
-        },
-        {
-          "t": 7.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 12.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 14.5,
-          "rainyDays": 9
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 7
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 10
-        },
-        {
-          "t": 17.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 10.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 5,
-          "rainyDays": 8
-        },
-        {
-          "t": 2.8,
-          "rainyDays": 7
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 15,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "Day of the Establishment of the Slovak Republic"
-        },
-        {
-          "date": "2026-01-06",
-          "name": "Epiphany"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "International Workers' Day"
-        },
-        {
-          "date": "2026-05-08",
-          "name": "Day of victory over fascism"
-        },
-        {
-          "date": "2026-07-05",
-          "name": "St. Cyril and Methodius Day"
-        },
-        {
-          "date": "2026-08-29",
-          "name": "Slovak National Uprising anniversary"
-        },
-        {
-          "date": "2026-09-01",
-          "name": "Day of the Constitution of the Slovak Republic"
-        },
-        {
-          "date": "2026-09-15",
-          "name": "Day of Our Lady of the Seven Sorrows"
-        },
-        {
-          "date": "2026-11-01",
-          "name": "All Saints’ Day"
-        },
-        {
-          "date": "2026-11-17",
-          "name": "Struggle for Freedom and Democracy Day"
-        },
-        {
-          "date": "2026-12-24",
-          "name": "Christmas Eve"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 4,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 74.5,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 5.9,
+      "value": 0.3,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -22194,56 +16361,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "San Salvador",
       "year": "2025",
-      "months": [
-        {
-          "t": 25,
-          "rainyDays": 2
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 10
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 19
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 26
-        },
-        {
-          "t": 24,
-          "rainyDays": 27
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 18
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 28
-        },
-        {
-          "t": 24,
-          "rainyDays": 27
-        },
-        {
-          "t": 23.4,
-          "rainyDays": 25
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 7
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 6
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -22345,438 +16464,35 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Turks and Caicos Islands": {
-    "iso2": "TC",
-    "capital": "Cockburn Town",
+  "Somalia": {
+    "iso2": "SO",
+    "capital": "Mogadishu",
     "climate": {
-      "city": "Cockburn Town",
+      "city": "Mogadishu",
       "year": "2025",
-      "months": [
-        {
-          "t": 24.9,
-          "rainyDays": 5
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 7
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 7
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 12
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 3
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 9
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 3
-        },
-        {
-          "t": 28.6,
-          "rainyDays": 8
-        },
-        {
-          "t": 28.7,
-          "rainyDays": 20
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 17
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 10
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-09",
-          "name": "Commonwealth Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "JAGS McCartney Day"
-        },
-        {
-          "date": "2026-05-25",
-          "name": "King's Birthday"
-        },
-        {
-          "date": "2026-08-01",
-          "name": "Emancipation Day"
-        },
-        {
-          "date": "2026-08-31",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-09-25",
-          "name": "National Youth Day"
-        },
-        {
-          "date": "2026-10-12",
-          "name": "National Heritage Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
+    "holidays": null,
     "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 61.1,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Sierra Leone": {
-    "iso2": "SL",
-    "capital": "Freetown",
-    "climate": {
-      "city": "Freetown",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.6,
-          "rainyDays": 2
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 2
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 28
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 30
-        },
-        {
-          "t": 24.5,
-          "rainyDays": 31
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 31
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 29
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 12
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 9,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-18",
-          "name": "Armed Forces Day"
-        },
-        {
-          "date": "2026-03-08",
-          "name": "International Women's Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-27",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 7.49,
-      "year": "2025"
-    },
     "lifeExpectancy": {
-      "value": 61,
+      "value": 54,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 0.6,
+      "value": 0.4,
       "year": "2024"
     },
     "bigMacUsd": null
   },
-  "Chad": {
-    "iso2": "TD",
-    "capital": "N'Djamena",
+  "Saint Pierre and Miquelon": {
+    "iso2": "PM",
+    "capital": "Saint-Pierre",
     "climate": {
-      "city": "N'Djamena",
+      "city": "Saint-Pierre",
       "year": "2025",
-      "months": [
-        {
-          "t": 25.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 28,
-          "rainyDays": 0
-        },
-        {
-          "t": 32.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 34.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 35,
-          "rainyDays": 1
-        },
-        {
-          "t": 32.4,
-          "rainyDays": 6
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 21
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 30.3,
-          "rainyDays": 4
-        },
-        {
-          "t": 29.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 0
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": -3.91,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 59.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 6.3,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Tajikistan": {
-    "iso2": "TJ",
-    "capital": "Dushanbe",
-    "climate": {
-      "city": "Dushanbe",
-      "year": "2025",
-      "months": [
-        {
-          "t": 2.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 4.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 8.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 16.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 4
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 4
-        },
-        {
-          "t": 30.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 17,
-          "rainyDays": 2
-        },
-        {
-          "t": 8.5,
-          "rainyDays": 3
-        },
-        {
-          "t": 6.2,
-          "rainyDays": 15
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 6,
-      "year": "2016"
-    },
-    "lifeExpectancy": {
-      "value": 71.8,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.6,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Togo": {
-    "iso2": "TG",
-    "capital": "Lomé",
-    "climate": {
-      "city": "Lomé",
-      "year": "2025",
-      "months": [
-        {
-          "t": 28.4,
-          "rainyDays": 6
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 5
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 28.6,
-          "rainyDays": 11
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 24
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 12
-        },
-        {
-          "t": 24.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 20
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 17
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 14
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -22787,20 +16503,16 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "New Year's Day"
         },
         {
-          "date": "2026-01-13",
-          "name": "Liberation Day"
-        },
-        {
           "date": "2026-04-06",
           "name": "Easter Monday"
         },
         {
-          "date": "2026-04-27",
-          "name": "Independence Day"
-        },
-        {
           "date": "2026-05-01",
           "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-08",
+          "name": "Victory Day"
         },
         {
           "date": "2026-05-14",
@@ -22811,8 +16523,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "Whit Monday"
         },
         {
-          "date": "2026-06-21",
-          "name": "Martyrs' Day"
+          "date": "2026-07-14",
+          "name": "National Day"
         },
         {
           "date": "2026-08-15",
@@ -22823,93 +16535,614 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
           "name": "All Saints' Day"
         },
         {
+          "date": "2026-11-11",
+          "name": "Armistice Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": null,
+    "bigMacUsd": null
+  },
+  "Suriname": {
+    "iso2": "SR",
+    "capital": "Paramaribo",
+    "climate": {
+      "city": "Paramaribo",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 18,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Three Kings Day"
+        },
+        {
+          "date": "2026-01-18",
+          "name": "World Religion Day"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Chinese New Year"
+        },
+        {
+          "date": "2026-02-25",
+          "name": "Day of the Revolution"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-06-05",
+          "name": "Indian Arrival Day"
+        },
+        {
+          "date": "2026-07-01",
+          "name": "Keti Koti"
+        },
+        {
+          "date": "2026-08-08",
+          "name": "Javanese Arrival Day"
+        },
+        {
+          "date": "2026-08-09",
+          "name": "Indigenous People's Day"
+        },
+        {
+          "date": "2026-10-10",
+          "name": "Day of the Maroons"
+        },
+        {
+          "date": "2026-10-20",
+          "name": "Chinese Arrival day"
+        },
+        {
+          "date": "2026-11-25",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Boxing Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 9.21,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 69.8,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 8.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Serbia": {
+    "iso2": "RS",
+    "capital": "Belgrade",
+    "climate": {
+      "city": "Belgrade",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-07",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Statehood Day"
+        },
+        {
+          "date": "2026-02-17",
+          "name": "Statehood Day"
+        },
+        {
+          "date": "2026-04-10",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-12",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-13",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-02",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Armistice Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.89,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.8,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 10.6,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "South Sudan": {
+    "iso2": "SS",
+    "capital": "Juba",
+    "climate": {
+      "city": "Juba",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 91.44,
+      "year": "2024"
+    },
+    "lifeExpectancy": {
+      "value": 58.6,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 7.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "São Tomé and Príncipe": {
+    "iso2": "ST",
+    "capital": "São Tomé",
+    "climate": {
+      "city": "São Tomé",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 11.05,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 71.2,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.8,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Slovakia": {
+    "iso2": "SK",
+    "capital": "Bratislava",
+    "climate": {
+      "city": "Bratislava",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 15,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "Day of the Establishment of the Slovak Republic"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "International Workers' Day"
+        },
+        {
+          "date": "2026-05-08",
+          "name": "Day of victory over fascism"
+        },
+        {
+          "date": "2026-07-05",
+          "name": "St. Cyril and Methodius Day"
+        },
+        {
+          "date": "2026-08-29",
+          "name": "Slovak National Uprising anniversary"
+        },
+        {
+          "date": "2026-09-01",
+          "name": "Day of the Constitution of the Slovak Republic"
+        },
+        {
+          "date": "2026-09-15",
+          "name": "Day of Our Lady of the Seven Sorrows"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints’ Day"
+        },
+        {
+          "date": "2026-11-17",
+          "name": "Struggle for Freedom and Democracy Day"
+        },
+        {
+          "date": "2026-12-24",
+          "name": "Christmas Eve"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 4,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 74.5,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 5.9,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Sint Maarten": {
+    "iso2": "SX",
+    "capital": "Philipsburg",
+    "climate": {
+      "city": "Philipsburg",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 14,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-16",
+          "name": "Carnival Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-27",
+          "name": "King's Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-24",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-07-01",
+          "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-10-10",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-11-11",
+          "name": "Sint Maarten Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 2.19,
+      "year": "2017"
+    },
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 69.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Sweden": {
+    "iso2": "SE",
+    "capital": "Stockholm",
+    "climate": {
+      "city": "Stockholm",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 16,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-06",
+          "name": "Epiphany"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "International Workers' Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-24",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-06-06",
+          "name": "National Day of Sweden"
+        },
+        {
+          "date": "2026-06-19",
+          "name": "Midsummer Eve"
+        },
+        {
+          "date": "2026-06-20",
+          "name": "Midsummer Day"
+        },
+        {
+          "date": "2026-10-31",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-12-24",
+          "name": "Christmas Eve"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        },
+        {
+          "date": "2026-12-31",
+          "name": "New Year's Eve"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.68,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 82.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 21.4,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 7.26,
+      "date": "2026-01-01"
+    }
+  },
+  "Slovenia": {
+    "iso2": "SI",
+    "capital": "Ljubljana",
+    "climate": {
+      "city": "Ljubljana",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 21,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-02",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-02-08",
+          "name": "Prešeren Day"
+        },
+        {
+          "date": "2026-04-05",
+          "name": "Easter Sunday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-27",
+          "name": "Day of Uprising Against Occupation"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-02",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-02",
+          "name": "Primož Trubar Day"
+        },
+        {
+          "date": "2026-05-24",
+          "name": "Pentecost"
+        },
+        {
+          "date": "2026-06-25",
+          "name": "Statehood Day"
+        },
+        {
+          "date": "2026-08-14",
+          "name": "Sovereignty Day"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Unification of Prekmurje Slovenes with the Mother Nation"
+        },
+        {
+          "date": "2026-09-15",
+          "name": "Integration of Primorska into the Homeland"
+        },
+        {
+          "date": "2026-09-23",
+          "name": "Slovenian Sports Day"
+        },
+        {
+          "date": "2026-10-31",
+          "name": "Reformation Day"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "Day of the Dead"
+        },
+        {
+          "date": "2026-11-23",
+          "name": "Rudolf Maister Day"
+        },
+        {
           "date": "2026-12-25",
           "name": "Christmas Day"
         }
       ]
     },
     "inflation": {
-      "value": 0.43,
+      "value": 2.37,
       "year": "2025"
     },
     "lifeExpectancy": {
-      "value": 63.9,
+      "value": 80.4,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 3,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Syria": {
-    "iso2": "SY",
-    "capital": "Damascus",
-    "climate": {
-      "city": "Damascus",
-      "year": "2025",
-      "months": [
-        {
-          "t": 10,
-          "rainyDays": 0
-        },
-        {
-          "t": 7.9,
-          "rainyDays": 4
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 5
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 3
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 1
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 30.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 30.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 18.1,
-          "rainyDays": 2
-        },
-        {
-          "t": 10.1,
-          "rainyDays": 6
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 13.42,
-      "year": "2019"
-    },
-    "lifeExpectancy": {
-      "value": 72.4,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 3.6,
+      "value": 14.9,
       "year": "2024"
     },
     "bigMacUsd": null
@@ -22920,56 +17153,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Lobamba",
       "year": "2025",
-      "months": [
-        {
-          "t": 22.4,
-          "rainyDays": 17
-        },
-        {
-          "t": 21.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 21,
-          "rainyDays": 20
-        },
-        {
-          "t": 18.9,
-          "rainyDays": 18
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 2
-        },
-        {
-          "t": 13.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 14,
-          "rainyDays": 5
-        },
-        {
-          "t": 16.9,
-          "rainyDays": 2
-        },
-        {
-          "t": 19.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 19,
-          "rainyDays": 14
-        },
-        {
-          "t": 19.4,
-          "rainyDays": 21
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 22
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -22986,624 +17171,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Tonga": {
-    "iso2": "TO",
-    "capital": "Nuku'alofa",
-    "climate": {
-      "city": "Nuku'alofa",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.4,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 18
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 18
-        },
-        {
-          "t": 23.9,
-          "rainyDays": 10
-        },
-        {
-          "t": 22.5,
-          "rainyDays": 16
-        },
-        {
-          "t": 22.4,
-          "rainyDays": 13
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 20
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 18
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 5.59,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 72.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 3.4,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Trinidad and Tobago": {
-    "iso2": "TT",
-    "capital": "Port of Spain",
-    "climate": {
-      "city": "Port of Spain",
-      "year": "2025",
-      "months": [
-        {
-          "t": 25.4,
-          "rainyDays": 16
-        },
-        {
-          "t": 26,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 25
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 18
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 22
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 20
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-30",
-          "name": "Spiritual Baptist Shouter Liberation Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-30",
-          "name": "Indian Arrival Day"
-        },
-        {
-          "date": "2026-06-04",
-          "name": "Corpus Christi"
-        },
-        {
-          "date": "2026-06-19",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-08-01",
-          "name": "Emancipation Day"
-        },
-        {
-          "date": "2026-08-31",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-09-24",
-          "name": "Republic Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.99,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 71.7,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 7.5,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Tunisia": {
-    "iso2": "TN",
-    "capital": "Tunis",
-    "climate": {
-      "city": "Tunis",
-      "year": "2025",
-      "months": [
-        {
-          "t": 12,
-          "rainyDays": 6
-        },
-        {
-          "t": 12.2,
-          "rainyDays": 9
-        },
-        {
-          "t": 15.5,
-          "rainyDays": 6
-        },
-        {
-          "t": 16.8,
-          "rainyDays": 7
-        },
-        {
-          "t": 21,
-          "rainyDays": 12
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 1
-        },
-        {
-          "t": 29.4,
-          "rainyDays": 1
-        },
-        {
-          "t": 28,
-          "rainyDays": 2
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 5
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 7
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 3
-        },
-        {
-          "t": 12.9,
-          "rainyDays": 8
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 8,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-20",
-          "name": "Independence Day"
-        },
-        {
-          "date": "2026-04-09",
-          "name": "Martyrs' Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-07-25",
-          "name": "Republic Day"
-        },
-        {
-          "date": "2026-08-13",
-          "name": "Women's Day"
-        },
-        {
-          "date": "2026-10-15",
-          "name": "Evacuation Day"
-        },
-        {
-          "date": "2026-12-17",
-          "name": "Revolution Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 5.15,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 74.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.5,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Tuvalu": {
-    "iso2": "TV",
-    "capital": "Funafuti",
-    "climate": {
-      "city": "Funafuti",
-      "year": "2025",
-      "months": [
-        {
-          "t": 28.2,
-          "rainyDays": 23
-        },
-        {
-          "t": 28.4,
-          "rainyDays": 15
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 27
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 29
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 28.1,
-          "rainyDays": 19
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 21
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 11,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-09",
-          "name": "Commonwealth Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-05-11",
-          "name": "Gospel Day"
-        },
-        {
-          "date": "2026-05-11",
-          "name": "King's Official Birthday"
-        },
-        {
-          "date": "2026-08-03",
-          "name": "National Children's Day"
-        },
-        {
-          "date": "2026-10-01",
-          "name": "Tuvalu Day"
-        },
-        {
-          "date": "2026-10-02",
-          "name": "Tuvalu Day Holiday"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 0.5,
-      "year": "2011"
-    },
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 2.6,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Taiwan": {
-    "iso2": "TW",
-    "capital": "Taipei",
-    "climate": {
-      "city": "Taipei",
-      "year": "2025",
-      "months": [
-        {
-          "t": 14.7,
-          "rainyDays": 8
-        },
-        {
-          "t": 15.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 17.9,
-          "rainyDays": 13
-        },
-        {
-          "t": 21.3,
-          "rainyDays": 15
-        },
-        {
-          "t": 24.6,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 28,
-          "rainyDays": 23
-        },
-        {
-          "t": 29.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 28.9,
-          "rainyDays": 16
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 21.2,
-          "rainyDays": 13
-        },
-        {
-          "t": 18.2,
-          "rainyDays": 13
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": {
-      "value": 2.47,
-      "date": "2026-01-01"
-    }
-  },
-  "Tanzania": {
-    "iso2": "TZ",
-    "capital": "Dodoma",
-    "climate": {
-      "city": "Dodoma",
-      "year": "2025",
-      "months": [
-        {
-          "t": 23.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 6
-        },
-        {
-          "t": 23.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 22.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 21.5,
-          "rainyDays": 8
-        },
-        {
-          "t": 20.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 19.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 1
-        },
-        {
-          "t": 24.7,
-          "rainyDays": 3
-        },
-        {
-          "t": 23.9,
-          "rainyDays": 14
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 3.33,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 66.8,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 0.7,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Seychelles": {
     "iso2": "SC",
     "capital": "Victoria",
     "climate": {
       "city": "Victoria",
       "year": "2025",
-      "months": [
-        {
-          "t": 26.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 13
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 18
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 15
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 6
-        },
-        {
-          "t": 20.7,
-          "rainyDays": 7
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 7
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 14
-        },
-        {
-          "t": 22.6,
-          "rainyDays": 23
-        },
-        {
-          "t": 24.1,
-          "rainyDays": 15
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 12
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -23677,62 +17252,549 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "Togo": {
+    "iso2": "TG",
+    "capital": "Lomé",
+    "climate": {
+      "city": "Lomé",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-01-13",
+          "name": "Liberation Day"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-04-27",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-05-14",
+          "name": "Ascension Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "Whit Monday"
+        },
+        {
+          "date": "2026-06-21",
+          "name": "Martyrs' Day"
+        },
+        {
+          "date": "2026-08-15",
+          "name": "Assumption Day"
+        },
+        {
+          "date": "2026-11-01",
+          "name": "All Saints' Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.43,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 63.9,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 3,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Syria": {
+    "iso2": "SY",
+    "capital": "Damascus",
+    "climate": {
+      "city": "Damascus",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 13.42,
+      "year": "2019"
+    },
+    "lifeExpectancy": {
+      "value": 72.4,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 3.6,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Turks and Caicos Islands": {
+    "iso2": "TC",
+    "capital": "Cockburn Town",
+    "climate": {
+      "city": "Cockburn Town",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-09",
+          "name": "Commonwealth Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "JAGS McCartney Day"
+        },
+        {
+          "date": "2026-05-25",
+          "name": "King's Birthday"
+        },
+        {
+          "date": "2026-08-01",
+          "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-08-31",
+          "name": "Constitution Day"
+        },
+        {
+          "date": "2026-09-25",
+          "name": "National Youth Day"
+        },
+        {
+          "date": "2026-10-12",
+          "name": "National Heritage Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 61.1,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Tajikistan": {
+    "iso2": "TJ",
+    "capital": "Dushanbe",
+    "climate": {
+      "city": "Dushanbe",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 6,
+      "year": "2016"
+    },
+    "lifeExpectancy": {
+      "value": 71.8,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 2.6,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Chad": {
+    "iso2": "TD",
+    "capital": "N'Djamena",
+    "climate": {
+      "city": "N'Djamena",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": -3.91,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 59.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 6.3,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Turkmenistan": {
+    "iso2": "TM",
+    "capital": "Ashgabat",
+    "climate": {
+      "city": "Ashgabat",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": null,
+    "lifeExpectancy": {
+      "value": 69.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 2.6,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Timor-Leste": {
+    "iso2": "TL",
+    "capital": "Dili",
+    "climate": {
+      "city": "Dili",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 0.43,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 68,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.6,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Trinidad and Tobago": {
+    "iso2": "TT",
+    "capital": "Port of Spain",
+    "climate": {
+      "city": "Port of Spain",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-30",
+          "name": "Spiritual Baptist Shouter Liberation Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-30",
+          "name": "Indian Arrival Day"
+        },
+        {
+          "date": "2026-06-04",
+          "name": "Corpus Christi"
+        },
+        {
+          "date": "2026-06-19",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-08-01",
+          "name": "Emancipation Day"
+        },
+        {
+          "date": "2026-08-31",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-09-24",
+          "name": "Republic Day"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.99,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 71.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 7.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Tuvalu": {
+    "iso2": "TV",
+    "capital": "Funafuti",
+    "climate": {
+      "city": "Funafuti",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 11,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-09",
+          "name": "Commonwealth Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Easter Monday"
+        },
+        {
+          "date": "2026-05-11",
+          "name": "Gospel Day"
+        },
+        {
+          "date": "2026-05-11",
+          "name": "King's Official Birthday"
+        },
+        {
+          "date": "2026-08-03",
+          "name": "National Children's Day"
+        },
+        {
+          "date": "2026-10-01",
+          "name": "Tuvalu Day"
+        },
+        {
+          "date": "2026-10-02",
+          "name": "Tuvalu Day Holiday"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "St. Stephen's Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 0.5,
+      "year": "2011"
+    },
+    "lifeExpectancy": null,
+    "migrantShare": {
+      "value": 2.6,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Tunisia": {
+    "iso2": "TN",
+    "capital": "Tunis",
+    "climate": {
+      "city": "Tunis",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 8,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-20",
+          "name": "Independence Day"
+        },
+        {
+          "date": "2026-04-09",
+          "name": "Martyrs' Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Labour Day"
+        },
+        {
+          "date": "2026-07-25",
+          "name": "Republic Day"
+        },
+        {
+          "date": "2026-08-13",
+          "name": "Women's Day"
+        },
+        {
+          "date": "2026-10-15",
+          "name": "Evacuation Day"
+        },
+        {
+          "date": "2026-12-17",
+          "name": "Revolution Day"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 5.15,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 74.1,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.5,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Taiwan": {
+    "iso2": "TW",
+    "capital": "Taipei",
+    "climate": {
+      "city": "Taipei",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": null,
+    "lifeExpectancy": null,
+    "migrantShare": null,
+    "bigMacUsd": {
+      "value": 2.47,
+      "date": "2026-01-01"
+    }
+  },
+  "Tanzania": {
+    "iso2": "TZ",
+    "capital": "Dodoma",
+    "climate": {
+      "city": "Dodoma",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 3.33,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 66.8,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 0.7,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
+  "Tonga": {
+    "iso2": "TO",
+    "capital": "Nuku'alofa",
+    "climate": {
+      "city": "Nuku'alofa",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 5.59,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.7,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 3.4,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Uganda": {
     "iso2": "UG",
     "capital": "Kampala",
     "climate": {
       "city": "Kampala",
       "year": "2025",
-      "months": [
-        {
-          "t": 22.3,
-          "rainyDays": 16
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 28
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 21.2,
-          "rainyDays": 14
-        },
-        {
-          "t": 20.8,
-          "rainyDays": 15
-        },
-        {
-          "t": 20.8,
-          "rainyDays": 14
-        },
-        {
-          "t": 22.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 20
-        },
-        {
-          "t": 22,
-          "rainyDays": 15
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 14
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -23808,56 +17870,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Kyiv",
       "year": "2025",
-      "months": [
-        {
-          "t": 2,
-          "rainyDays": 6
-        },
-        {
-          "t": -4.6,
-          "rainyDays": 2
-        },
-        {
-          "t": 7,
-          "rainyDays": 9
-        },
-        {
-          "t": 10.9,
-          "rainyDays": 8
-        },
-        {
-          "t": 13.7,
-          "rainyDays": 18
-        },
-        {
-          "t": 19.5,
-          "rainyDays": 14
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 14
-        },
-        {
-          "t": 19.9,
-          "rainyDays": 7
-        },
-        {
-          "t": 16.6,
-          "rainyDays": 2
-        },
-        {
-          "t": 8.7,
-          "rainyDays": 13
-        },
-        {
-          "t": 6.4,
-          "rainyDays": 12
-        },
-        {
-          "t": 0.9,
-          "rainyDays": 13
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -23909,7 +17923,10 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
         }
       ]
     },
-    "inflation": null,
+    "inflation": {
+      "value": 12.73,
+      "year": "2025"
+    },
     "lifeExpectancy": {
       "value": 70.9,
       "year": "2021"
@@ -23923,62 +17940,38 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
       "date": "2026-01-01"
     }
   },
+  "Uzbekistan": {
+    "iso2": "UZ",
+    "capital": "Tashkent",
+    "climate": {
+      "city": "Tashkent",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": null,
+    "inflation": {
+      "value": 8.8,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 72.2,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 3.2,
+      "year": "2024"
+    },
+    "bigMacUsd": null
+  },
   "Vatican City": {
     "iso2": "VA",
     "capital": "Vatican City",
     "climate": {
       "city": "Vatican City",
       "year": "2025",
-      "months": [
-        {
-          "t": 9.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 9.6,
-          "rainyDays": 13
-        },
-        {
-          "t": 12.1,
-          "rainyDays": 17
-        },
-        {
-          "t": 14.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 17.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 2
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 6
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 7
-        },
-        {
-          "t": 21.7,
-          "rainyDays": 7
-        },
-        {
-          "t": 16.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 12,
-          "rainyDays": 10
-        },
-        {
-          "t": 9.1,
-          "rainyDays": 9
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -24051,134 +18044,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "migrantShare": null,
     "bigMacUsd": null
   },
-  "Uzbekistan": {
-    "iso2": "UZ",
-    "capital": "Tashkent",
-    "climate": {
-      "city": "Tashkent",
-      "year": "2025",
-      "months": [
-        {
-          "t": 0.8,
-          "rainyDays": 8
-        },
-        {
-          "t": 3.7,
-          "rainyDays": 9
-        },
-        {
-          "t": 9.5,
-          "rainyDays": 8
-        },
-        {
-          "t": 19.5,
-          "rainyDays": 6
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 3
-        },
-        {
-          "t": 29.7,
-          "rainyDays": 2
-        },
-        {
-          "t": 32.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 28.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.4,
-          "rainyDays": 0
-        },
-        {
-          "t": 17,
-          "rainyDays": 2
-        },
-        {
-          "t": 7.6,
-          "rainyDays": 3
-        },
-        {
-          "t": 3.6,
-          "rainyDays": 17
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 8.8,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 72.2,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 3.2,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
   "Saint Vincent and the Grenadines": {
     "iso2": "VC",
     "capital": "Kingstown",
     "climate": {
       "city": "Kingstown",
       "year": "2025",
-      "months": [
-        {
-          "t": 25.9,
-          "rainyDays": 18
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 25
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 17
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 24
-        },
-        {
-          "t": 28,
-          "rainyDays": 20
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 21
-        },
-        {
-          "t": 26,
-          "rainyDays": 16
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -24254,56 +18127,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Caracas",
       "year": "2025",
-      "months": [
-        {
-          "t": 20.5,
-          "rainyDays": 18
-        },
-        {
-          "t": 20.9,
-          "rainyDays": 18
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 23
-        },
-        {
-          "t": 22.1,
-          "rainyDays": 26
-        },
-        {
-          "t": 22.8,
-          "rainyDays": 24
-        },
-        {
-          "t": 22.8,
-          "rainyDays": 21
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 20
-        },
-        {
-          "t": 22.9,
-          "rainyDays": 27
-        },
-        {
-          "t": 23.5,
-          "rainyDays": 22
-        },
-        {
-          "t": 23,
-          "rainyDays": 25
-        },
-        {
-          "t": 21.6,
-          "rainyDays": 22
-        },
-        {
-          "t": 20.5,
-          "rainyDays": 18
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -24414,56 +18239,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Road Town",
       "year": "2025",
-      "months": [
-        {
-          "t": 26,
-          "rainyDays": 8
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 14
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 15
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 14
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 8
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 13
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 15
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 20
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 14
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 14
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -24541,56 +18318,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Charlotte Amalie",
       "year": "2025",
-      "months": [
-        {
-          "t": 26.1,
-          "rainyDays": 11
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 15
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 12
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 13
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 13
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 6
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 15
-        },
-        {
-          "t": 28.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 19
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 21
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 26.7,
-          "rainyDays": 16
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -24678,125 +18407,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Wallis and Futuna": {
-    "iso2": "WF",
-    "capital": "Mata-Utu",
-    "climate": {
-      "city": "Mata-Utu",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.5,
-          "rainyDays": 27
-        },
-        {
-          "t": 27.7,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 27
-        },
-        {
-          "t": 28,
-          "rainyDays": 19
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 28
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 20
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 19
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 25
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 22
-        },
-        {
-          "t": 27.8,
-          "rainyDays": 17
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": null,
-    "migrantShare": null,
-    "bigMacUsd": null
-  },
   "Vanuatu": {
     "iso2": "VU",
     "capital": "Port Vila",
     "climate": {
       "city": "Port Vila",
       "year": "2025",
-      "months": [
-        {
-          "t": 26.6,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 26
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 23
-        },
-        {
-          "t": 25.6,
-          "rainyDays": 14
-        },
-        {
-          "t": 24.4,
-          "rainyDays": 15
-        },
-        {
-          "t": 23.9,
-          "rainyDays": 9
-        },
-        {
-          "t": 23.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 24,
-          "rainyDays": 15
-        },
-        {
-          "t": 25.2,
-          "rainyDays": 16
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 24
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 19
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
@@ -24819,56 +18437,8 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     "climate": {
       "city": "Apia",
       "year": "2025",
-      "months": [
-        {
-          "t": 26,
-          "rainyDays": 31
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 27
-        },
-        {
-          "t": 26.1,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.2,
-          "rainyDays": 24
-        },
-        {
-          "t": 25.8,
-          "rainyDays": 30
-        },
-        {
-          "t": 25.5,
-          "rainyDays": 24
-        },
-        {
-          "t": 25.1,
-          "rainyDays": 25
-        },
-        {
-          "t": 25.3,
-          "rainyDays": 24
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 20
-        },
-        {
-          "t": 25.4,
-          "rainyDays": 31
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 29
-        },
-        {
-          "t": 26.4,
-          "rainyDays": 30
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -24934,262 +18504,14 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Yemen": {
-    "iso2": "YE",
-    "capital": "Sana'a",
-    "climate": {
-      "city": "Sana'a",
-      "year": "2025",
-      "months": [
-        {
-          "t": 14.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 17.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 18.2,
-          "rainyDays": 2
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 22,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 23.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.3,
-          "rainyDays": 9
-        },
-        {
-          "t": 21,
-          "rainyDays": 3
-        },
-        {
-          "t": 17.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 13.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 14.4,
-          "rainyDays": 1
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": {
-      "value": 8.1,
-      "year": "2014"
-    },
-    "lifeExpectancy": {
-      "value": 65.8,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 1,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "South Africa": {
-    "iso2": "ZA",
-    "capital": "Pretoria",
-    "climate": {
-      "city": "Pretoria",
-      "year": "2025",
-      "months": [
-        {
-          "t": 22.4,
-          "rainyDays": 14
-        },
-        {
-          "t": 21.9,
-          "rainyDays": 22
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 21
-        },
-        {
-          "t": 17,
-          "rainyDays": 12
-        },
-        {
-          "t": 14.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 11.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 12.2,
-          "rainyDays": 1
-        },
-        {
-          "t": 16.1,
-          "rainyDays": 1
-        },
-        {
-          "t": 20.3,
-          "rainyDays": 4
-        },
-        {
-          "t": 19.6,
-          "rainyDays": 12
-        },
-        {
-          "t": 18.3,
-          "rainyDays": 20
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 21
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 12,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-03-21",
-          "name": "Human Rights Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Family Day"
-        },
-        {
-          "date": "2026-04-27",
-          "name": "Freedom Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Workers' Day"
-        },
-        {
-          "date": "2026-06-16",
-          "name": "Youth Day"
-        },
-        {
-          "date": "2026-08-10",
-          "name": "National Women's Day"
-        },
-        {
-          "date": "2026-09-24",
-          "name": "Heritage Day"
-        },
-        {
-          "date": "2026-12-16",
-          "name": "Day of Reconciliation"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "Day of Goodwill"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 3.21,
-      "year": "2025"
-    },
-    "lifeExpectancy": {
-      "value": 61.5,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 4.1,
-      "year": "2024"
-    },
-    "bigMacUsd": {
-      "value": 3.36,
-      "date": "2026-01-01"
-    }
-  },
   "Zambia": {
     "iso2": "ZM",
     "capital": "Lusaka",
     "climate": {
       "city": "Lusaka",
       "year": "2025",
-      "months": [
-        {
-          "t": 20.9,
-          "rainyDays": 28
-        },
-        {
-          "t": 21.4,
-          "rainyDays": 23
-        },
-        {
-          "t": 21.8,
-          "rainyDays": 10
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 6
-        },
-        {
-          "t": 18.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 18,
-          "rainyDays": 0
-        },
-        {
-          "t": 16.5,
-          "rainyDays": 0
-        },
-        {
-          "t": 19.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.2,
-          "rainyDays": 0
-        },
-        {
-          "t": 24.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 22.4,
-          "rainyDays": 15
-        },
-        {
-          "t": 21.1,
-          "rainyDays": 25
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -25275,62 +18597,94 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
+  "South Africa": {
+    "iso2": "ZA",
+    "capital": "Pretoria",
+    "climate": {
+      "city": "Pretoria",
+      "year": "2025",
+      "months": [],
+      "sunnyDays": null
+    },
+    "holidays": {
+      "year": "2026",
+      "count": 12,
+      "sample": [
+        {
+          "date": "2026-01-01",
+          "name": "New Year's Day"
+        },
+        {
+          "date": "2026-03-21",
+          "name": "Human Rights Day"
+        },
+        {
+          "date": "2026-04-03",
+          "name": "Good Friday"
+        },
+        {
+          "date": "2026-04-06",
+          "name": "Family Day"
+        },
+        {
+          "date": "2026-04-27",
+          "name": "Freedom Day"
+        },
+        {
+          "date": "2026-05-01",
+          "name": "Workers' Day"
+        },
+        {
+          "date": "2026-06-16",
+          "name": "Youth Day"
+        },
+        {
+          "date": "2026-08-10",
+          "name": "National Women's Day"
+        },
+        {
+          "date": "2026-09-24",
+          "name": "Heritage Day"
+        },
+        {
+          "date": "2026-12-16",
+          "name": "Day of Reconciliation"
+        },
+        {
+          "date": "2026-12-25",
+          "name": "Christmas Day"
+        },
+        {
+          "date": "2026-12-26",
+          "name": "Day of Goodwill"
+        }
+      ]
+    },
+    "inflation": {
+      "value": 3.21,
+      "year": "2025"
+    },
+    "lifeExpectancy": {
+      "value": 61.5,
+      "year": "2021"
+    },
+    "migrantShare": {
+      "value": 4.1,
+      "year": "2024"
+    },
+    "bigMacUsd": {
+      "value": 3.36,
+      "date": "2026-01-01"
+    }
+  },
   "Zimbabwe": {
     "iso2": "ZW",
     "capital": "Harare",
     "climate": {
       "city": "Harare",
       "year": "2025",
-      "months": [
-        {
-          "t": 20,
-          "rainyDays": 24
-        },
-        {
-          "t": 20.5,
-          "rainyDays": 20
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 9
-        },
-        {
-          "t": 19.4,
-          "rainyDays": 10
-        },
-        {
-          "t": 17,
-          "rainyDays": 2
-        },
-        {
-          "t": 15.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 14.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 17.3,
-          "rainyDays": 0
-        },
-        {
-          "t": 21.5,
-          "rainyDays": 1
-        },
-        {
-          "t": 21.9,
-          "rainyDays": 3
-        },
-        {
-          "t": 19.5,
-          "rainyDays": 20
-        },
-        {
-          "t": 19.3,
-          "rainyDays": 24
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": {
       "year": "2026",
@@ -25404,273 +18758,26 @@ export const COUNTRY_INSIGHTS: Record<string, CountryInsights> = {
     },
     "bigMacUsd": null
   },
-  "Turkmenistan": {
-    "iso2": "TM",
-    "capital": "Ashgabat",
+  "Yemen": {
+    "iso2": "YE",
+    "capital": "Sana'a",
     "climate": {
-      "city": "Ashgabat",
+      "city": "Sana'a",
       "year": "2025",
-      "months": [
-        {
-          "t": 4.7,
-          "rainyDays": 3
-        },
-        {
-          "t": 3.4,
-          "rainyDays": 6
-        },
-        {
-          "t": 13.1,
-          "rainyDays": 9
-        },
-        {
-          "t": 22.6,
-          "rainyDays": 4
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 0
-        },
-        {
-          "t": 29.8,
-          "rainyDays": 1
-        },
-        {
-          "t": 33.9,
-          "rainyDays": 0
-        },
-        {
-          "t": 31.8,
-          "rainyDays": 0
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 0
-        },
-        {
-          "t": 20.1,
-          "rainyDays": 0
-        },
-        {
-          "t": 13.7,
-          "rainyDays": 1
-        },
-        {
-          "t": 7,
-          "rainyDays": 7
-        }
-      ]
-    },
-    "holidays": null,
-    "inflation": null,
-    "lifeExpectancy": {
-      "value": 69.1,
-      "year": "2021"
-    },
-    "migrantShare": {
-      "value": 2.6,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Timor-Leste": {
-    "iso2": "TL",
-    "capital": "Dili",
-    "climate": {
-      "city": "Dili",
-      "year": "2025",
-      "months": [
-        {
-          "t": 27.2,
-          "rainyDays": 30
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 21
-        },
-        {
-          "t": 27.1,
-          "rainyDays": 31
-        },
-        {
-          "t": 26.9,
-          "rainyDays": 20
-        },
-        {
-          "t": 27,
-          "rainyDays": 23
-        },
-        {
-          "t": 26.5,
-          "rainyDays": 17
-        },
-        {
-          "t": 26,
-          "rainyDays": 8
-        },
-        {
-          "t": 26.3,
-          "rainyDays": 2
-        },
-        {
-          "t": 27.2,
-          "rainyDays": 10
-        },
-        {
-          "t": 27.9,
-          "rainyDays": 11
-        },
-        {
-          "t": 28,
-          "rainyDays": 24
-        },
-        {
-          "t": 27.3,
-          "rainyDays": 30
-        }
-      ]
+      "months": [],
+      "sunnyDays": null
     },
     "holidays": null,
     "inflation": {
-      "value": 0.43,
-      "year": "2025"
+      "value": 8.1,
+      "year": "2014"
     },
     "lifeExpectancy": {
-      "value": 68,
+      "value": 65.8,
       "year": "2021"
     },
     "migrantShare": {
-      "value": 0.6,
-      "year": "2024"
-    },
-    "bigMacUsd": null
-  },
-  "Sint Maarten": {
-    "iso2": "SX",
-    "capital": "Philipsburg",
-    "climate": {
-      "city": "Philipsburg",
-      "year": "2025",
-      "months": [
-        {
-          "t": 26.2,
-          "rainyDays": 11
-        },
-        {
-          "t": 25.7,
-          "rainyDays": 12
-        },
-        {
-          "t": 26,
-          "rainyDays": 10
-        },
-        {
-          "t": 25.9,
-          "rainyDays": 12
-        },
-        {
-          "t": 26.8,
-          "rainyDays": 16
-        },
-        {
-          "t": 27.4,
-          "rainyDays": 4
-        },
-        {
-          "t": 27.6,
-          "rainyDays": 15
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 12
-        },
-        {
-          "t": 28.3,
-          "rainyDays": 14
-        },
-        {
-          "t": 28,
-          "rainyDays": 23
-        },
-        {
-          "t": 27.5,
-          "rainyDays": 13
-        },
-        {
-          "t": 26.6,
-          "rainyDays": 9
-        }
-      ]
-    },
-    "holidays": {
-      "year": "2026",
-      "count": 14,
-      "sample": [
-        {
-          "date": "2026-01-01",
-          "name": "New Year's Day"
-        },
-        {
-          "date": "2026-02-16",
-          "name": "Carnival Day"
-        },
-        {
-          "date": "2026-04-03",
-          "name": "Good Friday"
-        },
-        {
-          "date": "2026-04-05",
-          "name": "Easter Sunday"
-        },
-        {
-          "date": "2026-04-06",
-          "name": "Easter Monday"
-        },
-        {
-          "date": "2026-04-27",
-          "name": "King's Day"
-        },
-        {
-          "date": "2026-05-01",
-          "name": "Labour Day"
-        },
-        {
-          "date": "2026-05-14",
-          "name": "Ascension Day"
-        },
-        {
-          "date": "2026-05-24",
-          "name": "Pentecost"
-        },
-        {
-          "date": "2026-07-01",
-          "name": "Emancipation Day"
-        },
-        {
-          "date": "2026-10-10",
-          "name": "Constitution Day"
-        },
-        {
-          "date": "2026-11-11",
-          "name": "Sint Maarten Day"
-        },
-        {
-          "date": "2026-12-25",
-          "name": "Christmas Day"
-        },
-        {
-          "date": "2026-12-26",
-          "name": "St. Stephen's Day"
-        }
-      ]
-    },
-    "inflation": {
-      "value": 2.19,
-      "year": "2017"
-    },
-    "lifeExpectancy": null,
-    "migrantShare": {
-      "value": 69.5,
+      "value": 1,
       "year": "2024"
     },
     "bigMacUsd": null

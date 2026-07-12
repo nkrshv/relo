@@ -123,6 +123,18 @@ function buildRows(a: Destination, b: Destination): Row[] {
       source: "Open-Meteo historical weather",
     },
     {
+      label: "Sunny days (capital)",
+      a:
+        insA?.climate.sunnyDays != null
+          ? `${insA.climate.sunnyDays} days / yr`
+          : null,
+      b:
+        insB?.climate.sunnyDays != null
+          ? `${insB.climate.sunnyDays} days / yr`
+          : null,
+      source: "Open-Meteo, days with over 4.5h of sunshine",
+    },
+    {
       label: "Air quality (capital)",
       a: odA?.airQuality
         ? `AQI ${odA.airQuality.aqi} · ${aqiLabel(odA.airQuality.aqi).text}`

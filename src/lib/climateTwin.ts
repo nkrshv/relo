@@ -34,6 +34,8 @@ export interface ClimatePoint {
   annualPrecipMm: number | null;
   /** Mean daily relative humidity (%). */
   humidityPct: number | null;
+  /** Days in the reference year with more than 4.5 hours of sunshine. */
+  sunnyDays: number | null;
   /** Annual pollutant averages from the nearest OpenAQ sensors. */
   air: Pollutant[];
   /** Reference year for the climate normals. */
@@ -163,6 +165,22 @@ export function buildTwinComparison(
         `The air is ${d > 0 ? "more humid" : "drier"} than home (about ${round(
           dest.humidityPct,
         )}% versus ${round(home.humidityPct)}%).`,
+      );
+    }
+  }
+
+  // Sunshine: days with more than 4.5 hours of sun over the reference year.
+  if (home.sunnyDays !== null && dest.sunnyDays !== null) {
+    const d = dest.sunnyDays - home.sunnyDays;
+    if (Math.abs(d) >= 15) {
+      verdicts.push(
+        `${destName} gets about ${Math.abs(d)} ${
+          d > 0 ? "more" : "fewer"
+        } sunny days a year than home (${dest.sunnyDays} versus ${home.sunnyDays} days with over 4.5 hours of sun).`,
+      );
+    } else {
+      verdicts.push(
+        `A similar number of sunny days to home: about ${dest.sunnyDays} days a year with over 4.5 hours of sun.`,
       );
     }
   }
