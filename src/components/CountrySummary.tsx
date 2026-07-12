@@ -37,7 +37,7 @@ import { formatMonth, formatDate } from "@/lib/dates";
 import MessengerIcons from "@/components/MessengerIcons";
 import { useCityContext } from "@/lib/useCityContext";
 import ClimateTwinPanel from "@/components/ClimateTwinPanel";
-import type { ClimateTwin } from "@/lib/climateTwin";
+import type { ClimateTwinState } from "@/lib/useClimateTwin";
 
 const FLAG_BY_NAME: Record<string, string> = Object.fromEntries(
   ALL_COUNTRIES.map((c) => [normalizeName(c.name), c.emoji]),
@@ -54,7 +54,7 @@ interface Props {
   fromCity?: string;
   toCity?: string;
   visa?: VisaSummary | null;
-  climateTwin?: ClimateTwin | null;
+  climate?: ClimateTwinState;
 }
 
 // Plain-language safety wording; the official label lives in the Safety tab.
@@ -218,9 +218,11 @@ export default function CountrySummary({
   fromCity,
   toCity,
   visa,
-  climateTwin,
+  climate: climateState,
 }: Props) {
   const [openTab, setOpenTab] = useState<TabKey | null>(null);
+  const climateTwin = climateState?.twin ?? null;
+  const climateStatus = climateState?.status ?? "empty";
   // City-level overrides: in big countries (India, Australia) capital-level
   // climate/AQI/timezone can be way off, so recompute them for the chosen
   // cities live and fall back to the country snapshot while loading.
@@ -659,7 +661,16 @@ export default function CountrySummary({
     { key: "practical", label: "Practical", show: hasPractical },
     { key: "cost", label: "Cost of living", show: hasCost },
     { key: "crypto", label: "Crypto", show: Boolean(cryptoTax) },
-    { key: "climate", label: "Climate twin", show: hasClimateTwin },
+    {
+      key: "climate",
+      label: "Climate twin",
+      // Keep the tab reachable while loading or after a transient failure so
+      // the user sees progress / can retry instead of the block vanishing.
+      show:
+        hasClimateTwin ||
+        climateStatus === "loading" ||
+        climateStatus === "error",
+    },
     { key: "health", label: "Health", show: hasHealth },
     { key: "safety", label: "Safety", show: hasSafety },
   ];
@@ -940,11 +951,39 @@ export default function CountrySummary({
             </div>
           )}
 
-          {openTab === "climate" && hasClimateTwin && (
-            <ClimateTwinPanel
-              twin={climateTwin!}
-              aqi={{ home: homeAqiSide, dest: destAqiSide }}
-            />
+          {openTab === "climate" && (
+            <>
+              {hasClimateTwin && climateTwin && (
+                <ClimateTwinPanel
+                  twin={climateTwin}
+                  aqi={{ home: homeAqiSide, dest: destAqiSide }}
+                />
+              )}
+              {!hasClimateTwin && climateStatus === "loading" && (
+                <div className="mt-2.5 space-y-2" aria-busy>
+                  <div className="h-4 w-40 animate-pulse rounded bg-stone-100" />
+                  <div className="h-20 animate-pulse rounded-lg bg-stone-100" />
+                  <div className="h-4 w-2/3 animate-pulse rounded bg-stone-100" />
+                  <p className="text-xs text-stone-400">
+                    Loading climate data for {toCity ?? name}…
+                  </p>
+                </div>
+              )}
+              {!hasClimateTwin && climateStatus === "error" && (
+                <div className="mt-2.5 rounded-lg border border-stone-200 bg-stone-50 p-4 text-center">
+                  <p className="text-sm text-stone-600">
+                    Couldn&apos;t load climate data right now.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => climateState?.retry()}
+                    className="mt-2 inline-flex items-center rounded-md border border-stone-300 bg-white px-3 py-1.5 text-xs font-medium text-stone-700 transition hover:bg-stone-100"
+                  >
+                    Retry
+                  </button>
+                </div>
+              )}
+            </>
           )}
 
           {openTab === "health" && hasHealth && (

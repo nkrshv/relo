@@ -27,6 +27,10 @@ interface GeoResult {
 
 const cache = new Map<string, { at: number; data: ClimateTwin | null }>();
 const TTL_MS = 24 * 60 * 60 * 1000;
+// A miss (upstream timeout / transient failure) must not stick: cache it only
+// briefly so the next view retries the live sources instead of showing "no
+// data" for a whole day.
+const NEG_TTL_MS = 10 * 60 * 1000;
 const CACHE_MAX = 2000;
 
 function cacheSet(key: string, data: ClimateTwin | null) {
@@ -37,45 +41,95 @@ function cacheSet(key: string, data: ClimateTwin | null) {
   cache.set(key, { at: Date.now(), data });
 }
 
-async function geocode(
-  place: string,
-  country: string,
-): Promise<GeoResult | null> {
-  const res = await fetch(
+function cacheFresh(hit: { at: number; data: ClimateTwin | null }): boolean {
+  const ttl = hit.data ? TTL_MS : NEG_TTL_MS;
+  return Date.now() - hit.at < ttl;
+}
+
+// One retry for the external climate/geo sources: they occasionally time out
+// or 5xx transiently, and a single retry turns most of those misses into hits
+// instead of poisoning the cache. Only retries transport errors and 5xx, not
+// 4xx (which are genuine "no such place").
+async function fetchResilient(
+  url: string,
+  init: RequestInit,
+): Promise<Response | null> {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch(url, init);
+      if (res.ok || (res.status >= 400 && res.status < 500)) return res;
+    } catch {
+      // transport error / timeout: fall through to retry
+    }
+  }
+  return null;
+}
+
+// Outcomes are three-way so the caller can tell a genuine "no such place"
+// (safe to cache and hide) apart from a transient upstream failure (must be
+// retryable, never cached as "no data").
+type GeoOutcome =
+  | { status: "ok"; geo: GeoResult }
+  | { status: "empty" }
+  | { status: "unavailable" };
+
+async function geocode(place: string, country: string): Promise<GeoOutcome> {
+  const res = await fetchResilient(
     `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(place)}&count=5&language=en&format=json`,
     { signal: AbortSignal.timeout(6000) },
   );
-  if (!res.ok) return null;
-  const json = (await res.json()) as { results?: GeoResult[] };
-  const results = json.results ?? [];
-  if (results.length === 0) return null;
+  if (!res) return { status: "unavailable" };
+  if (!res.ok) return { status: "empty" };
+  const json = (await res.json().catch(() => null)) as {
+    results?: GeoResult[];
+  } | null;
+  const results = json?.results ?? [];
+  if (results.length === 0) return { status: "empty" };
   const want = country.toLowerCase();
-  return (
+  const geo =
     results.find((r) => {
       const got = (r.country ?? "").toLowerCase();
       return got && (got.includes(want) || want.includes(got));
-    }) ?? results[0]
-  );
+    }) ?? results[0];
+  return { status: "ok", geo };
 }
 
+type ResolveOutcome =
+  | { status: "ok"; geo: GeoResult; label: string }
+  | { status: "empty" }
+  | { status: "unavailable" };
+
 // Prefer the chosen city; fall back to the curated capital, then the country
-// centroid, so a country-only move still gets a representative climate.
+// centroid, so a country-only move still gets a representative climate. If any
+// step hit a transient failure but none genuinely resolved, report
+// "unavailable" (retryable) rather than "empty" (genuinely nothing there).
 async function resolvePoint(
   city: string | undefined,
   country: string,
-): Promise<{ geo: GeoResult; label: string } | null> {
+): Promise<ResolveOutcome> {
+  let sawUnavailable = false;
+  const attempt = async (place: string, label: string) => {
+    const r = await geocode(place, country).catch(
+      () => ({ status: "unavailable" }) as GeoOutcome,
+    );
+    if (r.status === "unavailable") sawUnavailable = true;
+    return r.status === "ok"
+      ? ({ status: "ok", geo: r.geo, label } as const)
+      : null;
+  };
+
   if (city) {
-    const geo = await geocode(city, country).catch(() => null);
-    if (geo) return { geo, label: geo.name };
+    const geo = await attempt(city, city);
+    if (geo) return { ...geo, label: geo.label };
   }
   const capital = insightsForCountry(country)?.climate.city;
   if (capital) {
-    const geo = await geocode(capital, country).catch(() => null);
-    if (geo) return { geo, label: geo.name };
+    const hit = await attempt(capital, capital);
+    if (hit) return hit;
   }
-  const geo = await geocode(country, country).catch(() => null);
-  if (geo) return { geo, label: country };
-  return null;
+  const hit = await attempt(country, country);
+  if (hit) return hit;
+  return { status: sawUnavailable ? "unavailable" : "empty" };
 }
 
 interface ClimateNormals {
@@ -109,13 +163,13 @@ async function fetchClimateNormals(
   lon: number,
 ): Promise<ClimateNormals | null> {
   const year = new Date().getUTCFullYear() - 1;
-  const res = await fetch(
+  const res = await fetchResilient(
     `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}` +
       `&start_date=${year}-01-01&end_date=${year}-12-31` +
       `&daily=temperature_2m_mean,precipitation_sum,relative_humidity_2m_mean,sunshine_duration&timezone=auto`,
     { signal: AbortSignal.timeout(9000) },
   );
-  if (!res.ok) return null;
+  if (!res || !res.ok) return null;
   const json = (await res.json()) as {
     daily?: {
       time?: string[];
@@ -330,20 +384,27 @@ async function fetchSensorYear(
   return { value: best.value, unit: best.unit, year: best.year };
 }
 
+type PointOutcome =
+  | { status: "ok"; point: ClimatePoint }
+  | { status: "empty" }
+  | { status: "unavailable" };
+
 async function buildPoint(
   city: string | undefined,
   country: string,
-): Promise<ClimatePoint | null> {
+): Promise<PointOutcome> {
   const resolved = await resolvePoint(city, country);
-  if (!resolved) return null;
+  if (resolved.status !== "ok") return { status: resolved.status };
   const { geo, label } = resolved;
   const refYear = new Date().getUTCFullYear() - 1;
   const [normals, air] = await Promise.all([
     fetchClimateNormals(geo.latitude, geo.longitude).catch(() => null),
     fetchAir(geo.latitude, geo.longitude, refYear).catch(() => []),
   ]);
-  if (!normals) return null;
-  return {
+  // Geocoded fine but the climate archive gave nothing: treat as a transient
+  // miss so it stays retryable rather than being cached as "no climate".
+  if (!normals) return { status: "unavailable" };
+  const point: ClimatePoint = {
     label,
     janC: normals.janC !== null ? Math.round(normals.janC) : null,
     julC: normals.julC !== null ? Math.round(normals.julC) : null,
@@ -362,6 +423,7 @@ async function buildPoint(
     air,
     year: normals.year,
   };
+  return { status: "ok", point };
 }
 
 // A short, plain-language read tying the numbers together, generated by the
@@ -473,7 +535,7 @@ export async function GET(req: NextRequest) {
     .map((s) => (s ?? "").toLowerCase())
     .join("|");
   const hit = cache.get(key);
-  if (hit && Date.now() - hit.at < TTL_MS) {
+  if (hit && cacheFresh(hit)) {
     if (!hit.data) return Response.json({ error: "not found" }, { status: 404 });
     return Response.json(hit.data, {
       headers: { "Cache-Control": "public, s-maxage=86400" },
@@ -481,23 +543,43 @@ export async function GET(req: NextRequest) {
   }
 
   const [home, dest] = await Promise.all([
-    buildPoint(fromCity, fromCountry).catch(() => null),
-    buildPoint(toCity, toCountry).catch(() => null),
+    buildPoint(fromCity, fromCountry).catch(
+      () => ({ status: "unavailable" }) as PointOutcome,
+    ),
+    buildPoint(toCity, toCountry).catch(
+      () => ({ status: "unavailable" }) as PointOutcome,
+    ),
   ]);
 
-  if (!home || !dest) {
+  if (home.status !== "ok" || dest.status !== "ok") {
+    // A transient failure on either side must stay retryable: return 503 and
+    // do NOT cache, so the next view (or the client's retry) hits the sources
+    // again. Only a genuine "no such place" is cached (briefly) and 404'd.
+    const transient =
+      home.status === "unavailable" || dest.status === "unavailable";
+    if (transient) {
+      return Response.json(
+        { error: "temporarily unavailable" },
+        { status: 503 },
+      );
+    }
     cacheSet(key, null);
     return Response.json({ error: "not found" }, { status: 404 });
   }
 
-  const { comfort, verdicts, packing } = buildTwinComparison(home, dest);
-  const usedAir = home.air.length > 0 || dest.air.length > 0;
-  const summary = await aiSummary(home, dest, verdicts, comfort).catch(
+  const homePoint = home.point;
+  const destPoint = dest.point;
+  const { comfort, verdicts, packing } = buildTwinComparison(
+    homePoint,
+    destPoint,
+  );
+  const usedAir = homePoint.air.length > 0 || destPoint.air.length > 0;
+  const summary = await aiSummary(homePoint, destPoint, verdicts, comfort).catch(
     () => null,
   );
   const data: ClimateTwin = {
-    home,
-    dest,
+    home: homePoint,
+    dest: destPoint,
     comfort,
     verdicts,
     packing,
