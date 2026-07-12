@@ -51,7 +51,13 @@ export interface ChecklistItem {
   commonMistake?: string;
 }
 
-export const PHASE_KEYS = ["before", "week1", "month1", "days90"] as const;
+export const PHASE_KEYS = [
+  "before",
+  "departure",
+  "week1",
+  "month1",
+  "days90",
+] as const;
 export type PhaseKey = (typeof PHASE_KEYS)[number];
 
 export interface Phase {
@@ -84,6 +90,7 @@ export interface ReloPlan {
 
 export const PHASE_TITLES: Record<PhaseKey, string> = {
   before: "Before you go",
+  departure: "Wrapping up at home",
   week1: "First week",
   month1: "First month",
   days90: "First 90 days",
