@@ -803,7 +803,7 @@ export default function ChecklistView({
         {visa && (
           <VisaAnswer
             visa={visa}
-            fromCountry={input.fromCountry}
+            fromCountry={visa.passport ?? input.fromCountry}
             profile={input.profile}
           />
         )}

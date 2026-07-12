@@ -29,6 +29,9 @@ export interface ReloInput {
   fromCity?: string;
   toCity?: string;
   profile: Profile;
+  /** Countries whose passports the mover holds (for visa/eligibility logic).
+   *  Empty means unknown, in which case fromCountry is used as a proxy. */
+  citizenships?: string[];
   visaStatus: string;
   timeline: string;
   priorities: string[];
@@ -80,6 +83,9 @@ export interface VisaSummary {
   category: string;
   days: number | null;
   updatedAt: string;
+  /** Which passport this verdict is based on (the strongest one for the
+   *  destination when the mover holds several). */
+  passport?: string;
 }
 
 export interface ReloPlan {

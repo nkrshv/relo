@@ -40,6 +40,8 @@ export default function ReloForm({
   const [fromCity, setFromCity] = useState("");
   const [toCity, setToCity] = useState("");
   const [profile, setProfile] = useState<Profile>("solo");
+  const [citizenships, setCitizenships] = useState<string[]>([]);
+  const [citizenshipDraft, setCitizenshipDraft] = useState("");
   const [visaStatus, setVisaStatus] = useState("");
   const [timeline, setTimeline] = useState("");
   const [priorities, setPriorities] = useState<string[]>([]);
@@ -65,6 +67,25 @@ export default function ReloForm({
     );
   }
 
+  // The combobox fires onChange on every keystroke; a full valid country name
+  // only appears once a suggestion is picked (or typed out), so that is when we
+  // commit it as a chip and clear the input for the next one.
+  function addCitizenship(v: string) {
+    setCitizenshipDraft(v);
+    const name = v.trim();
+    if (
+      isValidCountry(name) &&
+      !citizenships.some((c) => c.toLowerCase() === name.toLowerCase())
+    ) {
+      setCitizenships((prev) => [...prev, name]);
+      setCitizenshipDraft("");
+    }
+  }
+
+  function removeCitizenship(name: string) {
+    setCitizenships((prev) => prev.filter((c) => c !== name));
+  }
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setTouched(true);
@@ -75,6 +96,7 @@ export default function ReloForm({
       fromCity: fromCity.trim() || undefined,
       toCity: toCity.trim() || undefined,
       profile,
+      citizenships,
       visaStatus: visaStatus.trim(),
       timeline: timeline.trim(),
       priorities,
@@ -184,6 +206,39 @@ export default function ReloForm({
             onChange={(e) => setTimeline(e.target.value)}
           />
         </label>
+
+        <div className="sm:col-span-2">
+          <CountryCombobox
+            label="Citizenships / passports you hold (optional)"
+            value={citizenshipDraft}
+            onChange={addCitizenship}
+            placeholder="Add each passport you hold, e.g. Netherlands"
+          />
+          {citizenships.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-2">
+              {citizenships.map((c) => (
+                <span
+                  key={c}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-stone-300 bg-stone-50 px-2.5 py-1 text-sm text-stone-700"
+                >
+                  {c}
+                  <button
+                    type="button"
+                    onClick={() => removeCitizenship(c)}
+                    aria-label={`Remove ${c}`}
+                    className="text-base leading-none text-stone-400 transition-colors hover:text-stone-700"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+          <p className="mt-1.5 text-xs text-stone-400">
+            Hold more than one? We check each and base your visa route on the
+            strongest passport for this destination.
+          </p>
+        </div>
 
         <label className="block sm:col-span-2">
           <span className={labelClass}>

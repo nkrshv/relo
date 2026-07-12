@@ -2,7 +2,8 @@ import type { NextRequest } from "next/server";
 import { factsForCountry } from "@/lib/countryFacts";
 import { taxRegimesForCountry } from "@/lib/taxRegimes";
 import { advisoryForCountry, impactForProfile } from "@/lib/countryAdvisory";
-import { visaRequirementBetween } from "@/lib/visaMatrix";
+import { bestVisaRequirement } from "@/lib/visaMatrix";
+import { isValidCountry } from "@/lib/allCountries";
 import {
   insightsForCountry,
   climateSummary,
@@ -353,11 +354,28 @@ function breakDependencyCycles(phases: Phase[]): Phase[] {
   return phases;
 }
 
+// The passports to reason about: declared citizenships when given, otherwise
+// the origin country as a proxy (someone who lives there likely holds it).
+function passportsFor(input: ReloInput): string[] {
+  return input.citizenships && input.citizenships.length > 0
+    ? input.citizenships
+    : [input.fromCountry];
+}
+
+// Best short-stay outcome across all of the mover's passports, tagged with the
+// passport it came from (so dual citizens see their strongest option).
+function planVisa(input: ReloInput) {
+  return bestVisaRequirement(passportsFor(input), input.toCountry);
+}
+
 function buildUserContent(input: ReloInput): string {
   const profile = [
     `Moving from: ${input.fromCity ? `${input.fromCity}, ` : ""}${input.fromCountry}`,
     `Moving to: ${input.toCity ? `${input.toCity}, ` : ""}${input.toCountry}`,
     `Profile: ${input.profile}`,
+    input.citizenships && input.citizenships.length
+      ? `Citizenships / passports held: ${input.citizenships.join(", ")}`
+      : "",
     input.visaStatus ? `Visa / status: ${input.visaStatus}` : "",
     input.timeline ? `Timeline: ${input.timeline}` : "",
     input.priorities.length
@@ -402,13 +420,20 @@ function buildUserContent(input: ReloInput): string {
     blocks.push(lines.join("\n"));
   }
 
-  const visa = visaRequirementBetween(input.fromCountry, input.toCountry);
+  const visa = planVisa(input);
   if (visa) {
+    const passports = passportsFor(input);
+    const multi = passports.length > 1;
     blocks.push(
       [
-        `SHORT-STAY VISA RULE (Passport Index dataset, updated ${visa.updatedAt}) for a ${input.fromCountry} passport holder entering ${input.toCountry}: ${visa.label}.`,
+        `SHORT-STAY VISA RULE (Passport Index dataset, updated ${visa.updatedAt}) for a ${visa.passport} passport holder entering ${input.toCountry}: ${visa.label}.`,
+        multi
+          ? `The mover holds multiple passports (${passports.join(", ")}); the ${visa.passport} passport is their strongest for this destination, so base entry/visa-run advice on it and mention when a specific passport unlocks visa-free entry or residency (e.g. an EU passport inside the EU/EEA grants freedom of movement).`
+          : "",
         `This covers tourist/short stays only — long-term relocation still needs the residence route. Use it to ground advice about scouting trips, visa-run realities, and whether the person can enter first and regularize later.`,
-      ].join("\n"),
+      ]
+        .filter(Boolean)
+        .join("\n"),
     );
   }
 
@@ -550,6 +575,13 @@ export async function POST(req: NextRequest) {
     fromCity: cap(str(body.fromCity)).slice(0, 80) || undefined,
     toCity: cap(str(body.toCity)).slice(0, 80) || undefined,
     profile: (body.profile as ReloInput["profile"]) ?? "solo",
+    citizenships: Array.isArray(body.citizenships)
+      ? body.citizenships
+          .map(str)
+          .map((c) => c.trim())
+          .filter((c) => isValidCountry(c))
+          .slice(0, 5)
+      : [],
     visaStatus: cap(str(body.visaStatus)),
     timeline: cap(str(body.timeline)),
     priorities: Array.isArray(body.priorities)
@@ -603,7 +635,7 @@ export async function POST(req: NextRequest) {
       return Response.json({
         input,
         plan: revisedPlan,
-        visa: visaRequirementBetween(input.fromCountry, input.toCountry),
+        visa: planVisa(input),
       });
     }
   } catch {
@@ -621,7 +653,7 @@ export async function POST(req: NextRequest) {
   return Response.json({
     input,
     plan,
-    visa: visaRequirementBetween(input.fromCountry, input.toCountry),
+    visa: planVisa(input),
   });
 }
 
