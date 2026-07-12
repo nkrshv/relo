@@ -25,7 +25,8 @@ import {
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
 import {
-  capitalGainsLabel,
+  cryptoShortStatus,
+  cryptoGainsBreakdown,
   cryptoStatusLabel,
   cryptoTaxForCountry,
   cryptoTaxTone,
@@ -165,6 +166,36 @@ function CellIcon({ name }: { name: IconName }) {
   );
 }
 
+// Compact reachability signal for the Messengers cell: a check when every app
+// is reachable, an alert triangle when OONI saw disruptions.
+function MessengerStatusGlyph({ status }: { status: "ok" | "issues" }) {
+  const ok = status === "ok";
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      role="img"
+      aria-label={ok ? "All messengers reachable" : "Some messengers restricted"}
+      className={`h-4 w-4 shrink-0 ${ok ? "text-stone-600" : "text-amber-600"}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <title>{ok ? "All messengers reachable" : "Some messengers restricted"}</title>
+      {ok ? (
+        <path d="m5 12.5 4.5 4.5L19 7" />
+      ) : (
+        <>
+          <path d="M12 3 2 20h20L12 3Z" />
+          <path d="M12 10v4" />
+          <path d="M12 17.5v.5" />
+        </>
+      )}
+    </svg>
+  );
+}
+
 interface BentoCell {
   key: string;
   icon: IconName;
@@ -175,6 +206,7 @@ interface BentoCell {
   hint?: string;
   wide?: boolean;
   messengers?: MessengerReachability[];
+  messengerStatus?: "ok" | "issues";
 }
 
 type TabKey = "practical" | "cost" | "crypto" | "climate" | "health" | "safety";
@@ -216,8 +248,20 @@ export default function CountrySummary({
   // Big Mac price alone is noise; compare against the origin when we can,
   // or at least quote it in the origin currency so it reads as a home price.
   const originInsights = fromCountry ? insightsForCountry(fromCountry) : null;
+  const originOpenData = fromCountry ? openDataForCountry(fromCountry) : null;
   const originCurrency = fromCountry ? currencyForCountry(fromCountry) : null;
   const priceLevel = (() => {
+    // Prefer the Eurostat price level index for the home comparison: it is
+    // country-specific, whereas the Big Mac index prices the whole euro area
+    // as a single number (so Portugal and Germany would read as identical).
+    const destPli = openData?.priceLevelEU?.value;
+    const originPli = originOpenData?.priceLevelEU?.value;
+    if (destPli != null && originPli != null && fromCountry) {
+      const pct = Math.round(((destPli - originPli) / originPli) * 100);
+      const hint = `Consumer price level: ${Math.round(destPli)} here vs ${Math.round(originPli)} in ${fromCountry} (Eurostat, EU27 = 100)`;
+      if (pct === 0) return { value: "Similar prices", sub: undefined, hint };
+      return { value: `${pct > 0 ? "+" : ""}${pct}% vs home`, sub: undefined, hint };
+    }
     const dest = insights?.bigMacUsd?.value;
     if (!dest) return null;
     const origin = originInsights?.bigMacUsd?.value;
@@ -305,14 +349,12 @@ export default function CountrySummary({
     (destLite?.aqi != null
       ? { aqi: destLite.aqi, dominant: null, station: destLite.capital }
       : null);
-  const airBand = air ? aqiLabel(air.aqi) : null;
   const hasHealth = Boolean(
-    air ||
-      (vac &&
-        (vac.required.length > 0 ||
-          vac.recommended.length > 0 ||
-          vac.malaria ||
-          vac.healthNotices.length > 0)),
+    vac &&
+      (vac.required.length > 0 ||
+        vac.recommended.length > 0 ||
+        vac.malaria ||
+        vac.healthNotices.length > 0),
   );
   const regimes = taxRegimesForCountry(country);
   const hasCost = Boolean(
@@ -492,25 +534,26 @@ export default function CountrySummary({
       key: "crypto-tax",
       icon: "tax",
       label: "Crypto taxes",
-      value: capitalGainsLabel(cryptoTax),
-      sub: cryptoStatusLabel(cryptoTax),
+      value: cryptoShortStatus(cryptoTax),
       accent: cryptoTaxTone(cryptoTax),
-      hint: cryptoTax.shortSummary,
+      hint: `${cryptoTax.shortSummary} · open the Crypto tab for rates`,
     });
   const censorship = censorshipForCountry(country);
-  if (censorship && censorship.messengers.length > 0)
+  if (censorship && censorship.messengers.length > 0) {
+    const allOk = allMessengersReachable(censorship);
     cells.push({
       key: "messengers",
       icon: "chat",
       label: "Messengers",
-      value: allMessengersReachable(censorship) ? "No known issues" : "",
+      value: "",
       sub: `OONI, 6 months to ${formatMonth(censorship.window.until)}`,
-      accent: allMessengersReachable(censorship) ? undefined : "text-amber-700",
+      messengerStatus: allOk ? "ok" : "issues",
       messengers: censorship.messengers,
       hint: censorship.messengers
         .map((m) => `${m.app}: ${reachabilityLabel(m.status).text}`)
         .join(", "),
     });
+  }
   const salary = salaryForCountry(country);
   if (salary?.avgAnnual)
     cells.push({
@@ -645,8 +688,9 @@ export default function CountrySummary({
               <p
                 className={`tnum mt-1.5 flex items-center gap-1.5 text-sm font-semibold ${c.wide ? "sm:text-base" : ""} ${c.accent ?? "text-stone-900"}`}
               >
+                {c.messengerStatus && <MessengerStatusGlyph status={c.messengerStatus} />}
                 {c.messengers && <MessengerIcons messengers={c.messengers} />}
-                <span className="truncate">{c.value}</span>
+                {c.value && <span className="truncate">{c.value}</span>}
               </p>
               {c.sub && (
                 <p className="mt-0.5 truncate text-xs text-stone-400">{c.sub}</p>
@@ -839,12 +883,18 @@ export default function CountrySummary({
                   {cryptoTax.legalStatus}
                 </span>
               </div>
-              <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                <Tile
-                  label="Capital gains"
-                  value={capitalGainsLabel(cryptoTax)}
-                  accent={cryptoTaxTone(cryptoTax)}
-                />
+              <div className="mt-2.5 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {(() => {
+                  const g = cryptoGainsBreakdown(cryptoTax);
+                  return (
+                    <>
+                      <Tile label={g.underLabel} value={g.under} />
+                      {g.afterLabel && g.after && (
+                        <Tile label={g.afterLabel} value={g.after} />
+                      )}
+                    </>
+                  );
+                })()}
                 <Tile
                   label="Staking income"
                   value={formatCryptoRate(cryptoTax.stakingRate)}
@@ -854,10 +904,7 @@ export default function CountrySummary({
                   value={formatCryptoRate(cryptoTax.miningRate)}
                 />
               </div>
-              <p className="mt-2.5 text-sm leading-relaxed text-stone-600">
-                {cryptoTax.shortSummary}
-              </p>
-              <p className="mt-2 text-[11px] leading-relaxed text-stone-400">
+              <p className="mt-2.5 text-[11px] leading-relaxed text-stone-400">
                 General rates, not personal tax advice.{" "}
                 <a
                   href={CRYPTO_TAX_DATASET_URL}
@@ -873,27 +920,17 @@ export default function CountrySummary({
           )}
 
           {openTab === "climate" && hasClimateTwin && (
-            <ClimateTwinPanel twin={climateTwin!} />
+            <ClimateTwinPanel
+              twin={climateTwin!}
+              aqi={{
+                home: sameCountry ? null : originCity?.aqi ?? origin?.aqi ?? null,
+                dest: cityAir?.aqi ?? null,
+              }}
+            />
           )}
 
           {openTab === "health" && hasHealth && (
             <div className="mt-2.5">
-              {air && airBand && (
-                <div className="mb-2.5 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                  <Tile
-                    label={`Air quality · ${openData?.capital ?? air.station}`}
-                    value={`AQI ${air.aqi} · ${airBand.text}`}
-                    accent={
-                      airBand.tone === "good"
-                        ? "text-emerald-700"
-                        : airBand.tone === "moderate"
-                          ? "text-amber-700"
-                          : "text-orange-700"
-                    }
-                    hint={`WAQI, station: ${air.station}`}
-                  />
-                </div>
-              )}
               {vac && vac.required.length > 0 && (
                 <div className="mb-2">
                   <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
@@ -959,9 +996,7 @@ export default function CountrySummary({
                   </div>
                 </div>
               )}
-              <p className="mt-2 text-xs text-stone-400">
-                Source: {[vac ? "CDC" : null, air ? "WAQI" : null].filter(Boolean).join(" · ")}
-              </p>
+              <p className="mt-2 text-xs text-stone-400">Source: CDC</p>
             </div>
           )}
 
