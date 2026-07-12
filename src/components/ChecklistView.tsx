@@ -1135,7 +1135,8 @@ export default function ChecklistView({
                                 item.documents?.length ||
                                 item.commonMistake ||
                                 item.tip ||
-                                (destOffices && officeTaskMatch(item))) && (
+                                ((destOffices || originOffices) &&
+                                  officeTaskMatch(item))) && (
                                 <details className="group/tip mt-2">
                                   <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-stone-500 transition-colors hover:text-stone-900 [&::-webkit-details-marker]:hidden">
                                     {item.steps?.length ? "How to do it" : "Tip"}
