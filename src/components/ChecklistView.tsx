@@ -9,6 +9,7 @@ import type {
   VisaSummary,
 } from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
+import ClimateTwin from "@/components/ClimateTwin";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
 import { openDataForCountry } from "@/lib/countryOpenData";
@@ -809,6 +810,12 @@ export default function ChecklistView({
           fromCity={input.fromCity}
           toCity={input.toCity}
           visa={visa ?? null}
+        />
+        <ClimateTwin
+          fromCountry={input.fromCountry}
+          toCountry={input.toCountry}
+          fromCity={input.fromCity}
+          toCity={input.toCity}
         />
       </header>
 

@@ -1,0 +1,475 @@
+import type { NextRequest } from "next/server";
+import { insightsForCountry } from "@/lib/countryInsights";
+import {
+  buildTwinComparison,
+  type ClimatePoint,
+  type ClimateTwin,
+  type Pollutant,
+} from "@/lib/climateTwin";
+
+// The "climate twin" endpoint: given the mover's home and destination
+// (city + country), it resolves both to coordinates, pulls historical
+// climate normals from Open-Meteo (temperature, rainfall, humidity; no key,
+// CC BY 4.0) and annual pollutant averages (PM2.5, PM10, NO2, O3, SO2, CO)
+// from the nearest OpenAQ sensors (needs OPENAQ_API_KEY; degrades to [] with-
+// out it), compares them, and asks OpenAI for a short grounded verdict.
+// Results are cached in memory and at the CDN; everything degrades so the
+// client can simply hide the block.
+
+export const runtime = "nodejs";
+
+interface GeoResult {
+  name: string;
+  latitude: number;
+  longitude: number;
+  country?: string;
+}
+
+const cache = new Map<string, { at: number; data: ClimateTwin | null }>();
+const TTL_MS = 24 * 60 * 60 * 1000;
+const CACHE_MAX = 2000;
+
+function cacheSet(key: string, data: ClimateTwin | null) {
+  if (cache.size >= CACHE_MAX) {
+    const oldest = cache.keys().next().value;
+    if (oldest !== undefined) cache.delete(oldest);
+  }
+  cache.set(key, { at: Date.now(), data });
+}
+
+async function geocode(
+  place: string,
+  country: string,
+): Promise<GeoResult | null> {
+  const res = await fetch(
+    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(place)}&count=5&language=en&format=json`,
+    { signal: AbortSignal.timeout(6000) },
+  );
+  if (!res.ok) return null;
+  const json = (await res.json()) as { results?: GeoResult[] };
+  const results = json.results ?? [];
+  if (results.length === 0) return null;
+  const want = country.toLowerCase();
+  return (
+    results.find((r) => {
+      const got = (r.country ?? "").toLowerCase();
+      return got && (got.includes(want) || want.includes(got));
+    }) ?? results[0]
+  );
+}
+
+// Prefer the chosen city; fall back to the curated capital, then the country
+// centroid, so a country-only move still gets a representative climate.
+async function resolvePoint(
+  city: string | undefined,
+  country: string,
+): Promise<{ geo: GeoResult; label: string } | null> {
+  if (city) {
+    const geo = await geocode(city, country).catch(() => null);
+    if (geo) return { geo, label: geo.name };
+  }
+  const capital = insightsForCountry(country)?.climate.city;
+  if (capital) {
+    const geo = await geocode(capital, country).catch(() => null);
+    if (geo) return { geo, label: geo.name };
+  }
+  const geo = await geocode(country, country).catch(() => null);
+  if (geo) return { geo, label: country };
+  return null;
+}
+
+interface ClimateNormals {
+  janC: number | null;
+  julC: number | null;
+  coldestC: number | null;
+  warmestC: number | null;
+  coldestMonth: number | null;
+  warmestMonth: number | null;
+  wettestMonth: number | null;
+  annualPrecipMm: number | null;
+  humidityPct: number | null;
+  year: number;
+}
+
+function mean(vals: number[]): number | null {
+  const v = vals.filter((n): n is number => typeof n === "number");
+  if (v.length === 0) return null;
+  return v.reduce((a, b) => a + b, 0) / v.length;
+}
+
+function sum(vals: number[]): number | null {
+  const v = vals.filter((n): n is number => typeof n === "number");
+  if (v.length === 0) return null;
+  return v.reduce((a, b) => a + b, 0);
+}
+
+async function fetchClimateNormals(
+  lat: number,
+  lon: number,
+): Promise<ClimateNormals | null> {
+  const year = new Date().getUTCFullYear() - 1;
+  const res = await fetch(
+    `https://archive-api.open-meteo.com/v1/archive?latitude=${lat}&longitude=${lon}` +
+      `&start_date=${year}-01-01&end_date=${year}-12-31` +
+      `&daily=temperature_2m_mean,precipitation_sum,relative_humidity_2m_mean&timezone=auto`,
+    { signal: AbortSignal.timeout(9000) },
+  );
+  if (!res.ok) return null;
+  const json = (await res.json()) as {
+    daily?: {
+      time?: string[];
+      temperature_2m_mean?: (number | null)[];
+      precipitation_sum?: (number | null)[];
+      relative_humidity_2m_mean?: (number | null)[];
+    };
+  };
+  const time = json.daily?.time ?? [];
+  const temps = json.daily?.temperature_2m_mean ?? [];
+  const precip = json.daily?.precipitation_sum ?? [];
+  const humid = json.daily?.relative_humidity_2m_mean ?? [];
+  if (time.length === 0) return null;
+
+  const monthTemp: number[][] = Array.from({ length: 12 }, () => []);
+  const monthPrecip: number[][] = Array.from({ length: 12 }, () => []);
+  const monthHumid: number[][] = Array.from({ length: 12 }, () => []);
+  time.forEach((t, i) => {
+    const m = parseInt(t.slice(5, 7), 10) - 1;
+    if (m < 0 || m > 11) return;
+    if (typeof temps[i] === "number") monthTemp[m].push(temps[i] as number);
+    if (typeof precip[i] === "number") monthPrecip[m].push(precip[i] as number);
+    if (typeof humid[i] === "number") monthHumid[m].push(humid[i] as number);
+  });
+
+  const monthlyTempMean = monthTemp.map(mean);
+  const monthlyPrecipSum = monthPrecip.map(sum);
+
+  const withTemp = monthlyTempMean
+    .map((v, i) => ({ v, i }))
+    .filter((x): x is { v: number; i: number } => x.v !== null);
+  if (withTemp.length === 0) return null;
+
+  const coldest = withTemp.reduce((a, b) => (b.v < a.v ? b : a));
+  const warmest = withTemp.reduce((a, b) => (b.v > a.v ? b : a));
+
+  const withPrecip = monthlyPrecipSum
+    .map((v, i) => ({ v, i }))
+    .filter((x): x is { v: number; i: number } => x.v !== null);
+  const wettest =
+    withPrecip.length > 0
+      ? withPrecip.reduce((a, b) => (b.v > a.v ? b : a))
+      : null;
+
+  const allHumid = monthHumid.flat();
+  const allPrecip = precip.filter((n): n is number => typeof n === "number");
+
+  return {
+    janC: monthlyTempMean[0] !== null ? monthlyTempMean[0] : null,
+    julC: monthlyTempMean[6] !== null ? monthlyTempMean[6] : null,
+    coldestC: coldest.v,
+    warmestC: warmest.v,
+    coldestMonth: coldest.i + 1,
+    warmestMonth: warmest.i + 1,
+    wettestMonth: wettest ? wettest.i + 1 : null,
+    annualPrecipMm: allPrecip.length > 0 ? sum(allPrecip) : null,
+    humidityPct: allHumid.length > 0 ? mean(allHumid) : null,
+    year,
+  };
+}
+
+interface OpenAqSensor {
+  id: number;
+  parameter?: { name?: string; units?: string; displayName?: string };
+}
+
+interface OpenAqLocation {
+  id: number;
+  name?: string;
+  distance?: number;
+  sensors?: OpenAqSensor[];
+}
+
+// Pollutants we surface, in display order. Labels/units come from the API
+// response so we stay faithful to what each sensor actually reports.
+const POLLUTANTS = ["pm25", "pm10", "no2", "o3", "so2", "co"] as const;
+// Unit-aware rounding: µg/m³ values are whole-ish, but ppm/ppb readings can be
+// well below 1, where rounding to a single decimal would wrongly show "0".
+function roundSmart(v: number): number {
+  if (v >= 10) return Math.round(v);
+  if (v >= 1) return Math.round(v * 10) / 10;
+  if (v <= 0) return 0;
+  const digits = Math.max(0, 2 - Math.floor(Math.log10(v)));
+  const f = Math.pow(10, digits);
+  return Math.round(v * f) / f;
+}
+
+const POLLUTANT_LABEL: Record<string, string> = {
+  pm25: "PM2.5",
+  pm10: "PM10",
+  no2: "NO2",
+  o3: "O3",
+  so2: "SO2",
+  co: "CO",
+};
+
+// Annual pollutant averages from the OpenAQ sensors nearest the point. For
+// each pollutant it takes the closest station (government or community) that
+// measures it, then reads the yearly mean for the reference year (falling
+// back to the most recent year with decent coverage). Returns [] when no key
+// is set or no nearby sensor has usable data.
+async function fetchAir(
+  lat: number,
+  lon: number,
+  refYear: number,
+): Promise<Pollutant[]> {
+  const key = process.env.OPENAQ_API_KEY;
+  if (!key) return [];
+  const headers = { "X-API-Key": key };
+
+  const locRes = await fetch(
+    `https://api.openaq.org/v3/locations?coordinates=${lat},${lon}&radius=25000&limit=100`,
+    { headers, signal: AbortSignal.timeout(8000) },
+  ).catch(() => null);
+  if (!locRes || !locRes.ok) return [];
+  const locJson = (await locRes.json()) as { results?: OpenAqLocation[] };
+  const locations = (locJson.results ?? []).sort(
+    (a, b) => (a.distance ?? Infinity) - (b.distance ?? Infinity),
+  );
+
+  // Pick the nearest sensor per pollutant.
+  const chosen = new Map<
+    string,
+    { sensorId: number; station: string | null }
+  >();
+  for (const loc of locations) {
+    for (const sensor of loc.sensors ?? []) {
+      const name = sensor.parameter?.name;
+      if (!name || !POLLUTANTS.includes(name as (typeof POLLUTANTS)[number]))
+        continue;
+      if (!chosen.has(name)) {
+        chosen.set(name, { sensorId: sensor.id, station: loc.name ?? null });
+      }
+    }
+    if (chosen.size === POLLUTANTS.length) break;
+  }
+
+  const results = await Promise.all(
+    [...chosen.entries()].map(([name, { sensorId, station }]) =>
+      fetchSensorYear(headers, sensorId, refYear).then((y) => {
+        if (!y) return null;
+        const value = roundSmart(y.value);
+        if (value <= 0) return null; // rounds away to nothing; not worth showing
+        return {
+          parameter: name,
+          label: POLLUTANT_LABEL[name] ?? name.toUpperCase(),
+          value,
+          unit: y.unit,
+          year: y.year,
+          station,
+        };
+      }),
+    ),
+  );
+
+  const air = results.filter((r): r is Pollutant => r !== null);
+  air.sort(
+    (a, b) => POLLUTANTS.indexOf(a.parameter as (typeof POLLUTANTS)[number]) -
+      POLLUTANTS.indexOf(b.parameter as (typeof POLLUTANTS)[number]),
+  );
+  return air;
+}
+
+interface YearlyResult {
+  value?: number;
+  parameter?: { units?: string };
+  period?: { datetimeFrom?: { utc?: string } };
+  coverage?: { percentComplete?: number };
+}
+
+// Yearly mean for one sensor: prefers the reference year, else the most recent
+// year with at least ~40% coverage.
+async function fetchSensorYear(
+  headers: Record<string, string>,
+  sensorId: number,
+  refYear: number,
+): Promise<{ value: number; unit: string; year: number } | null> {
+  const res = await fetch(
+    `https://api.openaq.org/v3/sensors/${sensorId}/years` +
+      `?date_from=${refYear - 2}-01-01&date_to=${refYear}-12-31&limit=5`,
+    { headers, signal: AbortSignal.timeout(7000) },
+  ).catch(() => null);
+  if (!res || !res.ok) return null;
+  const json = (await res.json()) as { results?: YearlyResult[] };
+  const usable = (json.results ?? [])
+    .map((r) => ({
+      value: r.value,
+      unit: r.parameter?.units ?? "µg/m³",
+      year: parseInt(r.period?.datetimeFrom?.utc?.slice(0, 4) ?? "0", 10),
+      coverage: r.coverage?.percentComplete ?? 0,
+    }))
+    .filter(
+      (r) => typeof r.value === "number" && r.value >= 0 && r.coverage >= 40,
+    ) as { value: number; unit: string; year: number; coverage: number }[];
+  if (usable.length === 0) return null;
+  const exact = usable.find((r) => r.year === refYear);
+  const best = exact ?? usable.sort((a, b) => b.year - a.year)[0];
+  return { value: best.value, unit: best.unit, year: best.year };
+}
+
+async function buildPoint(
+  city: string | undefined,
+  country: string,
+): Promise<ClimatePoint | null> {
+  const resolved = await resolvePoint(city, country);
+  if (!resolved) return null;
+  const { geo, label } = resolved;
+  const refYear = new Date().getUTCFullYear() - 1;
+  const [normals, air] = await Promise.all([
+    fetchClimateNormals(geo.latitude, geo.longitude).catch(() => null),
+    fetchAir(geo.latitude, geo.longitude, refYear).catch(() => []),
+  ]);
+  if (!normals) return null;
+  return {
+    label,
+    janC: normals.janC !== null ? Math.round(normals.janC) : null,
+    julC: normals.julC !== null ? Math.round(normals.julC) : null,
+    coldestC: normals.coldestC !== null ? Math.round(normals.coldestC) : null,
+    warmestC: normals.warmestC !== null ? Math.round(normals.warmestC) : null,
+    coldestMonth: normals.coldestMonth,
+    warmestMonth: normals.warmestMonth,
+    wettestMonth: normals.wettestMonth,
+    annualPrecipMm:
+      normals.annualPrecipMm !== null
+        ? Math.round(normals.annualPrecipMm)
+        : null,
+    humidityPct:
+      normals.humidityPct !== null ? Math.round(normals.humidityPct) : null,
+    air,
+    year: normals.year,
+  };
+}
+
+// A short, plain-language read tying the numbers together, generated by the
+// model but strictly grounded: it is only fed the verified facts and told not
+// to invent, advise medically, or use em dashes. Falls back to null on any
+// failure so the deterministic verdicts still carry the block.
+async function aiSummary(
+  home: ClimatePoint,
+  dest: ClimatePoint,
+  verdicts: string[],
+): Promise<string | null> {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) return null;
+
+  const facts = {
+    home: pointFacts(home),
+    destination: pointFacts(dest),
+    computedComparisons: verdicts,
+  };
+  const prompt =
+    "You are helping someone relocate understand how the destination's climate and air " +
+    "quality compare to their home city, so they feel less anxious about the move. " +
+    "Using ONLY the verified facts below, write 1 to 2 short sentences in plain English " +
+    "about how physically comfortable the destination is likely to feel relative to home " +
+    "(temperature, rain, humidity, air quality). Be specific and honest. Do not invent " +
+    "numbers, do not give medical advice, do not guarantee comfort, and do not use em dashes. " +
+    "Return JSON: {\"summary\": string}.\n\nFacts:\n" +
+    JSON.stringify(facts);
+
+  try {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model: "gpt-4o",
+        temperature: 0.3,
+        response_format: { type: "json_object" },
+        messages: [{ role: "user", content: prompt }],
+      }),
+      signal: AbortSignal.timeout(12000),
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as {
+      choices?: { message?: { content?: string } }[];
+    };
+    const content = data.choices?.[0]?.message?.content;
+    if (!content) return null;
+    const parsed = JSON.parse(content) as { summary?: unknown };
+    const summary = typeof parsed.summary === "string" ? parsed.summary.trim() : "";
+    return summary.replace(/\u2014/g, ", ").slice(0, 400) || null;
+  } catch {
+    return null;
+  }
+}
+
+function pointFacts(p: ClimatePoint) {
+  return {
+    place: p.label,
+    year: p.year,
+    coldestMonthMeanC: p.coldestC,
+    warmestMonthMeanC: p.warmestC,
+    janMeanC: p.janC,
+    julMeanC: p.julC,
+    annualRainMm: p.annualPrecipMm,
+    meanHumidityPct: p.humidityPct,
+    airAnnualAverages: p.air.map((a) => ({
+      pollutant: a.label,
+      value: a.value,
+      unit: a.unit,
+    })),
+  };
+}
+
+export async function GET(req: NextRequest) {
+  const p = req.nextUrl.searchParams;
+  const fromCountry = (p.get("fromCountry") ?? "").trim().slice(0, 80);
+  const toCountry = (p.get("toCountry") ?? "").trim().slice(0, 80);
+  const fromCity = (p.get("fromCity") ?? "").trim().slice(0, 80) || undefined;
+  const toCity = (p.get("toCity") ?? "").trim().slice(0, 80) || undefined;
+  if (!fromCountry || !toCountry) {
+    return Response.json(
+      { error: "fromCountry and toCountry are required" },
+      { status: 400 },
+    );
+  }
+
+  const key = [fromCountry, fromCity, toCountry, toCity]
+    .map((s) => (s ?? "").toLowerCase())
+    .join("|");
+  const hit = cache.get(key);
+  if (hit && Date.now() - hit.at < TTL_MS) {
+    if (!hit.data) return Response.json({ error: "not found" }, { status: 404 });
+    return Response.json(hit.data, {
+      headers: { "Cache-Control": "public, s-maxage=86400" },
+    });
+  }
+
+  const [home, dest] = await Promise.all([
+    buildPoint(fromCity, fromCountry).catch(() => null),
+    buildPoint(toCity, toCountry).catch(() => null),
+  ]);
+
+  if (!home || !dest) {
+    cacheSet(key, null);
+    return Response.json({ error: "not found" }, { status: 404 });
+  }
+
+  const { comfort, verdicts, packing } = buildTwinComparison(home, dest);
+  const usedAir = home.air.length > 0 || dest.air.length > 0;
+  const summary = await aiSummary(home, dest, verdicts).catch(() => null);
+  const data: ClimateTwin = {
+    home,
+    dest,
+    comfort,
+    verdicts,
+    packing,
+    aiSummary: summary,
+    sources: ["Open-Meteo (CC BY 4.0)", ...(usedAir ? ["OpenAQ"] : [])],
+  };
+  cacheSet(key, data);
+  return Response.json(data, {
+    headers: { "Cache-Control": "public, s-maxage=86400" },
+  });
+}
