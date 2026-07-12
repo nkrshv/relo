@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DESTINATIONS, type Destination } from "@/lib/countries";
-import { insightsForCountry, climateSummary, INSIGHTS_UPDATED_AT } from "@/lib/countryInsights";
+import {
+  insightsForCountry,
+  climateSummary,
+  INSIGHTS_UPDATED_AT,
+  type CountryInsights,
+} from "@/lib/countryInsights";
 import { openDataForCountry, aqiLabel } from "@/lib/countryOpenData";
 import { OPEN_DATA_UPDATED_AT } from "@/lib/countryOpenData.generated";
 import { staticDataForCountry } from "@/lib/staticCountryData";
@@ -26,6 +31,7 @@ import {
 } from "@/lib/cryptoTax";
 import { formatMonth, formatDate } from "@/lib/dates";
 import SiteFooter from "@/components/SiteFooter";
+import CompareClimateRows from "@/components/CompareClimateRows";
 import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
@@ -125,24 +131,6 @@ function buildRows(a: Destination, b: Destination): Row[] {
   };
 
   const rows: Row[] = [
-    {
-      label: "Climate (capital)",
-      a: insA ? `${climateSummary(insA) ?? ""} · ${insA.capital}` : null,
-      b: insB ? `${climateSummary(insB) ?? ""} · ${insB.capital}` : null,
-      source: "Open-Meteo historical weather",
-    },
-    {
-      label: "Sunny days (capital)",
-      a:
-        insA?.climate.sunnyDays != null
-          ? `${insA.climate.sunnyDays} days / yr`
-          : null,
-      b:
-        insB?.climate.sunnyDays != null
-          ? `${insB.climate.sunnyDays} days / yr`
-          : null,
-      source: "Open-Meteo, days with over 4.5h of sunshine",
-    },
     {
       label: "Air quality (capital)",
       a: odA?.airQuality
@@ -283,6 +271,23 @@ export default async function ComparePage({
   if (!parsed) notFound();
   const { a, b } = parsed;
   const rows = buildRows(a, b);
+
+  // Climate + sunny days: curated where available, otherwise filled live from
+  // Open-Meteo on the client (same source the plan uses), so non-curated
+  // countries stop showing "—" for climate.
+  const insCA = insightsForCountry(a.name);
+  const insCB = insightsForCountry(b.name);
+  const odCA = openDataForCountry(a.name);
+  const odCB = openDataForCountry(b.name);
+  const curatedClimate = (
+    ins: CountryInsights | null,
+    capital: string | undefined,
+  ): string | null => {
+    const summary = ins ? climateSummary(ins) : null;
+    return summary && capital ? `${summary} · ${capital}` : null;
+  };
+  const curatedSunny = (ins: CountryInsights | null): string | null =>
+    ins?.climate.sunnyDays != null ? `${ins.climate.sunnyDays} days / yr` : null;
   const cryptoA = cryptoTaxForCountry(a.name);
   const cryptoB = cryptoTaxForCountry(b.name);
   const cryptoField = (
@@ -394,6 +399,16 @@ export default async function ComparePage({
               {b.emoji} {b.name}
             </span>
           </div>
+          <CompareClimateRows
+            aName={a.name}
+            bName={b.name}
+            aCapital={odCA?.capital ?? null}
+            bCapital={odCB?.capital ?? null}
+            aClimate={curatedClimate(insCA, insCA?.capital)}
+            bClimate={curatedClimate(insCB, insCB?.capital)}
+            aSunny={curatedSunny(insCA)}
+            bSunny={curatedSunny(insCB)}
+          />
           {rows.map((row) => (
             <div
               key={row.label}
