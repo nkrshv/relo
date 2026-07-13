@@ -7,6 +7,7 @@ import PlanSkeleton from "@/components/PlanSkeleton";
 import StageStepper from "@/components/StageStepper";
 import { ALL_COUNTRIES, isValidCountry } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
+import { track } from "@/lib/analytics";
 import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 
 interface Props {
@@ -103,6 +104,11 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   const [unlocked, setUnlocked] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Fire the top-of-funnel view once on the /plan page.
+  useEffect(() => {
+    if (showHeading) track("Plan Page Viewed");
+  }, [showHeading]);
+
   // Restore prior session + handle unlock redirect from Stripe.
   useEffect(() => {
     try {
@@ -131,6 +137,12 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   const generate = useCallback(async (input: ReloInput) => {
     setLoading(true);
     setError(null);
+    // Only non-PII route/profile fields; free-text budget/notes are excluded.
+    track("Plan Generation Started", {
+      fromCountry: input.fromCountry,
+      toCountry: input.toCountry,
+      profile: input.profile,
+    });
     try {
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -141,6 +153,15 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         | StoredResult
         | { error?: string };
       if (!res.ok || !("plan" in data)) {
+        track("Plan Generation Failed", {
+          status_code: res.status,
+          error_type:
+            res.status === 429
+              ? "rate_limited"
+              : res.status === 503
+                ? "unavailable"
+                : "server_error",
+        });
         setError(
           ("error" in data && data.error) ||
             "Something went wrong generating your plan.",
@@ -148,6 +169,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         setLoading(false);
         return;
       }
+      track("Plan Generation Succeeded");
       // Let the final "Assembling your checklist" step visibly complete
       // before swapping the skeleton for the real plan.
       setFinishing(true);
@@ -163,6 +185,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         setFinishing(false);
       }, 1600);
     } catch {
+      track("Plan Generation Failed", { error_type: "network" });
       setError("Network error. Please try again.");
       setLoading(false);
     }
@@ -171,6 +194,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   const unlock = useCallback(async () => {
     setUnlocking(true);
     setError(null);
+    track("Unlock Clicked");
     try {
       const res = await fetch("/api/checkout", { method: "POST" });
       const data = (await res.json()) as {

@@ -9,6 +9,7 @@ import type {
   VisaSummary,
 } from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
+import { track } from "@/lib/analytics";
 import { useClimateTwin } from "@/lib/useClimateTwin";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
@@ -607,6 +608,14 @@ export default function ChecklistView({
     input.toCity,
   );
   const climateTwin = climate.twin;
+  // Fire once when the visitor is exposed to locked phases behind the paywall.
+  const paywallTracked = useRef(false);
+  useEffect(() => {
+    if (!unlocked && plan.phases.length > 1 && !paywallTracked.current) {
+      paywallTracked.current = true;
+      track("Paywall Viewed");
+    }
+  }, [unlocked, plan.phases.length]);
   // Climate-derived packing advice is woven into the checklist as ordinary
   // tasks at the end of "Before you go" (always the free, first phase), so it
   // is not a detached block. Their checked state lives under the same

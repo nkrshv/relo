@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist, Geist_Mono } from "next/font/google";
 import CookieBanner from "@/components/CookieBanner";
+import AnalyticsInit from "@/components/AnalyticsInit";
 import "./globals.css";
 
 const GTM_ID = "GTM-TK4LCSRM";
@@ -104,6 +105,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
         />
         {children}
+        <AnalyticsInit />
         <CookieBanner />
         <Analytics />
         <SpeedInsights />
