@@ -122,6 +122,3 @@ We may update these Terms from time to time. Material changes will be posted wit
 - **Copyright / DMCA notices:** legal@reloka.to
 - **Response time:** we aim to respond within a reasonable period.
 
----
-
-*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing.*
