@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CookieSettingsLink from "@/components/CookieSettingsLink";
 
 export default function SiteFooter() {
   return (
@@ -42,6 +43,7 @@ export default function SiteFooter() {
           >
             Refunds
           </Link>
+          <CookieSettingsLink />
         </nav>
         <p className="max-w-md text-xs leading-relaxed text-stone-400">
           Not legal, tax or immigration advice. Always verify official

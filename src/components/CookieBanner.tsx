@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 
 const STORAGE_KEY = "reloka-consent";
+export const OPEN_EVENT = "reloka:open-consent";
+
+export function openCookieSettings() {
+  window.dispatchEvent(new Event(OPEN_EVENT));
+}
 
 declare global {
   interface Window {
@@ -32,6 +37,9 @@ export default function CookieBanner() {
     } catch {
       // localStorage unavailable; keep the banner hidden.
     }
+    const reopen = () => setVisible(true);
+    window.addEventListener(OPEN_EVENT, reopen);
+    return () => window.removeEventListener(OPEN_EVENT, reopen);
   }, []);
 
   function decide(granted: boolean) {
