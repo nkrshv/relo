@@ -1,33 +1,13 @@
 import type { NextRequest } from "next/server";
 import { put } from "@vercel/blob";
+import { perIpRateLimited, clientIp } from "@/lib/ratelimit";
 
 export const runtime = "nodejs";
 
 const MAX_LEN = 200;
 
 const RATE_LIMIT = 10;
-const RATE_WINDOW_MS = 60 * 60 * 1000;
-
-// Best-effort per-instance rate limiting, same approach as /api/generate.
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const windowStart = now - RATE_WINDOW_MS;
-  const list = (hits.get(ip) ?? []).filter((t) => t > windowStart);
-  if (list.length >= RATE_LIMIT) {
-    hits.set(ip, list);
-    return true;
-  }
-  list.push(now);
-  hits.set(ip, list);
-  if (hits.size > 10000) {
-    for (const [k, v] of hits) {
-      if (v.every((t) => t <= windowStart)) hits.delete(k);
-    }
-  }
-  return false;
-}
+const RATE_WINDOW_SEC = 60 * 60;
 
 // Persist one entry as a small JSON file in Vercel Blob (visible in the
 // Vercel dashboard under Storage). Falls back to deployment logs when no
@@ -52,9 +32,10 @@ async function store(type: string, value: string): Promise<void> {
 // Lightweight intake for country requests. No PII is stored: the changelog
 // email signup was removed, so only requested country names land in Blob.
 export async function POST(req: NextRequest) {
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (rateLimited(ip)) {
+  const ip = clientIp(req.headers);
+  if (
+    await perIpRateLimited("relo:feedback:ip", ip, RATE_LIMIT, RATE_WINDOW_SEC)
+  ) {
     return Response.json(
       { error: "Too many requests. Please try again later." },
       { status: 429 },

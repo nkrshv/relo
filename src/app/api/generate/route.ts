@@ -5,6 +5,12 @@ import { advisoryForCountry, impactForProfile } from "@/lib/countryAdvisory";
 import { bestVisaRequirement } from "@/lib/visaMatrix";
 import { isValidCountry } from "@/lib/allCountries";
 import {
+  perIpRateLimited,
+  dailyBudgetExhausted,
+  recordTokens,
+  clientIp,
+} from "@/lib/ratelimit";
+import {
   insightsForCountry,
   climateSummary,
   wettestMonths,
@@ -25,31 +31,9 @@ import {
 export const runtime = "nodejs";
 
 const RATE_LIMIT = 5;
-const RATE_WINDOW_MS = 60 * 60 * 1000;
+const RATE_WINDOW_SEC = 60 * 60;
 const FIELD_MAX = 500;
 const MAX_PRIORITIES = 12;
-
-// Best-effort per-instance rate limiting; enough to stop casual abuse of the
-// unauthenticated endpoint without external storage.
-const hits = new Map<string, number[]>();
-
-function rateLimited(ip: string): boolean {
-  const now = Date.now();
-  const windowStart = now - RATE_WINDOW_MS;
-  const list = (hits.get(ip) ?? []).filter((t) => t > windowStart);
-  if (list.length >= RATE_LIMIT) {
-    hits.set(ip, list);
-    return true;
-  }
-  list.push(now);
-  hits.set(ip, list);
-  if (hits.size > 10000) {
-    for (const [k, v] of hits) {
-      if (v.every((t) => t <= windowStart)) hits.delete(k);
-    }
-  }
-  return false;
-}
 
 function cap(v: string): string {
   return v.slice(0, FIELD_MAX);
@@ -538,11 +522,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const ip =
-    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (rateLimited(ip)) {
+  const ip = clientIp(req.headers);
+  if (await perIpRateLimited("relo:gen:ip", ip, RATE_LIMIT, RATE_WINDOW_SEC)) {
     return Response.json(
       { error: "Too many plans generated. Please try again in an hour." },
+      { status: 429 },
+    );
+  }
+
+  // Global daily backstop so total OpenAI usage stays inside the free-tier
+  // token budget even if per-IP limits are evaded across many IPs.
+  if (await dailyBudgetExhausted()) {
+    return Response.json(
+      {
+        error:
+          "We've hit today's plan-generation capacity. Please try again tomorrow.",
+      },
       { status: 429 },
     );
   }
@@ -680,6 +675,9 @@ async function callModel(
   }
   const data = (await res.json()) as {
     choices?: Array<{ message?: { content?: string } }>;
+    usage?: { total_tokens?: number };
   };
+  // Fire-and-forget: record real token spend against today's global budget.
+  void recordTokens(data.usage?.total_tokens ?? 0);
   return data.choices?.[0]?.message?.content ?? "";
 }

@@ -6,6 +6,7 @@ import {
   type ClimateTwin,
   type Pollutant,
 } from "@/lib/climateTwin";
+import { recordTokens } from "@/lib/ratelimit";
 
 // The "climate twin" endpoint: given the mover's home and destination
 // (city + country), it resolves both to coordinates, pulls historical
@@ -488,7 +489,9 @@ async function aiSummary(
     if (!res.ok) return null;
     const data = (await res.json()) as {
       choices?: { message?: { content?: string } }[];
+      usage?: { total_tokens?: number };
     };
+    void recordTokens(data.usage?.total_tokens ?? 0);
     const content = data.choices?.[0]?.message?.content;
     if (!content) return null;
     const parsed = JSON.parse(content) as { summary?: unknown };
