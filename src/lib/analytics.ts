@@ -48,6 +48,10 @@ export function setAnalyticsConsent(granted: boolean) {
  * Mixpanel is opted out and the call is a no-op.
  */
 export function track(event: string, props?: Record<string, unknown>) {
-  if (typeof window === "undefined" || !initialized) return;
+  if (typeof window === "undefined") return;
+  // Lazily init so an event fired before AnalyticsInit's effect (e.g. a mount
+  // effect earlier in the tree) still initializes Mixpanel first. Safe: init
+  // opts out by default, so this never leaks events before consent.
+  initAnalytics();
   mixpanel.track(event, props);
 }
