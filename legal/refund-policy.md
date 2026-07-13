@@ -65,6 +65,3 @@ We may decline repeated or clearly abusive refund requests (for example, multipl
 - **Refund requests:** refunds@reloka.to
 - **General support:** support@reloka.to
 
----
-
-*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing, and ensure the EU withdrawal button is implemented in the product if you serve EU consumers.*

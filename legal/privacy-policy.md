@@ -138,6 +138,3 @@ We may update this Privacy Policy from time to time. Material changes will be po
 - **Rights:** know, delete, correct; opt out of sale/sharing (we do neither).
 - **"Do Not Sell or Share My Personal Information":** not applicable because we do not sell or share personal information.
 
----
-
-*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing.*
