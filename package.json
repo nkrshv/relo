@@ -12,6 +12,7 @@
   "dependencies": {
     "@next/third-parties": "^16.2.9",
     "@stripe/stripe-js": "^9.8.0",
+    "@tailwindcss/typography": "^0.5.20",
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.5.0",
     "@vercel/speed-insights": "^2.0.0",
@@ -19,6 +20,8 @@
     "openai": "^6.45.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
+    "react-markdown": "^9.1.0",
+    "remark-gfm": "^4.0.1",
     "stripe": "^22.3.0"
   },
   "devDependencies": {

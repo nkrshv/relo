@@ -35,9 +35,7 @@ If you are a consumer in the EU/EEA, you normally have a **14-day right to withd
 - Until the service is fully performed, you may withdraw within 14 days without giving a reason, and we will refund you within 14 days of your withdrawal using the same payment method.
 - Nothing in this policy removes your **statutory conformity rights** (including the minimum 2-year guarantee for defective digital services under EU law).
 
-**How to withdraw:** email **refunds@reloka.to** with your purchase details, or use the withdrawal function described below. We will confirm receipt on a durable medium (email) with a timestamp.
-
-> **Compliance note for the operator:** Directive (EU) 2023/2673 requires a clearly labeled, permanently available **withdrawal button** with a two-step confirmation for contracts concluded online with EU consumers (deadline **19 June 2026**). If you target EU consumers, add a "Withdraw from contract" button (button → confirmation page → "Confirm withdrawal") and send an automated dated confirmation by email. This policy describes the mechanism; the button must also exist in the product.
+**How to withdraw:** email **refunds@reloka.to** with your purchase details. We will confirm receipt on a durable medium (email) with a timestamp.
 
 ## UK Consumers
 
@@ -69,4 +67,4 @@ We may decline repeated or clearly abusive refund requests (for example, multipl
 
 ---
 
-*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing, complete every `[bracketed]` field, and ensure the EU withdrawal button is implemented in the product if you serve EU consumers.*
+*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing, and ensure the EU withdrawal button is implemented in the product if you serve EU consumers.*

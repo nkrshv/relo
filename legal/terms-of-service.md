@@ -2,9 +2,7 @@
 
 **Last updated: 10 July 2026**
 
-These Terms of Service ("Terms") govern your access to and use of reloka.to and the relocation-planning service provided there (the "Service"), operated by [Legal operator name] ("Reloka", "we", "us", or "our"). Please read them carefully.
-
-> **Placeholders to complete before publishing:** items in `[square brackets]` (legal operator name, governing-law jurisdiction and courts) must be filled in with your real details.
+These Terms of Service ("Terms") govern your access to and use of reloka.to and the relocation-planning service provided there (the "Service"), operated by a private individual based in Utrecht, the Netherlands ("Reloka", "we", "us", or "our"). Please read them carefully.
 
 ---
 
@@ -112,7 +110,7 @@ You agree to indemnify and hold Reloka harmless from any claims, damages, liabil
 
 ## 19. Governing Law & Venue
 
-These Terms are governed by the laws of **[governing-law jurisdiction]**, without regard to conflict-of-law principles. Disputes will be brought exclusively in the **[courts of the specified location]**. Where a party is unable to bring a claim there due to jurisdictional limitations, the parties consent to **[alternate courts]** as the alternate forum. Nothing in this section deprives a consumer of the mandatory protections of the law of their country of residence.
+These Terms are governed by the laws of **the Netherlands**, without regard to conflict-of-law principles. Disputes will be brought exclusively in the **competent court in Utrecht, the Netherlands (Rechtbank Midden-Nederland)**. Where a party is unable to bring a claim there due to jurisdictional limitations, the parties consent to **the competent courts of the Netherlands** as the alternate forum. Nothing in this section deprives a consumer of the mandatory protections of the law of their country of residence.
 
 ## 20. Changes
 
@@ -126,4 +124,4 @@ We may update these Terms from time to time. Material changes will be posted wit
 
 ---
 
-*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing, and complete every `[bracketed]` field with your real details.*
+*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing.*

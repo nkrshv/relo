@@ -24,6 +24,24 @@ export default function SiteFooter() {
           >
             Compare countries
           </Link>
+          <Link
+            href="/legal/privacy-policy"
+            className="text-stone-500 transition-colors hover:text-stone-900"
+          >
+            Privacy
+          </Link>
+          <Link
+            href="/legal/terms-of-service"
+            className="text-stone-500 transition-colors hover:text-stone-900"
+          >
+            Terms
+          </Link>
+          <Link
+            href="/legal/refund-policy"
+            className="text-stone-500 transition-colors hover:text-stone-900"
+          >
+            Refunds
+          </Link>
         </nav>
         <p className="max-w-md text-xs leading-relaxed text-stone-400">
           Not legal, tax or immigration advice. Always verify official
