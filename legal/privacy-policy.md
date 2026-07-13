@@ -4,13 +4,11 @@
 
 This Privacy Policy explains what information reloka.to ("Reloka", "we", "us", or "our") collects, how we use it, and the choices you have. Reloka is a relocation-planning tool that turns a few details about your move into a personalized checklist. We built this policy to be readable by a non-lawyer; the plain-language summaries are not a substitute for the full text.
 
-> **Placeholders to complete before publishing:** items in `[square brackets]` (legal operator name, registered address, EU/UK representative) must be filled in with your real details. See the note at the end of this document.
-
 ---
 
 ## 1. Who We Are
 
-- **Operator:** [Legal operator name / sole proprietor or company], the operator of reloka.to.
+- **Operator:** Reloka is operated by a private individual based in Utrecht, the Netherlands. Contact: privacy@reloka.to.
 - **What we do:** Reloka generates a personalized relocation checklist from the origin, destination, and preferences you enter.
 - **Contact:** privacy@reloka.to
 
@@ -56,8 +54,6 @@ When you buy the full plan, payment is processed by **Stripe**. Stripe collects 
 - **Legal compliance:** meet applicable legal obligations.
 
 **AI model training disclosure.** Your plan inputs are processed by the OpenAI API to generate output. We have enabled OpenAI's "share inputs and outputs" setting, which means the inputs you submit and the plans we generate **may be used by OpenAI to develop and improve its services, including training its models**, under OpenAI's own terms. Reloka itself does not operate or train separate AI models. If you would prefer your inputs not be shared with OpenAI for these purposes, please avoid submitting sensitive personal details in the free-text fields.
-
-> **Operator note:** this paragraph assumes the "Share inputs and outputs with OpenAI" toggle is **ON** in your OpenAI organization settings. If you disable it, replace this paragraph with: "Data submitted through the OpenAI API is not used to train OpenAI's models, and Reloka does not use your inputs or generated plans to train, fine-tune, or improve any AI model." Keep this document consistent with your actual OpenAI setting.
 
 We do not sell your personal information, and we do not use your data for third-party advertising.
 
@@ -127,7 +123,7 @@ We may update this Privacy Policy from time to time. Material changes will be po
 
 - **Privacy questions:** privacy@reloka.to
 - **Response time:** within 30 days
-- **EU/UK representative (if required):** [name and contact, if applicable]
+- **EU/UK representative:** not applicable; the operator is established in the European Union (the Netherlands).
 
 ## 14. Regional Supplements
 
@@ -144,4 +140,4 @@ We may update this Privacy Policy from time to time. Material changes will be po
 
 ---
 
-*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing, and complete every `[bracketed]` field with your real details.*
+*This document is a template generated for reloka.to and is provided for informational purposes only. It is not legal advice. Have it reviewed by a qualified attorney for your jurisdiction before publishing.*
