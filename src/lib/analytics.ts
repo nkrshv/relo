@@ -5,6 +5,12 @@ import mixpanel from "mixpanel-browser";
 const MIXPANEL_TOKEN =
   process.env.NEXT_PUBLIC_MIXPANEL_TOKEN ?? "543a8c0c6ac17368ab7f021ec6fe414d";
 
+// The project has EU data residency, so events must go to the EU ingestion
+// endpoint. Events sent to the default US host are accepted (HTTP 200) but
+// never ingested. Overridable for a US/other-region project.
+const MIXPANEL_API_HOST =
+  process.env.NEXT_PUBLIC_MIXPANEL_API_HOST ?? "https://api-eu.mixpanel.com";
+
 const CONSENT_KEY = "reloka-consent";
 
 let initialized = false;
@@ -27,6 +33,7 @@ export function initAnalytics() {
   if (initialized || typeof window === "undefined") return;
   initialized = true;
   mixpanel.init(MIXPANEL_TOKEN, {
+    api_host: MIXPANEL_API_HOST,
     persistence: "localStorage",
     track_pageview: false,
     opt_out_tracking_by_default: true,
