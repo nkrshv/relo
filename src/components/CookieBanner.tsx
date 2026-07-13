@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { setAnalyticsConsent } from "@/lib/analytics";
 
 const STORAGE_KEY = "reloka-consent";
 export const OPEN_EVENT = "reloka:open-consent";
@@ -49,6 +50,7 @@ export default function CookieBanner() {
       // ignore write failures
     }
     updateConsent(granted);
+    setAnalyticsConsent(granted);
     setVisible(false);
   }
 

@@ -16,6 +16,7 @@
     "@vercel/analytics": "^2.0.1",
     "@vercel/blob": "^2.5.0",
     "@vercel/speed-insights": "^2.0.0",
+    "mixpanel-browser": "^2.80.0",
     "next": "16.2.9",
     "openai": "^6.45.0",
     "react": "19.2.4",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/mixpanel-browser": "^2.60.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
