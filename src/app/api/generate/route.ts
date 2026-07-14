@@ -17,6 +17,7 @@ import {
 } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
 import { openDataForCountry } from "@/lib/countryOpenData";
+import { buildTrackingUrl } from "@/lib/saily";
 import {
   PHASE_KEYS,
   PHASE_TITLES,
@@ -275,6 +276,39 @@ function normalizeItem(raw: RawItem): ChecklistItem | null {
     deadline: str(raw.deadline) || undefined,
     commonMistake: normalizeMistake(raw.commonMistake),
   };
+}
+
+// Attach a tracked Saily partner link to the plan's travel-eSIM task, so the
+// connectivity step carries a real, native way to act on it. The model always
+// includes a "travel eSIM" item in the "before" phase; if for some reason it
+// is missing, nothing is attached (graceful). No price is shown: Saily's plan
+// API is Cloudflare-blocked to server traffic, so we surface only the link.
+const ESIM_RE = /e-?sim|\bconnectivity\b/i;
+
+function matchesEsim(item: ChecklistItem): boolean {
+  return (
+    ESIM_RE.test(item.title) ||
+    ESIM_RE.test(item.why) ||
+    ESIM_RE.test(item.category) ||
+    (item.steps ?? []).some((s) => ESIM_RE.test(s))
+  );
+}
+
+function attachEsimAffiliate(plan: ReloPlan): void {
+  const before = plan.phases.find((p) => p.key === "before");
+  const ordered = before
+    ? [before, ...plan.phases.filter((p) => p !== before)]
+    : plan.phases;
+  for (const phase of ordered) {
+    const item = phase.items.find(matchesEsim);
+    if (item) {
+      item.affiliate = {
+        url: buildTrackingUrl({ clickId: crypto.randomUUID() }),
+        label: "Get a Saily eSIM",
+      };
+      return;
+    }
+  }
 }
 
 function normalizeFeasibility(raw: unknown): Feasibility | undefined {
@@ -627,6 +661,7 @@ export async function POST(req: NextRequest) {
       // Feasibility level must not be weakened by the critic.
       revisedPlan.feasibility =
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
+      attachEsimAffiliate(revisedPlan);
       return Response.json({
         input,
         plan: revisedPlan,
@@ -644,6 +679,7 @@ export async function POST(req: NextRequest) {
       { status: 502 },
     );
   }
+  attachEsimAffiliate(plan);
 
   return Response.json({
     input,
