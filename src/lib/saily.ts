@@ -194,6 +194,61 @@ export async function getEsimOffer(country: string): Promise<EsimOffer | null> {
 }
 
 /**
+ * Safe upstream diagnostic (metadata only, no plan data): reports whether the
+ * Saily API is reachable from this environment and why a lookup returns
+ * nothing. Distinguishes a Cloudflare block (403 + HTML) from an auth error
+ * (401 JSON) from a reachable-but-unparsed response.
+ */
+export async function diagnoseFetch(country: string): Promise<{
+  ok: boolean;
+  status: number | null;
+  contentType: string | null;
+  itemCount: number | null;
+  snippet: string;
+  error: string | null;
+}> {
+  const iso = country.toUpperCase();
+  const url =
+    `${PLANS_API}?filters_in%5Bcovered_countries%5D=${encodeURIComponent(iso)}` +
+    `&format_price=true&currencyCode=USD`;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  try {
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+      signal: controller.signal,
+    });
+    const text = await res.text();
+    let itemCount: number | null = null;
+    try {
+      const j = JSON.parse(text) as RawResponse;
+      itemCount = Array.isArray(j.items) ? j.items.length : null;
+    } catch {
+      /* not JSON */
+    }
+    return {
+      ok: res.ok,
+      status: res.status,
+      contentType: res.headers.get("content-type"),
+      itemCount,
+      snippet: text.slice(0, 200),
+      error: null,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      status: null,
+      contentType: null,
+      itemCount: null,
+      snippet: "",
+      error: err instanceof Error ? err.message : String(err),
+    };
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
  * Non-production helper: return a small sample of the raw API response so the
  * exact price/plan shape can be inspected on a preview deployment (the API is
  * behind Cloudflare and cannot be reached from every environment).
