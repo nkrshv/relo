@@ -27,6 +27,34 @@ export function limiterConfigured(): boolean {
   return getRedis() !== null;
 }
 
+// --- Generic best-effort JSON cache on the shared store ------------------
+// Used to cache slow/expensive external lookups (e.g. Saily eSIM plans).
+// No-ops without a store and never throws, so callers degrade gracefully.
+
+export async function kvGetJson<T>(key: string): Promise<T | null> {
+  const r = getRedis();
+  if (!r) return null;
+  try {
+    return (await r.get<T>(key)) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export async function kvSetJson(
+  key: string,
+  value: unknown,
+  ttlSec: number,
+): Promise<void> {
+  const r = getRedis();
+  if (!r) return;
+  try {
+    await r.set(key, value, { ex: ttlSec });
+  } catch {
+    // best-effort cache only
+  }
+}
+
 // --- Per-IP sliding window (anti-abuse) ---------------------------------
 
 const ipLimiters = new Map<string, Ratelimit>();
