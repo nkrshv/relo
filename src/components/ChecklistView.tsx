@@ -570,9 +570,6 @@ function AdvancedTable({
                               className="inline-flex items-center gap-1 text-xs font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
                             >
                               {row.item.affiliate.label}
-                              <span className="font-normal text-stone-400">
-                                · partner
-                              </span>
                             </a>
                           )}
                         </div>
@@ -639,11 +636,11 @@ export default function ChecklistView({
     const phases = plan.phases.map((p) => ({ ...p, items: [...p.items] }));
     const target = phases.find((p) => p.key === "before") ?? phases[0];
     if (target) {
-      packing.forEach((line, i) => {
+      packing.forEach((item, i) => {
         target.items.push({
           id: `pack-${i}`,
-          title: line,
-          why: "",
+          title: item.title,
+          why: item.why,
           category: "Packing",
         });
       });
@@ -1171,10 +1168,6 @@ export default function ChecklistView({
                                 </svg>
                                 <span className="truncate">
                                   {item.affiliate.label}
-                                  <span className="font-normal text-stone-400">
-                                    {" "}
-                                    · partner
-                                  </span>
                                 </span>
                               </a>
                             )}

@@ -44,6 +44,12 @@ export interface ClimatePoint {
 
 export type Comfort = "similar" | "milder" | "harsher" | "mixed";
 
+/** A packing recommendation shaped like a checklist task. */
+export interface PackingItem {
+  title: string;
+  why: string;
+}
+
 export interface ClimateTwin {
   home: ClimatePoint;
   dest: ClimatePoint;
@@ -51,11 +57,12 @@ export interface ClimateTwin {
   /** One-line human comparisons (winter, summer, rain, air, humidity). */
   verdicts: string[];
   /**
-   * What to pack. Leads with one consolidated clothing recommendation reasoned
+   * What to pack, as checklist-ready tasks (a short title plus a reasoned
+   * "why"). Leads with one consolidated clothing recommendation reasoned
    * against the mover's home climate (does the home wardrobe transfer, or do
    * they need to buy specifics), followed by any health item like masks.
    */
-  packing: string[];
+  packing: PackingItem[];
   /** Optional 1-2 sentence plain-language read, grounded in the numbers. */
   aiSummary: string | null;
   /** Attribution labels for the data sources actually used. */
@@ -258,14 +265,15 @@ function buildPacking(
   home: ClimatePoint,
   dest: ClimatePoint,
   airHarsher: boolean,
-): string[] {
-  const packing: string[] = [buildClothingAdvice(home, dest)];
+): PackingItem[] {
+  const packing: PackingItem[] = [buildClothingAdvice(home, dest)];
 
   const destPm = pollutant(dest, "pm25");
   if (destPm && destPm.value >= PM25_UNHEALTHY && airHarsher) {
-    packing.push(
-      `A few N95 masks for high-pollution days if you are sensitive to air quality.`,
-    );
+    packing.push({
+      title: "Pack a few N95 masks",
+      why: `For high-pollution days in ${dest.label} if you are sensitive to air quality.`,
+    });
   }
 
   return packing;
@@ -285,7 +293,10 @@ function joinList(items: string[]): string {
  * specifics (warm layers, breathable fabrics, rain gear) only when they
  * genuinely differ.
  */
-function buildClothingAdvice(home: ClimatePoint, dest: ClimatePoint): string {
+function buildClothingAdvice(
+  home: ClimatePoint,
+  dest: ClimatePoint,
+): PackingItem {
   const needs: string[] = [];
 
   // Cold: destination has a real winter that home does not match.
@@ -341,10 +352,16 @@ function buildClothingAdvice(home: ClimatePoint, dest: ClimatePoint): string {
 
   const homeName = home.label;
   if (needs.length === 0) {
-    return `Clothing: your ${homeName} wardrobe should transfer well. Temperatures, humidity and rainfall in ${dest.label} are close to what you already dress for, so there is little you need to buy specially.`;
+    return {
+      title: "Pack your usual wardrobe",
+      why: `Your ${homeName} clothes should transfer well: temperatures, humidity and rainfall in ${dest.label} are close to what you already dress for, so there is little you need to buy specially.`,
+    };
   }
 
-  return `Clothing: your ${homeName} wardrobe covers most of it, but ${dest.label} also calls for ${joinList(
-    needs,
-  )}, which you may not already own.`;
+  return {
+    title: `Pack for ${dest.label}'s climate`,
+    why: `Your ${homeName} wardrobe covers most of it, but ${dest.label} also calls for ${joinList(
+      needs,
+    )}, which you may not already own.`,
+  };
 }
