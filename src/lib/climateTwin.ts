@@ -50,7 +50,11 @@ export interface ClimateTwin {
   comfort: Comfort;
   /** One-line human comparisons (winter, summer, rain, air, humidity). */
   verdicts: string[];
-  /** What to pack, derived from the destination's absolute values + deltas. */
+  /**
+   * What to pack. Leads with one consolidated clothing recommendation reasoned
+   * against the mover's home climate (does the home wardrobe transfer, or do
+   * they need to buy specifics), followed by any health item like masks.
+   */
   packing: string[];
   /** Optional 1-2 sentence plain-language read, grounded in the numbers. */
   aiSummary: string | null;
@@ -255,42 +259,7 @@ function buildPacking(
   dest: ClimatePoint,
   airHarsher: boolean,
 ): string[] {
-  const packing: string[] = [];
-
-  if (dest.coldestC !== null && dest.coldestC < 5) {
-    packing.push(
-      dest.coldestC < 0
-        ? `A serious winter coat, thermals and gloves: the coldest month averages about ${round(dest.coldestC)}°.`
-        : `A proper winter coat and layers for a coldest month around ${round(dest.coldestC)}°.`,
-    );
-  }
-
-  if (dest.warmestC !== null && dest.warmestC >= 27) {
-    packing.push(
-      `Lightweight, breathable clothing and sun protection for warmest-month highs near ${round(dest.warmestC)}°${
-        dest.warmestMonth ? ` (${monthName(dest.warmestMonth)})` : ""
-      }.`,
-    );
-  }
-
-  const muchWetter =
-    dest.annualPrecipMm !== null &&
-    (dest.annualPrecipMm >= 900 ||
-      (home.annualPrecipMm !== null &&
-        dest.annualPrecipMm / Math.max(home.annualPrecipMm, 1) >= 1.3));
-  if (muchWetter) {
-    packing.push(
-      `A waterproof jacket or a compact umbrella${
-        dest.wettestMonth ? `, especially around ${monthName(dest.wettestMonth)}` : ""
-      }.`,
-    );
-  }
-
-  if (dest.humidityPct !== null && dest.humidityPct >= 70) {
-    packing.push(
-      `Breathable natural fabrics: humidity sits around ${round(dest.humidityPct)}%.`,
-    );
-  }
+  const packing: string[] = [buildClothingAdvice(home, dest)];
 
   const destPm = pollutant(dest, "pm25");
   if (destPm && destPm.value >= PM25_UNHEALTHY && airHarsher) {
@@ -299,11 +268,83 @@ function buildPacking(
     );
   }
 
-  if (packing.length === 0) {
-    packing.push(
-      `Your usual wardrobe should transfer well: the climate is close to ${home.label}.`,
+  return packing;
+}
+
+function joinList(items: string[]): string {
+  if (items.length <= 1) return items[0] ?? "";
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")}, and ${items[items.length - 1]}`;
+}
+
+/**
+ * One consolidated clothing recommendation, reasoned from the mover's home
+ * climate rather than the destination alone. It only names gear the
+ * destination demands that home does not already prepare them for, so it says
+ * "your wardrobe transfers" when the two climates are close and lists
+ * specifics (warm layers, breathable fabrics, rain gear) only when they
+ * genuinely differ.
+ */
+function buildClothingAdvice(home: ClimatePoint, dest: ClimatePoint): string {
+  const needs: string[] = [];
+
+  // Cold: destination has a real winter that home does not match.
+  if (dest.coldestC !== null && dest.coldestC < 5) {
+    const homeAlreadyCold =
+      home.coldestC !== null && home.coldestC <= dest.coldestC + 3;
+    if (!homeAlreadyCold) {
+      needs.push(
+        dest.coldestC < 0
+          ? `a serious winter coat, thermals and gloves for a coldest month near ${round(dest.coldestC)}°`
+          : `a proper winter coat and warm layers for a coldest month near ${round(dest.coldestC)}°`,
+      );
+    }
+  }
+
+  // Heat: destination summers run hotter than home.
+  if (dest.warmestC !== null && dest.warmestC >= 27) {
+    const homeAlreadyHot =
+      home.warmestC !== null && home.warmestC >= dest.warmestC - 3;
+    if (!homeAlreadyHot) {
+      needs.push(
+        `lightweight, breathable clothing and sun protection for a warmest month near ${round(dest.warmestC)}°${
+          dest.warmestMonth ? ` in ${monthName(dest.warmestMonth)}` : ""
+        }`,
+      );
+    }
+  }
+
+  // Humidity: noticeably muggier than home, so fabric choice matters.
+  if (
+    dest.humidityPct !== null &&
+    dest.humidityPct >= 70 &&
+    (home.humidityPct === null || dest.humidityPct - home.humidityPct >= 8)
+  ) {
+    needs.push(
+      `quick-drying, breathable natural fabrics for humidity around ${round(dest.humidityPct)}%`,
     );
   }
 
-  return packing;
+  // Rain: wetter than home, or heavy in absolute terms.
+  const muchWetter =
+    dest.annualPrecipMm !== null &&
+    (dest.annualPrecipMm >= 900 ||
+      (home.annualPrecipMm !== null &&
+        dest.annualPrecipMm / Math.max(home.annualPrecipMm, 1) >= 1.3));
+  if (muchWetter) {
+    needs.push(
+      `a waterproof jacket${
+        dest.wettestMonth ? ` for the rain around ${monthName(dest.wettestMonth)}` : ""
+      }`,
+    );
+  }
+
+  const homeName = home.label;
+  if (needs.length === 0) {
+    return `Clothing: your ${homeName} wardrobe should transfer well. Temperatures, humidity and rainfall in ${dest.label} are close to what you already dress for, so there is little you need to buy specially.`;
+  }
+
+  return `Clothing: your ${homeName} wardrobe covers most of it, but ${dest.label} also calls for ${joinList(
+    needs,
+  )}, which you may not already own.`;
 }

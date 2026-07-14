@@ -521,7 +521,7 @@ function AdvancedTable({
                           {row.item.steps && row.item.steps.length > 0 && (
                             <ol className="space-y-1.5">
                               {row.item.steps.map((step, si) => (
-                                <li key={si} className="flex gap-2">
+                                <li key={si} className="flex items-baseline gap-2">
                                   <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-400">
                                     {si + 1}.
                                   </span>
@@ -1167,7 +1167,7 @@ export default function ChecklistView({
                                     {item.steps && item.steps.length > 0 && (
                                       <ol className="space-y-1.5">
                                         {item.steps.map((step, si) => (
-                                          <li key={si} className="flex gap-2">
+                                          <li key={si} className="flex items-baseline gap-2">
                                             <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-400">
                                               {si + 1}.
                                             </span>
