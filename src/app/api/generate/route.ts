@@ -17,7 +17,7 @@ import {
 } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
 import { openDataForCountry } from "@/lib/countryOpenData";
-import { buildTrackingUrl } from "@/lib/saily";
+import { esimPartnerLinks } from "@/lib/saily";
 import {
   PHASE_KEYS,
   PHASE_TITLES,
@@ -112,7 +112,7 @@ MOVE-LOGISTICS MODULES — mandatory in EVERY plan, each in the phase named. The
 - "before" — DOCUMENT LEGALIZATION: identify which civil and education documents (birth certificate, marriage certificate, diplomas/transcripts, criminal-record check) this destination requires with an Apostille or, for non-Hague countries, consular legalization, and often a sworn translation. State plainly that an Apostille can ONLY be issued by the country that ISSUED the document, so it must be done at home before leaving; getting it from abroad means couriers, a power of attorney, or a trip back.
 - "before" — CAPITAL TRANSFER (FX): open an international money-transfer or multi-currency account to move savings and pay the first rental deposit without slow, expensive SWIFT wires. Name the neutral category or 2-3 example services to compare (never one as "the" choice), and the criteria that matter: exchange-rate markup, transfer limits, receiving fees, supported currencies, and whether the destination accepts the transfer for a deposit.
 - "before" — PHYSICAL LOGISTICS: decide what ships versus what gets sold/stored, and book cargo/shipping only if actually moving belongings (give the realistic mode and lead time for this route); and book short-term accommodation for the first 2 to 4 weeks (a neutral category or a couple of examples), ideally a place whose address can be used for local registration.
-- "before" — CONNECTIVITY (travel eSIM): buy a travel eSIM before the flight so the person lands already online for maps, ride-hailing, bookings and 2FA, before any local SIM exists.
+- "before" — CONNECTIVITY (travel eSIM): buy a data travel eSIM before the flight so the person lands already online for maps, ride-hailing and bookings without paying roaming, bridging the gap until they get a local SIM. A data eSIM provides internet, NOT a local phone number, so leave SMS-based verification to the local SIM in week 1.
 - "before" — HEALTH CONTINUITY: cover the gap between arrival and local health enrolment (travel/expat health insurance for the first weeks or the visa's required policy), carry a medication supply plus prescriptions and a short medical summary, and check whether current prescriptions are sold/legal at the destination.
 - "before" — DIGITAL & FINANCIAL CONTINUITY: keep one working home bank account and card open for the transition, request a bank reference letter if destination banks ask for account-opening history, and back up 2FA/authenticator codes and recovery keys BEFORE the home SIM is cancelled (many logins are tied to the home number).
 - "departure" — DEREGISTER FROM HOME: complete any residency/municipal deregistration and tax-residency exit the origin country requires, so the person stops owing taxes, fees or civic obligations they no longer use (name the real home-country process where widely known).
@@ -278,11 +278,11 @@ function normalizeItem(raw: RawItem): ChecklistItem | null {
   };
 }
 
-// Attach a tracked Saily partner link to the plan's travel-eSIM task, so the
+// Attach a few tracked eSIM partner links to the plan's travel-eSIM task, as
+// neutral "compare these" options (Airalo / Saily / Yesim), so the
 // connectivity step carries a real, native way to act on it. The model always
 // includes a "travel eSIM" item in the "before" phase; if for some reason it
-// is missing, nothing is attached (graceful). No price is shown: Saily's plan
-// API is Cloudflare-blocked to server traffic, so we surface only the link.
+// is missing, nothing is attached (graceful). No prices are shown.
 const ESIM_RE = /e-?sim|\bconnectivity\b/i;
 
 function matchesEsim(item: ChecklistItem): boolean {
@@ -302,10 +302,7 @@ function attachEsimAffiliate(plan: ReloPlan): void {
   for (const phase of ordered) {
     const item = phase.items.find(matchesEsim);
     if (item) {
-      item.affiliate = {
-        url: buildTrackingUrl({ clickId: crypto.randomUUID() }),
-        label: "Get a Saily eSIM",
-      };
+      item.affiliate = esimPartnerLinks();
       return;
     }
   }
