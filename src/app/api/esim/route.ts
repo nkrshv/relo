@@ -3,6 +3,7 @@ import {
   getEsimOffer,
   buildTrackingUrl,
   debugFetchRaw,
+  diagnoseFetch,
 } from "@/lib/saily";
 import { perIpRateLimited, clientIp } from "@/lib/ratelimit";
 
@@ -29,6 +30,11 @@ export async function GET(req: NextRequest) {
       { error: "country must be an ISO 3166-1 alpha-2 code" },
       { status: 400 },
     );
+  }
+
+  // Safe upstream reachability diagnostic (metadata only, no plan data).
+  if (params.get("diag") === "1") {
+    return Response.json({ country, diag: await diagnoseFetch(country) });
   }
 
   // Preview-only: expose the raw shape to confirm reachability + parsing.
