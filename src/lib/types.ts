@@ -52,6 +52,12 @@ export interface ChecklistItem {
   documents?: string[];
   deadline?: string;
   commonMistake?: string;
+  /**
+   * Optional partner (affiliate) link attached server-side to a specific task,
+   * e.g. a tracked Saily link on the travel-eSIM item. Rendered as a labelled,
+   * clearly-marked partner link, distinct from the neutral source `url`.
+   */
+  affiliate?: { url: string; label: string };
 }
 
 export const PHASE_KEYS = [

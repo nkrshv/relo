@@ -562,6 +562,19 @@ function AdvancedTable({
                               {prettyHost(row.item.url)}
                             </a>
                           )}
+                          {row.item.affiliate && (
+                            <a
+                              href={row.item.affiliate.url}
+                              target="_blank"
+                              rel="noopener noreferrer sponsored"
+                              className="inline-flex items-center gap-1 text-xs font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
+                            >
+                              {row.item.affiliate.label}
+                              <span className="font-normal text-stone-400">
+                                · partner
+                              </span>
+                            </a>
+                          )}
                         </div>
                       )}
                     </div>
@@ -1137,6 +1150,31 @@ export default function ChecklistView({
                                 </svg>
                                 <span className="truncate">
                                   {prettyHost(item.url)}
+                                </span>
+                              </a>
+                            )}
+                            {!isChecked && item.affiliate && (
+                              <a
+                                href={item.affiliate.url}
+                                target="_blank"
+                                rel="noopener noreferrer sponsored"
+                                className="mt-2 inline-flex max-w-full items-center gap-1 text-xs font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900 hover:decoration-stone-500"
+                              >
+                                <svg
+                                  viewBox="0 0 20 20"
+                                  fill="currentColor"
+                                  className="h-3.5 w-3.5 shrink-0"
+                                  aria-hidden
+                                >
+                                  <path d="M11 3a1 1 0 1 0 0 2h2.586l-6.293 6.293a1 1 0 1 0 1.414 1.414L15 6.414V9a1 1 0 1 0 2 0V4a1 1 0 0 0-1-1h-5Z" />
+                                  <path d="M5 5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3a1 1 0 1 0-2 0v3H5V7h3a1 1 0 0 0 0-2H5Z" />
+                                </svg>
+                                <span className="truncate">
+                                  {item.affiliate.label}
+                                  <span className="font-normal text-stone-400">
+                                    {" "}
+                                    · partner
+                                  </span>
                                 </span>
                               </a>
                             )}
