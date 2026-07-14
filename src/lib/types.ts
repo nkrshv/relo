@@ -53,11 +53,11 @@ export interface ChecklistItem {
   deadline?: string;
   commonMistake?: string;
   /**
-   * Optional partner (affiliate) link attached server-side to a specific task,
-   * e.g. a tracked Saily link on the travel-eSIM item. Rendered as a labelled,
-   * clearly-marked partner link, distinct from the neutral source `url`.
+   * Optional partner (affiliate) links attached server-side to a specific task,
+   * e.g. tracked eSIM providers on the travel-eSIM item. Rendered as a small
+   * "compare" row of labelled links, distinct from the neutral source `url`.
    */
-  affiliate?: { url: string; label: string };
+  affiliate?: { url: string; label: string }[];
 }
 
 export const PHASE_KEYS = [

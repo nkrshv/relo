@@ -210,3 +210,31 @@ export function buildTrackingUrl(opts?: {
   if (opts?.destinationUrl) params.push(`url=${opts.destinationUrl}`);
   return `${TRACK_HOST}?${params.join("&")}`;
 }
+
+// TravelPayouts referral links (tracking is baked into the URL; static).
+const AIRALO_URL = process.env.AIRALO_AFF_URL ?? "https://airalo.tpk.ro/brbBobVi";
+const YESIM_URL = process.env.YESIM_AFF_URL ?? "https://yesim.tpk.ro/Go6NKGh9";
+
+export interface AffiliateLink {
+  label: string;
+  url: string;
+}
+
+/**
+ * The eSIM partner links to offer as neutral "compare these" options on the
+ * travel-eSIM task. Order is shuffled per call so no provider is consistently
+ * listed first. Saily gets a fresh Tune click id; Airalo/Yesim are static
+ * TravelPayouts links.
+ */
+export function esimPartnerLinks(): AffiliateLink[] {
+  const links: AffiliateLink[] = [
+    { label: "Airalo", url: AIRALO_URL },
+    { label: "Saily", url: buildTrackingUrl({ clickId: crypto.randomUUID() }) },
+    { label: "Yesim", url: YESIM_URL },
+  ];
+  for (let i = links.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [links[i], links[j]] = [links[j], links[i]];
+  }
+  return links;
+}
