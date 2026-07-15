@@ -98,6 +98,14 @@ interface QuickFact {
   messengers?: MessengerReachability[];
 }
 
+// Compact people count: 84512000 -> "84.5M".
+function compactPopulation(n: number): string {
+  if (n >= 1_000_000)
+    return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;
+  if (n >= 1000) return `${Math.round(n / 1000)}k`;
+  return n.toLocaleString("en-US");
+}
+
 function quickFacts(name: string): QuickFact[] {
   const ins = insightsForCountry(name);
   const od = openDataForCountry(name);
@@ -148,6 +156,27 @@ function quickFacts(name: string): QuickFact[] {
           label: "Foreign-born residents",
           value: `${ins.migrantShare.value.toFixed(1)}% of population`,
           source: `World Bank ${ins.migrantShare.year}`,
+        }
+      : null,
+    ins?.population
+      ? {
+          label: "Population",
+          value: compactPopulation(ins.population.value),
+          source: `World Bank ${ins.population.year}`,
+        }
+      : null,
+    ins?.density
+      ? {
+          label: "Population density",
+          value: `${Math.round(ins.density.value).toLocaleString("en-US")} / km²`,
+          source: `World Bank ${ins.density.year}`,
+        }
+      : null,
+    ins?.unemployment
+      ? {
+          label: "Unemployment",
+          value: `${ins.unemployment.value.toFixed(1)}%`,
+          source: `World Bank ${ins.unemployment.year}`,
         }
       : null,
     sal?.avgAnnual

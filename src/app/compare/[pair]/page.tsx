@@ -96,6 +96,14 @@ interface Row {
   sourceUrl?: string;
 }
 
+// Compact people count for the comparison table: 84512000 -> "84.5M".
+function compactPopulation(n: number): string {
+  if (n >= 1_000_000)
+    return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;
+  if (n >= 1000) return `${Math.round(n / 1000)}k`;
+  return n.toLocaleString("en-US");
+}
+
 function buildRows(a: Destination, b: Destination): Row[] {
   const insA = insightsForCountry(a.name);
   const insB = insightsForCountry(b.name);
@@ -199,6 +207,18 @@ function buildRows(a: Destination, b: Destination): Row[] {
       source: "World Bank",
     },
     {
+      label: "Unemployment",
+      a:
+        insA?.unemployment && insB?.unemployment
+          ? `${insA.unemployment.value.toFixed(1)}% (${insA.unemployment.year})`
+          : null,
+      b:
+        insA?.unemployment && insB?.unemployment
+          ? `${insB.unemployment.value.toFixed(1)}% (${insB.unemployment.year})`
+          : null,
+      source: "World Bank, ILO-modelled estimate",
+    },
+    {
       label: "Internet (median fixed)",
       a: stA ? `~${stA.internetMbps} Mbps` : null,
       b: stB ? `~${stB.internetMbps} Mbps` : null,
@@ -227,6 +247,30 @@ function buildRows(a: Destination, b: Destination): Row[] {
       aTone: advA && advA.level >= 3 ? "text-red-700" : undefined,
       bTone: advB && advB.level >= 3 ? "text-red-700" : undefined,
       source: "U.S. State Department travel advisory",
+    },
+    {
+      label: "Population",
+      a:
+        insA?.population && insB?.population
+          ? `${compactPopulation(insA.population.value)} (${insA.population.year})`
+          : null,
+      b:
+        insA?.population && insB?.population
+          ? `${compactPopulation(insB.population.value)} (${insB.population.year})`
+          : null,
+      source: "World Bank total population",
+    },
+    {
+      label: "Population density",
+      a:
+        insA?.density && insB?.density
+          ? `${Math.round(insA.density.value).toLocaleString("en-US")} / km² (${insA.density.year})`
+          : null,
+      b:
+        insA?.density && insB?.density
+          ? `${Math.round(insB.density.value).toLocaleString("en-US")} / km² (${insB.density.year})`
+          : null,
+      source: "World Bank, people per km²",
     },
     {
       label: "Foreign-born residents",

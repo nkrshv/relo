@@ -17,6 +17,7 @@ export interface CityContext {
   janC: number | null;
   julC: number | null;
   climateYear: number | null;
+  population: number | null;
 }
 
 interface GeoResult {
@@ -234,6 +235,7 @@ export async function GET(req: NextRequest) {
     janC: climate ? Math.round(climate.janC) : null,
     julC: climate ? Math.round(climate.julC) : null,
     climateYear: climate?.year ?? null,
+    population: typeof geo.population === "number" ? geo.population : null,
   };
   cacheSet(key, data);
   return Response.json(data, {
