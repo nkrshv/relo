@@ -103,11 +103,25 @@ async function resolveIata(city: string, country: string): Promise<string | null
   return code;
 }
 
-// City to use for a side of the trip: the explicit city, else the country
-// capital from our open-data snapshot.
-function cityFor(city: string | undefined, country: string): string | null {
-  if (city && city.trim()) return city.trim();
-  return openDataForCountry(country)?.capital ?? null;
+// Resolve one side of the trip to an IATA city code, trying the explicit city
+// first and falling back to the country capital when the city has no airport of
+// its own (e.g. Utrecht, whose nearest hub is Amsterdam). Returns null only
+// when neither the city nor the capital resolves.
+async function resolveSideIata(
+  city: string | undefined,
+  country: string,
+): Promise<string | null> {
+  const capital = openDataForCountry(country)?.capital ?? null;
+  const explicit = city && city.trim() ? city.trim() : null;
+  const candidates: string[] = [];
+  if (explicit) candidates.push(explicit);
+  if (capital && norm(capital) !== (explicit ? norm(explicit) : ""))
+    candidates.push(capital);
+  for (const candidate of candidates) {
+    const code = await resolveIata(candidate, country);
+    if (code) return code;
+  }
+  return null;
 }
 
 function buildSearchUrl(originIata: string, destinationIata: string, link?: string): string {
@@ -127,13 +141,9 @@ export interface FlightQuery {
 }
 
 export async function getFlightOffer(q: FlightQuery): Promise<FlightOffer | null> {
-  const originCity = cityFor(q.fromCity, q.fromCountry);
-  const destCity = cityFor(q.toCity, q.toCountry);
-  if (!originCity || !destCity) return null;
-
   const [originIata, destinationIata] = await Promise.all([
-    resolveIata(originCity, q.fromCountry),
-    resolveIata(destCity, q.toCountry),
+    resolveSideIata(q.fromCity, q.fromCountry),
+    resolveSideIata(q.toCity, q.toCountry),
   ]);
   if (!originIata || !destinationIata || originIata === destinationIata) return null;
 
