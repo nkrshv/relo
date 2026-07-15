@@ -300,10 +300,10 @@ function insertEsimBlock(plan: ReloPlan): void {
     deadline: "Before departure",
     affiliate: esimPartnerLinks(),
   };
-  before.items.unshift(item);
+  before.items.push(item);
 }
 
-// Flights (Travelpayouts/Aviasales) as its OWN dedicated block at the top of
+// Flights (Travelpayouts/Aviasales) as its OWN dedicated block near the end of
 // the "before" phase, rather than attaching to a model-generated item (which
 // was unreliable: the word "flight" in the eSIM item's text stole the price,
 // and some plans had no flight item at all). We insert a deterministic
@@ -333,7 +333,7 @@ async function insertFlightBlock(plan: ReloPlan, input: ReloInput): Promise<void
   const item: ChecklistItem = {
     id: "flights",
     title: `Book your flight to ${dest}`,
-    why: `Lock in your one-way flight to ${dest} once your dates and visa timing are settled. Fares on this route move fast, so check early and set a price alert if your dates are flexible.`,
+    why: `Once your dates and visa timing are settled, compare one-way fares to ${dest} and check they fit the moving budget before you commit. Prices on this route move fast, so book when a fare lands in your range and set a price alert if your dates are flexible.`,
     category: "Travel",
     deadline: "Before departure",
     flightDeal: {
@@ -344,7 +344,7 @@ async function insertFlightBlock(plan: ReloPlan, input: ReloInput): Promise<void
           : "Search flights on Aviasales",
     },
   };
-  before.items.unshift(item);
+  before.items.push(item);
 }
 
 function normalizeFeasibility(raw: unknown): Feasibility | undefined {
@@ -697,8 +697,8 @@ export async function POST(req: NextRequest) {
       // Feasibility level must not be weakened by the critic.
       revisedPlan.feasibility =
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
-      insertEsimBlock(revisedPlan);
       await insertFlightBlock(revisedPlan, input);
+      insertEsimBlock(revisedPlan);
       return Response.json({
         input,
         plan: revisedPlan,
@@ -716,8 +716,8 @@ export async function POST(req: NextRequest) {
       { status: 502 },
     );
   }
-  insertEsimBlock(plan);
   await insertFlightBlock(plan, input);
+  insertEsimBlock(plan);
 
   return Response.json({
     input,
