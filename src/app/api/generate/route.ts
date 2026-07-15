@@ -18,6 +18,7 @@ import {
 import { staticDataForCountry } from "@/lib/staticCountryData";
 import { openDataForCountry } from "@/lib/countryOpenData";
 import { esimPartnerLinks } from "@/lib/saily";
+import { getFlightOffer } from "@/lib/flights";
 import {
   PHASE_KEYS,
   PHASE_TITLES,
@@ -112,6 +113,7 @@ MOVE-LOGISTICS MODULES — mandatory in EVERY plan, each in the phase named. The
 - "before" — DOCUMENT LEGALIZATION: identify which civil and education documents (birth certificate, marriage certificate, diplomas/transcripts, criminal-record check) this destination requires with an Apostille or, for non-Hague countries, consular legalization, and often a sworn translation. State plainly that an Apostille can ONLY be issued by the country that ISSUED the document, so it must be done at home before leaving; getting it from abroad means couriers, a power of attorney, or a trip back.
 - "before" — CAPITAL TRANSFER (FX): open an international money-transfer or multi-currency account to move savings and pay the first rental deposit without slow, expensive SWIFT wires. Name the neutral category or 2-3 example services to compare (never one as "the" choice), and the criteria that matter: exchange-rate markup, transfer limits, receiving fees, supported currencies, and whether the destination accepts the transfer for a deposit.
 - "before" — PHYSICAL LOGISTICS: decide what ships versus what gets sold/stored, and book cargo/shipping only if actually moving belongings (give the realistic mode and lead time for this route); and book short-term accommodation for the first 2 to 4 weeks (a neutral category or a couple of examples), ideally a place whose address can be used for local registration.
+- "before" — FLIGHTS: book the one-way flight to the destination once dates and visa timing are settled, and start watching fares early since prices on this route move fast. Give one concrete route-specific pointer (a realistic booking lead time, the main airport served, or whether a stopover hub is usually cheapest). Keep the title action-oriented (e.g. "Book your flight to {city}").
 - "before" — CONNECTIVITY (travel eSIM): buy a data travel eSIM before the flight so the person lands already online for maps, ride-hailing and bookings without paying roaming, bridging the gap until they get a local SIM. A data eSIM provides internet, NOT a local phone number, so leave SMS-based verification to the local SIM in week 1.
 - "before" — HEALTH CONTINUITY: cover the gap between arrival and local health enrolment (travel/expat health insurance for the first weeks or the visa's required policy), carry a medication supply plus prescriptions and a short medical summary, and check whether current prescriptions are sold/legal at the destination.
 - "before" — DIGITAL & FINANCIAL CONTINUITY: keep one working home bank account and card open for the transition, request a bank reference letter if destination banks ask for account-opening history, and back up 2FA/authenticator codes and recovery keys BEFORE the home SIM is cancelled (many logins are tied to the home number).
@@ -144,7 +146,7 @@ For EVERY item in the draft:
 4. If "deadline" is empty but a legal deadline exists — add it. commonMistake audit: any commonMistake that would read true for almost any task ("don't forget", "delaying causes complications", "not doing it on time", "failing to register results in fines", "waiting too long", "not being prepared") is filler and MUST be replaced with the real, step-specific trap and its concrete consequence: the exact wrong action or reversed order of operations, and which later step it blocks / how many weeks or how much money it costs / the penalty or disqualifying threshold.
 4b. Neutrality audit (no advertising): if an item steers the user to ONE private company as the choice (a single named bank, broker, insurer, mobile carrier, relocation agency, or comparison site), rewrite it either as the neutral category plus the concrete selection criteria that matter here, or as 2 to 3 options framed as examples to compare, not endorsements. If "url" points at a private company's website, replace it with the relevant official/government site or "". Keep exact naming ONLY for government offices, official portals and statutory schemes.
 5. Replace filler items ("join communities", "explore the city", "familiarize yourself with X") with concrete, destination-specific items. Do NOT shrink the plan: keep at least 4 items in "before", "week1", "month1" and "days90", and at least 3 in "departure" — when you cut filler, add a real missing task for this move (e.g. SIM/eSIM registration rules, utility contracts, license exchange, apostilles) instead.
-5b. Coverage audit: verify the five phases exist in order ("before", "departure", "week1", "month1", "days90") and that the mandatory move-logistics modules are present in the right phase: document legalization/apostille, capital-transfer (FX) account, physical logistics (shipping + short-term accommodation), travel eSIM, health continuity and digital/financial continuity all in "before"; deregistration, cancelling local contracts, mail forwarding and notifying home tax/social-security in "departure"; local physical SIM in "week1"; driver's-license exchange in "days90". If any is missing, add it as a real destination-specific item.
+5b. Coverage audit: verify the five phases exist in order ("before", "departure", "week1", "month1", "days90") and that the mandatory move-logistics modules are present in the right phase: document legalization/apostille, capital-transfer (FX) account, physical logistics (shipping + short-term accommodation), flights, travel eSIM, health continuity and digital/financial continuity all in "before"; deregistration, cancelling local contracts, mail forwarding and notifying home tax/social-security in "departure"; local physical SIM in "week1"; driver's-license exchange in "days90". If any is missing, add it as a real destination-specific item.
 6. Personalization audit: re-read the user's message and verify every concrete detail they gave (budget or rent cap, savings, children's ages, pets, spouse's work plans, employer situation, timeline) is reflected in at least one item. If any detail is missing from the draft, weave it into the most relevant item or add a dedicated item for it. If the user gave no visa/status info, ensure the plan compares realistic visa routes rather than assuming one.
 7. Keep everything consistent with the VERIFIED FACTS and OFFICIAL TRAVEL ADVISORY blocks if they were provided — they are ground truth. Never invent office names, laws, or URLs; for url keep the same rules (official root domain or "").
 8. Do NOT change the JSON structure, phase keys, or feasibility level; you may sharpen the feasibility note's wording. Keep each item's "id" unchanged. Keep "dependsOn" pointing only at ids that still exist; if you add an item, give it a new unused id (continue the "tN" sequence) and set real dependencies; add a missing genuine dependency where the draft overlooked one.
@@ -306,6 +308,50 @@ function attachEsimAffiliate(plan: ReloPlan): void {
       return;
     }
   }
+}
+
+// Flight-price hint (Travelpayouts/Aviasales) on the "book your flight" task,
+// mirroring the eSIM affiliate flow. The label carries the cheapest cached
+// fare ("Flights from ~$X"); when no price is available we still show a plain
+// "Search flights on Aviasales" affiliate link. If the API is unreachable or
+// no route item exists, nothing is attached (graceful).
+const FLIGHT_RE = /\bflight|\bairfare|\bplane ticket|\bbook.*fly\b/i;
+
+function matchesFlight(item: ChecklistItem): boolean {
+  return (
+    FLIGHT_RE.test(item.title) ||
+    FLIGHT_RE.test(item.why) ||
+    (item.steps ?? []).some((s) => FLIGHT_RE.test(s))
+  );
+}
+
+async function attachFlightDeal(plan: ReloPlan, input: ReloInput): Promise<void> {
+  const before = plan.phases.find((p) => p.key === "before");
+  const ordered = before
+    ? [before, ...plan.phases.filter((p) => p !== before)]
+    : plan.phases;
+  let item: ChecklistItem | undefined;
+  for (const phase of ordered) {
+    item = phase.items.find(matchesFlight);
+    if (item) break;
+  }
+  if (!item) return;
+
+  const offer = await getFlightOffer({
+    fromCity: input.fromCity,
+    fromCountry: input.fromCountry,
+    toCity: input.toCity,
+    toCountry: input.toCountry,
+  });
+  if (!offer) return;
+
+  item.flightDeal = {
+    url: offer.url,
+    label:
+      offer.priceUsd != null
+        ? `Flights from ~$${offer.priceUsd}`
+        : "Search flights on Aviasales",
+  };
 }
 
 function normalizeFeasibility(raw: unknown): Feasibility | undefined {
@@ -659,6 +705,7 @@ export async function POST(req: NextRequest) {
       revisedPlan.feasibility =
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
       attachEsimAffiliate(revisedPlan);
+      await attachFlightDeal(revisedPlan, input);
       return Response.json({
         input,
         plan: revisedPlan,
@@ -677,6 +724,7 @@ export async function POST(req: NextRequest) {
     );
   }
   attachEsimAffiliate(plan);
+  await attachFlightDeal(plan, input);
 
   return Response.json({
     input,
