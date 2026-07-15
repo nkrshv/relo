@@ -585,6 +585,18 @@ function AdvancedTable({
                                 ))}
                               </p>
                             )}
+                          {row.item.flightDeal && (
+                            <p className="text-xs text-stone-500">
+                              <a
+                                href={row.item.flightDeal.url}
+                                target="_blank"
+                                rel="noopener noreferrer sponsored"
+                                className="font-medium underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
+                              >
+                                {row.item.flightDeal.label}
+                              </a>
+                            </p>
+                          )}
                         </div>
                       )}
                     </div>
@@ -1187,6 +1199,18 @@ export default function ChecklistView({
                                   ))}
                                 </p>
                               )}
+                            {!isChecked && item.flightDeal && (
+                              <p className="mt-2 text-xs text-stone-500">
+                                <a
+                                  href={item.flightDeal.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer sponsored"
+                                  className="font-medium underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900 hover:decoration-stone-500"
+                                >
+                                  {item.flightDeal.label}
+                                </a>
+                              </p>
+                            )}
                             {!isChecked &&
                               (item.steps?.length ||
                                 item.documents?.length ||

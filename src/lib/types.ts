@@ -58,6 +58,12 @@ export interface ChecklistItem {
    * "compare" row of labelled links, distinct from the neutral source `url`.
    */
   affiliate?: { url: string; label: string }[];
+  /**
+   * Optional flight-price hint attached server-side to the "book your flight"
+   * task: a single sponsored link whose label carries the fare (e.g.
+   * "Flights from ~$138") and whose url is an affiliate aviasales.com search.
+   */
+  flightDeal?: { url: string; label: string };
 }
 
 export const PHASE_KEYS = [
