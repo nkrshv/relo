@@ -133,7 +133,10 @@ type IconName =
   | "chat"
   | "people"
   | "salary"
-  | "clock";
+  | "clock"
+  | "population"
+  | "density"
+  | "jobs";
 
 const ICON_PATHS: Record<IconName, string> = {
   visa: "M4 3.5h8a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Zm2 3.5h4M6 9.5h4M6 12h2.5",
@@ -147,7 +150,17 @@ const ICON_PATHS: Record<IconName, string> = {
   people: "M6 4.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4Zm-3.5 9a3.5 3.5 0 0 1 7 0M11 5a1.8 1.8 0 1 1 0 3.6m1 4.9a3.2 3.2 0 0 0-2.4-3.1",
   salary: "M2.5 5.5h11a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1Zm5.5 1.8a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Z",
   clock: "M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2Zm0 2.5V8l2.5 1.5",
+  population: "M2.5 13.5h11M4 13.5V4.2l4-1.7v11m0-7 4 1.5v6M5.6 6h.8M5.6 8.2h.8M5.6 10.4h.8M9.6 8h.8M9.6 10.4h.8",
+  density: "M3.5 3.5h.01M8 3.5h.01M12.5 3.5h.01M3.5 8h.01M8 8h.01M12.5 8h.01M3.5 12.5h.01M8 12.5h.01M12.5 12.5h.01",
+  jobs: "M3 5.5h10a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Zm3.3 0v-1a1 1 0 0 1 1-1h1.4a1 1 0 0 1 1 1v1M2 9h12",
 };
+
+// Compact people count: 3592294 -> "3.6M", 512000 -> "512k", 8400 -> "8,400".
+function formatPopulation(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1).replace(/\.0$/, "")}M`;
+  if (n >= 100_000) return `${Math.round(n / 1000)}k`;
+  return n.toLocaleString("en-US");
+}
 
 function CellIcon({ name }: { name: IconName }) {
   return (
@@ -586,6 +599,49 @@ export default function CountrySummary({
       value: `${formatSalary(salary.avgAnnual, salary.currency)} / yr`,
       sub: salary.avgMonth ? `Adzuna, ${formatMonth(salary.avgMonth)}` : "Adzuna",
       hint: "Average advertised salary across Adzuna job listings, local currency",
+    });
+  if (insights?.unemployment)
+    cells.push({
+      key: "unemployment",
+      icon: "jobs",
+      label: "Unemployment",
+      value: `${insights.unemployment.value.toFixed(1)}%`,
+      sub: `Nationwide · World Bank ${insights.unemployment.year}`,
+      hint: `National unemployment rate, ${insights.unemployment.value.toFixed(1)}% of the labour force (World Bank, ILO estimate, ${insights.unemployment.year})`,
+    });
+  // Population: prefer the chosen destination city (Open-Meteo), otherwise the
+  // country total (World Bank) so the cell still appears for country-only plans.
+  const cityPop =
+    destCity?.population != null && destCity.population > 0
+      ? destCity.population
+      : null;
+  const countryPop = insights?.population ?? null;
+  if (cityPop != null)
+    cells.push({
+      key: "population",
+      icon: "population",
+      label: "City population",
+      value: formatPopulation(cityPop),
+      sub: `${destCity!.city} · Open-Meteo`,
+      hint: `Population of ${destCity!.city} (Open-Meteo geocoding)`,
+    });
+  else if (countryPop)
+    cells.push({
+      key: "population",
+      icon: "population",
+      label: "Population",
+      value: formatPopulation(countryPop.value),
+      sub: `Nationwide · World Bank ${countryPop.year}`,
+      hint: `Total country population (World Bank ${countryPop.year})`,
+    });
+  if (insights?.density)
+    cells.push({
+      key: "density",
+      icon: "density",
+      label: "Density",
+      value: `${Math.round(insights.density.value).toLocaleString("en-US")} / km²`,
+      sub: `Nationwide · World Bank ${insights.density.year}`,
+      hint: `People per square kilometre, country-wide (World Bank ${insights.density.year})`,
     });
   if (insights?.migrantShare)
     cells.push({
