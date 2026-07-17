@@ -9,6 +9,7 @@ import type {
   VisaSummary,
 } from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
+import ExportMenu from "@/components/ExportMenu";
 import { track } from "@/lib/analytics";
 import { useClimateTwin } from "@/lib/useClimateTwin";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
@@ -814,12 +815,11 @@ export default function ChecklistView({
               </button>
             ))}
           </div>
-          <button
-            onClick={() => window.print()}
-            className="rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-50 hover:text-stone-900"
-          >
-            Print / PDF
-          </button>
+          <ExportMenu
+            input={input}
+            plan={augmentedPlan}
+            visa={visa ?? null}
+          />
         </div>
       </div>
 
@@ -1002,12 +1002,12 @@ export default function ChecklistView({
             </div>
           </div>
           <div className="flex shrink-0 gap-2 print:hidden">
-            <button
-              onClick={() => window.print()}
-              className="rounded-md bg-emerald-700 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-emerald-800"
-            >
-              Print / PDF
-            </button>
+            <ExportMenu
+              input={input}
+              plan={augmentedPlan}
+              visa={visa ?? null}
+              variant="emerald"
+            />
             <button
               onClick={onReset}
               className="rounded-md border border-emerald-300 bg-white px-3 py-1.5 text-sm font-medium text-emerald-800 transition-colors hover:bg-emerald-100"
