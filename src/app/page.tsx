@@ -6,8 +6,6 @@ import PipelineDiagram from "@/components/PipelineDiagram";
 import TrustBlock from "@/components/TrustBlock";
 import ScrollRoad from "@/components/ScrollRoad";
 import SiteFooter from "@/components/SiteFooter";
-import { OPEN_DATA_UPDATED_AT } from "@/lib/countryOpenData";
-import { formatMonth } from "@/lib/dates";
 
 const TYPE_CITIES = [
   "Lisbon",
@@ -107,11 +105,7 @@ export default function Home() {
       />
       {/* Hero */}
       <section className="mx-auto max-w-3xl px-4 pt-24 pb-20 text-center">
-        <span className="rise inline-flex items-center gap-2 rounded-full border border-stone-200 bg-white px-3 py-1 text-xs font-medium tracking-wide text-stone-500">
-          <span className="pulse-dot" aria-hidden />
-          Grounded in official data, last refreshed {formatMonth(OPEN_DATA_UPDATED_AT)}
-        </span>
-        <h1 className="rise rise-1 mt-6 text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 sm:text-6xl">
+        <h1 className="rise rise-1 text-4xl font-semibold leading-[1.1] tracking-tight text-stone-900 sm:text-6xl">
           Move to <Typewriter words={TYPE_CITIES} /> without the{" "}
           <span className="relative inline-block whitespace-nowrap">
             <span className="absolute -inset-x-1 inset-y-0 -rotate-1 rounded bg-amber-200/70" aria-hidden />
