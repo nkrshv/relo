@@ -125,7 +125,7 @@ export default function Home() {
         </p>
         <div className="rise rise-3 mt-9 flex flex-col items-center gap-3">
           <CtaButton label="Get my relocation plan" />
-          <span className="text-sm text-stone-400">
+          <span className="text-sm text-stone-500">
             Free plan in about a minute, full checklist $9
           </span>
         </div>
@@ -175,7 +175,7 @@ export default function Home() {
               key={s.title}
               className="card-lift rounded-lg border border-stone-200 bg-white p-6 sm:nth-2:col-span-2 sm:last:col-span-2"
             >
-              <p className="mb-3 font-mono text-xs font-medium text-stone-400">
+              <p className="mb-3 font-mono text-xs font-medium text-stone-500">
                 {String(i + 1).padStart(2, "0")}
               </p>
               <h3 className="text-base font-semibold text-stone-900">{s.title}</h3>
@@ -265,7 +265,7 @@ export default function Home() {
               <summary className="cursor-pointer list-none text-sm font-medium text-stone-900 marker:content-none">
                 <span className="flex items-center justify-between gap-2">
                   {f.q}
-                  <span className="font-mono text-stone-400 transition-transform duration-200 group-open:rotate-45">
+                  <span className="font-mono text-stone-500 transition-transform duration-200 group-open:rotate-45">
                     +
                   </span>
                 </span>

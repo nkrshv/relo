@@ -102,7 +102,7 @@ export default function PlanSkeleton({ done = false }: Props) {
               key={label}
               className={`reveal flex items-center gap-3 text-sm transition-colors duration-300 ${
                 checked
-                  ? "text-stone-400"
+                  ? "text-stone-500"
                   : active
                     ? "font-medium text-stone-800"
                     : "text-stone-300"
