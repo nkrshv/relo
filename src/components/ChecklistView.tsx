@@ -178,7 +178,7 @@ function OfficeLinks({
 }) {
   return (
     <div>
-      <p className="text-[10px] font-semibold uppercase tracking-wider text-stone-400">
+      <p className="text-[10px] font-semibold uppercase tracking-wider text-stone-500">
         Offices near {capital} · tap to open the map
       </p>
       <div className="mt-1 flex flex-wrap gap-1">
@@ -197,7 +197,7 @@ function OfficeLinks({
               strokeWidth="1.3"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="h-3 w-3 shrink-0 text-stone-400"
+              className="h-3 w-3 shrink-0 text-stone-500"
               aria-hidden
             >
               <path d="M8 14.5s-4.5-4.1-4.5-7.5a4.5 4.5 0 0 1 9 0c0 3.4-4.5 7.5-4.5 7.5Zm0-5.8a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4Z" />
@@ -206,7 +206,7 @@ function OfficeLinks({
           </a>
         ))}
       </div>
-      <p className="mt-1 text-[11px] text-stone-400">
+      <p className="mt-1 text-[11px] text-stone-500">
         {curated
           ? "OpenStreetMap · moving to another city? Search its local office instead."
           : "OpenStreetMap · exact office names vary; the map search finds the local one."}
@@ -397,7 +397,7 @@ function AdvancedTable({
               <h2 className="text-sm font-semibold text-stone-900">
                 {phase.title}
               </h2>
-              <span className="text-xs tabular-nums text-stone-400">
+              <span className="text-xs tabular-nums text-stone-500">
                 {locked ? "Locked" : `${phaseDone}/${phaseRows.length}`}
               </span>
             </div>
@@ -440,7 +440,7 @@ function AdvancedTable({
                             .map((d) => d.display)
                             .join(", ")} first`}
                         />
-                        <span className="w-12 shrink-0 font-mono text-[11px] text-stone-400">
+                        <span className="w-12 shrink-0 font-mono text-[11px] text-stone-500">
                           {row.display}
                         </span>
                         <button
@@ -458,7 +458,7 @@ function AdvancedTable({
                           <span
                             className={`truncate font-medium ${
                               isChecked
-                                ? "text-stone-400 line-through"
+                                ? "text-stone-500 line-through"
                                 : isBlocked
                                   ? "text-stone-500"
                                   : "text-stone-900"
@@ -522,7 +522,7 @@ function AdvancedTable({
                             <ol className="space-y-1.5">
                               {row.item.steps.map((step, si) => (
                                 <li key={si} className="flex items-baseline gap-2">
-                                  <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-400">
+                                  <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-500">
                                     {si + 1}.
                                   </span>
                                   <span className="min-w-0">{step}</span>
@@ -617,7 +617,7 @@ function AdvancedTable({
         );
       })}
       {!hasDeps && (
-        <p className="text-xs text-stone-400">
+        <p className="text-xs text-stone-500">
           Dependencies appear here for newly generated plans.
         </p>
       )}
@@ -824,7 +824,7 @@ export default function ChecklistView({
       </div>
 
       <header className="mb-8">
-        <p className="text-xs font-medium uppercase tracking-wider text-stone-400">
+        <p className="text-xs font-medium uppercase tracking-wider text-stone-500">
           Your relocation plan
         </p>
         <h1 className="mt-1 text-2xl font-semibold tracking-tight text-stone-900 sm:text-3xl">
@@ -952,7 +952,7 @@ export default function ChecklistView({
               <p className="truncate text-sm font-semibold text-stone-800">
                 {doneItems}/{totalItems} steps done
               </p>
-              <p className="hidden text-xs text-stone-400 sm:block">
+              <p className="hidden text-xs text-stone-500 sm:block">
                 {input.fromCountry} → {input.toCountry}
               </p>
             </div>
@@ -1072,13 +1072,13 @@ export default function ChecklistView({
                 </span>
                 {phase.title}
                 {locked ? (
-                  <span className="ml-1 text-xs font-medium text-stone-400">
+                  <span className="ml-1 text-xs font-medium text-stone-500">
                     Locked
                   </span>
                 ) : (
                   <span
                     className={`ml-1 text-xs font-medium tabular-nums print:hidden ${
-                      phaseComplete ? "text-emerald-600" : "text-stone-400"
+                      phaseComplete ? "text-emerald-600" : "text-stone-500"
                     }`}
                   >
                     {phaseDone}/{phase.items.length}
@@ -1127,13 +1127,13 @@ export default function ChecklistView({
                               <span
                                 className={`block text-sm font-medium leading-snug transition-colors duration-150 ${
                                   isChecked
-                                    ? "text-stone-400 line-through"
+                                    ? "text-stone-500 line-through"
                                     : "text-stone-900"
                                 } ${isNext ? "pr-16" : ""}`}
                               >
                                 {item.title}
                               </span>
-                              <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-stone-400">
+                              <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-stone-500">
                                 <span className="inline-flex items-center gap-1.5 text-[11px] font-medium capitalize text-stone-500">
                                   <span
                                     className={`h-1.5 w-1.5 rounded-full ${categoryDot(item.category)}`}
@@ -1228,7 +1228,7 @@ export default function ChecklistView({
                                       strokeWidth="1.5"
                                       strokeLinecap="round"
                                       strokeLinejoin="round"
-                                      className="h-3 w-3 text-stone-400 transition-transform group-open/tip:rotate-180"
+                                      className="h-3 w-3 text-stone-500 transition-transform group-open/tip:rotate-180"
                                       aria-hidden
                                     >
                                       <path d="M4 6l4 4 4-4" />
@@ -1239,7 +1239,7 @@ export default function ChecklistView({
                                       <ol className="space-y-1.5">
                                         {item.steps.map((step, si) => (
                                           <li key={si} className="flex items-baseline gap-2">
-                                            <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-400">
+                                            <span className="w-4 shrink-0 text-right text-xs font-medium tabular-nums text-stone-500">
                                               {si + 1}.
                                             </span>
                                             <span className="min-w-0">{step}</span>
@@ -1249,7 +1249,7 @@ export default function ChecklistView({
                                     )}
                                     {item.documents && item.documents.length > 0 && (
                                       <div>
-                                        <p className="text-[10px] font-semibold uppercase tracking-wider text-stone-400">
+                                        <p className="text-[10px] font-semibold uppercase tracking-wider text-stone-500">
                                           Bring / prepare
                                         </p>
                                         <div className="mt-1 flex flex-wrap gap-1">

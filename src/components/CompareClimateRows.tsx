@@ -120,7 +120,7 @@ function Row({
     <div className="grid grid-cols-[1.2fr_1fr_1fr] items-start border-b border-stone-100 px-4 py-3 last:border-b-0">
       <div>
         <p className="text-sm font-medium text-stone-700">{label}</p>
-        <p className="mt-0.5 text-[11px] text-stone-400">{source}</p>
+        <p className="mt-0.5 text-[11px] text-stone-500">{source}</p>
       </div>
       <p className="tnum pr-2 text-sm text-stone-800">{a ?? "—"}</p>
       <p className="tnum text-sm text-stone-800">{b ?? "—"}</p>

@@ -351,14 +351,14 @@ export default async function MovingToPage({
                 key={f.label}
                 className="rounded-lg border border-stone-200 bg-white px-3 py-3"
               >
-                <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
                   {f.label}
                 </p>
                 <p className="tnum mt-1 flex items-center gap-1.5 text-sm font-semibold text-stone-900">
                   {f.messengers && <MessengerIcons messengers={f.messengers} />}
                   <span>{f.value}</span>
                 </p>
-                <p className="mt-0.5 text-[11px] text-stone-400">{f.source}</p>
+                <p className="mt-0.5 text-[11px] text-stone-500">{f.source}</p>
               </div>
             ))}
           </div>
@@ -370,7 +370,7 @@ export default async function MovingToPage({
                   className="rounded-lg border border-stone-200 bg-white px-4 py-3"
                 >
                   <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                    <span className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                    <span className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
                       Special tax regime
                     </span>
                     {r.status !== "active" && (
@@ -387,7 +387,7 @@ export default async function MovingToPage({
                     {r.detail}
                     {r.statusNote ? ` ${r.statusNote}.` : ""}
                   </p>
-                  <p className="mt-1.5 text-[11px] text-stone-400">
+                  <p className="mt-1.5 text-[11px] text-stone-500">
                     Verified {formatMonth(r.verified)} ·{" "}
                     <a
                       href={r.sourceUrl}

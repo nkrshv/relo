@@ -65,7 +65,7 @@ function InlineForm({
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder={placeholder}
-        className="min-w-0 flex-1 rounded-md border border-stone-200 bg-white px-3 py-2 text-sm text-stone-900 placeholder:text-stone-400 focus:border-stone-400 focus:outline-none"
+        className="min-w-0 flex-1 rounded-md border border-stone-200 bg-white px-3 py-2 text-sm text-stone-900 placeholder:text-stone-500 focus:border-stone-400 focus:outline-none"
       />
       <button
         type="submit"
@@ -86,7 +86,7 @@ export default function TrustBlock() {
     <section className="mx-auto max-w-5xl px-4 py-16">
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="rounded-xl border border-stone-200 bg-white p-6 lg:col-span-2">
-          <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+          <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
             Why we built this
           </p>
           <h2 className="mt-2 text-xl font-semibold tracking-tight text-stone-900">

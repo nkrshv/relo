@@ -109,7 +109,7 @@ function Tile({
       className="rounded-md border border-stone-200 bg-stone-50 px-3 py-2.5"
       title={hint ?? value}
     >
-      <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+      <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
         {label}
       </p>
       <p
@@ -117,7 +117,7 @@ function Tile({
       >
         {value}
       </p>
-      {sub && <p className="mt-0.5 text-xs leading-snug text-stone-400">{sub}</p>}
+      {sub && <p className="mt-0.5 text-xs leading-snug text-stone-500">{sub}</p>}
     </div>
   );
 }
@@ -166,7 +166,7 @@ function CellIcon({ name }: { name: IconName }) {
   return (
     <svg
       viewBox="0 0 16 16"
-      className="h-3.5 w-3.5 shrink-0 text-stone-400"
+      className="h-3.5 w-3.5 shrink-0 text-stone-500"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.3"
@@ -743,7 +743,7 @@ export default function CountrySummary({
             {flag}
           </span>
           <div>
-            <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+            <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
               Country snapshot
             </p>
             <h3 className="text-base font-semibold text-stone-900">{name}</h3>
@@ -769,7 +769,7 @@ export default function CountrySummary({
             >
               <div className="flex items-center gap-1.5">
                 <CellIcon name={c.icon} />
-                <p className="truncate text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                <p className="truncate text-[10px] font-medium uppercase tracking-wider text-stone-500">
                   {c.label}
                 </p>
               </div>
@@ -781,7 +781,7 @@ export default function CountrySummary({
                 {c.value && <span className="truncate">{c.value}</span>}
               </p>
               {c.sub && (
-                <p className="mt-0.5 truncate text-xs text-stone-400">{c.sub}</p>
+                <p className="mt-0.5 truncate text-xs text-stone-500">{c.sub}</p>
               )}
             </div>
           ))}
@@ -861,7 +861,7 @@ export default function CountrySummary({
               )}
               {nextHolidays.length > 0 && (
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
                     Upcoming public holidays · offices closed
                   </p>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -916,7 +916,7 @@ export default function CountrySummary({
               )}
               {regimes.length > 0 && (
                 <div className="col-span-2 sm:col-span-3">
-                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
                     Special tax regimes for newcomers
                   </p>
                   <div className="mt-1.5 space-y-2">
@@ -940,7 +940,7 @@ export default function CountrySummary({
                           {r.detail}
                           {r.statusNote ? ` ${r.statusNote}.` : ""}
                         </p>
-                        <p className="mt-1.5 text-[11px] text-stone-400">
+                        <p className="mt-1.5 text-[11px] text-stone-500">
                           Verified {formatMonth(r.verified)} ·{" "}
                           <a
                             href={r.sourceUrl}
@@ -967,7 +967,7 @@ export default function CountrySummary({
                 >
                   {cryptoStatusLabel(cryptoTax)}
                 </span>
-                <span className="text-xs capitalize text-stone-400">
+                <span className="text-xs capitalize text-stone-500">
                   {cryptoTax.legalStatus}
                 </span>
               </div>
@@ -992,7 +992,7 @@ export default function CountrySummary({
                   value={formatCryptoRate(cryptoTax.miningRate)}
                 />
               </div>
-              <p className="mt-2.5 text-[11px] leading-relaxed text-stone-400">
+              <p className="mt-2.5 text-[11px] leading-relaxed text-stone-500">
                 General rates, not personal tax advice.{" "}
                 <a
                   href={CRYPTO_TAX_DATASET_URL}
@@ -1020,7 +1020,7 @@ export default function CountrySummary({
                   <div className="h-4 w-40 animate-pulse rounded bg-stone-100" />
                   <div className="h-20 animate-pulse rounded-lg bg-stone-100" />
                   <div className="h-4 w-2/3 animate-pulse rounded bg-stone-100" />
-                  <p className="text-xs text-stone-400">
+                  <p className="text-xs text-stone-500">
                     Loading climate data for {toCity ?? name}…
                   </p>
                 </div>
@@ -1046,7 +1046,7 @@ export default function CountrySummary({
             <div className="mt-2.5">
               {vac && vac.required.length > 0 && (
                 <div className="mb-2">
-                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
                     Vaccines required to enter
                   </p>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -1063,7 +1063,7 @@ export default function CountrySummary({
               )}
               {vac && vac.recommended.length > 0 && (
                 <div>
-                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
                     Vaccines CDC suggests having before you go
                   </p>
                   <div className="mt-1.5 flex flex-wrap gap-1.5">
@@ -1089,7 +1089,7 @@ export default function CountrySummary({
               )}
               {(vac?.healthNotices ?? []).length > 0 && (
                 <div className="mt-2.5">
-                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-400">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
                     Current health notices · tap to read
                   </p>
                   <div className="mt-1.5 space-y-1.5">
@@ -1109,7 +1109,7 @@ export default function CountrySummary({
                   </div>
                 </div>
               )}
-              <p className="mt-2 text-xs text-stone-400">Source: CDC</p>
+              <p className="mt-2 text-xs text-stone-500">Source: CDC</p>
             </div>
           )}
 
@@ -1138,7 +1138,7 @@ export default function CountrySummary({
                     <span className="font-medium text-stone-800">
                       For {PROFILE_LABEL[profile]}
                     </span>{" "}
-                    <span className="text-stone-400">({impact.level} risk)</span>{" "}
+                    <span className="text-stone-500">({impact.level} risk)</span>{" "}
                     · {impact.detail}
                   </p>
                 </div>
@@ -1158,7 +1158,7 @@ export default function CountrySummary({
         </div>
       )}
 
-      <div className="mt-4 border-t border-stone-100 pt-3 text-xs text-stone-400">
+      <div className="mt-4 border-t border-stone-100 pt-3 text-xs text-stone-500">
         <span>
           {advisory ? "Sources: U.S. State Dept" : "Sources: open data"}
           {visa ? " · Passport Index" : ""}

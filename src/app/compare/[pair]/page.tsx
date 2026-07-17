@@ -465,12 +465,12 @@ export default async function ComparePage({
                     href={row.sourceUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-0.5 block text-[11px] text-stone-400 underline decoration-stone-200 underline-offset-2 transition-colors hover:text-stone-700"
+                    className="mt-0.5 block text-[11px] text-stone-500 underline decoration-stone-200 underline-offset-2 transition-colors hover:text-stone-700"
                   >
                     {row.source}
                   </a>
                 ) : (
-                  <p className="mt-0.5 text-[11px] text-stone-400">{row.source}</p>
+                  <p className="mt-0.5 text-[11px] text-stone-500">{row.source}</p>
                 )}
               </div>
               <p className={`tnum pr-2 text-sm ${row.aTone ?? "text-stone-800"}`}>
@@ -490,7 +490,7 @@ export default async function ComparePage({
                     <svg
                       viewBox="0 0 24 24"
                       aria-hidden
-                      className="h-3.5 w-3.5 text-stone-400 transition-transform group-open:rotate-180"
+                      className="h-3.5 w-3.5 text-stone-500 transition-transform group-open:rotate-180"
                     >
                       <path
                         d="m6 9 6 6 6-6"
@@ -506,7 +506,7 @@ export default async function ComparePage({
                     href={CRYPTO_TAX_DATASET_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-0.5 block text-[11px] text-stone-400 underline decoration-stone-200 underline-offset-2 transition-colors hover:text-stone-700"
+                    className="mt-0.5 block text-[11px] text-stone-500 underline decoration-stone-200 underline-offset-2 transition-colors hover:text-stone-700"
                   >
                     CryptoNomadHub, updated {formatDate(CRYPTO_TAX_UPDATED_AT)} · CC BY 4.0
                   </a>
@@ -529,14 +529,14 @@ export default async function ComparePage({
                     <p className="tnum text-sm text-stone-800">{r.b}</p>
                   </div>
                 ))}
-                <p className="mt-2 text-[11px] text-stone-400">
+                <p className="mt-2 text-[11px] text-stone-500">
                   General rates, not personal tax advice.
                 </p>
               </div>
             </details>
           )}
         </div>
-        <p className="mt-3 text-xs text-stone-400">
+        <p className="mt-3 text-xs text-stone-500">
           Climate, inflation and life expectancy verified {formatDate(INSIGHTS_UPDATED_AT)}.
           Prices, taxes and air quality verified {formatDate(OPEN_DATA_UPDATED_AT)}. Sources
           shown per row.
@@ -558,7 +558,7 @@ export default async function ComparePage({
                 key={`${country.slug}-${r.name}`}
                 className="rounded-lg border border-stone-200 bg-white px-4 py-3"
               >
-                <p className="text-[11px] font-medium uppercase tracking-wider text-stone-400">
+                <p className="text-[11px] font-medium uppercase tracking-wider text-stone-500">
                   {country.emoji} {country.name}
                 </p>
                 <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -572,7 +572,7 @@ export default async function ComparePage({
                   )}
                 </div>
                 <p className="mt-0.5 text-sm text-stone-700">{r.headline}</p>
-                <p className="mt-1.5 text-[11px] text-stone-400">
+                <p className="mt-1.5 text-[11px] text-stone-500">
                   Verified {formatMonth(r.verified)} ·{" "}
                   <a
                     href={r.sourceUrl}

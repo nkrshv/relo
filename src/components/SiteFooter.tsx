@@ -65,7 +65,7 @@ export default function SiteFooter() {
             </svg>
           </a>
         </nav>
-        <p className="max-w-md text-xs leading-relaxed text-stone-400">
+        <p className="max-w-md text-xs leading-relaxed text-stone-500">
           Not legal, tax or immigration advice. Always verify official
           requirements.
         </p>

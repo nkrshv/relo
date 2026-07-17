@@ -139,7 +139,7 @@ function InfoDot({ text }: { text: string }) {
         type="button"
         aria-label={text}
         onClick={(e) => e.preventDefault()}
-        className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-stone-300 text-[9px] font-semibold leading-none text-stone-400 transition-colors hover:border-stone-500 hover:text-stone-700"
+        className="flex h-3.5 w-3.5 items-center justify-center rounded-full border border-stone-300 text-[9px] font-semibold leading-none text-stone-500 transition-colors hover:border-stone-500 hover:text-stone-700"
       >
         i
       </button>
@@ -199,13 +199,13 @@ export default function ClimateTwinPanel({
               title={c.hint}
               className="rounded-md border border-stone-200 bg-stone-50 px-3 py-2.5"
             >
-              <p className="flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-stone-400">
+              <p className="flex items-center gap-1 text-[10px] font-medium uppercase tracking-wider text-stone-500">
                 <span>{c.label}</span>
                 {c.info && <InfoDot text={c.info} />}
               </p>
               <div className="mt-1.5 space-y-1">
                 <div className="flex items-baseline justify-between gap-2">
-                  <span className="truncate text-[11px] text-stone-400">
+                  <span className="truncate text-[11px] text-stone-500">
                     {c.homeLabel ?? home.label}
                   </span>
                   <span className="tnum shrink-0 text-sm text-stone-500">
@@ -226,7 +226,7 @@ export default function ClimateTwinPanel({
         </div>
       )}
 
-      <p className="text-[11px] text-stone-400">
+      <p className="text-[11px] text-stone-500">
         {home.label} versus {dest.label}, historical normals from{" "}
         {dest.year ?? home.year}. Sources:{" "}
         {[...sources, aqi && aqi.home && aqi.dest ? "WAQI" : null]

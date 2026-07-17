@@ -31,7 +31,7 @@ export default function StageStepper({ current }: Props) {
                       ? "border-emerald-600 bg-emerald-600 text-white"
                       : active
                         ? "border-stone-900 bg-stone-900 text-white"
-                        : "border-stone-200 bg-white text-stone-400"
+                        : "border-stone-200 bg-white text-stone-500"
                   }`}
                 >
                   {done ? (
@@ -58,7 +58,7 @@ export default function StageStepper({ current }: Props) {
                       ? "text-stone-900"
                       : done
                         ? "text-stone-500"
-                        : "text-stone-400"
+                        : "text-stone-500"
                   }`}
                 >
                   {label}

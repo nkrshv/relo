@@ -25,7 +25,7 @@ interface Props {
 }
 
 const fieldClass =
-  "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-500 focus:ring-2 focus:ring-stone-200";
+  "w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-500 focus:border-stone-500 focus:ring-2 focus:ring-stone-200";
 
 const labelClass = "mb-1.5 block text-sm font-medium text-stone-700";
 
@@ -226,7 +226,7 @@ export default function ReloForm({
                     type="button"
                     onClick={() => removeCitizenship(c)}
                     aria-label={`Remove ${c}`}
-                    className="text-base leading-none text-stone-400 transition-colors hover:text-stone-700"
+                    className="text-base leading-none text-stone-500 transition-colors hover:text-stone-700"
                   >
                     ×
                   </button>
@@ -234,7 +234,7 @@ export default function ReloForm({
               ))}
             </div>
           )}
-          <p className="mt-1.5 text-xs text-stone-400">
+          <p className="mt-1.5 text-xs text-stone-500">
             Hold more than one? We check each and base your visa route on the
             strongest passport for this destination.
           </p>
@@ -243,7 +243,7 @@ export default function ReloForm({
         <label className="block sm:col-span-2">
           <span className={labelClass}>
             Visa / residency status{" "}
-            <span className="font-normal text-stone-400">(optional)</span>
+            <span className="font-normal text-stone-500">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -281,7 +281,7 @@ export default function ReloForm({
       <div className="mt-5 grid gap-5 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>
-            Budget <span className="font-normal text-stone-400">(optional)</span>
+            Budget <span className="font-normal text-stone-500">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -293,7 +293,7 @@ export default function ReloForm({
         <label className="block">
           <span className={labelClass}>
             Anything else?{" "}
-            <span className="font-normal text-stone-400">(optional)</span>
+            <span className="font-normal text-stone-500">(optional)</span>
           </span>
           <input
             className={fieldClass}
@@ -318,7 +318,7 @@ export default function ReloForm({
           <>Build my relocation plan →</>
         )}
       </button>
-      <p className="mt-3 text-center text-xs text-stone-400">
+      <p className="mt-3 text-center text-xs text-stone-500">
         Free preview · Full personalized plan for $9
       </p>
     </form>

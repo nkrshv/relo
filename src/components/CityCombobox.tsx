@@ -110,7 +110,7 @@ export default function CityCombobox({
   return (
     <div className="block" ref={rootRef}>
       <span className="mb-1.5 block text-sm font-medium text-stone-700">
-        {label} <span className="font-normal text-stone-400">(optional)</span>
+        {label} <span className="font-normal text-stone-500">(optional)</span>
       </span>
       <div className="relative">
         <input
@@ -119,7 +119,7 @@ export default function CityCombobox({
           aria-controls={listId}
           aria-autocomplete="list"
           autoComplete="off"
-          className="w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-400 focus:border-stone-500 focus:ring-2 focus:ring-stone-200"
+          className="w-full rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm text-stone-900 outline-none transition-colors placeholder:text-stone-500 focus:border-stone-500 focus:ring-2 focus:ring-stone-200"
           placeholder={placeholder}
           value={query}
           onChange={(e) => {
@@ -154,7 +154,7 @@ export default function CityCombobox({
                 >
                   <span>{c.name}</span>
                   {c.admin1 && (
-                    <span className="truncate text-xs text-stone-400">
+                    <span className="truncate text-xs text-stone-500">
                       {c.admin1}
                     </span>
                   )}
