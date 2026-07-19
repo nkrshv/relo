@@ -55,6 +55,41 @@ export async function getPlan(slug: string): Promise<StoredPlan | null> {
   return kvGetJson<StoredPlan>(keyFor(slug));
 }
 
+// Mark a plan paid from a verified payment webhook. Idempotent: paidAt is set
+// once, and the buyer email is stored server-side (never exposed by GET).
+// Returns the updated record, or null if the plan no longer exists.
+export async function markPlanPaid(
+  slug: string,
+  email: string | null,
+): Promise<StoredPlan | null> {
+  const record = await getPlan(slug);
+  if (!record) return null;
+  const updated: StoredPlan = {
+    ...record,
+    paid: true,
+    paidAt: record.paidAt ?? new Date().toISOString(),
+    email: email ?? record.email,
+  };
+  await savePlan(slug, updated);
+  return updated;
+}
+
+// Record that the permanent-link email was sent, so a duplicate webhook never
+// sends a second copy.
+export async function markPlanEmailed(slug: string): Promise<void> {
+  const record = await getPlan(slug);
+  if (!record) return;
+  await savePlan(slug, { ...record, emailedAt: new Date().toISOString() });
+}
+
+// Revoke access after a refund or chargeback. Keeps the record (and its email)
+// but flips paid back off.
+export async function markPlanRefunded(slug: string): Promise<void> {
+  const record = await getPlan(slug);
+  if (!record) return;
+  await savePlan(slug, { ...record, paid: false });
+}
+
 // Whitelist the fields safe to hand back to the browser (drops the email).
 export function toPublicPlan(record: StoredPlan): PublicPlan {
   return {
