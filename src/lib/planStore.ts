@@ -23,11 +23,20 @@ export interface StoredPlan {
 export type PublicPlan = Omit<StoredPlan, "email" | "emailedAt">;
 
 const KEY_PREFIX = "relo:plan:";
+const PROGRESS_PREFIX = "relo:progress:";
 const UNPAID_TTL_SEC = 60 * 60 * 24 * 30; // 30 days
 const PAID_TTL_SEC = 60 * 60 * 24 * 365 * 3; // ~3 years
 
+// A user cannot have more checklist items than the plan holds; this cap just
+// guards the store against an abusive payload on the public write endpoint.
+const MAX_PROGRESS_ENTRIES = 500;
+
 function keyFor(slug: string): string {
   return `${KEY_PREFIX}${slug}`;
+}
+
+function progressKeyFor(slug: string): string {
+  return `${PROGRESS_PREFIX}${slug}`;
 }
 
 // URL-safe, unguessable slug with 128 bits of entropy (16 random bytes,
@@ -88,6 +97,58 @@ export async function markPlanRefunded(slug: string): Promise<void> {
   const record = await getPlan(slug);
   if (!record) return;
   await savePlan(slug, { ...record, paid: false });
+}
+
+// Checklist completion for a plan, kept in its own key so ticking a box never
+// rewrites (or reschedules the TTL of) the plan record itself. Keyed by the
+// same capability slug: anyone holding the link can read and update progress,
+// exactly like the plan it belongs to.
+export interface PlanProgress {
+  /** Item id ("<phase>:<item>") → checked. Only true entries are kept. */
+  checked: Record<string, boolean>;
+  updatedAt: string;
+}
+
+// Item ids are "<phaseIndex>:<itemIndex>". Drop anything else and keep only the
+// checked (true) entries, so the stored map stays small and well-formed.
+function sanitizeChecked(input: unknown): Record<string, boolean> {
+  if (!input || typeof input !== "object") return {};
+  const out: Record<string, boolean> = {};
+  let n = 0;
+  for (const [key, value] of Object.entries(input as Record<string, unknown>)) {
+    if (n >= MAX_PROGRESS_ENTRIES) break;
+    if (value === true && /^\d{1,3}:\d{1,3}$/.test(key)) {
+      out[key] = true;
+      n += 1;
+    }
+  }
+  return out;
+}
+
+export async function getProgress(slug: string): Promise<PlanProgress | null> {
+  if (!isValidSlug(slug)) return null;
+  return kvGetJson<PlanProgress>(progressKeyFor(slug));
+}
+
+// Persist checklist progress for an existing plan. Returns null when the slug
+// has no plan (so a bogus link cannot seed arbitrary keys). Progress inherits
+// the plan's retention so it lives exactly as long as the plan does.
+export async function saveProgress(
+  slug: string,
+  checked: unknown,
+): Promise<PlanProgress | null> {
+  const record = await getPlan(slug);
+  if (!record) return null;
+  const progress: PlanProgress = {
+    checked: sanitizeChecked(checked),
+    updatedAt: new Date().toISOString(),
+  };
+  await kvSetJson(
+    progressKeyFor(slug),
+    progress,
+    record.paid ? PAID_TTL_SEC : UNPAID_TTL_SEC,
+  );
+  return progress;
 }
 
 // Whitelist the fields safe to hand back to the browser (drops the email).
