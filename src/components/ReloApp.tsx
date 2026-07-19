@@ -212,7 +212,11 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
     setError(null);
     track("Unlock Clicked");
     try {
-      const res = await fetch("/api/checkout", { method: "POST" });
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: result?.slug }),
+      });
       const data = (await res.json()) as {
         url?: string;
         devUnlock?: boolean;
@@ -237,7 +241,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
     } finally {
       setUnlocking(false);
     }
-  }, []);
+  }, [result]);
 
   const reset = useCallback(() => {
     setResult(null);

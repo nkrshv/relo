@@ -37,6 +37,7 @@ export default async function SavedPlanPage({
 
       <section className="px-4 pb-12">
         <SavedPlan
+          slug={slug}
           input={record.input}
           plan={record.plan}
           visa={record.visa}
