@@ -1,6 +1,9 @@
 import type { NextRequest } from "next/server";
 import { factsForCountry } from "@/lib/countryFacts";
-import { taxRegimesForCountry } from "@/lib/taxRegimes";
+import {
+  taxRegimesForCountry,
+  residencyTaxationForCountry,
+} from "@/lib/taxRegimes";
 import { advisoryForCountry, impactForProfile } from "@/lib/countryAdvisory";
 import { bestVisaRequirement } from "@/lib/visaMatrix";
 import { isValidCountry } from "@/lib/allCountries";
@@ -129,8 +132,13 @@ MOVE-LOGISTICS MODULES — mandatory in EVERY plan, each in the phase named. The
 - "departure" — MAIL FORWARDING: set up forwarding of physical post to a trusted relative or a virtual mailbox so official letters (tax, pension, banks) still reach the person.
 - "departure" — NOTIFY TAX & SOCIAL SECURITY: notify the home tax authority of the move (exit formalities or a final return) and check any social-security/pension totalization agreement between the two countries so contributions and future pension rights are not lost. Make this a two-country TAX CALENDAR: the official exit/departure date and why it matters, the need to track physical-presence days in each country in the move year, both countries' concrete filing deadlines that apply to that year, and the situations where a cross-border tax advisor is worth the fee (dual residence risk, property or business left behind, stock compensation). Never state that someone becomes tax resident solely because of 183 days: presence-day counts, permanent home, and family/economic ties all feed the tests, so say a threshold "may trigger tax residency or filing obligations" unless a verified country-specific rule is provided in the facts.
 - "week1" — LOCAL SIM: get a local physical SIM and number in the first week (needed for local 2FA, bank verification, deliveries and appointments), noting any ID/registration the destination requires to buy one.
+- "month1" — RENTAL-SCAM DEFENSE: the long-term housing item MUST arm the person against rental fraud, because newcomers searching remotely or in a language they do not speak are the #1 target. Make it concrete for THIS market, not a generic "beware of scams": (a) name where scams concentrate for this destination (unmoderated Facebook expat groups, Craigslist-style boards, listings cloned from legitimate portals at a too-good price) versus the safer local channels (the country's dominant listing portals, licensed agents and what their licence is called); (b) the classic schemes: "landlord abroad, courier will bring the keys after you wire the deposit", pressure to pay a deposit or "reservation fee" before any viewing or video call, a cloned listing with a real address but the scammer's contact, prices 30-40% below the market for the area; (c) hard rules: never pay ANYTHING before seeing the property live or on a live video call and verifying the landlord's identity against ownership (name the destination's public ownership/land registry lookup if one exists, e.g. Kadaster in the Netherlands, nota simple from the Registro de la Propiedad in Spain), pay deposit and rent by traceable bank transfer with the landlord's name matching the contract, never by crypto, gift cards, or cash wire services; (d) the local norms that make overcharging visible: the legal or customary deposit cap for this destination and what must be in a valid contract. Put the sharpest scheme in commonMistake with its real cost (a wired deposit is usually unrecoverable).
 - "days90" — DRIVER'S LICENSE: check whether the origin license can be exchanged or a local theory/practical test is required, plus the exact deadline (many countries require the exchange within 6 to 12 months of establishing residency, after which you must start from scratch).
 When the user's priorities include "Pets", emphasize timing in the "before" pet item: a rabies-antibody titer test where required can add 3+ months of lead time, so it gates the whole move.
+
+RISK & FALLBACK MICRO-RULES:
+- BANKING FALLBACK: whenever the standard bank-account path is gated by a prerequisite (address registration, residence permit, tax ID), the banking item must also state the realistic interim option for the first weeks: which category of bank or account in this destination opens with just a passport (a digital/neobank category or specific well-known-to-accept-newcomers types, named per the neutrality rule), or that the multi-currency account from the "before" phase covers payments until the local account opens. Never leave the person with "you cannot open an account yet" and no bridge.
+- PROFESSIONAL REVIEW TRIGGER: when the user's situation contains genuine complexity (dual/multiple citizenships, owning a business or being self-employed across borders, significant assets or property left behind, stock compensation, a non-working spouse's status, custody arrangements, anything criminal-record related), the relevant item must say plainly that this specific part is worth one consultation with a licensed immigration lawyer or cross-border tax advisor BEFORE acting, and what exactly to ask them. Do not add this boilerplate to simple cases.
 
 PERSONALIZATION IS MANDATORY — the plan must visibly reflect THIS user's inputs, not just the destination:
 - Every concrete detail the user gives (a budget cap, a rent limit, total savings, children's ages, pet species/breed, a spouse's job plans, an employer situation, a stated timeline) MUST appear verbatim or near-verbatim inside at least one relevant item's title, why, tip, steps or commonMistake. Example: if they say "rent under 1500 eur", the housing item must reference searching with a ≤€1,500 filter and what that budget realistically gets in that market; if a spouse will look for local work, add an item about local work authorization / job-search realities and required registrations.
@@ -647,6 +655,17 @@ function buildUserContent(input: ReloInput): string {
       [
         `VERIFIED ORIGIN-COUNTRY FACTS about ${input.fromCountry} (verified ${COUNTRY_FACTS_VERIFIED}) — credentials and documents that are easy to get while still resident there but slow or impossible from abroad. Treat as ground truth and use the real institution names/URLs in the relevant "before"/"departure" items (criminal-record checks, international driving permit, e-government access, certified civil documents):`,
         ...originReqs.map((f) => `- ${f}`),
+      ].join("\n"),
+    );
+  }
+
+  const residencyTax = residencyTaxationForCountry(input.toCountry);
+  if (residencyTax) {
+    blocks.push(
+      [
+        `RESIDENCY TAXATION SYSTEM in ${input.toCountry} (verified ${residencyTax.verified}) — how residents' foreign-source income is taxed. This OVERRIDES your training data; base tax-residency items on it and never describe this destination as plain worldwide taxation:`,
+        `- System: ${residencyTax.system.replace(/_/g, " ")}. ${residencyTax.note}`,
+        `- Carve-outs are common (work physically performed locally, business activity), so tell the user to confirm their specific income types with a local tax advisor.`,
       ].join("\n"),
     );
   }
