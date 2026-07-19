@@ -13,6 +13,11 @@
 // Each fact may include the OFFICIAL root URL for the institution/portal it
 // names, in the form "(https://domain/)". These are the domains the model
 // should use for the item "url" field — they override the model's own guesses.
+// When this table was last reviewed against official sources, YYYY-MM.
+// Surfaced in the prompt so generated advice can qualify time-sensitive
+// figures ("verified as of ..."), and as a maintenance reminder here.
+export const COUNTRY_FACTS_VERIFIED = "2026-06";
+
 export const COUNTRY_FACTS: Record<string, string[]> = {
   portugal: [
     "Immigration/residency authority is AIMA (Agência para a Integração, Migrações e Asilo) (https://aima.gov.pt/) — it REPLACED SEF in October 2023. Never refer to SEF as current, and never link to acm.gov.pt for residency.",
