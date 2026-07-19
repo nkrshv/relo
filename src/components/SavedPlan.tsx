@@ -7,6 +7,7 @@ import { track } from "@/lib/analytics";
 import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 
 interface Props {
+  slug: string;
   input: ReloInput;
   plan: ReloPlan;
   visa: VisaSummary | null;
@@ -20,6 +21,7 @@ const UNLOCK_KEY = "relochecklist:unlocked";
 // server-verified `paid` flag; the localStorage/query fallbacks keep the
 // current (pre-payment-webhook) unlock behavior working.
 export default function SavedPlan({
+  slug,
   input,
   plan,
   visa,
@@ -62,7 +64,11 @@ export default function SavedPlan({
     setError(null);
     track("Unlock Clicked");
     try {
-      const res = await fetch("/api/checkout", { method: "POST" });
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug }),
+      });
       const data = (await res.json()) as {
         url?: string;
         devUnlock?: boolean;
@@ -87,7 +93,7 @@ export default function SavedPlan({
     } finally {
       setUnlocking(false);
     }
-  }, []);
+  }, [slug]);
 
   const reset = useCallback(() => {
     router.push("/plan");
