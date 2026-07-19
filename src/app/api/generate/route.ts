@@ -9,7 +9,9 @@ import {
   dailyBudgetExhausted,
   recordTokens,
   clientIp,
+  limiterConfigured,
 } from "@/lib/ratelimit";
+import { mintSlug, savePlan } from "@/lib/planStore";
 import {
   insightsForCountry,
   climateSummary,
@@ -28,6 +30,7 @@ import {
   type PhaseKey,
   type ReloInput,
   type ReloPlan,
+  type VisaSummary,
 } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -583,6 +586,29 @@ function buildUserContent(input: ReloInput): string {
   return blocks.join("\n\n");
 }
 
+// Persist the finished plan under an unguessable slug so it has a permanent,
+// shareable link (reloka.to/plan/{slug}) the moment it is generated. Only
+// hand a slug back to the client when a store is configured to hold it, so
+// without Upstash/KV the app falls back to its client-only behavior.
+async function respondWithPlan(
+  input: ReloInput,
+  plan: ReloPlan,
+  visa: VisaSummary | null,
+): Promise<Response> {
+  let slug: string | undefined;
+  if (limiterConfigured()) {
+    slug = mintSlug();
+    await savePlan(slug, {
+      input,
+      plan,
+      visa,
+      createdAt: new Date().toISOString(),
+      paid: false,
+    });
+  }
+  return Response.json({ input, plan, visa, slug });
+}
+
 export async function POST(req: NextRequest) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
@@ -699,11 +725,7 @@ export async function POST(req: NextRequest) {
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
       await insertFlightBlock(revisedPlan, input);
       insertEsimBlock(revisedPlan);
-      return Response.json({
-        input,
-        plan: revisedPlan,
-        visa: planVisa(input),
-      });
+      return respondWithPlan(input, revisedPlan, planVisa(input) ?? null);
     }
   } catch {
     // fall through to the draft
@@ -719,11 +741,7 @@ export async function POST(req: NextRequest) {
   await insertFlightBlock(plan, input);
   insertEsimBlock(plan);
 
-  return Response.json({
-    input,
-    plan,
-    visa: planVisa(input),
-  });
+  return respondWithPlan(input, plan, planVisa(input) ?? null);
 }
 
 async function callModel(

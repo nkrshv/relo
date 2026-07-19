@@ -85,6 +85,8 @@ interface StoredResult {
   input: ReloInput;
   plan: ReloPlan;
   visa?: VisaSummary | null;
+  /** Permanent slug when the plan was persisted server-side. */
+  slug?: string;
 }
 
 const RESULT_KEY = "relochecklist:result";
@@ -102,6 +104,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   const [finishing, setFinishing] = useState(false);
   const [unlocking, setUnlocking] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
+  const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   // Fire the top-of-funnel view once on the /plan page.
@@ -113,8 +116,14 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(RESULT_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (raw) setResult(JSON.parse(raw) as StoredResult);
+      if (raw) {
+        const restored = JSON.parse(raw) as StoredResult;
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setResult(restored);
+        if (restored.slug) {
+          setShareUrl(`${window.location.origin}/plan/${restored.slug}`);
+        }
+      }
     } catch {
       // ignore
     }
@@ -180,6 +189,13 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         } catch {
           // ignore
         }
+        // Promote the plan to its permanent URL so a refresh (or a shared
+        // link) resolves to the saved copy on the server.
+        if (data.slug) {
+          const url = `/plan/${data.slug}`;
+          window.history.replaceState({}, "", url);
+          setShareUrl(`${window.location.origin}${url}`);
+        }
         window.scrollTo({ top: 0, behavior: "smooth" });
         setLoading(false);
         setFinishing(false);
@@ -226,10 +242,15 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
   const reset = useCallback(() => {
     setResult(null);
     setError(null);
+    setShareUrl(null);
     try {
       localStorage.removeItem(RESULT_KEY);
     } catch {
       // ignore
+    }
+    // Back to the empty form URL so the next plan mints a fresh link.
+    if (window.location.pathname !== "/plan") {
+      window.history.replaceState({}, "", "/plan");
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -256,6 +277,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
             unlocking={unlocking}
             onUnlock={unlock}
             onReset={reset}
+            shareUrl={shareUrl}
           />
         </div>
       ) : loading ? (

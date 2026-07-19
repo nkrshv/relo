@@ -21,8 +21,10 @@ const AI_CRAWLERS = [
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
-      { userAgent: AI_CRAWLERS, allow: "/" },
-      { userAgent: "*", allow: "/" },
+      // Saved-plan capability links (/plan/{slug}) are private to whoever
+      // holds them, so keep every crawler out of them.
+      { userAgent: AI_CRAWLERS, allow: "/", disallow: "/plan/" },
+      { userAgent: "*", allow: "/", disallow: "/plan/" },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
   };

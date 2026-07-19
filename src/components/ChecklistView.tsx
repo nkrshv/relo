@@ -224,6 +224,62 @@ interface Props {
   unlocking: boolean;
   onUnlock: () => void;
   onReset: () => void;
+  /** Permanent link to this plan. When set, a "saved, copy your link" banner
+   *  is shown so the user can return from any device. */
+  shareUrl?: string | null;
+}
+
+// A quiet banner reassuring the user their plan lives at a permanent URL,
+// with a one-click copy so they can save it or reopen it from any device.
+function ShareLinkBanner({ url }: { url: string }) {
+  const [copied, setCopied] = useState(false);
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      return;
+    }
+    setCopied(true);
+    track("Plan Link Copied");
+    window.setTimeout(() => setCopied(false), 2000);
+  };
+  return (
+    <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-lg border border-stone-200 bg-stone-50 px-4 py-3 print:hidden">
+      <div className="min-w-0">
+        <p className="text-sm font-medium text-stone-900">
+          Your plan is saved
+        </p>
+        <p className="mt-0.5 truncate text-xs text-stone-500">
+          Bookmark this link to return to your plan from any device: {url}
+        </p>
+      </div>
+      <button
+        onClick={copy}
+        className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50"
+      >
+        <svg
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-3.5 w-3.5"
+          aria-hidden
+        >
+          {copied ? (
+            <path d="M3.5 8.5l3 3 6-7" />
+          ) : (
+            <>
+              <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" />
+              <path d="M10.5 5.5V4A1.5 1.5 0 0 0 9 2.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5" />
+            </>
+          )}
+        </svg>
+        {copied ? "Copied" : "Copy link"}
+      </button>
+    </div>
+  );
 }
 
 const CHECK_KEY_PREFIX = "relochecklist:checked";
@@ -634,6 +690,7 @@ export default function ChecklistView({
   unlocking,
   onUnlock,
   onReset,
+  shareUrl,
 }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [view, setView] = useState<ViewMode>("simple");
@@ -822,6 +879,8 @@ export default function ChecklistView({
           />
         </div>
       </div>
+
+      {shareUrl && <ShareLinkBanner url={shareUrl} />}
 
       <header className="mb-8">
         <p className="text-xs font-medium uppercase tracking-wider text-stone-500">
