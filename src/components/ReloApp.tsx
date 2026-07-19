@@ -282,6 +282,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
             onUnlock={unlock}
             onReset={reset}
             shareUrl={shareUrl}
+            slug={result.slug}
           />
         </div>
       ) : loading ? (

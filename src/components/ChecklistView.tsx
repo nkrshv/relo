@@ -227,6 +227,9 @@ interface Props {
   /** Permanent link to this plan. When set, a "saved, copy your link" banner
    *  is shown so the user can return from any device. */
   shareUrl?: string | null;
+  /** Capability slug of the saved plan. When set, checklist progress syncs to
+   *  the server so ticked steps follow the user across devices. */
+  slug?: string | null;
 }
 
 // A quiet banner reassuring the user their plan lives at a permanent URL,
@@ -691,6 +694,7 @@ export default function ChecklistView({
   onUnlock,
   onReset,
   shareUrl,
+  slug,
 }: Props) {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [view, setView] = useState<ViewMode>("simple");
@@ -766,6 +770,7 @@ export default function ChecklistView({
   const originOffices = officeSet(input.fromCountry, input.fromCity);
   const storageKey = planStorageKey(input, plan);
   const doneRef = useRef<HTMLDivElement>(null);
+  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     try {
@@ -788,16 +793,80 @@ export default function ChecklistView({
     }
   }
 
+  // Best-effort push of the full checked map to the server. Keyed by the plan's
+  // capability slug; a no-op for unsaved plans. The local copy is the fallback
+  // if the network is down.
+  const putProgress = (next: Record<string, boolean>) => {
+    if (!slug) return;
+    void fetch(`/api/plan/${slug}/progress`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ checked: next }),
+    }).catch(() => {
+      // ignore — localStorage still holds this device's copy
+    });
+  };
+
+  // Instant same-device load from localStorage. The cross-device sync below
+  // then reconciles with the server when the plan has a slug.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(storageKey);
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setChecked(raw ? (JSON.parse(raw) as Record<string, boolean>) : {});
     } catch {
-       
       setChecked({});
     }
   }, [storageKey]);
+
+  // Cross-device sync: pull server progress and union it with this device's
+  // local completions, so a step ticked on any device stays ticked. If the
+  // merge surfaces completions the server was missing (e.g. progress made
+  // before sync existed, or offline), push the union back up.
+  useEffect(() => {
+    if (!slug) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch(`/api/plan/${slug}/progress`, {
+          cache: "no-store",
+        });
+        if (!res.ok || cancelled) return;
+        const data = (await res.json()) as {
+          checked?: Record<string, boolean>;
+        };
+        const server = data.checked ?? {};
+
+        let local: Record<string, boolean> = {};
+        try {
+          const raw = localStorage.getItem(storageKey);
+          if (raw) local = JSON.parse(raw) as Record<string, boolean>;
+        } catch {
+          local = {};
+        }
+
+        const merged: Record<string, boolean> = {};
+        for (const [k, v] of Object.entries(local)) if (v) merged[k] = true;
+        for (const [k, v] of Object.entries(server)) if (v) merged[k] = true;
+        const localExtra = Object.keys(merged).some((k) => !server[k]);
+
+        if (cancelled) return;
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(merged));
+        } catch {
+          // ignore
+        }
+        setChecked(merged);
+        if (localExtra) putProgress(merged);
+      } catch {
+        // offline / hiccup — local state stands
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, storageKey]);
 
   function toggle(id: string) {
     setChecked((prev) => {
@@ -806,6 +875,10 @@ export default function ChecklistView({
         localStorage.setItem(storageKey, JSON.stringify(next));
       } catch {
         // ignore
+      }
+      if (slug) {
+        if (saveTimer.current) clearTimeout(saveTimer.current);
+        saveTimer.current = setTimeout(() => putProgress(next), 600);
       }
       return next;
     });

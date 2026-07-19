@@ -165,6 +165,7 @@ export default function SavedPlan({
         onUnlock={unlock}
         onReset={reset}
         shareUrl={shareUrl}
+        slug={slug}
       />
     </div>
   );
