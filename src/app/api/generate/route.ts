@@ -20,6 +20,9 @@ import {
 import { staticDataForCountry } from "@/lib/staticCountryData";
 import { openDataForCountry } from "@/lib/countryOpenData";
 import { legalizationPath } from "@/lib/hagueApostille";
+import { preArrivalForCountry } from "@/lib/preArrivalRequirements";
+import { originRequirementsForCountry } from "@/lib/originRequirements";
+import { COUNTRY_FACTS_VERIFIED } from "@/lib/countryFacts";
 import { esimPartnerLinks } from "@/lib/saily";
 import { getFlightOffer } from "@/lib/flights";
 import {
@@ -607,7 +610,7 @@ function buildUserContent(input: ReloInput): string {
   const facts = factsForCountry(input.toCountry);
   if (facts) {
     const factBlock = [
-      `VERIFIED FACTS about ${input.toCountry} — these are current and authoritative. Treat them as ground truth: they OVERRIDE your training data wherever they conflict (institution names change over time). Weave the relevant ones into the checklist; never contradict them.`,
+      `VERIFIED FACTS about ${input.toCountry} (verified ${COUNTRY_FACTS_VERIFIED}) — these are current and authoritative. Treat them as ground truth: they OVERRIDE your training data wherever they conflict (institution names change over time). Weave the relevant ones into the checklist; never contradict them.`,
       ...facts.map((f) => `- ${f}`),
     ].join("\n");
     blocks.push(factBlock);
@@ -620,6 +623,33 @@ function buildUserContent(input: ReloInput): string {
       ...legalization.lines.map((l) => `- ${l}`),
     ].join("\n"),
   );
+
+  const preArrival = preArrivalForCountry(input.toCountry);
+  if (preArrival) {
+    const lines = preArrival.map((r) => {
+      const who =
+        r.appliesTo === "all_foreign_arrivals"
+          ? "required for ALL foreign arrivals regardless of visa status"
+          : "required only for visa-exempt nationalities entering without a visa (skip it if this person needs or holds a visa; the visa verdict above decides)";
+      return `- ${r.name} (${r.type.replace(/_/g, " ")}): ${who}; submit ${r.submitWindow}. Official portal: ${r.officialUrl}${r.note ? ` Note: ${r.note}` : ""}`;
+    });
+    blocks.push(
+      [
+        `PRE-ARRIVAL REQUIREMENTS for ${input.toCountry} (verified ${preArrival[0].verified}) — online submissions travellers must complete BEFORE boarding/arrival, separate from any visa. These OVERRIDE your training data. If a requirement applies to this person, include it as its own concrete checklist item in "before" or "departure" (timed against the flight, with the official portal as the url); missing it can mean denied boarding:`,
+        ...lines,
+      ].join("\n"),
+    );
+  }
+
+  const originReqs = originRequirementsForCountry(input.fromCountry);
+  if (originReqs) {
+    blocks.push(
+      [
+        `VERIFIED ORIGIN-COUNTRY FACTS about ${input.fromCountry} (verified ${COUNTRY_FACTS_VERIFIED}) — credentials and documents that are easy to get while still resident there but slow or impossible from abroad. Treat as ground truth and use the real institution names/URLs in the relevant "before"/"departure" items (criminal-record checks, international driving permit, e-government access, certified civil documents):`,
+        ...originReqs.map((f) => `- ${f}`),
+      ].join("\n"),
+    );
+  }
 
   const regimes = taxRegimesForCountry(input.toCountry);
   if (regimes.length > 0) {
