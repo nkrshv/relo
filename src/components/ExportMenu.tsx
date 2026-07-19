@@ -11,6 +11,7 @@ interface Props {
   input: ReloInput;
   plan: ReloPlan;
   visa: VisaSummary | null;
+  shareUrl?: string | null;
   variant?: Variant;
 }
 
@@ -25,6 +26,7 @@ export default function ExportMenu({
   input,
   plan,
   visa,
+  shareUrl,
   variant = "default",
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -56,7 +58,7 @@ export default function ExportMenu({
   function exportMarkdown() {
     setOpen(false);
     track("Plan Exported", { format: "markdown" });
-    const md = planToMarkdown(input, plan, visa);
+    const md = planToMarkdown(input, plan, visa, { shareUrl });
     const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

@@ -19,6 +19,7 @@ import {
 } from "@/lib/countryInsights";
 import { staticDataForCountry } from "@/lib/staticCountryData";
 import { openDataForCountry } from "@/lib/countryOpenData";
+import { legalizationPath } from "@/lib/hagueApostille";
 import { esimPartnerLinks } from "@/lib/saily";
 import { getFlightOffer } from "@/lib/flights";
 import {
@@ -380,7 +381,7 @@ function normalizePlan(raw: RawPlan): ReloPlan {
   return {
     destinationSummary: str(raw.destinationSummary),
     feasibility: normalizeFeasibility(raw.feasibility),
-    phases: breakDependencyCycles(phases),
+    phases: dropLaterPhaseDependencies(breakDependencyCycles(phases)),
   };
 }
 
@@ -409,6 +410,45 @@ function breakDependencyCycles(phases: Phase[]): Phase[] {
     if (item.id && !resolved.has(item.id)) item.dependsOn = undefined;
   }
   return phases;
+}
+
+// A dependency pointing at a task scheduled in a LATER phase reads as a
+// logically impossible plan ("blocked by" something the timeline puts after
+// it), even without a cycle. Drop those edges; the phase ordering stands.
+function dropLaterPhaseDependencies(phases: Phase[]): Phase[] {
+  const phaseOf = new Map<string, number>();
+  phases.forEach((p, pi) => {
+    for (const item of p.items) if (item.id) phaseOf.set(item.id, pi);
+  });
+  phases.forEach((p, pi) => {
+    for (const item of p.items) {
+      if (!item.dependsOn?.length) continue;
+      const kept = item.dependsOn.filter((d) => {
+        const dp = phaseOf.get(d);
+        return dp !== undefined && dp <= pi;
+      });
+      item.dependsOn = kept.length ? kept : undefined;
+    }
+  });
+  return phases;
+}
+
+// Deterministic safety net for the computed legalization rule: if the pair
+// needs consular legalization but an item still presents an apostille as the
+// route without mentioning the consular chain, append a correction so the
+// user never acts on an apostille-only instruction for a non-Hague pair.
+function enforceLegalizationRule(plan: ReloPlan, input: ReloInput): void {
+  const path = legalizationPath(input.fromCountry, input.toCountry);
+  if (path.verdict !== "consular_legalization_likely") return;
+  for (const phase of plan.phases) {
+    for (const item of phase.items) {
+      const text = `${item.title} ${item.why} ${item.tip ?? ""} ${(item.steps ?? []).join(" ")}`;
+      if (!/apostille/i.test(text)) continue;
+      if (/consular|legaliz|legalis|embassy/i.test(text.replace(/apostille/gi, "")))
+        continue;
+      item.why = `${item.why} Note: ${input.toCountry} does not accept a plain apostille (it is not a Hague Apostille Convention party), so this document needs consular legalization via ${input.toCountry}'s embassy in ${input.fromCountry}; confirm the exact chain with the receiving authority.`.trim();
+    }
+  }
 }
 
 // The passports to reason about: declared citizenships when given, otherwise
@@ -571,6 +611,14 @@ function buildUserContent(input: ReloInput): string {
     blocks.push(factBlock);
   }
 
+  const legalization = legalizationPath(input.fromCountry, input.toCountry);
+  blocks.push(
+    [
+      `DOCUMENT LEGALIZATION RULE for documents issued in ${input.fromCountry} and used in ${input.toCountry} (computed from the HCCH Apostille Convention status table, verified ${legalization.verified}). This OVERRIDES your training data; base every legalization/apostille item on it:`,
+      ...legalization.lines.map((l) => `- ${l}`),
+    ].join("\n"),
+  );
+
   const regimes = taxRegimesForCountry(input.toCountry);
   if (regimes.length > 0) {
     const regimeBlock = [
@@ -725,6 +773,7 @@ export async function POST(req: NextRequest) {
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
       await insertFlightBlock(revisedPlan, input);
       insertEsimBlock(revisedPlan);
+      enforceLegalizationRule(revisedPlan, input);
       return respondWithPlan(input, revisedPlan, planVisa(input) ?? null);
     }
   } catch {
@@ -740,6 +789,7 @@ export async function POST(req: NextRequest) {
   }
   await insertFlightBlock(plan, input);
   insertEsimBlock(plan);
+  enforceLegalizationRule(plan, input);
 
   return respondWithPlan(input, plan, planVisa(input) ?? null);
 }
