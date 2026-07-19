@@ -949,6 +949,7 @@ export default function ChecklistView({
             input={input}
             plan={augmentedPlan}
             visa={visa ?? null}
+            shareUrl={shareUrl}
           />
         </div>
       </div>
@@ -1138,6 +1139,7 @@ export default function ChecklistView({
               input={input}
               plan={augmentedPlan}
               visa={visa ?? null}
+              shareUrl={shareUrl}
               variant="emerald"
             />
             <button
