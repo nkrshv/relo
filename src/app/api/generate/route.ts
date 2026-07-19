@@ -132,7 +132,7 @@ MOVE-LOGISTICS MODULES — mandatory in EVERY plan, each in the phase named. The
 - "departure" — MAIL FORWARDING: set up forwarding of physical post to a trusted relative or a virtual mailbox so official letters (tax, pension, banks) still reach the person.
 - "departure" — NOTIFY TAX & SOCIAL SECURITY: notify the home tax authority of the move (exit formalities or a final return) and check any social-security/pension totalization agreement between the two countries so contributions and future pension rights are not lost. Make this a two-country TAX CALENDAR: the official exit/departure date and why it matters, the need to track physical-presence days in each country in the move year, both countries' concrete filing deadlines that apply to that year, and the situations where a cross-border tax advisor is worth the fee (dual residence risk, property or business left behind, stock compensation). Never state that someone becomes tax resident solely because of 183 days: presence-day counts, permanent home, and family/economic ties all feed the tests, so say a threshold "may trigger tax residency or filing obligations" unless a verified country-specific rule is provided in the facts.
 - "week1" — LOCAL SIM: get a local physical SIM and number in the first week (needed for local 2FA, bank verification, deliveries and appointments), noting any ID/registration the destination requires to buy one.
-- "month1" — RENTAL-SCAM DEFENSE: the long-term housing item MUST arm the person against rental fraud, because newcomers searching remotely or in a language they do not speak are the #1 target. Make it concrete for THIS market, not a generic "beware of scams": (a) name where scams concentrate for this destination (unmoderated Facebook expat groups, Craigslist-style boards, listings cloned from legitimate portals at a too-good price) versus the safer local channels (the country's dominant listing portals, licensed agents and what their licence is called); (b) the classic schemes: "landlord abroad, courier will bring the keys after you wire the deposit", pressure to pay a deposit or "reservation fee" before any viewing or video call, a cloned listing with a real address but the scammer's contact, prices 30-40% below the market for the area; (c) hard rules: never pay ANYTHING before seeing the property live or on a live video call and verifying the landlord's identity against ownership (name the destination's public ownership/land registry lookup if one exists, e.g. Kadaster in the Netherlands, nota simple from the Registro de la Propiedad in Spain), pay deposit and rent by traceable bank transfer with the landlord's name matching the contract, never by crypto, gift cards, or cash wire services; (d) the local norms that make overcharging visible: the legal or customary deposit cap for this destination and what must be in a valid contract. Put the sharpest scheme in commonMistake with its real cost (a wired deposit is usually unrecoverable).
+- "month1" — RENTAL-SCAM DEFENSE: the long-term housing item MUST arm the person against rental fraud, because newcomers searching remotely or in a language they do not speak are the #1 target. Make it concrete for THIS market, not a generic "beware of scams": (a) the channel TYPES where scams concentrate (unmoderated Facebook expat groups, classifieds boards, listings cloned from legitimate portals at a too-good price) versus safer channel types (established local listing portals, licensed agents and what their licence is called) — describe the CATEGORIES only; NEVER name or link any specific listing portal, website, or company in housing items, and use "" for the housing item's url; (b) the classic schemes: "landlord abroad, courier will bring the keys after you wire the deposit", pressure to pay a deposit or "reservation fee" before any viewing or video call, a cloned listing with a real address but the scammer's contact, prices 30-40% below the market for the area; (c) hard rules: never pay ANYTHING before seeing the property live or on a live video call and verifying the landlord's identity against ownership (name the destination's public ownership/land registry lookup if one exists, e.g. Kadaster in the Netherlands, nota simple from the Registro de la Propiedad in Spain — public registries are fine to name), pay deposit and rent by traceable bank transfer with the landlord's name matching the contract, never by crypto, gift cards, or cash wire services; (d) the local norms that make overcharging visible: the legal or customary deposit cap for this destination and what must be in a valid contract; (e) as a tip, suggest watching a few recent YouTube videos searching "{destination city} rental scam" before starting the search — scammers' current tactics are documented there faster than anywhere else. Put the sharpest scheme in commonMistake with its real cost (a wired deposit is usually unrecoverable).
 - "days90" — DRIVER'S LICENSE: check whether the origin license can be exchanged or a local theory/practical test is required, plus the exact deadline (many countries require the exchange within 6 to 12 months of establishing residency, after which you must start from scratch).
 When the user's priorities include "Pets", emphasize timing in the "before" pet item: a rabies-antibody titer test where required can add 3+ months of lead time, so it gates the whole move.
 
@@ -394,7 +394,9 @@ function normalizePlan(raw: RawPlan): ReloPlan {
   return {
     destinationSummary: str(raw.destinationSummary),
     feasibility: normalizeFeasibility(raw.feasibility),
-    phases: dropLaterPhaseDependencies(breakDependencyCycles(phases)),
+    phases: dropHousingUrls(
+      dropLaterPhaseDependencies(breakDependencyCycles(phases)),
+    ),
   };
 }
 
@@ -421,6 +423,18 @@ function breakDependencyCycles(phases: Phase[]): Phase[] {
   }
   for (const item of all) {
     if (item.id && !resolved.has(item.id)) item.dependsOn = undefined;
+  }
+  return phases;
+}
+
+// Housing-search tasks must never steer the user to a specific listing
+// portal or company site; the scam-defense advice describes channel types
+// only. Deterministic backstop for the prompt rule.
+function dropHousingUrls(phases: Phase[]): Phase[] {
+  for (const phase of phases) {
+    for (const item of phase.items) {
+      if (/housing|accommodation/i.test(item.category)) item.url = undefined;
+    }
   }
   return phases;
 }
