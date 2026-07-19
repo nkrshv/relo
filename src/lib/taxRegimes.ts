@@ -447,3 +447,122 @@ const BY_NORM: Record<string, TaxRegime[]> = Object.fromEntries(
 export function taxRegimesForCountry(country: string): TaxRegime[] {
   return BY_NORM[normalizeName(country)] ?? [];
 }
+
+// How the destination taxes RESIDENTS' foreign-source income. Only countries
+// where the answer is confidently NOT plain worldwide taxation are listed:
+// an absent country means "assume worldwide" (the default for most of the
+// world), never "no tax". Notes stay cautious: these systems have carve-outs
+// (employment exercised locally is almost always taxable), so the generated
+// advice must send complex cases to a cross-border tax advisor.
+export type ResidencyTaxation =
+  | "territorial"
+  | "remittance_based"
+  | "no_personal_income_tax";
+
+export interface ResidencyTaxationInfo {
+  system: ResidencyTaxation;
+  note: string;
+  verified: string;
+}
+
+export const RESIDENCY_TAXATION: Record<string, ResidencyTaxationInfo> = {
+  "united arab emirates": {
+    system: "no_personal_income_tax",
+    note: "No personal income tax on salaries or most personal income; a 9% corporate tax applies to business profits, which can catch freelancers operating through a licence.",
+    verified: V,
+  },
+  qatar: {
+    system: "no_personal_income_tax",
+    note: "No personal income tax on employment income.",
+    verified: V,
+  },
+  kuwait: {
+    system: "no_personal_income_tax",
+    note: "No personal income tax on individuals.",
+    verified: V,
+  },
+  bahrain: {
+    system: "no_personal_income_tax",
+    note: "No personal income tax on individuals.",
+    verified: V,
+  },
+  "saudi arabia": {
+    system: "no_personal_income_tax",
+    note: "No personal income tax on employment income; self-employment/business activity can fall under Zakat or corporate rules.",
+    verified: V,
+  },
+  oman: {
+    system: "no_personal_income_tax",
+    note: "No personal income tax currently; a limited high-earner income tax has been legislated to start in 2028, so high earners should verify the current state.",
+    verified: V,
+  },
+  monaco: {
+    system: "no_personal_income_tax",
+    note: "No personal income tax for residents (French nationals excepted under the 1963 treaty).",
+    verified: V,
+  },
+  panama: {
+    system: "territorial",
+    note: "Only Panama-source income is taxed; foreign-source income of residents is generally outside the net.",
+    verified: V,
+  },
+  paraguay: {
+    system: "territorial",
+    note: "Personal income tax applies to Paraguayan-source income; most foreign-source income is not taxed.",
+    verified: V,
+  },
+  "costa rica": {
+    system: "territorial",
+    note: "Only Costa Rican-source income is taxed; foreign salaries and passive income are generally exempt.",
+    verified: V,
+  },
+  "hong kong": {
+    system: "territorial",
+    note: "Salaries tax applies to Hong Kong-sourced employment; offshore income is generally not taxed for individuals.",
+    verified: V,
+  },
+  georgia: {
+    system: "territorial",
+    note: "Individuals are taxed on Georgian-source income; most foreign-source income of residents is exempt, but remote work physically performed in Georgia usually counts as Georgian-source.",
+    verified: V,
+  },
+  malaysia: {
+    system: "territorial",
+    note: "Foreign-source income of resident individuals is largely exempt under a temporary exemption regime with conditions and an end date, so verify the current rules before relying on it.",
+    verified: V,
+  },
+  philippines: {
+    system: "territorial",
+    note: "Resident FOREIGN nationals are taxed only on Philippine-source income (citizens are taxed worldwide).",
+    verified: V,
+  },
+  thailand: {
+    system: "remittance_based",
+    note: "Since the 2024 reform, foreign-source income of tax residents is taxable when remitted into Thailand regardless of the year it was earned; further reforms are under discussion, so verify the current remittance rules.",
+    verified: V,
+  },
+  malta: {
+    system: "remittance_based",
+    note: "Non-domiciled residents are taxed on Malta-source income and on foreign income only if remitted to Malta (foreign capital gains are not taxed even if remitted); a minimum annual tax can apply.",
+    verified: V,
+  },
+  japan: {
+    system: "remittance_based",
+    note: "Non-permanent residents (foreign nationals resident under 5 of the past 10 years) are taxed on Japan-source income plus foreign income paid in or remitted to Japan; after that, worldwide taxation applies.",
+    verified: V,
+  },
+};
+
+const RESIDENCY_BY_NORM: Record<string, ResidencyTaxationInfo> =
+  Object.fromEntries(
+    Object.entries(RESIDENCY_TAXATION).map(([name, v]) => [
+      normalizeName(name),
+      v,
+    ]),
+  );
+
+export function residencyTaxationForCountry(
+  country: string,
+): ResidencyTaxationInfo | null {
+  return RESIDENCY_BY_NORM[normalizeName(country)] ?? null;
+}
