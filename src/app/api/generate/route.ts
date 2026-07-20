@@ -365,13 +365,12 @@ async function insertGenkiInsuranceBlock(
   });
 }
 
-// Attach a ballpark nightly price and a Klook booking link to the short-term
-// accommodation task the model produces in "before". The price is a neutral
-// average pulled from Hotels.nl (cached per city) so people can budget their
-// first weeks; the booking link is our Klook partner. Deliberately additive:
-// if the model did not write a short-term-stay task, we leave the plan alone
-// (the deterministic move-logistics prompt already mandates one). Skips the
-// price line when no estimate resolves, keeping just the partner link.
+// Show a ballpark nightly price on the short-term accommodation task the model
+// produces in "before", as a single clickable figure ("≈ EUR 84/night") that
+// links through to a booking partner. The number is a neutral median pulled
+// from Hotels.nl (cached per city); no partner brand name appears in the copy.
+// Deliberately additive: if the model wrote no short-term-stay task, or no
+// price resolves, the plan is left untouched (no naked partner link).
 async function attachAccommodationPriceHint(
   plan: ReloPlan,
   input: ReloInput,
@@ -387,15 +386,17 @@ async function attachAccommodationPriceHint(
   if (!item) return;
 
   const estimate = await getHotelNightlyEstimate(input.toCity, input.toCountry);
-  if (estimate) {
-    item.why =
-      `${item.why ?? ""} Budget hotels here run from about ${estimate.currency} ${estimate.minPerNight}/night, typically around ${estimate.currency} ${estimate.medianPerNight}/night (rough average, varies by season and area), useful for budgeting these first weeks before you sign a long-term lease.`.trim();
-  }
+  if (!estimate) return;
+
+  // Show only the figure and make it the clickable element (links through to a
+  // booking partner). No partner brand name in the copy.
   item.affiliate = [
-    ...(item.affiliate ?? []),
-    { label: "Klook", url: klookAffiliateUrl() },
+    {
+      label: `≈ ${estimate.currency} ${estimate.medianPerNight}/night`,
+      url: klookAffiliateUrl(),
+    },
   ];
-  item.affiliateLabel = item.affiliateLabel ?? "Short-term stays:";
+  item.affiliateLabel = "Typical nightly rate:";
 }
 
 // Some cross-border obligations are universal but compete for scarce phase
