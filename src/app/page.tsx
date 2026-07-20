@@ -3,6 +3,7 @@ import { DESTINATIONS } from "@/lib/countries";
 import Spotlight from "@/components/Spotlight";
 import Typewriter from "@/components/Typewriter";
 import PipelineDiagram from "@/components/PipelineDiagram";
+import SnapshotTeaser from "@/components/SnapshotTeaser";
 import TrustBlock from "@/components/TrustBlock";
 import ScrollRoad from "@/components/ScrollRoad";
 import SiteFooter from "@/components/SiteFooter";
@@ -255,6 +256,9 @@ export default function Home() {
           <CtaButton label="Build my checklist now" />
         </div>
       </section>
+
+      {/* Snapshot / Climate twin teaser */}
+      <SnapshotTeaser />
 
       {/* Trust: why we built this, request a country */}
       <TrustBlock />
