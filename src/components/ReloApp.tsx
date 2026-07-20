@@ -8,6 +8,7 @@ import StageStepper from "@/components/StageStepper";
 import { ALL_COUNTRIES, isValidCountry } from "@/lib/allCountries";
 import { normalizeName } from "@/lib/countryFacts";
 import { track } from "@/lib/analytics";
+import { isDevUnlocked, markDevUnlocked } from "@/lib/unlock";
 import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 
 interface Props {
@@ -90,7 +91,6 @@ interface StoredResult {
 }
 
 const RESULT_KEY = "relochecklist:result";
-const UNLOCK_KEY = "relochecklist:unlocked";
 
 export default function ReloApp({ initialTo, showHeading }: Props) {
   const [result, setResult] = useState<StoredResult | null>(null);
@@ -112,7 +112,8 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
     if (showHeading) track("Plan Page Viewed");
   }, [showHeading]);
 
-  // Restore prior session + handle unlock redirect from Stripe.
+  // Restore prior session. Unlock is scoped to the restored plan's own slug,
+  // never a browser-wide flag, so an unrelated plan never inherits access.
   useEffect(() => {
     try {
       const raw = localStorage.getItem(RESULT_KEY);
@@ -123,23 +124,12 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         if (restored.slug) {
           setShareUrl(`${window.location.origin}/plan/${restored.slug}`);
         }
+        if (isDevUnlocked(restored.slug)) {
+          setUnlocked(true);
+        }
       }
     } catch {
       // ignore
-    }
-    const params = new URLSearchParams(window.location.search);
-    const wasUnlocked = params.get("unlocked") === "1";
-    const stored = localStorage.getItem(UNLOCK_KEY) === "1";
-    if (wasUnlocked || stored) {
-      setUnlocked(true);
-      try {
-        localStorage.setItem(UNLOCK_KEY, "1");
-      } catch {
-        // ignore
-      }
-      if (wasUnlocked) {
-        window.history.replaceState({}, "", window.location.pathname);
-      }
     }
   }, []);
 
@@ -179,6 +169,8 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         return;
       }
       track("Plan Generation Succeeded");
+      // A freshly generated plan is unpaid; only its own slug can unlock it.
+      setUnlocked(isDevUnlocked(data.slug));
       // Let the final "Assembling your checklist" step visibly complete
       // before swapping the skeleton for the real plan.
       setFinishing(true);
@@ -223,12 +215,8 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
         error?: string;
       };
       if (data.devUnlock) {
+        markDevUnlocked(result?.slug);
         setUnlocked(true);
-        try {
-          localStorage.setItem(UNLOCK_KEY, "1");
-        } catch {
-          // ignore
-        }
         return;
       }
       if (data.url) {
@@ -247,6 +235,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
     setResult(null);
     setError(null);
     setShareUrl(null);
+    setUnlocked(false);
     try {
       localStorage.removeItem(RESULT_KEY);
     } catch {
