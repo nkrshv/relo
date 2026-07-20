@@ -130,6 +130,16 @@ export default async function MovingToPage({
             .
           </p>
         )}
+        <p className="mx-auto mt-3 max-w-xl text-sm text-stone-500">
+          Budgeting the move?{" "}
+          <Link
+            href={`/cost-of-living/${dest.slug}`}
+            className="font-medium text-stone-600 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
+          >
+            See the cost of living in {dest.name}
+          </Link>
+          .
+        </p>
       </section>
 
       <section className="pb-10">
