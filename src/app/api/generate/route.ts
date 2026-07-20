@@ -28,6 +28,7 @@ import { originRequirementsForCountry } from "@/lib/originRequirements";
 import { COUNTRY_FACTS_VERIFIED } from "@/lib/countryFacts";
 import { esimPartnerLinks } from "@/lib/saily";
 import { getGenkiOffer, genkiAffiliateUrl } from "@/lib/genki";
+import { getHotelNightlyEstimate, klookAffiliateUrl } from "@/lib/hotelPrice";
 import { getFlightOffer } from "@/lib/flights";
 import {
   PHASE_KEYS,
@@ -362,6 +363,39 @@ async function insertGenkiInsuranceBlock(
     affiliate: [{ label: "Genki", url: offer ? offer.url : genkiAffiliateUrl() }],
     affiliateLabel: "Nomad health insurance:",
   });
+}
+
+// Attach a ballpark nightly price and a Klook booking link to the short-term
+// accommodation task the model produces in "before". The price is a neutral
+// average pulled from Hotels.nl (cached per city) so people can budget their
+// first weeks; the booking link is our Klook partner. Deliberately additive:
+// if the model did not write a short-term-stay task, we leave the plan alone
+// (the deterministic move-logistics prompt already mandates one). Skips the
+// price line when no estimate resolves, keeping just the partner link.
+async function attachAccommodationPriceHint(
+  plan: ReloPlan,
+  input: ReloInput,
+): Promise<void> {
+  const before = plan.phases.find((p) => p.key === "before");
+  if (!before) return;
+  const item = before.items.find(
+    (i) =>
+      /short[-\s]?term|temporary|first (?:few )?weeks|short stay|temporary accommodation/i.test(
+        `${i.title} ${i.why ?? ""}`,
+      ) || /accommodation|lodging/i.test(i.title),
+  );
+  if (!item) return;
+
+  const estimate = await getHotelNightlyEstimate(input.toCity, input.toCountry);
+  if (estimate) {
+    item.why =
+      `${item.why ?? ""} Budget hotels here run from about ${estimate.currency} ${estimate.minPerNight}/night, typically around ${estimate.currency} ${estimate.medianPerNight}/night (rough average, varies by season and area), useful for budgeting these first weeks before you sign a long-term lease.`.trim();
+  }
+  item.affiliate = [
+    ...(item.affiliate ?? []),
+    { label: "Klook", url: klookAffiliateUrl() },
+  ];
+  item.affiliateLabel = item.affiliateLabel ?? "Short-term stays:";
 }
 
 // Some cross-border obligations are universal but compete for scarce phase
@@ -982,6 +1016,7 @@ export async function POST(req: NextRequest) {
       await insertFlightBlock(revisedPlan, input);
       insertEsimBlock(revisedPlan);
       await insertGenkiInsuranceBlock(revisedPlan, input);
+      await attachAccommodationPriceHint(revisedPlan, input);
       ensureContinuityBlock(revisedPlan);
       ensureInsuranceWindDownBlock(revisedPlan);
       ensureMedicationBlock(revisedPlan, input);
@@ -1002,6 +1037,7 @@ export async function POST(req: NextRequest) {
   await insertFlightBlock(plan, input);
   insertEsimBlock(plan);
   await insertGenkiInsuranceBlock(plan, input);
+  await attachAccommodationPriceHint(plan, input);
   ensureContinuityBlock(plan);
   ensureInsuranceWindDownBlock(plan);
   ensureMedicationBlock(plan, input);
