@@ -17,13 +17,25 @@ import {
   renderFact,
   OUTLINE,
 } from "@/lib/movingToContent";
+import {
+  usRelocationForSlug,
+  US_RELOCATION_VERIFIED,
+  SSA_AGREEMENTS_URL,
+  IRS_EXPAT_URL,
+  IRS_FEIE_URL,
+  FBAR_URL,
+} from "@/lib/usRelocation";
 
 interface Params {
   country: string;
 }
 
+// One page per destination except the US itself ("moving to the US from the
+// US" makes no sense).
 export function generateStaticParams(): Params[] {
-  return DESTINATIONS.map((d) => ({ country: d.slug }));
+  return DESTINATIONS.filter((d) => d.slug !== "united-states").map((d) => ({
+    country: d.slug,
+  }));
 }
 
 export const dynamicParams = false;
@@ -36,31 +48,61 @@ export async function generateMetadata({
   const { country } = await params;
   const dest = findDestination(country);
   if (!dest) return {};
-  const title = `Moving to ${dest.name}: visas, cost of living & 2026 checklist`;
-  const description = `How to move to ${dest.name}: visa and residency routes, cost of living, housing, banking, healthcare and taxes — plus a free personalized relocation checklist tailored to your passport and situation.`;
+  const title = `Moving to ${dest.name} from the USA: visas, taxes & 2026 checklist`;
+  const description = `How Americans move to ${dest.name}: visa and residency routes, the US tax rules that still apply abroad (FEIE, FBAR, Social Security), cost of living — plus a free personalized checklist for moving from the US.`;
   return {
     title,
     description,
-    alternates: { canonical: `/moving-to/${dest.slug}` },
-    openGraph: { title, description, url: `/moving-to/${dest.slug}` },
+    alternates: { canonical: `/moving-to/${dest.slug}/from-usa` },
+    openGraph: { title, description, url: `/moving-to/${dest.slug}/from-usa` },
     other: { "article:modified_time": OPEN_DATA_UPDATED_AT },
   };
 }
 
-export default async function MovingToPage({
+// US-specific facts shown to Americans regardless of destination, plus one
+// destination-specific line on the Social Security totalization agreement.
+function usTaxFacts(name: string, slug: string): string[] {
+  const { totalization } = usRelocationForSlug(slug);
+  return [
+    `As a US citizen or green-card holder you keep filing a US federal tax return on your worldwide income even while living in ${name} — the US taxes based on citizenship, not where you live (${IRS_EXPAT_URL}).`,
+    `Double taxation is usually avoided with the Foreign Earned Income Exclusion (Form 2555, ${IRS_FEIE_URL}) and/or the Foreign Tax Credit (Form 1116); which one is better depends on your income and ${name}'s tax rates.`,
+    `If your foreign bank and financial accounts exceed US$10,000 combined at any point in the year, you must file an FBAR (FinCEN Form 114, ${FBAR_URL}); larger balances can also trigger FATCA Form 8938 with your return.`,
+    totalization
+      ? `The US and ${name} have a Social Security Totalization Agreement (${SSA_AGREEMENTS_URL}), so you generally contribute to only one country's social-security system instead of paying into both, and coverage periods can be combined toward benefits.`
+      : `The US has no Social Security Totalization Agreement with ${name} (${SSA_AGREEMENTS_URL}), so you may owe social-security or social-insurance contributions in both countries at once — budget for it and confirm the local rules.`,
+  ];
+}
+
+export default async function MovingFromUsaPage({
   params,
 }: {
   params: Promise<Params>;
 }) {
   const { country } = await params;
   const dest = findDestination(country);
-  if (!dest) notFound();
+  if (!dest || dest.slug === "united-states") notFound();
+
   const facts = quickFacts(dest.name);
   const regimes = taxRegimesForCountry(dest.name);
-  const faqs = faqFor(dest.name);
   const highlights = introHighlights(dest.name);
   const essentials = factsForCountry(dest.name);
-  const pageUrl = `${SITE_URL}/moving-to/${dest.slug}`;
+  const taxFacts = usTaxFacts(dest.name, dest.slug);
+
+  const usFaqs: { q: string; a: string }[] = [
+    {
+      q: `Do I still pay US taxes if I move to ${dest.name}?`,
+      a: `Yes. The US taxes citizens and green-card holders on worldwide income no matter where they live, so you keep filing a federal return. The Foreign Earned Income Exclusion and the Foreign Tax Credit usually reduce or eliminate double taxation, but the filing obligation itself does not go away.`,
+    },
+    {
+      q: `Will I pay into Social Security in both the US and ${dest.name}?`,
+      a: usRelocationForSlug(dest.slug).totalization
+        ? `Usually no. The US and ${dest.name} have a Social Security Totalization Agreement, so you generally contribute to only one system and can combine coverage periods toward benefits.`
+        : `Possibly yes. The US has no Social Security Totalization Agreement with ${dest.name}, so you may owe contributions to both systems at the same time. Confirm the local rules and factor it into your budget.`,
+    },
+  ];
+  const faqs = [...usFaqs, ...faqFor(dest.name)];
+
+  const pageUrl = `${SITE_URL}/moving-to/${dest.slug}/from-usa`;
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -80,6 +122,12 @@ export default async function MovingToPage({
             "@type": "ListItem",
             position: 2,
             name: `Moving to ${dest.name}`,
+            item: `${SITE_URL}/moving-to/${dest.slug}`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: `From the USA`,
             item: pageUrl,
           },
         ],
@@ -87,7 +135,7 @@ export default async function MovingToPage({
       {
         "@type": "WebPage",
         "@id": pageUrl,
-        name: `Moving to ${dest.name}: relocation checklist`,
+        name: `Moving to ${dest.name} from the USA`,
         url: pageUrl,
         dateModified: OPEN_DATA_UPDATED_AT,
         isPartOf: { "@id": `${SITE_URL}/#website` },
@@ -99,41 +147,51 @@ export default async function MovingToPage({
     <main className="flex-1">
       <section className="mx-auto max-w-3xl px-4 pt-14 pb-8 text-center print:hidden">
         <Link
-          href="/"
+          href={`/moving-to/${dest.slug}`}
           className="text-sm font-medium text-stone-500 transition-colors hover:text-stone-900"
         >
-          ← Reloka
+          ← Moving to {dest.name}
         </Link>
         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-stone-900 sm:text-4xl">
-          Moving to {dest.name}: your relocation checklist
+          Moving to {dest.name} from the USA
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-stone-500">
-          How to move to {dest.name}: the visa and residency routes, cost of
-          living, banking, healthcare and taxes you&apos;ll deal with, organized
-          by phase. Generate a free plan tailored to your passport, family, and
-          budget below.
+          A guide for Americans relocating to {dest.name}: the visa and
+          residency routes, the US tax and Social Security rules that still
+          follow you abroad, cost of living and healthcare. Generate a free plan
+          below, pre-set to a move from the United States.
         </p>
         {highlights && (
           <p className="mx-auto mt-3 max-w-xl text-sm text-stone-500">
             {highlights}
           </p>
         )}
-        {dest.slug !== "united-states" && (
-          <p className="mx-auto mt-3 max-w-xl text-sm text-stone-500">
-            Moving from the United States?{" "}
-            <Link
-              href={`/moving-to/${dest.slug}/from-usa`}
-              className="font-medium text-stone-600 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
-            >
-              See the {dest.name} from the USA guide
-            </Link>
-            .
-          </p>
-        )}
       </section>
 
       <section className="pb-10">
-        <ReloApp initialTo={dest.name} />
+        <ReloApp initialTo={dest.name} initialFrom="United States" />
+      </section>
+
+      <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
+        <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
+          US taxes &amp; Social Security when you live in {dest.name}
+        </h2>
+        <p className="mt-1 text-sm text-stone-500">
+          What stays true for US citizens and green-card holders no matter where
+          they move. General information, not tax or legal advice — confirm your
+          situation with a cross-border tax professional. Reviewed{" "}
+          {formatMonth(US_RELOCATION_VERIFIED)}.
+        </p>
+        <ul className="mt-5 space-y-3">
+          {taxFacts.map((fact, i) => (
+            <li
+              key={i}
+              className="rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm leading-relaxed text-stone-700"
+            >
+              {renderFact(fact)}
+            </li>
+          ))}
+        </ul>
       </section>
 
       {facts.length > 0 && (
@@ -231,7 +289,7 @@ export default async function MovingToPage({
 
       <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
-          The {dest.name} relocation checklist at a glance
+          Moving to {dest.name} from the US, phase by phase
         </h2>
         <div className="mt-6 space-y-8">
           {OUTLINE.map((block, i) => (
@@ -254,9 +312,8 @@ export default async function MovingToPage({
         </div>
         <p className="mt-8 rounded-lg border border-stone-200 bg-white p-4 text-sm leading-relaxed text-stone-500">
           This is a general outline. Your personalized plan above adapts every
-          step to where you&apos;re moving from, your visa status, and your
-          situation. Always verify official requirements: this is not legal or
-          immigration advice.
+          step to your US starting point, visa status, and situation. Always
+          verify official requirements: this is not legal or immigration advice.
         </p>
       </section>
 
@@ -280,41 +337,29 @@ export default async function MovingToPage({
         />
       </section>
 
-      <section className="mx-auto max-w-5xl px-4 py-10 print:hidden">
-        <h2 className="text-center text-lg font-semibold text-stone-900">
-          Compare {dest.name} with another country
-        </h2>
-        <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {DESTINATIONS.filter((d) => d.slug !== dest.slug).map((d) => {
-            const ai = DESTINATIONS.findIndex((x) => x.slug === dest.slug);
-            const bi = DESTINATIONS.findIndex((x) => x.slug === d.slug);
-            const pair =
-              ai < bi ? `${dest.slug}-vs-${d.slug}` : `${d.slug}-vs-${dest.slug}`;
-            return (
-              <Link
-                key={d.slug}
-                href={`/compare/${pair}`}
-                className="rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-50 hover:text-stone-900"
-              >
-                vs {d.emoji} {d.name}
-              </Link>
-            );
-          })}
-        </div>
+      <section className="mx-auto max-w-3xl px-4 py-10 text-center print:hidden">
+        <Link
+          href={`/moving-to/${dest.slug}`}
+          className="text-sm font-medium text-stone-600 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
+        >
+          See the full Moving to {dest.name} guide →
+        </Link>
       </section>
 
       <section className="mx-auto max-w-5xl px-4 py-10 print:hidden">
         <h2 className="text-center text-lg font-semibold text-stone-900">
-          Other destinations
+          Moving to another country from the USA
         </h2>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
-          {DESTINATIONS.filter((d) => d.slug !== dest.slug).map((d) => (
+          {DESTINATIONS.filter(
+            (d) => d.slug !== dest.slug && d.slug !== "united-states",
+          ).map((d) => (
             <Link
               key={d.slug}
-              href={`/moving-to/${d.slug}`}
+              href={`/moving-to/${d.slug}/from-usa`}
               className="rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-50 hover:text-stone-900"
             >
-              Moving to {d.name}
+              {d.emoji} {d.name}
             </Link>
           ))}
         </div>
