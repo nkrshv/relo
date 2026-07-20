@@ -1170,7 +1170,7 @@ export default function ChecklistView({
           className="absolute bottom-4 left-[15px] top-1 w-px bg-stone-200 sm:left-[19px] print:hidden"
           aria-hidden
         >
-          <div className="timeline-ink absolute inset-0 bg-stone-900" />
+          <div className="timeline-ink timeline-assemble absolute inset-0 bg-stone-900" />
         </div>
         {augmentedPlan.phases.map((phase, pi) => {
           const locked = !unlocked && pi > 0;

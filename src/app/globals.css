@@ -160,17 +160,15 @@ a.pressable:active {
   opacity: 1;
 }
 
-/* Timeline rail ink that draws itself as the plan is scrolled. */
+/* Timeline rail ink. Resting state is fully drawn; on mount it draws itself
+   top-down in step with the row stagger so the rail and the checklist rows
+   assemble together. */
 .timeline-ink {
-  transform: scaleY(0);
+  transform: scaleY(1);
   transform-origin: top;
 }
-@supports (animation-timeline: view()) {
-  .timeline-ink {
-    animation: timeline-draw linear both;
-    animation-timeline: view();
-    animation-range: cover 15% cover 75%;
-  }
+.timeline-assemble {
+  animation: timeline-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes timeline-draw {
@@ -381,7 +379,8 @@ a.pressable:active {
     animation: none !important;
     opacity: 1;
   }
-  .timeline-ink {
+  .timeline-ink,
+  .timeline-assemble {
     animation: none !important;
     transform: scaleY(1);
   }

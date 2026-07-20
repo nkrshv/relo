@@ -29,6 +29,56 @@ interface Props {
   onDone?: () => void;
 }
 
+// One ghost task card. Its shell (border, padding, checkbox, two text lines)
+// matches a real checklist row, so the reveal reads as the skeleton becoming
+// the plan rather than a different block swapping in.
+function SkeletonRow({ titleWidth }: { titleWidth: string }) {
+  return (
+    <li className="rounded-lg border border-stone-200 bg-white p-4">
+      <div className="flex items-start gap-3">
+        <span className="mt-0.5 h-[18px] w-[18px] shrink-0 rounded border border-stone-200 bg-stone-100" />
+        <div className="min-w-0 flex-1">
+          <span className={`skeleton block h-3.5 rounded ${titleWidth}`} />
+          <span className="skeleton mt-2 block h-2.5 w-24 rounded" />
+        </div>
+      </div>
+    </li>
+  );
+}
+
+// A ghost phase: numbered node on the rail, a title bar, and a few rows.
+function SkeletonPhase({
+  index,
+  rows,
+  muted,
+}: {
+  index: number;
+  rows: string[];
+  muted?: boolean;
+}) {
+  return (
+    <section className={muted ? "blur-[1px]" : ""}>
+      <div className="mb-3 flex items-center gap-2">
+        <span
+          className={`absolute left-0 flex h-8 w-8 items-center justify-center rounded-full text-sm font-medium ring-4 ring-[#fbfbfa] sm:h-10 sm:w-10 ${
+            muted
+              ? "border border-stone-200 bg-white text-stone-300"
+              : "border border-stone-300 bg-white text-stone-600"
+          }`}
+        >
+          {index}
+        </span>
+        <span className="skeleton h-5 w-40 rounded" />
+      </div>
+      <ul className="space-y-3">
+        {rows.map((w, i) => (
+          <SkeletonRow key={i} titleWidth={w} />
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default function PlanSkeleton({ done = false, onDone }: Props) {
   const [index, setIndex] = useState(0);
   const [finished, setFinished] = useState(false);
@@ -92,7 +142,7 @@ export default function PlanSkeleton({ done = false, onDone }: Props) {
         if (finished && e.propertyName === "opacity") finish();
       }}
     >
-      <div className="mx-auto flex max-w-lg items-center justify-center gap-3 py-16">
+      <div className="mx-auto flex max-w-lg items-center justify-center gap-3 pb-10 pt-4">
         {finished ? (
           <svg
             viewBox="0 0 16 16"
@@ -127,6 +177,19 @@ export default function PlanSkeleton({ done = false, onDone }: Props) {
             {label}
           </span>
         </span>
+      </div>
+
+      {/* Ghost plan: same rail + phased rows as the finished checklist, so the
+          real content stands up in place of the skeleton. */}
+      <div className="relative space-y-10 pl-10 sm:pl-12" aria-hidden>
+        <div className="absolute bottom-4 left-[15px] top-1 w-px bg-stone-200 sm:left-[19px]">
+          <div className="timeline-ink timeline-assemble absolute inset-0 bg-stone-900" />
+        </div>
+        <SkeletonPhase
+          index={1}
+          rows={["w-3/5", "w-2/3", "w-1/2", "w-3/5", "w-2/5"]}
+        />
+        <SkeletonPhase index={2} rows={["w-1/2", "w-3/5"]} muted />
       </div>
     </div>
   );
