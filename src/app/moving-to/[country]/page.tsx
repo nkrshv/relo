@@ -17,6 +17,7 @@ import {
   CENSORSHIP_UPDATED_AT,
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
+import { factsForCountry, COUNTRY_FACTS_VERIFIED } from "@/lib/countryFacts";
 import { formatMonth, formatDate } from "@/lib/dates";
 import MessengerIcons from "@/components/MessengerIcons";
 import SiteFooter from "@/components/SiteFooter";
@@ -240,6 +241,49 @@ function introHighlights(name: string): string {
   return `${joined.charAt(0).toUpperCase()}${joined.slice(1)}.`;
 }
 
+// The curated COUNTRY_FACTS are written as instructions for the generation
+// model, so they carry a few model-directed clauses. Strip those so the text
+// reads naturally for a human; the figures/institutions are kept verbatim.
+function sanitizeFact(fact: string): string {
+  return fact
+    .replaceAll("tell the user to ", "")
+    .replace(
+      " Never refer to SEF as current, and never link to acm.gov.pt for residency.",
+      "",
+    )
+    .replace(" — don't conflate them.", ".")
+    .replace(/\bREPLACED\b/g, "replaced")
+    .replace(/\bSTARTED\b/g, "started")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+const FACT_URL_RE = /(https?:\/\/[^\s)]+)/g;
+
+// Render a fact string, turning inline official URLs into links that show a
+// readable hostname (e.g. "aima.gov.pt") instead of the raw URL.
+function renderFact(fact: string): React.ReactNode[] {
+  return sanitizeFact(fact)
+    .split(FACT_URL_RE)
+    .map((part, i) => {
+      if (/^https?:\/\//.test(part)) {
+        const label = part.replace(/^https?:\/\//, "").replace(/\/+$/, "");
+        return (
+          <a
+            key={i}
+            href={part}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
+          >
+            {label}
+          </a>
+        );
+      }
+      return <span key={i}>{part}</span>;
+    });
+}
+
 function faqFor(name: string): { q: string; a: string }[] {
   const ins = insightsForCountry(name);
   const od = openDataForCountry(name);
@@ -310,6 +354,7 @@ export default async function MovingToPage({
   const regimes = taxRegimesForCountry(dest.name);
   const faqs = faqFor(dest.name);
   const highlights = introHighlights(dest.name);
+  const essentials = factsForCountry(dest.name);
   const pageUrl = `${SITE_URL}/moving-to/${dest.slug}`;
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -439,6 +484,31 @@ export default async function MovingToPage({
               ))}
             </div>
           )}
+        </section>
+      )}
+
+      {essentials && essentials.length > 0 && (
+        <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
+          <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
+            Getting set up in {dest.name}: key steps &amp; official resources
+          </h2>
+          <p className="mt-1 text-sm text-stone-500">
+            The main immigration, tax, healthcare and housing bodies you&apos;ll
+            deal with, with the official portals and typical costs. Curated and
+            hand-verified — last reviewed {formatMonth(COUNTRY_FACTS_VERIFIED)}.
+            Figures are approximate; always confirm the current numbers on the
+            official site.
+          </p>
+          <ul className="mt-5 space-y-3">
+            {essentials.map((fact, i) => (
+              <li
+                key={i}
+                className="rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm leading-relaxed text-stone-700"
+              >
+                {renderFact(fact)}
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
