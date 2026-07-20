@@ -10,6 +10,14 @@ import type {
 } from "@/lib/types";
 import CountrySummary from "@/components/CountrySummary";
 import ExportMenu from "@/components/ExportMenu";
+import {
+  AlertTriangleIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CopyIcon,
+  ExternalLinkIcon,
+  MapPinIcon,
+} from "@/components/icons";
 import { track } from "@/lib/analytics";
 import { useClimateTwin } from "@/lib/useClimateTwin";
 import { ALL_COUNTRIES } from "@/lib/allCountries";
@@ -189,20 +197,9 @@ function OfficeLinks({
             href={`https://www.openstreetmap.org/search?query=${encodeURIComponent(`${name}, ${place}`)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 rounded border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600 transition-colors hover:border-stone-400 hover:text-stone-900"
+            className="inline-flex items-center gap-1 rounded-md border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600 transition-colors hover:border-stone-400 hover:text-stone-900"
           >
-            <svg
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-3 w-3 shrink-0 text-stone-500"
-              aria-hidden
-            >
-              <path d="M8 14.5s-4.5-4.1-4.5-7.5a4.5 4.5 0 0 1 9 0c0 3.4-4.5 7.5-4.5 7.5Zm0-5.8a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4Z" />
-            </svg>
+            <MapPinIcon className="h-3 w-3 shrink-0 text-stone-500" />
             {name}
           </a>
         ))}
@@ -260,25 +257,11 @@ function ShareLinkBanner({ url }: { url: string }) {
         onClick={copy}
         className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-stone-300 bg-white px-3 py-1.5 text-sm font-medium text-stone-700 transition-colors hover:bg-stone-50"
       >
-        <svg
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="h-3.5 w-3.5"
-          aria-hidden
-        >
-          {copied ? (
-            <path d="M3.5 8.5l3 3 6-7" />
-          ) : (
-            <>
-              <rect x="5.5" y="5.5" width="8" height="8" rx="1.5" />
-              <path d="M10.5 5.5V4A1.5 1.5 0 0 0 9 2.5H4A1.5 1.5 0 0 0 2.5 4v5A1.5 1.5 0 0 0 4 10.5h1.5" />
-            </>
-          )}
-        </svg>
+        {copied ? (
+          <CheckIcon className="h-3.5 w-3.5" />
+        ) : (
+          <CopyIcon className="h-3.5 w-3.5" />
+        )}
         {copied ? "Copied" : "Copy link"}
       </button>
     </div>
@@ -403,7 +386,7 @@ function CheckToggle({
       disabled={disabled}
       title={disabled ? disabledReason : undefined}
       onClick={onToggle}
-      className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded border transition-colors ${
+      className={`mt-0.5 flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-md border transition-colors ${
         disabled
           ? "cursor-not-allowed border-stone-200 bg-stone-100"
           : checked
@@ -527,20 +510,11 @@ function AdvancedTable({
                             {row.item.title}
                           </span>
                           {hasDetails && (
-                            <svg
-                              viewBox="0 0 16 16"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
+                            <ChevronDownIcon
                               className={`h-3 w-3 shrink-0 text-stone-300 transition-transform ${
                                 isOpen ? "rotate-180" : ""
                               }`}
-                              aria-hidden
-                            >
-                              <path d="M4 6l4 4 4-4" />
-                            </svg>
+                            />
                           )}
                         </button>
                         <span className="hidden shrink-0 items-center gap-1.5 text-[11px] font-medium capitalize text-stone-500 sm:inline-flex">
@@ -556,7 +530,7 @@ function AdvancedTable({
                           </span>
                         )}
                         {isBlocked && (
-                          <span className="inline-flex shrink-0 items-center gap-1 rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
+                          <span className="inline-flex shrink-0 items-center gap-1 rounded-md border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700">
                             Blocked by{" "}
                             {openBlockers.map((d) => d.display).join(", ")}
                           </span>
@@ -596,7 +570,7 @@ function AdvancedTable({
                                 {row.item.documents.map((doc, di) => (
                                   <span
                                     key={di}
-                                    className="rounded border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600"
+                                    className="rounded-md border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600"
                                   >
                                     {doc}
                                   </span>
@@ -936,7 +910,7 @@ export default function ChecklistView({
                 key={mode}
                 onClick={() => switchView(mode)}
                 aria-pressed={view === mode}
-                className={`rounded px-2.5 py-1 text-sm transition-colors ${
+                className={`rounded-md px-2.5 py-1 text-sm transition-colors ${
                   view === mode
                     ? "bg-stone-100 font-medium text-stone-900"
                     : "text-stone-500 hover:text-stone-900"
@@ -997,22 +971,13 @@ export default function ChecklistView({
                 : "border-amber-200 bg-amber-50"
             }`}
           >
-            <svg
-              viewBox="0 0 20 20"
-              fill="currentColor"
+            <AlertTriangleIcon
               className={`mt-0.5 h-4 w-4 shrink-0 ${
                 plan.feasibility.level === "blocked"
                   ? "text-red-500"
                   : "text-amber-500"
               }`}
-              aria-hidden
-            >
-              <path
-                fillRule="evenodd"
-                d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625l6.28-10.875ZM10 6a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 6Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            />
             <div className="min-w-0">
               <p
                 className={`text-sm font-semibold ${
@@ -1112,18 +1077,7 @@ export default function ChecklistView({
         >
           <div className="flex items-start gap-3">
             <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-white">
-              <svg
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="h-5 w-5"
-                aria-hidden
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 0 1 1.4-1.4l3.3 3.29 6.8-6.8a1 1 0 0 1 1.4 0Z"
-                  clipRule="evenodd"
-                />
-              </svg>
+              <CheckIcon className="h-5 w-5" />
             </span>
             <div>
               <p className="font-semibold text-emerald-900">
@@ -1188,22 +1142,7 @@ export default function ChecklistView({
                         : "border border-stone-300 bg-white text-stone-600"
                   }`}
                 >
-                  {phaseComplete ? (
-                    <svg
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      className="h-5 w-5"
-                      aria-hidden
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M16.7 5.3a1 1 0 0 1 0 1.4l-7.5 7.5a1 1 0 0 1-1.4 0L3.3 9.7a1 1 0 0 1 1.4-1.4l3.3 3.29 6.8-6.8a1 1 0 0 1 1.4 0Z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  ) : (
-                    pi + 1
-                  )}
+                  {phaseComplete ? <CheckIcon className="h-5 w-5" /> : pi + 1}
                 </span>
                 {phase.title}
                 {locked ? (
@@ -1255,7 +1194,7 @@ export default function ChecklistView({
                         } ${isChecked ? "p-3" : "p-4"}`}
                       >
                         {isNext && (
-                          <span className="absolute right-3 top-3 rounded bg-stone-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-stone-500 print:hidden">
+                          <span className="absolute right-3 top-3 rounded-md bg-stone-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-stone-500 print:hidden">
                             Up next
                           </span>
                         )}
@@ -1307,15 +1246,7 @@ export default function ChecklistView({
                                 rel="noopener noreferrer"
                                 className="mt-2 inline-flex max-w-full items-center gap-1 text-xs font-medium text-stone-500 underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900 hover:decoration-stone-500"
                               >
-                                <svg
-                                  viewBox="0 0 20 20"
-                                  fill="currentColor"
-                                  className="h-3.5 w-3.5 shrink-0"
-                                  aria-hidden
-                                >
-                                  <path d="M11 3a1 1 0 1 0 0 2h2.586l-6.293 6.293a1 1 0 1 0 1.414 1.414L15 6.414V9a1 1 0 1 0 2 0V4a1 1 0 0 0-1-1h-5Z" />
-                                  <path d="M5 5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3a1 1 0 1 0-2 0v3H5V7h3a1 1 0 0 0 0-2H5Z" />
-                                </svg>
+                                <ExternalLinkIcon className="h-3.5 w-3.5 shrink-0" />
                                 <span className="truncate">
                                   {prettyHost(item.url)}
                                 </span>
@@ -1367,18 +1298,7 @@ export default function ChecklistView({
                                 <details className="group/tip mt-2">
                                   <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-stone-500 transition-colors hover:text-stone-900 [&::-webkit-details-marker]:hidden">
                                     {item.steps?.length ? "How to do it" : "Tip"}
-                                    <svg
-                                      viewBox="0 0 16 16"
-                                      fill="none"
-                                      stroke="currentColor"
-                                      strokeWidth="1.5"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      className="h-3 w-3 text-stone-500 transition-transform group-open/tip:rotate-180"
-                                      aria-hidden
-                                    >
-                                      <path d="M4 6l4 4 4-4" />
-                                    </svg>
+                                    <ChevronDownIcon className="h-3 w-3 text-stone-500 transition-transform group-open/tip:rotate-180" />
                                   </summary>
                                   <div className="mt-1.5 space-y-2.5 rounded-md border border-stone-200 bg-stone-50 px-3 py-2.5 text-sm leading-relaxed text-stone-600">
                                     {item.steps && item.steps.length > 0 && (
@@ -1402,7 +1322,7 @@ export default function ChecklistView({
                                           {item.documents.map((doc, di) => (
                                             <span
                                               key={di}
-                                              className="rounded border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600"
+                                              className="rounded-md border border-stone-200 bg-white px-1.5 py-0.5 text-xs text-stone-600"
                                             >
                                               {doc}
                                             </span>

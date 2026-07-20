@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/*
+ * Shape scale (radius). One ladder, applied consistently:
+ *   rounded-md   -> chips, tags, badges, checkboxes, small toggle buttons, tooltips
+ *   rounded-lg   -> inputs, buttons, cards, panels, dropdown menus, list containers
+ *   rounded-xl   -> large outer surfaces (form container, feature cards, tables, banners)
+ *   rounded-full -> pills, dots, avatars, circular badges, progress bars/spinners
+ * Documented exceptions: skeleton/text-line placeholders use `rounded` so they
+ * read as text; the hero highlight is decorative; `rounded-t` is structural.
+ *
+ * Icons: use the canonical set in @/components/icons (24x24 grid, stroke 1.5).
+ * Domain glyph families that stay local (country-snapshot cells) use the same
+ * 1.5 stroke weight.
+ */
+
 :root {
   --background: #fbfbfa;
   --foreground: #1c1917;
