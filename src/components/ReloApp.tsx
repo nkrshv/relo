@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ReloForm from "@/components/ReloForm";
 import ChecklistView from "@/components/ChecklistView";
 import PlanSkeleton from "@/components/PlanSkeleton";
@@ -107,6 +107,10 @@ export default function ReloApp({ initialTo, initialFrom, showHeading }: Props) 
   const [unlocked, setUnlocked] = useState(false);
   const [shareUrl, setShareUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Holds the freshly generated plan while the loading block plays its finish
+  // animation; PlanSkeleton's onDone swaps it in, so the handoff is tied to the
+  // animation rather than a fixed timeout.
+  const pendingResult = useRef<StoredResult | null>(null);
 
   // Fire the top-of-funnel view once on the /plan page.
   useEffect(() => {
@@ -172,32 +176,39 @@ export default function ReloApp({ initialTo, initialFrom, showHeading }: Props) 
       track("Plan Generation Succeeded");
       // A freshly generated plan is unpaid; only its own slug can unlock it.
       setUnlocked(isDevUnlocked(data.slug));
-      // Let the final "Assembling your checklist" step visibly complete
-      // before swapping the skeleton for the real plan.
+      // Stash the plan and let the loading block finish its "Assembling your
+      // checklist" animation; finalizeGeneration swaps it in on onDone.
+      pendingResult.current = data;
       setFinishing(true);
-      setTimeout(() => {
-        setResult(data);
-        try {
-          localStorage.setItem(RESULT_KEY, JSON.stringify(data));
-        } catch {
-          // ignore
-        }
-        // Promote the plan to its permanent URL so a refresh (or a shared
-        // link) resolves to the saved copy on the server.
-        if (data.slug) {
-          const url = `/plan/${data.slug}`;
-          window.history.replaceState({}, "", url);
-          setShareUrl(`${window.location.origin}${url}`);
-        }
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        setLoading(false);
-        setFinishing(false);
-      }, 1600);
     } catch {
       track("Plan Generation Failed", { error_type: "network" });
       setError("Network error. Please try again.");
       setLoading(false);
     }
+  }, []);
+
+  // Swap the finished loading block for the real plan. Driven by PlanSkeleton's
+  // onDone so the reveal follows the fade-out instead of a magic timeout.
+  const finalizeGeneration = useCallback(() => {
+    const data = pendingResult.current;
+    if (!data) return;
+    pendingResult.current = null;
+    setResult(data);
+    try {
+      localStorage.setItem(RESULT_KEY, JSON.stringify(data));
+    } catch {
+      // ignore
+    }
+    // Promote the plan to its permanent URL so a refresh (or a shared link)
+    // resolves to the saved copy on the server.
+    if (data.slug) {
+      const url = `/plan/${data.slug}`;
+      window.history.replaceState({}, "", url);
+      setShareUrl(`${window.location.origin}${url}`);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setLoading(false);
+    setFinishing(false);
   }, []);
 
   const unlock = useCallback(async () => {
@@ -286,7 +297,7 @@ export default function ReloApp({ initialTo, initialFrom, showHeading }: Props) 
               building
             />
           )}
-          <PlanSkeleton done={finishing} />
+          <PlanSkeleton done={finishing} onDone={finalizeGeneration} />
         </>
       ) : (
         <>
