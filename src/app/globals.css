@@ -272,6 +272,27 @@ a.pressable:active {
   }
 }
 
+/* Checkbox fills from unchecked (white) to checked (stone-900) as the wave
+   lands, in step with the check drawing in. */
+.plan-box {
+  fill: #fff;
+  stroke: var(--color-stone-300);
+  stroke-width: 1;
+  animation: plan-box-check 5.5s ease-out infinite;
+}
+@keyframes plan-box-check {
+  0%,
+  58% {
+    fill: #fff;
+    stroke: var(--color-stone-300);
+  }
+  72%,
+  100% {
+    fill: var(--color-stone-900);
+    stroke: var(--color-stone-900);
+  }
+}
+
 /* Subtle content fade helper. */
 .reveal {
   animation: var(--animate-fade-in);
@@ -406,6 +427,11 @@ a.pressable:active {
   .plan-check {
     animation: none !important;
     stroke-dashoffset: 0;
+  }
+  .plan-box {
+    animation: none !important;
+    fill: var(--color-stone-900);
+    stroke: var(--color-stone-900);
   }
   .timeline-ink,
   .timeline-assemble {

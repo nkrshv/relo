@@ -224,23 +224,38 @@ function Diagram({
           Your relocation plan
         </text>
         {PLAN_TASKS.map((task, i) => {
-          const rowY = cardY + 52 + i * 26;
+          const cY = cardY + 52 + i * 26;
+          const box = cfg.rowFont + 2.5;
+          const bx = cardX + 18;
+          const by = cY - box / 2;
+          const check = `M ${(bx + box * 0.26).toFixed(1)} ${(by + box * 0.52).toFixed(1)} L ${(bx + box * 0.44).toFixed(1)} ${(by + box * 0.7).toFixed(1)} L ${(bx + box * 0.76).toFixed(1)} ${(by + box * 0.34).toFixed(1)}`;
           return (
             <g key={task}>
+              {/* rounded-square checkbox that fills as it gets checked off,
+                  matching the product's toggle */}
+              <rect
+                className="plan-box"
+                x={bx}
+                y={by}
+                width={box}
+                height={box}
+                rx="3.5"
+                style={{ animationDelay: `${i * 0.16}s` }}
+              />
               <path
                 className="plan-check"
                 pathLength={1}
-                d={`M${cardX + 18} ${rowY} l3.5 3.5 6 -6`}
+                d={check}
                 fill="none"
-                stroke="var(--color-emerald-600)"
-                strokeWidth="1.6"
+                stroke="white"
+                strokeWidth="1.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 style={{ animationDelay: `${i * 0.16}s` }}
               />
               <text
-                x={cardX + 38}
-                y={rowY + 4}
+                x={bx + box + 8}
+                y={cY + cfg.rowFont * 0.34}
                 className="fill-stone-700"
                 style={{ fontSize: `${cfg.rowFont}px` }}
               >
