@@ -51,8 +51,7 @@ const ICONS = {
   clock: "M8 2a6 6 0 1 1 0 12A6 6 0 0 1 8 2Zm0 2.5V8l2.5 1.5",
   tax: "M3.5 12.5 12.5 3.5M5 3.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z",
   chat: "M2.5 4.5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H7l-3 2.5V11.5h-.5a2 2 0 0 1-2-2v-5Z",
-  salary:
-    "M2.5 5.5h11a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-11a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1Zm5.5 1.8a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Z",
+  sun: "M8 1.5v1.8M8 12.7v1.8M1.5 8h1.8m9.4 0h1.8M3.4 3.4l1.3 1.3m6.6 6.6 1.3 1.3m0-9.2-1.3 1.3M4.7 11.3l-1.3 1.3M8 5.2a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6Z",
   visa: "M4 3.5h8a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Zm2 3.5h4M6 9.5h4M6 12h2.5",
 } as const;
 
@@ -275,14 +274,14 @@ export default function SnapshotTeaser() {
           </div>
         </div>
 
-        {/* Salary (honest missing value) */}
-        <CellShell icon={ICONS.salary} label="Advertised salary" className={cell}>
-          <div>
-            <span className="text-lg font-semibold text-stone-300">—</span>
-            <p className="mt-2 text-xs text-stone-400">
-              No reliable data. We show a dash, never a guess.
-            </p>
-          </div>
+        {/* Sunny days */}
+        <CellShell icon={ICONS.sun} label="Sunny days" className={cell}>
+          <Twin
+            home="63 / year"
+            dest="267 / year"
+            delta="Over 4x more sun than home"
+            tone="warm"
+          />
         </CellShell>
 
         {/* Safety */}
