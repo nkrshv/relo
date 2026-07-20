@@ -347,7 +347,7 @@ async function insertGenkiInsuranceBlock(
 
   const offer = await getGenkiOffer(input.age);
   const priceLine = offer
-    ? ` For your age (${offer.age}), Genki Traveler starts around ${offer.currency} ${offer.priceFrom}/month; confirm the exact price and what is covered on Genki before buying.`
+    ? ` For your age (${offer.age}), Genki Traveler starts around ${offer.currency} ${offer.priceFrom.toFixed(2)}/month; confirm the exact price and what is covered on Genki before buying.`
     : "";
 
   before.items.push({
