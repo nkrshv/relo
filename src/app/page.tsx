@@ -27,29 +27,42 @@ const PAINS = [
 const STEPS = [
   {
     title: "Tell us about your move",
-    body: "Where you're going, who's coming with you (kids, pets, partner), your visa situation and budget. 60 seconds, and every answer changes your plan.",
+    body: "Where you're going, who's coming with you (kids, pets, partner), the passports you hold, your visa situation, timeline and budget. About a minute, and every answer changes your plan.",
   },
   {
     title: "Get a plan that's actually yours",
-    body: "Not another generic moving abroad list. Your visa route, the real offices in your new city, and the tasks laid out in the order they unlock: what has to happen before what, so you never sit waiting on a step you could have started weeks earlier.",
+    body: "Not another generic moving abroad list. Your visa route checked on the strongest passport you hold, the entry rules and documents to sort before you fly, the real offices in your new city, and every task in the order it unlocks, so you never sit waiting on a step you could have started weeks earlier.",
   },
   {
-    title: "Check things off, not your sanity",
-    body: "From before you book flights to your first 90 days: what to bring, where to go, what each country actually pays and whether your messengers even work there, plus the costly mistake people make at each step, so you skip it.",
+    title: "Check things off, at your own pace",
+    body: "From before you book flights to your first 90 days: what to pack (with the weather compared to home), where to go, and the costly mistake people make at each step. Tick items off, close the tab, and pick up where you left off on any device.",
   },
 ];
 
-const FEATURES = [
+const PLAN_FEATURES = [
   "Real institution names: Finanças, AIMA, Bürgeramt, not \"the local authority\"",
   "The exact documents to bring to every appointment",
-  "What has to happen before what, so nothing blocks you",
+  "Tasks in the order they unlock, so nothing quietly blocks you",
+  "Entry rules to sort before you fly: apostille or legalization, and pre-arrival registrations like TDAC, ETA or ESTA",
   "The costly mistake people make at each step, and its real consequence",
   "Family, student and remote-worker modules that reshape the plan",
   "Pet import rules with real microchip and rabies lead times",
-  "A country snapshot: visa verdict, cost of living, salaries and safety",
+  "A packing list built from how the weather compares to home",
+];
+
+const SNAPSHOT_FEATURES = [
+  "Your visa verdict, checked on the strongest passport you hold",
+  "Cost of living and prices, converted into your home currency",
+  "A climate twin: temperature and air quality against where you live now",
+  "Typical advertised salaries and the local tax regime",
   "Whether WhatsApp, Telegram and Signal actually work there",
-  "Official safety levels and health notices per country",
-  "Print or save the whole plan as a PDF",
+  "Official government travel-advisory levels",
+];
+
+const KEEP_FEATURES = [
+  "A permanent private link that reopens your plan on any device",
+  "Your checklist progress saved as you go, so you can stop and resume anytime",
+  "The link emailed to you when you unlock, plus PDF and Markdown export",
 ];
 
 const FAQ = [
@@ -59,11 +72,19 @@ const FAQ = [
   },
   {
     q: "Can I trust the information?",
-    a: "It comes from the sources you'd check yourself if you had the time: official government travel advisories, health notices, daily exchange rates and country facts we keep fresh. Every plan links back to the originals, so verifying anything takes one click instead of an evening.",
+    a: "It comes from the sources you'd check yourself if you had the time: official government travel advisories, the passport-index visa matrix, live exchange rates, and open climate, cost and salary data. Every fact is labelled with its source and, where it matters, the date we last checked it, so verifying anything takes one click instead of an evening. Where we don't have a number for a country, we show a dash rather than guess.",
   },
   {
     q: "Is this legal or immigration advice?",
     a: "No, it's the research assistant you wish you had. It tells you what to do, when, and where to double-check it. If your case is tricky, the plan is also the fastest way to brief an actual immigration lawyer.",
+  },
+  {
+    q: "Can I come back to my plan later, or on another device?",
+    a: "Yes. Every plan gets its own private link, so you can reopen it on your phone or laptop and your checklist remembers what you've already ticked off. There's nothing to log into. Unlock the full plan and we also email you the link, so it's yours to keep.",
+  },
+  {
+    q: "What if I'm moving somewhere less common?",
+    a: "You can plan a move between 143 countries, in any direction. The most popular destinations have the deepest country data; for the rest we fill in what we can from live sources (like climate and exchange rates) and stay honest with a dash wherever we don't have a figure.",
   },
   {
     q: "How long does it take?",
@@ -82,6 +103,38 @@ function CtaButton({ label }: { label: string }) {
         <path d="M10.3 3.3a1 1 0 0 1 1.4 0l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4-1.4L14.6 11H3a1 1 0 1 1 0-2h11.6l-4.3-4.3a1 1 0 0 1 0-1.4Z" />
       </svg>
     </Link>
+  );
+}
+
+function FeatureGroup({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div>
+      <h3 className="text-xs font-medium uppercase tracking-wide text-stone-500">
+        {title}
+      </h3>
+      <ul className="mt-2">
+        {items.map((f) => (
+          <li
+            key={f}
+            className="flex items-start gap-2.5 border-b border-stone-200/70 py-3 text-sm leading-relaxed text-stone-600"
+          >
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
+              aria-hidden
+            >
+              <path d="M3 8.5l3.5 3.5L13 5" />
+            </svg>
+            {f}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }
 
@@ -184,28 +237,20 @@ export default function Home() {
         <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
           What&apos;s inside every plan
         </h2>
-        <ul className="mt-8 grid max-w-3xl gap-x-8 sm:grid-cols-2">
-          {FEATURES.map((f) => (
-            <li
-              key={f}
-              className="flex items-start gap-2.5 border-b border-stone-200/70 py-3 text-sm leading-relaxed text-stone-600"
-            >
-              <svg
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
-                aria-hidden
-              >
-                <path d="M3 8.5l3.5 3.5L13 5" />
-              </svg>
-              {f}
-            </li>
-          ))}
-        </ul>
+        <p className="mt-2 max-w-xl text-stone-500">
+          A step-by-step checklist for your exact route, a snapshot of the
+          country you&apos;re moving to, and a plan you can keep.
+        </p>
+
+        <div className="mt-8 grid gap-x-12 gap-y-8 sm:grid-cols-2">
+          <FeatureGroup title="Your step-by-step checklist" items={PLAN_FEATURES} />
+          <FeatureGroup title="Your country snapshot" items={SNAPSHOT_FEATURES} />
+        </div>
+
+        <div className="mt-8 max-w-3xl">
+          <FeatureGroup title="And it stays yours" items={KEEP_FEATURES} />
+        </div>
+
         <div className="mt-10 text-center">
           <CtaButton label="Build my checklist now" />
         </div>
