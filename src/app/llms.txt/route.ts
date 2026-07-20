@@ -27,9 +27,10 @@ export function GET(): Response {
 
 Key things to know about Reloka:
 
-- Covers 238 countries and territories; the pages below are the curated destination guides.
+- Any origin-to-destination move can be planned: 143 selectable countries in the form; the ${DESTINATIONS.length} curated destinations below have the richest data and their own guide pages.
 - Country data (visa-free stays, cost signals, climate, air quality, internet speed, taxes and special tax regimes, safety) is drawn from open data sources and marked with a "last verified" date and a source link.
-- The checklist generator at ${SITE_URL}/plan is free; it produces a phased plan (before you go, first week, first month, first 90 days) personalized by who is moving (solo, couple, family, digital nomad, student) and why.
+- The checklist generator at ${SITE_URL}/plan produces a phased plan (before you go, wrapping up at home, first week, first month, first 90 days) personalized by origin, destination, who is moving (solo, couple, family, digital nomad, student), citizenships, visa status, timeline, priorities and age.
+- The first phase is free; the rest of the checklist is unlocked with a one-time $9 payment, and each plan gets a permanent private link so it can be reopened on any device with checklist progress preserved.
 
 ## Country guides
 
