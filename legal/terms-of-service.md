@@ -2,6 +2,9 @@
 
 **Last updated: 20 July 2026**
 
+> In these Terms, references to "Reloka", "we", "us", and "our" include the individual operator personally and anyone acting on our behalf.
+
+
 These Terms of Service ("Terms") govern your access to and use of reloka.to and the relocation-planning service provided there (the "Service"), operated by a private individual based in Utrecht, the Netherlands ("Reloka", "we", "us", or "our"). Please read them carefully.
 
 ---
@@ -100,15 +103,19 @@ We may block IP addresses or sessions that violate §5 (Acceptable Use). Provisi
 
 THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. RELOKA DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, OR SECURE, OR THAT AI-GENERATED OUTPUT WILL BE ACCURATE, COMPLETE, CURRENT, OR SUITABLE FOR YOUR CIRCUMSTANCES.
 
+This disclaimer applies equally to the individual who operates Reloka and to anyone acting on our behalf, in their personal capacity.
+
 ## 17. Limitation of Liability
 
 TO THE MAXIMUM EXTENT PERMITTED BY LAW, RELOKA WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, DATA, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING FROM OR RELATED TO YOUR USE OF THE SERVICE. OUR TOTAL AGGREGATE LIABILITY FOR ANY CLAIM RELATING TO THE SERVICE IS LIMITED TO THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS BEFORE THE CLAIM, OR (B) USD $100.
 
-**Jurisdictional carve-out.** Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities. In those jurisdictions, our liability is limited to the maximum extent permitted by law, and the above limitations may not apply to you.
+**No personal liability.** TO THE MAXIMUM EXTENT PERMITTED BY LAW, THIS LIABILITY CAP AND THESE EXCLUSIONS APPLY NOT ONLY TO RELOKA AS A SERVICE BUT ALSO TO THE **INDIVIDUAL WHO OPERATES IT** AND TO ANY PEOPLE ACTING ON OUR BEHALF (SUCH AS CONTRACTORS OR SERVICE PROVIDERS), IN THEIR PERSONAL CAPACITY. YOU AGREE NOT TO BRING ANY CLAIM PERSONALLY AGAINST THE OPERATOR OR THOSE INDIVIDUALS THAT SEEKS MORE THAN THE CAPPED AMOUNT ABOVE, AND ANY SUCH CLAIM IS SUBJECT TO THE SAME LIMITATIONS AND EXCLUSIONS AS A CLAIM AGAINST RELOKA. This section is intended to benefit those individuals, who may rely on it.
+
+**Jurisdictional carve-out.** Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities, and some consumer, statutory, or non-waivable rights (for example, liability for death, personal injury, fraud, or gross negligence) cannot be excluded. In those jurisdictions, our liability is limited to the maximum extent permitted by law, and the above limitations may not apply to you. Nothing here excludes liability that cannot be excluded by law.
 
 ## 18. Indemnity
 
-You agree to indemnify and hold Reloka harmless from any claims, damages, liabilities, and expenses (including reasonable legal fees) arising from Your Content, your use of the generated output, your violation of these Terms, or your violation of any law or third-party right.
+You agree to indemnify and hold Reloka — including the individual operator and anyone acting on our behalf, personally — harmless from any claims, damages, liabilities, and expenses (including reasonable legal fees) arising from Your Content, your use of the generated output, your violation of these Terms, or your violation of any law or third-party right.
 
 ## 19. Governing Law & Venue
 
