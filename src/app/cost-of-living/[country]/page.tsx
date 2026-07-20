@@ -140,8 +140,8 @@ export default async function CostOfLivingPage({
   if (!dest) notFound();
   const facts = costFacts(dest.name);
   const intro = costIntro(dest.name);
-  const faqs = costFaqFor(dest.name);
   const detail = costDetailForSlug(dest.slug);
+  const faqs = costFaqFor(dest.name, detail);
   const pageUrl = `${SITE_URL}/cost-of-living/${dest.slug}`;
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -257,6 +257,65 @@ export default async function CostOfLivingPage({
               <CityBudget key={c.city} city={c} currency={detail.currency} />
             ))}
           </div>
+
+          {(detail.costIndexVsUsa ||
+            detail.incomeTaxHeadline ||
+            detail.vatRate) && (
+            <div className="mt-4 grid gap-2 sm:grid-cols-3">
+              {detail.costIndexVsUsa && (
+                <div className="rounded-lg border border-stone-200 bg-white px-4 py-3">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
+                    Cost index vs USA
+                  </p>
+                  <p className="tnum mt-0.5 text-base font-semibold text-stone-900">
+                    {detail.costIndexVsUsa.value}
+                    <span className="ml-1 text-xs font-normal text-stone-500">
+                      / 100
+                    </span>
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-stone-500">
+                    {detail.costIndexVsUsa.basis}
+                  </p>
+                </div>
+              )}
+              {detail.incomeTaxHeadline && (
+                <div className="rounded-lg border border-stone-200 bg-white px-4 py-3">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
+                    Income tax
+                  </p>
+                  <p className="mt-0.5 text-[13px] leading-snug text-stone-700">
+                    {detail.incomeTaxHeadline.sourceUrl ? (
+                      <a
+                        href={detail.incomeTaxHeadline.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-900"
+                      >
+                        {detail.incomeTaxHeadline.note}
+                      </a>
+                    ) : (
+                      detail.incomeTaxHeadline.note
+                    )}
+                  </p>
+                </div>
+              )}
+              {detail.vatRate && (
+                <div className="rounded-lg border border-stone-200 bg-white px-4 py-3">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
+                    VAT / GST
+                  </p>
+                  <p className="tnum mt-0.5 text-base font-semibold text-stone-900">
+                    {detail.vatRate.value}%
+                  </p>
+                  {detail.vatRate.note && (
+                    <p className="mt-0.5 text-[11px] text-stone-500">
+                      {detail.vatRate.note}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {detail.privateHealthInsuranceMonthUsd && (
             <div className="mt-4 rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm text-stone-700">

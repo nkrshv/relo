@@ -10,6 +10,7 @@ import { OPEN_DATA_UPDATED_AT } from "@/lib/countryOpenData.generated";
 import { currencyForCountry } from "@/lib/countryCurrency";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
 import { formatMonth, formatDate } from "@/lib/dates";
+import { formatRange, type CountryCost } from "@/lib/costOfLiving";
 
 export interface CostFact {
   label: string;
@@ -94,14 +95,24 @@ export function costIntro(name: string): string {
   return `${joined.charAt(0).toUpperCase()}${joined.slice(1)}.`;
 }
 
-export function costFaqFor(name: string): { q: string; a: string }[] {
+export function costFaqFor(
+  name: string,
+  detail?: CountryCost | null,
+): { q: string; a: string }[] {
   const od = openDataForCountry(name);
   const ins = insightsForCountry(name);
   const sal = salaryForCountry(name);
+  const capital = detail?.cities[0];
+  const single = capital?.monthlyBudgetSingle;
+  const family = capital?.monthlyBudgetFamily4;
+  const budgetAnswer =
+    capital && single
+      ? `A single person needs roughly ${formatRange(single.usd, "USD")} a month in ${capital.city}, including mid-range rent${family ? `, and a family of four around ${formatRange(family.usd, "USD")}` : ""} (${formatMonth(detail!.asOf)}). Costs vary by city and district — see the monthly breakdown below, then generate a free plan above for a budget matched to your exact city, household and priorities.`
+      : `It depends on the city, whether you rent in the centre, and your lifestyle. Use the figures on this page as a starting point, then generate a free plan above — it estimates a budget for your exact destination city, household size and priorities.`;
   const faqs: { q: string; a: string }[] = [
     {
       q: `How much money do I need to live in ${name}?`,
-      a: `It depends on the city, whether you rent in the centre, and your lifestyle. Use the figures on this page as a starting point, then generate a free plan above — it estimates a budget for your exact destination city, household size and priorities.`,
+      a: budgetAnswer,
     },
   ];
   if (od?.priceLevelEU) {
