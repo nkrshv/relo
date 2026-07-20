@@ -27,6 +27,7 @@ import { preArrivalForCountry } from "@/lib/preArrivalRequirements";
 import { originRequirementsForCountry } from "@/lib/originRequirements";
 import { COUNTRY_FACTS_VERIFIED } from "@/lib/countryFacts";
 import { esimPartnerLinks } from "@/lib/saily";
+import { getGenkiOffer, genkiAffiliateUrl } from "@/lib/genki";
 import { getFlightOffer } from "@/lib/flights";
 import {
   PHASE_KEYS,
@@ -143,6 +144,7 @@ RISK & FALLBACK MICRO-RULES:
 PERSONALIZATION IS MANDATORY — the plan must visibly reflect THIS user's inputs, not just the destination:
 - Every concrete detail the user gives (a budget cap, a rent limit, total savings, children's ages, pet species/breed, a spouse's job plans, an employer situation, a stated timeline) MUST appear verbatim or near-verbatim inside at least one relevant item's title, why, tip, steps or commonMistake. Example: if they say "rent under 1500 eur", the housing item must reference searching with a ≤€1,500 filter and what that budget realistically gets in that market; if a spouse will look for local work, add an item about local work authorization / job-search realities and required registrations.
 - Children's ages change the advice (kindergarten vs primary vs secondary enrolment) — use the actual ages given.
+- If the user gives their own age, let it shape age-relevant guidance where it genuinely matters (e.g. health-insurance options and pricing bands, visa/pension/retirement thresholds, student vs working-age routes) — do not invent age rules where none apply.
 - If the user gave NO visa / status information, do NOT silently pick one visa route for them. Make the FIRST "before" item a comparison of the 2-3 realistic visa/residency routes for this origin nationality and profile (real scheme names, income thresholds, processing times) ending with how to decide; base later items on requirements common to those routes.
 - Weave the user's stated budget, timeline and notes into item choices and estimates — never ignore them.
 
@@ -200,6 +202,14 @@ interface RawPlan {
 
 function str(v: unknown): string {
   return typeof v === "string" ? v.trim() : "";
+}
+
+// Age is optional; accept a number or numeric string, keep it plausible.
+function parseAge(v: unknown): number | undefined {
+  const n = typeof v === "number" ? v : typeof v === "string" ? Number(v) : NaN;
+  if (!Number.isFinite(n)) return undefined;
+  const age = Math.round(n);
+  return age >= 0 && age <= 120 ? age : undefined;
 }
 
 // The prompt forbids linking private companies (banks, insurers, housing
@@ -318,6 +328,40 @@ function insertEsimBlock(plan: ReloPlan): void {
     affiliate: esimPartnerLinks(),
   };
   before.items.push(item);
+}
+
+// Digital nomads rarely have a home public-health system to fall back on, so
+// worldwide travel/expat health cover is a real gap for them specifically. For
+// the nomad profile only, attach a partner (affiliate) offer with a real
+// monthly price pulled live from Genki's MCP server for the mover's age. Same
+// presentation as the eSIM partner row; shown as an explicit partner option,
+// not as neutral advice, and the price is a starting "from" figure the user
+// must confirm on Genki before buying. Skips silently when no price resolves.
+async function insertGenkiInsuranceBlock(
+  plan: ReloPlan,
+  input: ReloInput,
+): Promise<void> {
+  if (input.profile !== "nomad") return;
+  const before = plan.phases.find((p) => p.key === "before");
+  if (!before) return;
+
+  const offer = await getGenkiOffer(input.age);
+  const priceLine = offer
+    ? ` For your age (${offer.age}), Genki Traveler starts around ${offer.currency} ${offer.priceFrom}/month; confirm the exact price and what is covered on Genki before buying.`
+    : "";
+
+  before.items.push({
+    id: "nomad-insurance",
+    title: "Line up worldwide health insurance for your nomad stay",
+    why:
+      "As a digital nomad you usually have no local public-health system to fall back on, so you need worldwide health cover that works wherever you are and does not depend on residency." +
+      priceLine,
+    tip: "Compare cover limits, deductibles and any exclusions (adventure sports, pre-existing conditions) against your own situation, not just the price.",
+    category: "Health",
+    deadline: "Before departure",
+    affiliate: [{ label: "Genki", url: offer ? offer.url : genkiAffiliateUrl() }],
+    affiliateLabel: "Partner offer:",
+  });
 }
 
 // Some cross-border obligations are universal but compete for scarce phase
@@ -594,6 +638,7 @@ function buildUserContent(input: ReloInput): string {
     `Moving from: ${input.fromCity ? `${input.fromCity}, ` : ""}${input.fromCountry}`,
     `Moving to: ${input.toCity ? `${input.toCity}, ` : ""}${input.toCountry}`,
     `Profile: ${input.profile}`,
+    typeof input.age === "number" ? `Age: ${input.age}` : "",
     input.citizenships && input.citizenships.length
       ? `Citizenships / passports held: ${input.citizenships.join(", ")}`
       : "",
@@ -883,6 +928,7 @@ export async function POST(req: NextRequest) {
           .filter((c) => isValidCountry(c))
           .slice(0, 5)
       : [],
+    age: parseAge(body.age),
     visaStatus: cap(str(body.visaStatus)),
     timeline: cap(str(body.timeline)),
     priorities: Array.isArray(body.priorities)
@@ -935,6 +981,7 @@ export async function POST(req: NextRequest) {
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
       await insertFlightBlock(revisedPlan, input);
       insertEsimBlock(revisedPlan);
+      await insertGenkiInsuranceBlock(revisedPlan, input);
       ensureContinuityBlock(revisedPlan);
       ensureInsuranceWindDownBlock(revisedPlan);
       ensureMedicationBlock(revisedPlan, input);
@@ -954,6 +1001,7 @@ export async function POST(req: NextRequest) {
   }
   await insertFlightBlock(plan, input);
   insertEsimBlock(plan);
+  await insertGenkiInsuranceBlock(plan, input);
   ensureContinuityBlock(plan);
   ensureInsuranceWindDownBlock(plan);
   ensureMedicationBlock(plan, input);
