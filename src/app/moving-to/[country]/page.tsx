@@ -41,8 +41,8 @@ export async function generateMetadata({
   const { country } = await params;
   const dest = findDestination(country);
   if (!dest) return {};
-  const title = `Moving to ${dest.name}: relocation checklist`;
-  const description = `A step-by-step checklist for moving to ${dest.name}: visa and residency, housing, banking, healthcare, taxes and more. Get a free personalized plan.`;
+  const title = `Moving to ${dest.name}: visas, cost of living & 2026 checklist`;
+  const description = `How to move to ${dest.name}: visa and residency routes, cost of living, housing, banking, healthcare and taxes — plus a free personalized relocation checklist tailored to your passport and situation.`;
   return {
     title,
     description,
@@ -210,6 +210,36 @@ function quickFacts(name: string): QuickFact[] {
   return facts.filter((f): f is QuickFact => f !== null);
 }
 
+// A short, country-specific lead sentence built from data already shown on the
+// page, so every destination gets a unique intro instead of the same template.
+// Uses only unambiguous figures; the tax regime has its own section below.
+function introHighlights(name: string): string {
+  const sal = salaryForCountry(name);
+  const st = staticDataForCountry(name);
+  const od = openDataForCountry(name);
+  const parts: string[] = [];
+  if (od?.priceLevelEU) {
+    const diff = Math.round(od.priceLevelEU.value - 100);
+    parts.push(
+      `consumer prices run about ${Math.abs(diff)}% ${diff >= 0 ? "above" : "below"} the EU average`,
+    );
+  }
+  if (sal?.avgAnnual) {
+    parts.push(
+      `the average advertised salary is about ${formatSalary(sal.avgAnnual, sal.currency)} a year`,
+    );
+  }
+  if (st) {
+    parts.push(`English proficiency is rated “${st.english}” (EF EPI)`);
+  }
+  if (parts.length === 0) return "";
+  const joined =
+    parts.length === 1
+      ? parts[0]
+      : `${parts.slice(0, -1).join(", ")} and ${parts[parts.length - 1]}`;
+  return `${joined.charAt(0).toUpperCase()}${joined.slice(1)}.`;
+}
+
 function faqFor(name: string): { q: string; a: string }[] {
   const ins = insightsForCountry(name);
   const od = openDataForCountry(name);
@@ -279,6 +309,7 @@ export default async function MovingToPage({
   const facts = quickFacts(dest.name);
   const regimes = taxRegimesForCountry(dest.name);
   const faqs = faqFor(dest.name);
+  const highlights = introHighlights(dest.name);
   const pageUrl = `${SITE_URL}/moving-to/${dest.slug}`;
   const faqJsonLd = {
     "@context": "https://schema.org",
@@ -327,10 +358,16 @@ export default async function MovingToPage({
           Moving to {dest.name}: your relocation checklist
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-lg text-stone-500">
-          Everything you need to settle into {dest.name}, organized by phase.
-          Generate a free plan tailored to your visa status, family, and
+          How to move to {dest.name}: the visa and residency routes, cost of
+          living, banking, healthcare and taxes you&apos;ll deal with, organized
+          by phase. Generate a free plan tailored to your passport, family, and
           budget below.
         </p>
+        {highlights && (
+          <p className="mx-auto mt-3 max-w-xl text-sm text-stone-500">
+            {highlights}
+          </p>
+        )}
       </section>
 
       <section className="pb-10">
@@ -490,7 +527,7 @@ export default async function MovingToPage({
               href={`/moving-to/${d.slug}`}
               className="rounded-md border border-stone-200 bg-white px-3 py-1.5 text-sm text-stone-600 transition-colors hover:bg-stone-50 hover:text-stone-900"
             >
-              {d.name}
+              Moving to {d.name}
             </Link>
           ))}
         </div>
