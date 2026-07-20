@@ -1232,10 +1232,21 @@ export default function ChecklistView({
                     const id = itemId(pi, ii);
                     const isChecked = !!checked[id];
                     const isNext = !locked && id === nextId;
+                    // The first (free) phase settles in row by row on load, so
+                    // the plan reads as if it assembles itself. Cap the stagger
+                    // so it never feels slow.
+                    const assemble = pi === 0 && !locked && ii < 9;
                     return (
                       <li
                         key={id}
+                        style={
+                          assemble
+                            ? { animationDelay: `${ii * 0.05}s` }
+                            : undefined
+                        }
                         className={`relative rounded-lg border bg-white transition-colors duration-150 ${
+                          assemble ? "assemble" : ""
+                        } ${
                           isChecked
                             ? "border-stone-200 opacity-60"
                             : isNext

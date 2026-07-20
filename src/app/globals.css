@@ -256,6 +256,63 @@ a.pressable:active {
   animation: var(--animate-fade-in);
 }
 
+/* Checklist rows settle into place one after another, so the plan reads as if
+   it assembles itself. Delay is set inline per row and capped in JS. */
+.assemble {
+  animation: assemble-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes assemble-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading status line: the outgoing message drifts up and out while the next
+   one drifts in, so lines advance instead of popping. */
+.msg-in {
+  animation: msg-in 0.3s ease both;
+}
+.msg-out {
+  animation: msg-out 0.3s ease both;
+}
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes msg-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+}
+
+/* The final confirmation check draws itself, echoing the timeline ink motif. */
+.draw-check {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-check 0.5s ease-out 0.05s forwards;
+}
+@keyframes draw-check {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Gentle rise-and-fade entrance for hero and section blocks. */
 .rise {
   animation: var(--animate-rise-in);
@@ -297,8 +354,21 @@ a.pressable:active {
   .rise,
   .skeleton,
   .caret,
+  .assemble,
+  .msg-in,
+  .msg-out,
+  .animate-spin,
   .pulse-dot::after {
     animation: none !important;
+  }
+  .assemble,
+  .msg-in {
+    opacity: 1;
+    transform: none;
+  }
+  .draw-check {
+    animation: none !important;
+    stroke-dashoffset: 0;
   }
   .flow-dot {
     animation: none !important;
@@ -327,6 +397,8 @@ a.pressable:active {
   /* Reveal/entrance animations must not leave content faded or shifted on paper. */
   .reveal,
   .rise,
+  .assemble,
+  .msg-in,
   .plan-line {
     animation: none !important;
     opacity: 1 !important;
