@@ -275,9 +275,11 @@ export default async function MovingFromUsaPage({
                 <span className="font-medium text-stone-900">
                   Visa-free entry:
                 </span>{" "}
-                {detail.visaFreeDays > 0
-                  ? `${detail.visaFreeDays} days`
-                  : "none — a visa is required in advance"}
+                {detail.visaFreeDays === null
+                  ? "no standard visa-free entry — see the routes below"
+                  : detail.visaFreeDays > 0
+                    ? `${detail.visaFreeDays} days`
+                    : "none — a visa is required in advance"}
                 {detail.visaFreeNote ? ` (${detail.visaFreeNote})` : ""}.
               </p>
               <p className="mt-1 text-sm text-stone-700">
