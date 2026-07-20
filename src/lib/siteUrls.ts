@@ -8,6 +8,7 @@ export function allSiteUrls(): string[] {
   const urls = [SITE_URL, `${SITE_URL}/plan`, `${SITE_URL}/compare`];
   for (const d of DESTINATIONS) {
     urls.push(`${SITE_URL}/moving-to/${d.slug}`);
+    urls.push(`${SITE_URL}/cost-of-living/${d.slug}`);
   }
   for (let i = 0; i < DESTINATIONS.length; i++) {
     for (let j = i + 1; j < DESTINATIONS.length; j++) {

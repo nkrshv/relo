@@ -26,6 +26,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.75,
     })),
+    ...DESTINATIONS.map((d) => ({
+      url: `${SITE_URL}/cost-of-living/${d.slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
     {
       url: `${SITE_URL}/compare`,
       lastModified: now,
