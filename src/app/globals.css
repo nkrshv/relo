@@ -199,21 +199,23 @@ a.pressable:active {
   offset-rotate: 0deg;
   offset-distance: 0%;
   opacity: 0;
-  animation: flow-travel 5.5s linear infinite;
+  /* Accelerate inward (ease-in) so dots glide to the card, then a long idle
+     "breath" before the wave repeats. */
+  animation: flow-travel 5.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 @keyframes flow-travel {
   0% {
     offset-distance: 0%;
     opacity: 0;
   }
-  3% {
+  4% {
     opacity: 1;
   }
-  26% {
+  30% {
     offset-distance: 100%;
     opacity: 1;
   }
-  30%,
+  34%,
   100% {
     offset-distance: 100%;
     opacity: 0;
