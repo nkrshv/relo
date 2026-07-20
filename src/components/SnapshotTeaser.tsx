@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Spotlight from "@/components/Spotlight";
 
 /**
  * Landing teaser for the Country snapshot + Climate twin. Static, illustrative
@@ -67,7 +68,7 @@ function CellShell({
   children: React.ReactNode;
 }) {
   return (
-    <div
+    <Spotlight
       className={`flex flex-col rounded-xl border border-stone-200 bg-white p-4 ${className}`}
     >
       <div className="flex items-center gap-1.5">
@@ -77,7 +78,7 @@ function CellShell({
         </span>
       </div>
       <div className="mt-2 flex-1">{children}</div>
-    </div>
+    </Spotlight>
   );
 }
 
@@ -150,7 +151,7 @@ export default function SnapshotTeaser() {
         className="mt-8 grid auto-rows-[128px] grid-cols-2 gap-3 md:grid-cols-4"
       >
         {/* Climate twin (hero) */}
-        <div
+        <Spotlight
           className={`col-span-2 row-span-2 flex flex-col rounded-xl border border-stone-200 bg-white p-5 ${cell}`}
         >
           <div className="flex items-center gap-1.5">
@@ -201,7 +202,7 @@ export default function SnapshotTeaser() {
               Warm all year, no real winter
             </span>
           </div>
-        </div>
+        </Spotlight>
 
         {/* Air quality */}
         <CellShell icon={ICONS.air} label="Air quality" className={cell}>
@@ -240,7 +241,7 @@ export default function SnapshotTeaser() {
         </CellShell>
 
         {/* Messengers (wide) */}
-        <div
+        <Spotlight
           className={`col-span-2 flex flex-col rounded-xl border border-stone-200 bg-white p-4 ${cell}`}
         >
           <div className="flex items-center gap-1.5">
@@ -272,7 +273,7 @@ export default function SnapshotTeaser() {
             ))}
             <span className="ml-auto text-xs text-stone-400">Works normally</span>
           </div>
-        </div>
+        </Spotlight>
 
         {/* Sunny days */}
         <CellShell icon={ICONS.sun} label="Sunny days" className={cell}>
