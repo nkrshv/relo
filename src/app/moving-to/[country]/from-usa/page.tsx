@@ -19,11 +19,15 @@ import {
 } from "@/lib/movingToContent";
 import {
   usRelocationForSlug,
+  usCountryDetailForSlug,
   US_RELOCATION_VERIFIED,
   SSA_AGREEMENTS_URL,
   IRS_EXPAT_URL,
   IRS_FEIE_URL,
   FBAR_URL,
+  IRS_TREATIES_URL,
+  type TreatyStatus,
+  type LicenseExchange,
 } from "@/lib/usRelocation";
 
 interface Params {
@@ -59,18 +63,51 @@ export async function generateMetadata({
   };
 }
 
-// US-specific facts shown to Americans regardless of destination, plus one
-// destination-specific line on the Social Security totalization agreement.
+// One line on the income tax treaty status, worded per its current standing.
+function treatyFact(
+  name: string,
+  treaty: TreatyStatus,
+  since?: string,
+): string {
+  switch (treaty) {
+    case "in_force":
+      return `The US and ${name} have an income tax treaty in force${since ? ` (since ${since})` : ""} (${IRS_TREATIES_URL}). A treaty can lower withholding on cross-border income like dividends, interest and pensions and set residency tie-breaker rules — it does not remove your US filing obligation.`;
+    case "terminated":
+      return `The US–${name} income tax treaty was terminated and stopped having effect from 2024 (${IRS_TREATIES_URL}), so US-source dividends, interest and royalties no longer get reduced treaty rates. This is separate from the Social Security agreement below.`;
+    case "suspended":
+      return `Key articles of the US–${name} income tax treaty were suspended in 2024 (${IRS_TREATIES_URL}), so the usual treaty-reduced withholding rates are inactive for now — in practice treat the treaty as unavailable.`;
+    case "signed_not_in_force":
+      return `The US and ${name} have signed an income tax treaty, but it is not yet in force pending US ratification (${IRS_TREATIES_URL}), so you cannot rely on treaty benefits yet.`;
+    default:
+      return `The US has no income tax treaty with ${name} (${IRS_TREATIES_URL}), so there are no treaty-reduced withholding rates or tie-breaker rules to lean on — you rely on the Foreign Earned Income Exclusion and Foreign Tax Credit instead.`;
+  }
+}
+
+// US-specific facts shown to Americans regardless of destination, plus two
+// destination-specific lines: income tax treaty status and the Social Security
+// totalization agreement.
 function usTaxFacts(name: string, slug: string): string[] {
-  const { totalization } = usRelocationForSlug(slug);
+  const { totalization, treaty, treatySince } = usRelocationForSlug(slug);
   return [
     `As a US citizen or green-card holder you keep filing a US federal tax return on your worldwide income even while living in ${name} — the US taxes based on citizenship, not where you live (${IRS_EXPAT_URL}).`,
+    treatyFact(name, treaty, treatySince),
     `Double taxation is usually avoided with the Foreign Earned Income Exclusion (Form 2555, ${IRS_FEIE_URL}) and/or the Foreign Tax Credit (Form 1116); which one is better depends on your income and ${name}'s tax rates.`,
     `If your foreign bank and financial accounts exceed US$10,000 combined at any point in the year, you must file an FBAR (FinCEN Form 114, ${FBAR_URL}); larger balances can also trigger FATCA Form 8938 with your return.`,
     totalization
       ? `The US and ${name} have a Social Security Totalization Agreement (${SSA_AGREEMENTS_URL}), so you generally contribute to only one country's social-security system instead of paying into both, and coverage periods can be combined toward benefits.`
       : `The US has no Social Security Totalization Agreement with ${name} (${SSA_AGREEMENTS_URL}), so you may owe social-security or social-insurance contributions in both countries at once — budget for it and confirm the local rules.`,
   ];
+}
+
+function licenseLabel(status: LicenseExchange): string {
+  switch (status) {
+    case "full_reciprocity":
+      return "Exchangeable without a road test";
+    case "some_states":
+      return "Exchange rules vary by local authority";
+    default:
+      return "No exchange — local driving test required";
+  }
 }
 
 export default async function MovingFromUsaPage({
@@ -87,6 +124,23 @@ export default async function MovingFromUsaPage({
   const highlights = introHighlights(dest.name);
   const essentials = factsForCountry(dest.name);
   const taxFacts = usTaxFacts(dest.name, dest.slug);
+  const detail = usCountryDetailForSlug(dest.slug);
+
+  const us = usRelocationForSlug(dest.slug);
+  const treatyFaqAnswer = ((): string => {
+    switch (us.treaty) {
+      case "in_force":
+        return `Yes. The US and ${dest.name} have an income tax treaty in force, which can reduce withholding on cross-border income and set residency tie-breaker rules. It does not remove your US filing obligation, and you still use the Foreign Earned Income Exclusion or Foreign Tax Credit to avoid double taxation.`;
+      case "terminated":
+        return `No — not anymore. The US–${dest.name} income tax treaty was terminated and stopped having effect from 2024, so US-source dividends, interest and royalties no longer get reduced treaty rates. Note the Social Security Totalization Agreement is a separate deal and its status is unaffected.`;
+      case "suspended":
+        return `Not in practice. Key articles of the US–${dest.name} income tax treaty were suspended in 2024, so the usual treaty-reduced withholding rates are inactive. Treat the treaty as unavailable for now and rely on the Foreign Tax Credit instead.`;
+      case "signed_not_in_force":
+        return `Not yet. The US and ${dest.name} have signed an income tax treaty, but it is awaiting US ratification and is not in force, so you cannot rely on treaty benefits at this point.`;
+      default:
+        return `No. There is no US income tax treaty with ${dest.name}, so there are no treaty-reduced withholding rates or tie-breaker rules to lean on — you rely on the Foreign Earned Income Exclusion and Foreign Tax Credit to avoid double taxation.`;
+    }
+  })();
 
   const usFaqs: { q: string; a: string }[] = [
     {
@@ -94,8 +148,12 @@ export default async function MovingFromUsaPage({
       a: `Yes. The US taxes citizens and green-card holders on worldwide income no matter where they live, so you keep filing a federal return. The Foreign Earned Income Exclusion and the Foreign Tax Credit usually reduce or eliminate double taxation, but the filing obligation itself does not go away.`,
     },
     {
+      q: `Is there a US tax treaty with ${dest.name}?`,
+      a: treatyFaqAnswer,
+    },
+    {
       q: `Will I pay into Social Security in both the US and ${dest.name}?`,
-      a: usRelocationForSlug(dest.slug).totalization
+      a: us.totalization
         ? `Usually no. The US and ${dest.name} have a Social Security Totalization Agreement, so you generally contribute to only one system and can combine coverage periods toward benefits.`
         : `Possibly yes. The US has no Social Security Totalization Agreement with ${dest.name}, so you may owe contributions to both systems at the same time. Confirm the local rules and factor it into your budget.`,
     },
@@ -193,6 +251,80 @@ export default async function MovingFromUsaPage({
           ))}
         </ul>
       </section>
+
+      {detail && (
+        <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
+          <h2 className="text-2xl font-semibold tracking-tight text-stone-900">
+            Moving to {dest.name} from the US: the American&apos;s checklist
+          </h2>
+          <p className="mt-1 text-sm text-stone-500">
+            How US citizens apply, whether your license transfers, and the
+            things that catch Americans out. Reviewed{" "}
+            {formatMonth(US_RELOCATION_VERIFIED)} against official sources;
+            always confirm current requirements before you act.
+          </p>
+          <div className="mt-5 grid gap-2 sm:grid-cols-2">
+            <div className="rounded-lg border border-stone-200 bg-white px-4 py-3">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
+                Applying for a visa
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-stone-700">
+                {detail.howToApply}
+              </p>
+              <p className="mt-2 text-sm text-stone-700">
+                <span className="font-medium text-stone-900">
+                  Visa-free entry:
+                </span>{" "}
+                {detail.visaFreeDays > 0
+                  ? `${detail.visaFreeDays} days`
+                  : "none — a visa is required in advance"}
+                {detail.visaFreeNote ? ` (${detail.visaFreeNote})` : ""}.
+              </p>
+              <p className="mt-1 text-sm text-stone-700">
+                <span className="font-medium text-stone-900">
+                  Main long-stay routes:
+                </span>{" "}
+                {detail.longStayRoutes.join(", ")}.
+              </p>
+            </div>
+            <div className="rounded-lg border border-stone-200 bg-white px-4 py-3">
+              <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
+                Your US driver&apos;s license
+              </p>
+              <p className="mt-1 text-sm font-semibold text-stone-900">
+                {licenseLabel(detail.license)}
+              </p>
+              <p className="mt-1 text-sm leading-relaxed text-stone-700">
+                {detail.licenseNote}
+              </p>
+            </div>
+          </div>
+          <ul className="mt-4 space-y-2">
+            {detail.keyNotes.map((note, i) => (
+              <li
+                key={i}
+                className="rounded-lg border border-stone-200 bg-white px-4 py-3 text-sm leading-relaxed text-stone-700"
+              >
+                {note}
+              </li>
+            ))}
+          </ul>
+          {detail.officialUrl && detail.officialLabel && (
+            <p className="mt-3 text-[11px] text-stone-500">
+              Verify at{" "}
+              <a
+                href={detail.officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-stone-300 underline-offset-2 transition-colors hover:text-stone-700"
+              >
+                {detail.officialLabel}
+              </a>
+              .
+            </p>
+          )}
+        </section>
+      )}
 
       {facts.length > 0 && (
         <section className="mx-auto max-w-3xl px-4 py-10 print:hidden">
