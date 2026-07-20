@@ -30,7 +30,7 @@ export default function CompareIndexPage() {
         </p>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 pb-12">
+      <section className="mx-auto max-w-5xl px-4 pb-12">
         {DESTINATIONS.map((a, i) => {
           const others = DESTINATIONS.slice(i + 1);
           if (others.length === 0) return null;
