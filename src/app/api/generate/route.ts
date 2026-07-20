@@ -320,6 +320,103 @@ function insertEsimBlock(plan: ReloPlan): void {
   before.items.push(item);
 }
 
+// Some cross-border obligations are universal but compete for scarce phase
+// slots, so the model sometimes drops them even when the prompt demands them.
+// These safety nets add a baseline item ONLY when the model produced nothing
+// covering it; a model-written item (usually richer and personalized) is left
+// untouched. Text stays generic-but-actionable and tells the user to confirm
+// the specifics for their case.
+function planText(item: ChecklistItem): string {
+  return [
+    item.title,
+    item.why,
+    item.tip ?? "",
+    (item.steps ?? []).join(" "),
+    (item.documents ?? []).join(" "),
+    item.commonMistake ?? "",
+  ].join(" ");
+}
+
+function planHasMatch(plan: ReloPlan, re: RegExp): boolean {
+  return plan.phases.some((p) => p.items.some((i) => re.test(planText(i))));
+}
+
+function ensureContinuityBlock(plan: ReloPlan): void {
+  if (planHasMatch(plan, /2fa|two-factor|authenticator|passkey|recovery code/i))
+    return;
+  const before = plan.phases.find((p) => p.key === "before");
+  if (!before) return;
+  before.items.push({
+    id: "continuity",
+    title: "Secure account access before you lose your home number",
+    why: "Once the home SIM is cancelled, any account still using SMS 2FA on that number can lock you out, and those are exactly the accounts you need mid-move: bank, e-government, email.",
+    tip: "Do this while the home number still works, not after you land.",
+    category: "Digital",
+    deadline: "Before departure",
+    steps: [
+      "Move 2FA off SMS onto an authenticator app or passkeys for your bank, e-government, email and other critical accounts.",
+      "Save each account's recovery/backup codes somewhere offline.",
+      "Set a recovery email that does not depend on your home phone number.",
+      "Keep one home bank account and card open for the transition.",
+    ],
+    commonMistake:
+      "Cancelling the home SIM with SMS 2FA still active on the bank or email: the reset code goes to a dead number and recovery from abroad can take weeks.",
+  });
+}
+
+function ensureInsuranceWindDownBlock(plan: ReloPlan): void {
+  const re =
+    /(cancel|end|ending|terminat|wind[\s-]?down|deregist).{0,50}(health\s*insurance|health\s*cover|krankenversicherung)|(health\s*insurance|health\s*cover|krankenversicherung).{0,50}(cancel|end|ending|terminat|wind[\s-]?down|deregist)/i;
+  if (planHasMatch(plan, re)) return;
+  const departure =
+    plan.phases.find((p) => p.key === "departure") ??
+    plan.phases.find((p) => p.key === "before");
+  if (!departure) return;
+  departure.items.push({
+    id: "insurance-winddown",
+    title: "Wind down your home-country health insurance",
+    why: "Leaving does not always end your home health cover automatically, and a gap between it ending and your destination cover starting can leave you uninsured. Confirm the exact end date and any obligation to cancel actively.",
+    tip: "Line this up against the start date of your destination or travel health cover so there is no uninsured gap.",
+    category: "Health",
+    steps: [
+      "Ask your home health insurer/authority whether deregistration ends cover automatically or you must cancel it, and get the exact end date.",
+      "Check for any exit paperwork, final premiums, or refunds owed.",
+      "Confirm your first-weeks travel/expat policy or the destination's cover starts on or before that end date.",
+    ],
+    commonMistake:
+      "Assuming deregistration cancels the policy: some insurers keep billing until you actively cancel, and others end cover the day you deregister, leaving an uninsured gap.",
+  });
+}
+
+function ensureMedicationBlock(plan: ReloPlan, input: ReloInput): void {
+  const notes = `${input.notes ?? ""}`;
+  if (
+    !/medication|medicine|prescription|\bmeds\b|insulin|\badhd\b|antidepressant|inhaler/i.test(
+      notes,
+    )
+  )
+    return;
+  if (planHasMatch(plan, /medication|prescription|controlled substance/i))
+    return;
+  const before = plan.phases.find((p) => p.key === "before");
+  if (!before) return;
+  before.items.push({
+    id: "medication-import",
+    title: "Check medication import rules and carry a supply",
+    why: "Some everyday prescriptions are controlled substances abroad and can be seized at the border without the right paperwork. Confirm your medication is legal at the destination and travel with proof.",
+    tip: "Keep medication in its original packaging with the pharmacy label, not loose.",
+    category: "Health",
+    deadline: "Before departure",
+    steps: [
+      "Check with the destination's medicines/controlled-substances authority whether any of your medications are restricted and the maximum personal supply allowed.",
+      "Get a doctor's letter and a copy of the prescription, ideally with the generic drug name.",
+      "Carry enough supply to bridge until you can register with a local doctor and refill.",
+    ],
+    commonMistake:
+      "Bringing a normal home prescription that is a controlled substance at the destination without a doctor's letter: it can be confiscated at customs and leave you without your medication.",
+  });
+}
+
 // Flights (Travelpayouts/Aviasales) as its OWN dedicated block near the end of
 // the "before" phase, rather than attaching to a model-generated item (which
 // was unreliable: the word "flight" in the eSIM item's text stole the price,
@@ -838,6 +935,9 @@ export async function POST(req: NextRequest) {
         normalizeFeasibility(parsed.feasibility) ?? revisedPlan.feasibility;
       await insertFlightBlock(revisedPlan, input);
       insertEsimBlock(revisedPlan);
+      ensureContinuityBlock(revisedPlan);
+      ensureInsuranceWindDownBlock(revisedPlan);
+      ensureMedicationBlock(revisedPlan, input);
       enforceLegalizationRule(revisedPlan, input);
       return respondWithPlan(input, revisedPlan, planVisa(input) ?? null);
     }
@@ -854,6 +954,9 @@ export async function POST(req: NextRequest) {
   }
   await insertFlightBlock(plan, input);
   insertEsimBlock(plan);
+  ensureContinuityBlock(plan);
+  ensureInsuranceWindDownBlock(plan);
+  ensureMedicationBlock(plan, input);
   enforceLegalizationRule(plan, input);
 
   return respondWithPlan(input, plan, planVisa(input) ?? null);
