@@ -192,60 +192,139 @@ a.pressable:active {
   animation: var(--animate-shimmer);
 }
 
-/* Pipeline diagram: dots ride their offset-path into the engine node. */
+/* Pipeline diagram. One shared 5.5s loop drives every part so it reads as
+   cause and effect: source dots ride in as a wave, the node sparks and ripples
+   when they land, then a dot ships out and the plan's checks draw in. */
 .flow-dot {
   offset-rotate: 0deg;
   offset-distance: 0%;
   opacity: 0;
-  animation: flow-travel 3.4s ease-in-out infinite;
-}
-.flow-dot-out {
-  animation-delay: 1.7s;
+  animation: flow-travel 5.5s linear infinite;
 }
 @keyframes flow-travel {
   0% {
     offset-distance: 0%;
     opacity: 0;
   }
-  12% {
+  3% {
     opacity: 1;
   }
-  52% {
+  26% {
+    offset-distance: 100%;
     opacity: 1;
   }
-  62%,
+  30%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+.flow-dot-out {
+  offset-rotate: 0deg;
+  offset-distance: 0%;
+  opacity: 0;
+  animation: flow-out 5.5s ease-in-out infinite;
+}
+@keyframes flow-out {
+  0%,
+  45% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  48% {
+    opacity: 1;
+  }
+  60% {
+    offset-distance: 100%;
+    opacity: 1;
+  }
+  63%,
   100% {
     offset-distance: 100%;
     opacity: 0;
   }
 }
 .pipeline-node {
-  animation: node-breathe 3.4s ease-in-out infinite;
+  animation: node-pulse 5.5s ease-in-out infinite;
   transform-origin: center;
   transform-box: fill-box;
 }
-@keyframes node-breathe {
+@keyframes node-pulse {
   0%,
-  45%,
+  30%,
+  55%,
   100% {
     transform: scale(1);
   }
-  60% {
-    transform: scale(1.06);
+  40% {
+    transform: scale(1.1);
+  }
+}
+.node-spark {
+  animation: node-spark 5.5s ease-in-out infinite;
+}
+@keyframes node-spark {
+  0%,
+  30% {
+    opacity: 0.55;
+    transform: scale(1) rotate(0deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.25) rotate(45deg);
+  }
+  55%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1) rotate(90deg);
+  }
+}
+.node-ripple {
+  opacity: 0;
+  animation: node-ripple 5.5s ease-out infinite;
+}
+@keyframes node-ripple {
+  0%,
+  32% {
+    r: 24;
+    opacity: 0;
+  }
+  38% {
+    opacity: 0.5;
+  }
+  58%,
+  100% {
+    r: 42;
+    opacity: 0;
   }
 }
 .plan-line {
   opacity: 0.35;
-  animation: plan-tick 6.8s ease-out infinite;
+  animation: plan-row 5.5s ease-out infinite;
 }
-@keyframes plan-tick {
+@keyframes plan-row {
   0%,
-  20% {
+  58% {
     opacity: 0.35;
   }
-  28%,
+  70%,
   100% {
     opacity: 1;
+  }
+}
+.plan-check {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: plan-draw 5.5s ease-out infinite;
+}
+@keyframes plan-draw {
+  0%,
+  58% {
+    stroke-dashoffset: 1;
+  }
+  72%,
+  100% {
+    stroke-dashoffset: 0;
   }
 }
 
@@ -368,16 +447,26 @@ a.pressable:active {
     animation: none !important;
     stroke-dashoffset: 0;
   }
-  .flow-dot {
+  .flow-dot,
+  .flow-dot-out {
     animation: none !important;
     opacity: 0;
   }
-  .pipeline-node {
+  .pipeline-node,
+  .node-spark {
     animation: none !important;
+  }
+  .node-ripple {
+    animation: none !important;
+    opacity: 0;
   }
   .plan-line {
     animation: none !important;
     opacity: 1;
+  }
+  .plan-check {
+    animation: none !important;
+    stroke-dashoffset: 0;
   }
   .timeline-ink,
   .timeline-assemble {
