@@ -18,9 +18,10 @@ const SOURCES: Source[] = [
 const SOURCES_MOBILE: Source[] = [
   { label: "Your answers", accent: true },
   { label: "Visa rules" },
-  { label: "Climate and prices" },
-  { label: "Salaries and taxes" },
+  { label: "Climate" },
+  { label: "Prices" },
   { label: "Advisories" },
+  { label: "Salaries" },
 ];
 
 // Representative tasks shown inside the central plan card. These mirror the
@@ -62,18 +63,40 @@ const DESKTOP: Config = {
 };
 
 const MOBILE: Config = {
-  vbW: 520,
-  vbH: 480,
-  cx: 260,
-  cy: 240,
-  rx: 150,
-  ry: 156,
-  cardW: 208,
+  vbW: 560,
+  vbH: 560,
+  cx: 280,
+  cy: 270,
+  rx: 210,
+  ry: 214,
+  cardW: 196,
   cardH: 158,
   chipFont: 12,
-  titleFont: 12.5,
-  rowFont: 11.5,
+  titleFont: 12,
+  rowFont: 11,
 };
+
+// Deterministic hash + PRNG so the scatter is identical on server and client
+// (Math.random() at render time would break hydration).
+function seedFrom(str: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+// Stable pseudo-random in [-1, 1) from a string key.
+function jitter(key: string): number {
+  let x = seedFrom(key) || 1;
+  x ^= x << 13;
+  x >>>= 0;
+  x ^= x >> 17;
+  x ^= x << 5;
+  x >>>= 0;
+  return (x >>> 0) / 2147483648 - 1;
+}
 
 function chipAngle(i: number, count: number): number {
   // Even spacing around the ring, starting at the top (-90deg).
@@ -101,10 +124,17 @@ function Diagram({
   const cardX = cx - hw;
   const cardY = cy - hh;
 
+  const count = sources.length;
+  const slot = (2 * Math.PI) / count;
   const nodes = sources.map((s, i) => {
-    const a = chipAngle(i, sources.length);
-    const x = cx + rx * Math.cos(a);
-    const y = cy + ry * Math.sin(a);
+    // Scatter each source off the perfect ring: nudge its angle within its own
+    // slot and its radius in/out, deterministically per label. The accent
+    // ("Your answers") stays near the top and steady so it reads as the input.
+    const aScatter = s.accent ? 0 : jitter(s.label) * slot * 0.34;
+    const rScatter = s.accent ? 0.04 : jitter(`${s.label}#r`) * 0.16;
+    const a = chipAngle(i, count) + aScatter;
+    const x = cx + rx * (1 + rScatter) * Math.cos(a);
+    const y = cy + ry * (1 + rScatter) * Math.sin(a);
     // Where the rail meets the card: project the chip direction onto the card edge.
     const dx = x - cx;
     const dy = y - cy;
