@@ -304,19 +304,22 @@ function planStorageKey(input: ReloInput, plan: ReloPlan): string {
   return `${CHECK_KEY_PREFIX}:${hashString(signature)}`;
 }
 
-// A small coloured dot is the only per-category colour signal.
+// Muted, on-brand categorical palette. Anchored in the site's stone / amber /
+// emerald language with one restrained support tone (rose). The dot is a
+// secondary hint sitting next to the always-visible category label, so tones
+// stay subtle rather than a saturated rainbow.
 const CATEGORY_DOTS: Record<string, string> = {
-  residency: "bg-indigo-500",
-  visa: "bg-indigo-500",
-  healthcare: "bg-rose-500",
-  health: "bg-rose-500",
+  residency: "bg-amber-500",
+  visa: "bg-amber-500",
+  healthcare: "bg-rose-400",
+  health: "bg-rose-400",
   banking: "bg-emerald-500",
   finance: "bg-emerald-500",
-  housing: "bg-amber-500",
-  taxes: "bg-violet-500",
-  tax: "bg-violet-500",
-  logistics: "bg-sky-500",
-  packing: "bg-teal-500",
+  housing: "bg-stone-500",
+  taxes: "bg-amber-600",
+  tax: "bg-amber-600",
+  logistics: "bg-stone-400",
+  packing: "bg-emerald-400",
 };
 
 function categoryDot(category: string) {

@@ -18,6 +18,8 @@
 :root {
   --background: #fbfbfa;
   --foreground: #1c1917;
+  /* Keyboard focus ring, warm stone to match the palette. */
+  --focus-ring: #44403c; /* stone-700 */
 }
 
 @theme inline {
@@ -88,6 +90,24 @@ html {
 button:active:not(:disabled),
 a.pressable:active {
   transform: scale(0.98);
+}
+
+/*
+ * One consistent keyboard focus ring across every interactive control
+ * (WCAG 2.4.7). Only shows for keyboard/AT users via :focus-visible, never on
+ * mouse click. Text fields (input/select/textarea) are excluded here because
+ * they carry their own visible focus styling; adding the outline would double
+ * the ring.
+ */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+details:focus-visible,
+[role="button"]:focus-visible,
+[role="menuitem"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 /* Ultra-diffuse hover lift for cards. */
