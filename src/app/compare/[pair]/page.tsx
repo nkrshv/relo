@@ -32,6 +32,7 @@ import {
 import { formatMonth, formatDate } from "@/lib/dates";
 import SiteFooter from "@/components/SiteFooter";
 import CompareClimateRows from "@/components/CompareClimateRows";
+import { ChevronDownIcon } from "@/components/icons";
 import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
@@ -487,20 +488,7 @@ export default async function ComparePage({
                 <div>
                   <p className="flex items-center gap-1 text-sm font-medium text-stone-700">
                     Crypto taxes
-                    <svg
-                      viewBox="0 0 24 24"
-                      aria-hidden
-                      className="h-3.5 w-3.5 text-stone-500 transition-transform group-open:rotate-180"
-                    >
-                      <path
-                        d="m6 9 6 6 6-6"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <ChevronDownIcon className="h-3.5 w-3.5 text-stone-500 transition-transform group-open:rotate-180" />
                   </p>
                   <a
                     href={CRYPTO_TAX_DATASET_URL}

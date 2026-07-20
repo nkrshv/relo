@@ -7,6 +7,7 @@ import SnapshotTeaser from "@/components/SnapshotTeaser";
 import TrustBlock from "@/components/TrustBlock";
 import ScrollRoad from "@/components/ScrollRoad";
 import SiteFooter from "@/components/SiteFooter";
+import { ArrowRightIcon, CheckIcon, CloseIcon } from "@/components/icons";
 
 const TYPE_CITIES = [
   "Lisbon",
@@ -100,9 +101,7 @@ function CtaButton({ label }: { label: string }) {
       className="pressable inline-flex items-center gap-2 rounded-lg bg-stone-900 px-5 py-2.5 text-sm font-medium text-white transition-[background-color,transform] duration-200 hover:bg-stone-700"
     >
       {label}
-      <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" aria-hidden>
-        <path d="M10.3 3.3a1 1 0 0 1 1.4 0l6 6a1 1 0 0 1 0 1.4l-6 6a1 1 0 0 1-1.4-1.4L14.6 11H3a1 1 0 1 1 0-2h11.6l-4.3-4.3a1 1 0 0 1 0-1.4Z" />
-      </svg>
+      <ArrowRightIcon className="h-4 w-4" />
     </Link>
   );
 }
@@ -119,18 +118,7 @@ function FeatureGroup({ title, items }: { title: string; items: string[] }) {
             key={f}
             className="flex items-start gap-2.5 border-b border-stone-200/70 py-3 text-sm leading-relaxed text-stone-600"
           >
-            <svg
-              viewBox="0 0 16 16"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600"
-              aria-hidden
-            >
-              <path d="M3 8.5l3.5 3.5L13 5" />
-            </svg>
+            <CheckIcon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-600" />
             {f}
           </li>
         ))}
@@ -190,17 +178,7 @@ export default function Home() {
               key={p}
               className="flex items-start gap-3 py-3.5 text-sm leading-relaxed text-stone-600"
             >
-              <svg
-                viewBox="0 0 16 16"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                className="mt-0.5 h-4 w-4 shrink-0 text-rose-500"
-                aria-hidden
-              >
-                <path d="M4 4l8 8M12 4l-8 8" />
-              </svg>
+              <CloseIcon className="mt-0.5 h-4 w-4 shrink-0 text-rose-500" />
               {p}
             </li>
           ))}

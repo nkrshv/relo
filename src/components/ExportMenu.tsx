@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 import { planToMarkdown, planFileStem } from "@/lib/exportPlan";
 import { track } from "@/lib/analytics";
+import { ChevronDownIcon, FileTextIcon, MarkdownFileIcon } from "@/components/icons";
 
 type Variant = "default" | "emerald";
 
@@ -80,18 +81,9 @@ export default function ExportMenu({
         className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${TRIGGER_STYLES[variant]}`}
       >
         Export
-        <svg
-          viewBox="0 0 20 20"
-          fill="currentColor"
+        <ChevronDownIcon
           className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
-          aria-hidden
-        >
-          <path
-            fillRule="evenodd"
-            d="M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4Z"
-            clipRule="evenodd"
-          />
-        </svg>
+        />
       </button>
 
       {open && (
@@ -105,21 +97,7 @@ export default function ExportMenu({
             onClick={exportPdf}
             className="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm text-stone-700 transition-colors hover:bg-stone-50"
           >
-            <svg
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              className="h-4 w-4 shrink-0 text-stone-400"
-              aria-hidden
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 3.5h5L15 7v9.5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-12a1 1 0 0 1 1-1Z"
-              />
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 3.5V7H15" />
-            </svg>
+            <FileTextIcon className="h-4 w-4 shrink-0 text-stone-400" />
             Save as PDF
           </button>
           <button
@@ -128,21 +106,7 @@ export default function ExportMenu({
             onClick={exportMarkdown}
             className="flex w-full items-center gap-2.5 px-3 py-2 text-left text-sm text-stone-700 transition-colors hover:bg-stone-50"
           >
-            <svg
-              viewBox="0 0 20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.6"
-              className="h-4 w-4 shrink-0 text-stone-400"
-              aria-hidden
-            >
-              <rect x="2.5" y="5" width="15" height="10" rx="1.5" />
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5.5 12.5v-4l2 2.2 2-2.2v4M13 8.5v3.2M11.6 10.6 13 12l1.4-1.4"
-              />
-            </svg>
+            <MarkdownFileIcon className="h-4 w-4 shrink-0 text-stone-400" />
             Save as Markdown
           </button>
         </div>

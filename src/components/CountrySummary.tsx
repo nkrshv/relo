@@ -162,6 +162,9 @@ function formatPopulation(n: number): string {
   return n.toLocaleString("en-US");
 }
 
+// Domain glyph set for the snapshot bento cells. Kept local (it is an
+// inherent family of ~14 data glyphs) but drawn at the app's shared 1.5
+// stroke weight so it matches the canonical icon set in @/components/icons.
 function CellIcon({ name }: { name: IconName }) {
   return (
     <svg
@@ -169,7 +172,7 @@ function CellIcon({ name }: { name: IconName }) {
       className="h-3.5 w-3.5 shrink-0 text-stone-500"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.3"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
@@ -191,7 +194,7 @@ function MessengerStatusGlyph({ status }: { status: "ok" | "issues" }) {
       className={`h-4 w-4 shrink-0 ${ok ? "text-stone-600" : "text-amber-600"}`}
       fill="none"
       stroke="currentColor"
-      strokeWidth="2.2"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     >
@@ -868,7 +871,7 @@ export default function CountrySummary({
                     {nextHolidays.map((h) => (
                       <span
                         key={h.date}
-                        className="inline-flex items-center gap-1.5 rounded border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
+                        className="inline-flex items-center gap-1.5 rounded-md border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
                       >
                         <span className="font-medium text-stone-800">
                           {fmtDate(h.date)}
@@ -1053,7 +1056,7 @@ export default function CountrySummary({
                     {vac.required.map((v) => (
                       <span
                         key={v.name}
-                        className="inline-flex items-center rounded border border-amber-200 bg-white px-2 py-1 text-xs font-medium text-amber-800"
+                        className="inline-flex items-center rounded-md border border-amber-200 bg-white px-2 py-1 text-xs font-medium text-amber-800"
                       >
                         {v.name}
                       </span>
@@ -1070,7 +1073,7 @@ export default function CountrySummary({
                     {vac.recommended.map((v) => (
                       <span
                         key={v.name}
-                        className="inline-flex items-center rounded border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
+                        className="inline-flex items-center rounded-md border border-stone-200 bg-white px-2 py-1 text-xs text-stone-600"
                       >
                         {v.name}
                       </span>
@@ -1122,7 +1125,7 @@ export default function CountrySummary({
                 {advisory.reasons.slice(0, 3).map((r) => (
                   <span
                     key={r}
-                    className="inline-flex items-center rounded border border-stone-200 bg-white px-2 py-0.5 text-xs text-stone-500"
+                    className="inline-flex items-center rounded-md border border-stone-200 bg-white px-2 py-0.5 text-xs text-stone-500"
                   >
                     {humanize(r)}
                   </span>

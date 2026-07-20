@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Spotlight from "@/components/Spotlight";
+import { CheckIcon } from "@/components/icons";
 
 /**
  * Landing teaser for the Country snapshot + Climate twin. Static, illustrative
@@ -26,6 +27,8 @@ function tempHeight(t: number): number {
   return Math.max(6, Math.min(100, pct));
 }
 
+// Domain glyph set for the snapshot bento cells. Local to this teaser but
+// drawn on the same 16-grid as CountrySummary at a shared 1.5 stroke weight.
 function Icon({ d }: { d: string }) {
   return (
     <svg
@@ -33,7 +36,7 @@ function Icon({ d }: { d: string }) {
       className="h-3.5 w-3.5 shrink-0 text-stone-500"
       fill="none"
       stroke="currentColor"
-      strokeWidth="1.3"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden
@@ -256,18 +259,7 @@ export default function SnapshotTeaser() {
                 key={m}
                 className="flex items-center gap-1.5 text-sm text-stone-700"
               >
-                <svg
-                  viewBox="0 0 24 24"
-                  className="h-4 w-4 text-emerald-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden
-                >
-                  <path d="m5 12.5 4.5 4.5L19 7" />
-                </svg>
+                <CheckIcon className="h-4 w-4 text-emerald-600" />
                 {m}
               </span>
             ))}
