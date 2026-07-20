@@ -138,6 +138,62 @@ export const COUNTRY_FACTS: Record<string, string[]> = {
     "Healthcare is largely private/employer-provided for foreigners. Main housing portals: PropertyGuru (https://www.propertyguru.com.sg/), 99.co (https://www.99.co/). Emergency 999 (police), 995 (ambulance/fire).",
     "Key figures (approximate — verify current values): the Employment Pass minimum qualifying salary is ~SGD 5,600/month (higher in financial services, and rises with age) plus the COMPASS points test; EP application fee is ~SGD 105 + ~SGD 225 issuance; rental deposits are typically 1 month per year of lease; agent fee is commonly half to one month.",
   ],
+  philippines: [
+    "Immigration is handled by the Bureau of Immigration (https://immigration.gov.ph/); common long-stay routes are the 9(g) work visa, the 13(a) visa (married to a Filipino), and the SRRV retirement visa via the Philippine Retirement Authority (https://pra.gov.ph/).",
+    "Long-term foreigners get an ACR I-Card (Alien Certificate of Registration) from the Bureau of Immigration; tax is handled by the BIR (https://www.bir.gov.ph/) with a TIN.",
+    "Public health insurance is PhilHealth (https://www.philhealth.gov.ph/), but most expats also carry private cover; English is an official language and widely spoken, which eases setup.",
+    "Main housing portals: Lamudi (https://www.lamudi.com.ph/), Dot Property (https://www.dotproperty.com.ph/), plus Facebook Marketplace/groups. Emergency number is 911.",
+    "Key figures (approximate — verify current values): the SRRV retirement visa requires a bank deposit of ~US$10,000–20,000 (age-dependent) usually alongside a monthly pension; visa extension fees are modest but frequent; condo rentals commonly ask for 2 months' deposit plus 1–2 months advance rent.",
+  ],
+  "south korea": [
+    "Immigration and visas run through the Korea Immigration Service / Hi Korea (https://www.hikorea.go.kr/); common routes include the D-8 (investor), D-10 (job-seeker), E-7 (skilled worker) and F-series (family/residence) visas.",
+    "Register for an Alien Registration Card (ARC) at an immigration office within 90 days of arrival — it's needed for banking, phone contracts and most services.",
+    "National Health Insurance (NHIS, https://www.nhis.or.kr/) is mandatory and long-stay foreigners are auto-enrolled after 6 months; the tax authority is the NTS (https://www.nts.go.kr/).",
+    "Renting typically uses jeonse (a large lump-sum deposit that is refunded) or wolse (a smaller deposit plus monthly rent). Main portals: Zigbang (https://www.zigbang.com/), Dabang. Emergency 112 (police), 119 (fire/ambulance).",
+    "Key figures (approximate — verify current values): wolse deposits commonly run ₩5–10 million with monthly rent on top, while jeonse deposits can be tens to hundreds of millions of won; the ARC issuance fee is ~₩30,000; NHIS contributions for foreigners have a monthly minimum.",
+  ],
+  india: [
+    "Foreigners enter on a specific category — Employment, Business or e-Visa — issued via the Bureau of Immigration and the Indian e-FRRO portal (https://indianfrro.gov.in/); people of Indian origin can instead hold an OCI card.",
+    "Long-stay visa holders must register with the FRRO/FRO within 14 days of arrival through e-FRRO.",
+    "For tax you need a PAN from the Income Tax Department (https://www.incometax.gov.in/); many services also use Aadhaar (https://uidai.gov.in/). Healthcare is largely private for expats.",
+    "Main housing portals: MagicBricks (https://www.magicbricks.com/), 99acres (https://www.99acres.com/), Housing.com, NoBroker. Emergency number is 112.",
+    "Key figures (approximate — verify current values): Employment Visas generally require a minimum annual salary around US$25,000; FRRO registration is largely free but time-sensitive (14 days); rental deposits vary widely — often 2–3 months in Delhi/Bengaluru but historically much higher in some southern cities.",
+  ],
+  "south africa": [
+    "Immigration is handled by the Department of Home Affairs (https://www.dha.gov.za/), with applications usually lodged through VFS Global; common routes are the Critical Skills Work Visa, General Work Visa and Retired Person's Visa.",
+    "Tax is administered by SARS (https://www.sars.gov.za/) with an income tax number; there is no universal free healthcare for foreigners, so private medical aid is essential.",
+    "Work visas often require a SAQA evaluation of your qualifications and, for critical-skills routes, registration with a professional body. English is an official language and widely used.",
+    "Main housing portals: Property24 (https://www.property24.com/), Private Property (https://www.privateproperty.co.za/), Gumtree. Emergency 10111 (police), 112 (from a mobile).",
+    "Key figures (approximate — verify current values): the Critical Skills visa requires your occupation to be on the official critical-skills list plus professional-body registration; visa fees run ~R1,500–2,600 plus VFS service fees; rental deposits are commonly 1–2 months plus the first month upfront.",
+  ],
+  croatia: [
+    "Non-EU nationals apply for temporary stay/residence through the Ministry of the Interior (MUP, https://mup.gov.hr/); Croatia also offers a popular Digital Nomad residence permit.",
+    "You'll get an OIB (personal identification number) used for almost everything, and register your address with the local police administration.",
+    "Health insurance runs through HZZO (https://hzzo.hr/); the tax authority is Porezna uprava (https://www.porezna-uprava.hr/). Croatia joined the euro and Schengen in 2023, so the currency is the euro.",
+    "Main housing portals: Njuškalo (https://www.njuskalo.hr/), Index Oglasi (https://www.index.hr/). Emergency number is 112.",
+    "Key figures (approximate — verify current values): the Digital Nomad permit requires monthly income of roughly €3,300+ (higher with dependants); temporary residence card fees total roughly €50–90; rental deposits are typically 1–2 months.",
+  ],
+  sweden: [
+    "Residence and work permits are handled by the Migration Agency (Migrationsverket, https://www.migrationsverket.se/); EU citizens have free movement but still register locally.",
+    "The key to everyday life is a personnummer from the Tax Agency (Skatteverket, https://www.skatteverket.se/) — you generally need a residence permit valid 12+ months to get one; then set up a BankID for digital services.",
+    "Healthcare is public via your region (register at a vårdcentral); tax is handled by Skatteverket, which also runs an 'expert tax relief' for qualifying high earners.",
+    "First-hand rentals are queue-based (e.g. Bostadsförmedlingen in Stockholm); most newcomers start with second-hand rentals via Blocket Bostad (https://bostad.blocket.se/) or Qasa (https://www.qasa.se/). Emergency number is 112.",
+    "Key figures (approximate — verify current values): a personnummer usually needs a residence permit valid 12+ months; expert tax relief exempts 25% of salary for up to 7 years subject to a monthly salary threshold; first-hand contracts rarely take a deposit, but second-hand landlords may ask 1–2 months.",
+  ],
+  belgium: [
+    "Within 8 days of arriving you must register at your local commune/gemeente (town hall), which issues your residence document and national register number; non-EU permits involve the Immigration Office (https://dofi.ibz.be/).",
+    "Health insurance is mandatory — you join a mutuelle/ziekenfonds (health insurance fund). Tax is handled by SPF Finances / FOD Financiën (https://finances.belgium.be/).",
+    "A local police check often follows your commune registration to confirm you live at the address. Belgium runs a special tax regime for inbound taxpayers and researchers.",
+    "Main housing portals: Immoweb (https://www.immoweb.be/), Logic-Immo (https://www.logic-immo.be/), Zimmo. Emergency number is 112.",
+    "Key figures (approximate — verify current values): commune registration must be started within 8 days of arrival; rental deposits are legally capped at 3 months' rent (commonly 2 months, placed in a blocked account); a mutuelle costs a small monthly fee on top of social contributions.",
+  ],
+  hungary: [
+    "Residence permits for non-EU nationals are issued by the National Directorate-General for Aliens Policing (https://oif.gov.hu/); Hungary offers a 'White Card' residence permit for remote workers and digital nomads.",
+    "You'll get an address card (lakcímkártya) and a tax ID (adóazonosító jel) from NAV (https://nav.gov.hu/); a TAJ card covers public healthcare once you're insured.",
+    "Register your address with the local government office (kormányablak). English is less widely spoken outside Budapest, so official paperwork can need translation.",
+    "Main housing portal: ingatlan.com (https://ingatlan.com/), plus alberlet.hu for rentals. Emergency number is 112.",
+    "Key figures (approximate — verify current values): the White Card requires proof of monthly income around €3,000; residence-permit fees run roughly HUF 18,000–23,000; rental deposits are typically 1–2 months plus the first month upfront.",
+  ],
 };
 
 const ALIASES: Record<string, string> = {

@@ -43,6 +43,14 @@ const DATA: Record<string, StaticCountryData> = {
   japan: { internetMbps: 180, plugTypes: ["A", "B"], voltage: "100V", english: "low" },
   singapore: { internetMbps: 340, plugTypes: ["G"], voltage: "230V", english: "very high" },
   russia: { internetMbps: 90, plugTypes: ["C", "F"], voltage: "230V", english: "low" },
+  philippines: { internetMbps: 95, plugTypes: ["A", "B", "C"], voltage: "220V", english: "high" },
+  "south-korea": { internetMbps: 170, plugTypes: ["C", "F"], voltage: "220V", english: "moderate" },
+  india: { internetMbps: 60, plugTypes: ["C", "D", "M"], voltage: "230V", english: "moderate" },
+  "south-africa": { internetMbps: 50, plugTypes: ["C", "D", "M", "N"], voltage: "230V", english: "high" },
+  croatia: { internetMbps: 75, plugTypes: ["C", "F"], voltage: "230V", english: "high" },
+  sweden: { internetMbps: 190, plugTypes: ["C", "F"], voltage: "230V", english: "very high" },
+  belgium: { internetMbps: 130, plugTypes: ["C", "E"], voltage: "230V", english: "very high" },
+  hungary: { internetMbps: 200, plugTypes: ["C", "F"], voltage: "230V", english: "high" },
 };
 
 const BY_NAME: Record<string, StaticCountryData> = Object.fromEntries(
