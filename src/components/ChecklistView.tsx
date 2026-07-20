@@ -625,7 +625,8 @@ function AdvancedTable({
                           {row.item.affiliate &&
                             row.item.affiliate.length > 0 && (
                               <p className="text-xs text-stone-500">
-                                Compare eSIM apps:{" "}
+                                {row.item.affiliateLabel ??
+                                  "Compare eSIM apps:"}{" "}
                                 {row.item.affiliate.map((a, ai) => (
                                   <span key={a.label}>
                                     {ai > 0 && (
@@ -1313,7 +1314,7 @@ export default function ChecklistView({
                               item.affiliate &&
                               item.affiliate.length > 0 && (
                                 <p className="mt-2 text-xs text-stone-500">
-                                  Compare eSIM apps:{" "}
+                                  {item.affiliateLabel ?? "Compare eSIM apps:"}{" "}
                                   {item.affiliate.map((a, ai) => (
                                     <span key={a.label}>
                                       {ai > 0 && (

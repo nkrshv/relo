@@ -40,6 +40,7 @@ export default function ReloForm({
   const [fromCity, setFromCity] = useState("");
   const [toCity, setToCity] = useState("");
   const [profile, setProfile] = useState<Profile>("solo");
+  const [age, setAge] = useState("");
   const [citizenships, setCitizenships] = useState<string[]>([]);
   const [citizenshipDraft, setCitizenshipDraft] = useState("");
   const [visaStatus, setVisaStatus] = useState("");
@@ -96,6 +97,7 @@ export default function ReloForm({
       fromCity: fromCity.trim() || undefined,
       toCity: toCity.trim() || undefined,
       profile,
+      age: age.trim() ? Number(age) : undefined,
       citizenships,
       visaStatus: visaStatus.trim(),
       timeline: timeline.trim(),
@@ -204,6 +206,23 @@ export default function ReloForm({
             placeholder="e.g. moving in 2 months"
             value={timeline}
             onChange={(e) => setTimeline(e.target.value)}
+          />
+        </label>
+
+        <label className="block">
+          <span className={labelClass}>
+            Your age{" "}
+            <span className="font-normal text-stone-500">(optional)</span>
+          </span>
+          <input
+            className={fieldClass}
+            type="number"
+            min={0}
+            max={120}
+            inputMode="numeric"
+            placeholder="e.g. 34"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
           />
         </label>
 

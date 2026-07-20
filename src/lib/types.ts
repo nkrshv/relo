@@ -32,6 +32,9 @@ export interface ReloInput {
   /** Countries whose passports the mover holds (for visa/eligibility logic).
    *  Empty means unknown, in which case fromCountry is used as a proxy. */
   citizenships?: string[];
+  /** Age of the primary mover on the start date. Optional; used to personalise
+   *  the plan (e.g. real-time health-insurance pricing for nomads). */
+  age?: number;
   visaStatus: string;
   timeline: string;
   priorities: string[];
@@ -58,6 +61,12 @@ export interface ChecklistItem {
    * "compare" row of labelled links, distinct from the neutral source `url`.
    */
   affiliate?: { url: string; label: string }[];
+  /**
+   * Optional lead-in label for the `affiliate` row (defaults to the eSIM
+   * "Compare eSIM apps:" wording when omitted), so the same renderer can serve
+   * other partner offers such as nomad health insurance.
+   */
+  affiliateLabel?: string;
   /**
    * Optional flight-price hint attached server-side to the "book your flight"
    * task: a single sponsored link whose label carries the fare (e.g.
