@@ -20,6 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.8,
     })),
+    ...DESTINATIONS.filter((d) => d.slug !== "united-states").map((d) => ({
+      url: `${SITE_URL}/moving-to/${d.slug}/from-usa`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
     {
       url: `${SITE_URL}/compare`,
       lastModified: now,

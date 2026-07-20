@@ -13,6 +13,7 @@ import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 
 interface Props {
   initialTo?: string;
+  initialFrom?: string;
   /** Render the page heading, morphing into the route once both countries are picked. */
   showHeading?: boolean;
 }
@@ -92,10 +93,10 @@ interface StoredResult {
 
 const RESULT_KEY = "relochecklist:result";
 
-export default function ReloApp({ initialTo, showHeading }: Props) {
+export default function ReloApp({ initialTo, initialFrom, showHeading }: Props) {
   const [result, setResult] = useState<StoredResult | null>(null);
   const [route, setRoute] = useState({
-    from: "",
+    from: initialFrom ?? "",
     to: initialTo ?? "",
     fromCity: "",
     toCity: "",
@@ -306,6 +307,7 @@ export default function ReloApp({ initialTo, showHeading }: Props) {
           <ReloForm
             loading={loading}
             initialTo={initialTo}
+            initialFrom={initialFrom}
             onSubmit={generate}
             onRouteChange={(from, to, fromCity, toCity) =>
               setRoute({

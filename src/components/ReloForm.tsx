@@ -15,6 +15,7 @@ import {
 interface Props {
   loading: boolean;
   initialTo?: string;
+  initialFrom?: string;
   onSubmit: (input: ReloInput) => void;
   onRouteChange?: (
     fromCountry: string,
@@ -32,10 +33,11 @@ const labelClass = "mb-1.5 block text-sm font-medium text-stone-700";
 export default function ReloForm({
   loading,
   initialTo,
+  initialFrom,
   onSubmit,
   onRouteChange,
 }: Props) {
-  const [fromCountry, setFromCountry] = useState("");
+  const [fromCountry, setFromCountry] = useState(initialFrom ?? "");
   const [toCountry, setToCountry] = useState(initialTo ?? "");
   const [fromCity, setFromCity] = useState("");
   const [toCity, setToCity] = useState("");
