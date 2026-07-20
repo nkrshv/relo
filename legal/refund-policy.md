@@ -1,6 +1,6 @@
 # Refund Policy
 
-**Last updated: 10 July 2026**
+**Last updated: 20 July 2026**
 
 This Refund Policy explains when and how you can get a refund for a purchase on reloka.to ("Reloka", "we", "us", or "our"). It forms part of, and should be read together with, our [Terms of Service](./terms-of-service.md).
 
@@ -51,10 +51,10 @@ Nothing in this policy limits the consumer guarantees under the Australian Consu
 
 ## How to Request a Refund
 
-1. Email **refunds@reloka.to** from the email associated with your purchase (or include your Stripe receipt / payment reference).
+1. Email **refunds@reloka.to** from the email associated with your purchase (or include your Lemon Squeezy receipt / payment reference).
 2. Tell us briefly which of the situations above applies.
 3. We will respond within **5 business days** and, if approved, issue the refund to your **original payment method**.
-4. Refunds are typically processed by our payment provider (Stripe) within **5–10 business days**, depending on your bank or card issuer.
+4. Refunds are typically processed by our payment provider (Lemon Squeezy) within **5–10 business days**, depending on your bank or card issuer.
 
 ## Anti-Abuse
 
