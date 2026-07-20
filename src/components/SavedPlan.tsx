@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ChecklistView from "@/components/ChecklistView";
 import { track } from "@/lib/analytics";
+import { isDevUnlocked, markDevUnlocked } from "@/lib/unlock";
 import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
 
 interface Props {
@@ -15,7 +16,6 @@ interface Props {
   shareUrl: string;
 }
 
-const UNLOCK_KEY = "relochecklist:unlocked";
 const POLL_INTERVAL_MS = 2500;
 const POLL_MAX_ATTEMPTS = 12; // ~30s of confirming before we fall back to email
 
@@ -49,14 +49,11 @@ export default function SavedPlan({
     const returnedFromCheckout = params.get("paid") === "1";
 
     if (!returnedFromCheckout) {
-      // Dev-unlock fallback (only ever set when payments aren't configured).
-      try {
-        if (localStorage.getItem(UNLOCK_KEY) === "1") {
-          // eslint-disable-next-line react-hooks/set-state-in-effect
-          setUnlocked(true);
-        }
-      } catch {
-        // ignore
+      // Dev-unlock fallback (only ever set when payments aren't configured),
+      // scoped to this plan's slug so it never leaks to other plans.
+      if (isDevUnlocked(slug)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setUnlocked(true);
       }
       return;
     }
@@ -119,12 +116,8 @@ export default function SavedPlan({
         error?: string;
       };
       if (data.devUnlock) {
+        markDevUnlocked(slug);
         setUnlocked(true);
-        try {
-          localStorage.setItem(UNLOCK_KEY, "1");
-        } catch {
-          // ignore
-        }
         return;
       }
       if (data.url) {
