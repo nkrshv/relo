@@ -714,7 +714,7 @@ function buildUserContent(input: ReloInput): string {
       lines.push(`- Restrictions: ${advisory.restrictions.join("; ")}`);
     if (advisory.stateOfEmergency)
       lines.push(`- A state of emergency is currently declared.`);
-    if (impact.detail)
+    if (impact?.detail)
       lines.push(
         `- Risk for this profile (${input.profile}, ${impact.level}): ${impact.detail}`,
       );

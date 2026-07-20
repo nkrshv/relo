@@ -27,6 +27,6 @@ const PROFILE_TO_IMPACT: Record<Profile, keyof CountryAdvisory["travelerImpact"]
 export function impactForProfile(
   advisory: CountryAdvisory,
   profile: Profile,
-): TravelerImpactEntry {
+): TravelerImpactEntry | undefined {
   return advisory.travelerImpact[PROFILE_TO_IMPACT[profile]];
 }
