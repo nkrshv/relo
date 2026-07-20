@@ -3,7 +3,7 @@
 // world, so we build the list from the open mledoze/countries dataset and
 // enrich each capital with coordinates (geocoded once) for climate lookups.
 //
-// The 38 curated destinations (src/lib/countries.ts) keep hand-picked capital
+// The curated destinations (src/lib/countries.ts) keep hand-picked capital
 // names and coordinates via CURATED overrides so their existing snapshots do
 // not drift; every other officially-assigned country is added on top so any
 // origin/destination gets climate + messenger signals when data exists.
@@ -52,6 +52,14 @@ const CURATED = {
   VN: { name: "Vietnam", iso3: "VNM", capital: "Hanoi", lat: 21.03, lon: 105.85 },
   NZ: { name: "New Zealand", iso3: "NZL", capital: "Wellington", lat: -41.29, lon: 174.78 },
   RU: { name: "Russia", iso3: "RUS", capital: "Moscow", lat: 55.75, lon: 37.62 },
+  PH: { name: "Philippines", iso3: "PHL", capital: "Manila", lat: 14.6, lon: 120.98 },
+  KR: { name: "South Korea", iso3: "KOR", capital: "Seoul", lat: 37.57, lon: 126.98 },
+  IN: { name: "India", iso3: "IND", capital: "New Delhi", lat: 28.61, lon: 77.21 },
+  ZA: { name: "South Africa", iso3: "ZAF", capital: "Pretoria", lat: -25.75, lon: 28.19 },
+  HR: { name: "Croatia", iso3: "HRV", capital: "Zagreb", lat: 45.81, lon: 15.98 },
+  SE: { name: "Sweden", iso3: "SWE", capital: "Stockholm", lat: 59.33, lon: 18.06 },
+  BE: { name: "Belgium", iso3: "BEL", capital: "Brussels", lat: 50.85, lon: 4.35 },
+  HU: { name: "Hungary", iso3: "HUN", capital: "Budapest", lat: 47.5, lon: 19.04 },
 };
 
 async function getJson(url) {

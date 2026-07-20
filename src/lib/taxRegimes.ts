@@ -438,6 +438,31 @@ export const TAX_REGIMES: Record<string, TaxRegime[]> = {
       verified: V,
     },
   ],
+  sweden: [
+    {
+      name: "Expert tax relief (expertskatt)",
+      headline: "25% of salary tax-exempt · up to 7 years",
+      detail:
+        "For foreign experts, researchers and key employees; qualify either on specialist competence or a monthly salary threshold, as decided by the Taxation of Research Workers Board (Forskarskattenämnden).",
+      status: "active",
+      sourceUrl: "https://www.skatteverket.se/",
+      sourceLabel: "Skatteverket",
+      verified: V,
+    },
+  ],
+  belgium: [
+    {
+      name: "Inbound taxpayers & researchers regime",
+      headline: "Up to 30% of gross salary as a tax-free expat allowance",
+      detail:
+        "For qualifying employees and directors recruited from abroad (subject to a gross-salary threshold) and inbound researchers; introduced by the 2022 reform that replaced the old expat circular.",
+      status: "changed",
+      statusNote: "Replaced the pre-2022 expat regime",
+      sourceUrl: "https://finances.belgium.be/",
+      sourceLabel: "SPF Finances",
+      verified: V,
+    },
+  ],
 };
 
 const BY_NORM: Record<string, TaxRegime[]> = Object.fromEntries(
