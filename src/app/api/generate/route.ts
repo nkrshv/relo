@@ -360,7 +360,7 @@ async function insertGenkiInsuranceBlock(
     category: "Health",
     deadline: "Before departure",
     affiliate: [{ label: "Genki", url: offer ? offer.url : genkiAffiliateUrl() }],
-    affiliateLabel: "Partner offer:",
+    affiliateLabel: "Nomad health insurance:",
   });
 }
 
