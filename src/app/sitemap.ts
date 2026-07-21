@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { DESTINATIONS } from "@/lib/countries";
 import { allCostCityParams } from "@/lib/costOfLiving";
+import { allGlossarySlugs } from "@/lib/glossary";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://reloka.to";
@@ -53,5 +54,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
         priority: 0.6,
       })),
     ),
+    {
+      url: `${SITE_URL}/glossary`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    },
+    ...allGlossarySlugs().map((slug) => ({
+      url: `${SITE_URL}/glossary/${slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.55,
+    })),
   ];
 }

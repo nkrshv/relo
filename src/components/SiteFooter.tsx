@@ -27,6 +27,12 @@ export default function SiteFooter() {
             Compare countries
           </Link>
           <Link
+            href="/glossary"
+            className="text-stone-500 transition-colors hover:text-stone-900"
+          >
+            Glossary
+          </Link>
+          <Link
             href="/legal/privacy-policy"
             className="text-stone-500 transition-colors hover:text-stone-900"
           >
