@@ -107,7 +107,7 @@ export function costFaqFor(
   const family = capital?.monthlyBudgetFamily4;
   const budgetAnswer =
     capital && single
-      ? `A single person needs roughly ${formatRange(single.usd, "USD")} a month in ${capital.city}, including mid-range rent${family ? `, and a family of four around ${formatRange(family.usd, "USD")}` : ""} (${formatMonth(detail!.asOf)}). Costs vary by city and district — see the monthly breakdown below, then generate a free plan above for a budget matched to your exact city, household and priorities.`
+      ? `In ${capital.city}, expect roughly ${formatRange(single.usd, "USD")} a month in living costs for a single person${family ? `, and about ${formatRange(family.usd, "USD")} for a family of four` : ""}, excluding rent (${formatMonth(detail!.asOf)}). Add rent from the table below — a one-bed typically runs ${capital.rent1brCenter ? formatRange(capital.rent1brCenter.usd, "USD") : "the amounts shown"} in the centre. Costs vary by district, so generate a free plan above for a budget matched to your exact city, household and priorities.`
       : `It depends on the city, whether you rent in the centre, and your lifestyle. Use the figures on this page as a starting point, then generate a free plan above — it estimates a budget for your exact destination city, household size and priorities.`;
   const faqs: { q: string; a: string }[] = [
     {

@@ -68,7 +68,7 @@ export default function CityBudget({
           {city.monthlyBudgetSingle && (
             <div className="rounded-lg bg-stone-50 px-4 py-3">
               <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
-                Monthly budget · single
+                Living costs · single (excl. rent)
               </p>
               <p className="tnum mt-0.5 text-base font-semibold text-stone-900">
                 {formatRange(city.monthlyBudgetSingle.usd, "USD")}
@@ -78,7 +78,7 @@ export default function CityBudget({
           {city.monthlyBudgetFamily4 && (
             <div className="rounded-lg bg-stone-50 px-4 py-3">
               <p className="text-[10px] font-medium uppercase tracking-wider text-stone-500">
-                Monthly budget · family of four
+                Living costs · family of four (excl. rent)
               </p>
               <p className="tnum mt-0.5 text-base font-semibold text-stone-900">
                 {formatRange(city.monthlyBudgetFamily4.usd, "USD")}

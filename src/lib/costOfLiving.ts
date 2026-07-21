@@ -40,9 +40,9 @@ export interface CityCost {
   mealInexpensive?: MoneyRange;
   mealMidForTwo?: MoneyRange;
   publicTransportPass?: MoneyRange;
-  /** Realistic all-in monthly budget for one adult (incl. mid-range rent). */
+  /** Monthly living costs for one adult, EXCLUDING rent (rent is shown separately). */
   monthlyBudgetSingle?: MoneyRange;
-  /** Realistic all-in monthly budget for a family of four. */
+  /** Monthly living costs for a family of four, EXCLUDING rent. */
   monthlyBudgetFamily4?: MoneyRange;
 }
 
@@ -720,8 +720,6 @@ const COST_DETAIL: Record<string, CountryCost> = {
         mealInexpensive: { local: [35, 55], usd: [9, 14] },
         mealMidForTwo: { local: [160, 240], usd: [40, 60] },
         publicTransportPass: { local: [120, 160], usd: [30, 40] },
-        monthlyBudgetSingle: { local: [900, 1300], usd: [225, 325] },
-        monthlyBudgetFamily4: { local: [2800, 3800], usd: [700, 950] },
       },
       {
         city: "Krakow",
@@ -736,8 +734,6 @@ const COST_DETAIL: Record<string, CountryCost> = {
         mealInexpensive: { local: [30, 50], usd: [8, 13] },
         mealMidForTwo: { local: [150, 230], usd: [38, 58] },
         publicTransportPass: { local: [100, 150], usd: [25, 38] },
-        monthlyBudgetSingle: { local: [850, 1200], usd: [210, 300] },
-        monthlyBudgetFamily4: { local: [2600, 3600], usd: [650, 900] },
       },
     ],
     privateHealthInsuranceMonthUsd: { low: 40, high: 120, note: "Private packages on top of the public NFZ system; adult 30–45." },
