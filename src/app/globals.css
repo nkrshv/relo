@@ -13,6 +13,12 @@
  * Icons: use the canonical set in @/components/icons (24x24 grid, stroke 1.5).
  * Domain glyph families that stay local (country-snapshot cells) use the same
  * 1.5 stroke weight.
+ *
+ * Container width ladder (page sections, all `mx-auto px-4`):
+ *   max-w-3xl -> heroes and reading-width / prose-heavy content (SEO, legal)
+ *   max-w-5xl -> wide content: feature rows, card/fact grids, tables, bento
+ * Section headers are left-aligned `h2 text-2xl font-semibold tracking-tight`;
+ * only page heroes are centered (`text-center`).
  */
 
 :root {
@@ -20,6 +26,16 @@
   --foreground: #1c1917;
   /* Keyboard focus ring, warm stone to match the palette. */
   --focus-ring: #44403c; /* stone-700 */
+
+  /*
+   * Motion tokens. One easing signature for entrance/settle ("soft ease-out")
+   * and a small duration ladder. Continuous/looping decorative motion (the
+   * pipeline diagram, caret, shimmer) keeps its own timing.
+   */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.2s; /* fades, small state changes */
+  --dur-base: 0.3s; /* status swaps, collapses */
+  --dur-slow: 0.5s; /* draw-in / progress fills */
 }
 
 @theme inline {
@@ -28,8 +44,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --animate-fade-in: fade-in 0.2s ease both;
-  --animate-rise-in: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in var(--dur-fast) ease both;
+  --animate-rise-in: rise-in 0.6s var(--ease-out-soft) both;
   --animate-shimmer: shimmer 1.4s linear infinite;
 }
 
@@ -150,7 +166,7 @@ details:focus-visible,
   inset: 0;
   border-radius: 9999px;
   background: #059669;
-  animation: pulse-halo 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation: pulse-halo 2.4s var(--ease-out-soft) infinite;
 }
 
 @keyframes pulse-halo {
@@ -202,7 +218,7 @@ details:focus-visible,
   transform-origin: top;
 }
 .timeline-assemble {
-  animation: timeline-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: timeline-draw 0.9s var(--ease-out-soft) both;
 }
 
 @keyframes timeline-draw {
@@ -370,7 +386,7 @@ details:focus-visible,
 /* Checklist rows settle into place one after another, so the plan reads as if
    it assembles itself. Delay is set inline per row and capped in JS. */
 .assemble {
-  animation: assemble-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: assemble-in 0.45s var(--ease-out-soft) both;
 }
 @keyframes assemble-in {
   from {
@@ -386,10 +402,10 @@ details:focus-visible,
 /* Loading status line: the outgoing message drifts up and out while the next
    one drifts in, so lines advance instead of popping. */
 .msg-in {
-  animation: msg-in 0.3s ease both;
+  animation: msg-in var(--dur-base) ease both;
 }
 .msg-out {
-  animation: msg-out 0.3s ease both;
+  animation: msg-out var(--dur-base) ease both;
 }
 @keyframes msg-in {
   from {
@@ -416,7 +432,7 @@ details:focus-visible,
 .draw-check {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: draw-check 0.5s ease-out 0.05s forwards;
+  animation: draw-check var(--dur-slow) ease-out 0.05s forwards;
 }
 @keyframes draw-check {
   to {
@@ -448,9 +464,9 @@ details:focus-visible,
   overflow: hidden;
   opacity: 0;
   transition:
-    block-size 0.3s ease,
-    opacity 0.3s ease,
-    content-visibility 0.3s allow-discrete;
+    block-size var(--dur-base) ease,
+    opacity var(--dur-base) ease,
+    content-visibility var(--dur-base) allow-discrete;
 }
 .faq-details[open]::details-content {
   block-size: auto;
