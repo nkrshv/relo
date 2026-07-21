@@ -33,6 +33,10 @@ export default function SavedPlan({
   shareUrl,
 }: Props) {
   const router = useRouter();
+  // The SSR page only sends the free preview for an unpaid plan; once payment
+  // is confirmed we swap in the full plan the poll returns, so unlocking
+  // reveals the real phases without a full reload.
+  const [planState, setPlanState] = useState(plan);
   const [unlocked, setUnlocked] = useState(paid);
   const [unlocking, setUnlocking] = useState(false);
   const [confirming, setConfirming] = useState(false);
@@ -68,9 +72,13 @@ export default function SavedPlan({
       try {
         const res = await fetch(`/api/plan/${slug}`, { cache: "no-store" });
         if (res.ok) {
-          const data = (await res.json()) as { paid?: boolean };
+          const data = (await res.json()) as {
+            paid?: boolean;
+            plan?: ReloPlan;
+          };
           if (data.paid) {
             if (!cancelled) {
+              if (data.plan) setPlanState(data.plan);
               setUnlocked(true);
               setConfirming(false);
               track("Plan Unlocked");
@@ -151,7 +159,7 @@ export default function SavedPlan({
       )}
       <ChecklistView
         input={input}
-        plan={plan}
+        plan={planState}
         visa={visa}
         unlocked={unlocked}
         unlocking={unlocking}

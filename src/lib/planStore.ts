@@ -1,6 +1,11 @@
 import { randomBytes } from "node:crypto";
 import { kvGetJson, kvSetJson } from "@/lib/ratelimit";
-import type { ReloInput, ReloPlan, VisaSummary } from "@/lib/types";
+import type {
+  ChecklistItem,
+  ReloInput,
+  ReloPlan,
+  VisaSummary,
+} from "@/lib/types";
 
 // A saved plan is addressed by an unguessable slug: the link IS the key
 // (a capability link). Anyone with the link can read the plan, so the slug
@@ -21,6 +26,11 @@ export interface StoredPlan {
 // What a GET /api/plan/[slug] caller is allowed to see: everything except the
 // buyer email, so sharing the link never leaks the purchaser's address.
 export type PublicPlan = Omit<StoredPlan, "email" | "emailedAt">;
+
+// Freemium: only the first phase ("Before you go") is a free preview. Every
+// later phase is paid content and must never leave the server for an unpaid
+// caller — the browser-side blur is presentation only, not access control.
+const FREE_PHASE_COUNT = 1;
 
 const KEY_PREFIX = "relo:plan:";
 const PROGRESS_PREFIX = "relo:progress:";
@@ -151,11 +161,55 @@ export async function saveProgress(
   return progress;
 }
 
-// Whitelist the fields safe to hand back to the browser (drops the email).
+// Real paywall only exists once Lemon Squeezy is configured; without it the app
+// stays fully demoable (checkout returns a dev-unlock), so plans are served in
+// full rather than teasing content that can never be unlocked.
+export function paymentsConfigured(): boolean {
+  return Boolean(
+    process.env.LEMONSQUEEZY_API_KEY &&
+      process.env.LEMONSQUEEZY_STORE_ID &&
+      process.env.LEMONSQUEEZY_VARIANT_ID,
+  );
+}
+
+// A locked phase is reduced to blank placeholder rows: the count survives so
+// the preview can honestly say how much more the plan holds, but no task title,
+// reason, step, link or tip ever reaches an unpaid browser.
+function lockedPlaceholder(): ChecklistItem {
+  return {
+    title: "Unlock the full plan to see this step",
+    why: "",
+    category: "",
+  };
+}
+
+// The free preview: the first phase in full, later phases stripped to
+// placeholder rows. This is what an unpaid caller is allowed to receive.
+export function previewPlan(plan: ReloPlan): ReloPlan {
+  return {
+    ...plan,
+    phases: plan.phases.map((phase, i) =>
+      i < FREE_PHASE_COUNT
+        ? phase
+        : { ...phase, items: phase.items.map(() => lockedPlaceholder()) },
+    ),
+  };
+}
+
+// The plan a browser may see for this record: the full plan when paid (or when
+// no paywall is configured), otherwise the free preview. This is the single
+// server-side access-control boundary for paid phases.
+export function visiblePlan(record: StoredPlan): ReloPlan {
+  if (record.paid || !paymentsConfigured()) return record.plan;
+  return previewPlan(record.plan);
+}
+
+// Whitelist the fields safe to hand back to the browser (drops the email) and
+// redacts paid phases for unpaid callers.
 export function toPublicPlan(record: StoredPlan): PublicPlan {
   return {
     input: record.input,
-    plan: record.plan,
+    plan: visiblePlan(record),
     visa: record.visa,
     createdAt: record.createdAt,
     paid: record.paid,

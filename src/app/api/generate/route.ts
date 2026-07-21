@@ -14,7 +14,8 @@ import {
   clientIp,
   limiterConfigured,
 } from "@/lib/ratelimit";
-import { mintSlug, savePlan } from "@/lib/planStore";
+import { mintSlug, savePlan, visiblePlan } from "@/lib/planStore";
+import type { StoredPlan } from "@/lib/planStore";
 import {
   insightsForCountry,
   climateSummary,
@@ -885,18 +886,22 @@ async function respondWithPlan(
   plan: ReloPlan,
   visa: VisaSummary | null,
 ): Promise<Response> {
-  let slug: string | undefined;
   if (limiterConfigured()) {
-    slug = mintSlug();
-    await savePlan(slug, {
+    const slug = mintSlug();
+    // The full plan is persisted server-side; a freshly generated plan is
+    // unpaid, so the browser only receives the free preview. Paid phases are
+    // handed back later by GET /api/plan/[slug] once the plan is paid.
+    const record: StoredPlan = {
       input,
       plan,
       visa,
       createdAt: new Date().toISOString(),
       paid: false,
-    });
+    };
+    await savePlan(slug, record);
+    return Response.json({ input, plan: visiblePlan(record), visa, slug });
   }
-  return Response.json({ input, plan, visa, slug });
+  return Response.json({ input, plan, visa });
 }
 
 export async function POST(req: NextRequest) {
