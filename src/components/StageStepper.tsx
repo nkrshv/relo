@@ -1,5 +1,7 @@
 "use client";
 
+import { CheckIcon } from "@/components/icons";
+
 const STAGES = ["Your move", "Building your plan", "Your checklist"];
 
 interface Props {
@@ -34,22 +36,7 @@ export default function StageStepper({ current }: Props) {
                         : "border-stone-200 bg-white text-stone-500"
                   }`}
                 >
-                  {done ? (
-                    <svg
-                      viewBox="0 0 16 16"
-                      className="h-3.5 w-3.5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden
-                    >
-                      <path d="M3.5 8.5 6.5 11.5 12.5 4.5" />
-                    </svg>
-                  ) : (
-                    step
-                  )}
+                  {done ? <CheckIcon className="h-3.5 w-3.5" /> : step}
                 </span>
                 {/* Weight stays constant so label widths never shift between stages. */}
                 <span

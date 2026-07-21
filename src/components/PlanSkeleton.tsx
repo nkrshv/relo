@@ -36,7 +36,7 @@ function SkeletonRow({ titleWidth }: { titleWidth: string }) {
   return (
     <li className="rounded-lg border border-stone-200 bg-white p-4">
       <div className="flex items-start gap-3">
-        <span className="mt-0.5 h-[18px] w-[18px] shrink-0 rounded border border-stone-200 bg-stone-100" />
+        <span className="mt-0.5 h-[18px] w-[18px] shrink-0 rounded-md border border-stone-200 bg-stone-100" />
         <div className="min-w-0 flex-1">
           <span className={`skeleton block h-3.5 rounded ${titleWidth}`} />
           <span className="skeleton mt-2 block h-2.5 w-24 rounded" />

@@ -1,9 +1,41 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/*
+ * Shape scale (radius). One ladder, applied consistently:
+ *   rounded-md   -> chips, tags, badges, checkboxes, small toggle buttons, tooltips
+ *   rounded-lg   -> inputs, buttons, cards, panels, dropdown menus, list containers
+ *   rounded-xl   -> large outer surfaces (form container, feature cards, tables, banners)
+ *   rounded-full -> pills, dots, avatars, circular badges, progress bars/spinners
+ * Documented exceptions: skeleton/text-line placeholders use `rounded` so they
+ * read as text; the hero highlight is decorative; `rounded-t` is structural.
+ *
+ * Icons: use the canonical set in @/components/icons (24x24 grid, stroke 1.5).
+ * Domain glyph families that stay local (country-snapshot cells) use the same
+ * 1.5 stroke weight.
+ *
+ * Container width ladder (page sections, all `mx-auto px-4`):
+ *   max-w-3xl -> heroes and reading-width / prose-heavy content (SEO, legal)
+ *   max-w-5xl -> wide content: feature rows, card/fact grids, tables, bento
+ * Section headers are left-aligned `h2 text-2xl font-semibold tracking-tight`;
+ * only page heroes are centered (`text-center`).
+ */
+
 :root {
   --background: #fbfbfa;
   --foreground: #1c1917;
+  /* Keyboard focus ring, warm stone to match the palette. */
+  --focus-ring: #44403c; /* stone-700 */
+
+  /*
+   * Motion tokens. One easing signature for entrance/settle ("soft ease-out")
+   * and a small duration ladder. Continuous/looping decorative motion (the
+   * pipeline diagram, caret, shimmer) keeps its own timing.
+   */
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.2s; /* fades, small state changes */
+  --dur-base: 0.3s; /* status swaps, collapses */
+  --dur-slow: 0.5s; /* draw-in / progress fills */
 }
 
 @theme inline {
@@ -12,8 +44,8 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --animate-fade-in: fade-in 0.2s ease both;
-  --animate-rise-in: rise-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in: fade-in var(--dur-fast) ease both;
+  --animate-rise-in: rise-in 0.6s var(--ease-out-soft) both;
   --animate-shimmer: shimmer 1.4s linear infinite;
 }
 
@@ -76,6 +108,24 @@ a.pressable:active {
   transform: scale(0.98);
 }
 
+/*
+ * One consistent keyboard focus ring across every interactive control
+ * (WCAG 2.4.7). Only shows for keyboard/AT users via :focus-visible, never on
+ * mouse click. Text fields (input/select/textarea) are excluded here because
+ * they carry their own visible focus styling; adding the outline would double
+ * the ring.
+ */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+details:focus-visible,
+[role="button"]:focus-visible,
+[role="menuitem"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
 /* Ultra-diffuse hover lift for cards. */
 .card-lift {
   transition: box-shadow 0.2s ease;
@@ -116,7 +166,7 @@ a.pressable:active {
   inset: 0;
   border-radius: 9999px;
   background: #059669;
-  animation: pulse-halo 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  animation: pulse-halo 2.4s var(--ease-out-soft) infinite;
 }
 
 @keyframes pulse-halo {
@@ -168,7 +218,7 @@ a.pressable:active {
   transform-origin: top;
 }
 .timeline-assemble {
-  animation: timeline-draw 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: timeline-draw 0.9s var(--ease-out-soft) both;
 }
 
 @keyframes timeline-draw {
@@ -193,8 +243,8 @@ a.pressable:active {
 }
 
 /* Pipeline diagram. One shared 5.5s loop drives every part so it reads as
-   cause and effect: source dots converge on the central plan card as a wave,
-   the card ripples and pulses when they land, then the plan's checks draw in. */
+   cause and effect: source dots ride in as a wave, the node sparks and ripples
+   when they land, then a dot ships out and the plan's checks draw in. */
 .flow-dot {
   offset-rotate: 0deg;
   offset-distance: 0%;
@@ -219,12 +269,37 @@ a.pressable:active {
     opacity: 0;
   }
 }
-.plan-card-pulse {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: card-pulse 5.5s ease-in-out infinite;
+.flow-dot-out {
+  offset-rotate: 0deg;
+  offset-distance: 0%;
+  opacity: 0;
+  animation: flow-out 5.5s ease-in-out infinite;
 }
-@keyframes card-pulse {
+@keyframes flow-out {
+  0%,
+  45% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  48% {
+    opacity: 1;
+  }
+  60% {
+    offset-distance: 100%;
+    opacity: 1;
+  }
+  63%,
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+.pipeline-node {
+  animation: node-pulse 5.5s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes node-pulse {
   0%,
   30%,
   55%,
@@ -232,28 +307,59 @@ a.pressable:active {
     transform: scale(1);
   }
   40% {
-    transform: scale(1.02);
+    transform: scale(1.1);
   }
 }
-.plan-ripple {
-  opacity: 0;
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: card-ripple 5.5s ease-out infinite;
+.node-spark {
+  animation: node-spark 5.5s ease-in-out infinite;
 }
-@keyframes card-ripple {
+@keyframes node-spark {
   0%,
   30% {
-    transform: scale(0.97);
+    opacity: 0.55;
+    transform: scale(1) rotate(0deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.25) rotate(45deg);
+  }
+  55%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1) rotate(90deg);
+  }
+}
+.node-ripple {
+  opacity: 0;
+  animation: node-ripple 5.5s ease-out infinite;
+}
+@keyframes node-ripple {
+  0%,
+  32% {
+    r: 24;
     opacity: 0;
   }
   38% {
-    opacity: 0.55;
+    opacity: 0.5;
   }
   58%,
   100% {
-    transform: scale(1.08);
+    r: 42;
     opacity: 0;
+  }
+}
+.plan-line {
+  opacity: 0.35;
+  animation: plan-row 5.5s ease-out infinite;
+}
+@keyframes plan-row {
+  0%,
+  58% {
+    opacity: 0.35;
+  }
+  70%,
+  100% {
+    opacity: 1;
   }
 }
 .plan-check {
@@ -272,27 +378,6 @@ a.pressable:active {
   }
 }
 
-/* Checkbox fills from unchecked (white) to checked (stone-900) as the wave
-   lands, in step with the check drawing in. */
-.plan-box {
-  fill: #fff;
-  stroke: var(--color-stone-300);
-  stroke-width: 1;
-  animation: plan-box-check 5.5s ease-out infinite;
-}
-@keyframes plan-box-check {
-  0%,
-  58% {
-    fill: #fff;
-    stroke: var(--color-stone-300);
-  }
-  72%,
-  100% {
-    fill: var(--color-stone-900);
-    stroke: var(--color-stone-900);
-  }
-}
-
 /* Subtle content fade helper. */
 .reveal {
   animation: var(--animate-fade-in);
@@ -301,7 +386,7 @@ a.pressable:active {
 /* Checklist rows settle into place one after another, so the plan reads as if
    it assembles itself. Delay is set inline per row and capped in JS. */
 .assemble {
-  animation: assemble-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: assemble-in 0.45s var(--ease-out-soft) both;
 }
 @keyframes assemble-in {
   from {
@@ -317,10 +402,10 @@ a.pressable:active {
 /* Loading status line: the outgoing message drifts up and out while the next
    one drifts in, so lines advance instead of popping. */
 .msg-in {
-  animation: msg-in 0.3s ease both;
+  animation: msg-in var(--dur-base) ease both;
 }
 .msg-out {
-  animation: msg-out 0.3s ease both;
+  animation: msg-out var(--dur-base) ease both;
 }
 @keyframes msg-in {
   from {
@@ -347,7 +432,7 @@ a.pressable:active {
 .draw-check {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: draw-check 0.5s ease-out 0.05s forwards;
+  animation: draw-check var(--dur-slow) ease-out 0.05s forwards;
 }
 @keyframes draw-check {
   to {
@@ -379,9 +464,9 @@ a.pressable:active {
   overflow: hidden;
   opacity: 0;
   transition:
-    block-size 0.3s ease,
-    opacity 0.3s ease,
-    content-visibility 0.3s allow-discrete;
+    block-size var(--dur-base) ease,
+    opacity var(--dur-base) ease,
+    content-visibility var(--dur-base) allow-discrete;
 }
 .faq-details[open]::details-content {
   block-size: auto;
@@ -412,26 +497,26 @@ a.pressable:active {
     animation: none !important;
     stroke-dashoffset: 0;
   }
-  .flow-dot {
+  .flow-dot,
+  .flow-dot-out {
     animation: none !important;
     opacity: 0;
   }
-  .plan-card-pulse {
+  .pipeline-node,
+  .node-spark {
     animation: none !important;
-    transform: none;
   }
-  .plan-ripple {
+  .node-ripple {
     animation: none !important;
     opacity: 0;
+  }
+  .plan-line {
+    animation: none !important;
+    opacity: 1;
   }
   .plan-check {
     animation: none !important;
     stroke-dashoffset: 0;
-  }
-  .plan-box {
-    animation: none !important;
-    fill: var(--color-stone-900);
-    stroke: var(--color-stone-900);
   }
   .timeline-ink,
   .timeline-assemble {
@@ -451,7 +536,8 @@ a.pressable:active {
   .reveal,
   .rise,
   .assemble,
-  .msg-in {
+  .msg-in,
+  .plan-line {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

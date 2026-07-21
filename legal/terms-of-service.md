@@ -1,6 +1,9 @@
 # Terms of Service
 
-**Last updated: 10 July 2026**
+**Last updated: 20 July 2026**
+
+> In these Terms, references to "Reloka", "we", "us", and "our" include the individual operator personally and anyone acting on our behalf.
+
 
 These Terms of Service ("Terms") govern your access to and use of reloka.to and the relocation-planning service provided there (the "Service"), operated by a private individual based in Utrecht, the Netherlands ("Reloka", "we", "us", or "our"). Please read them carefully.
 
@@ -22,7 +25,8 @@ You must be at least **16** years old (or **13** in the United States, where per
 
 The Service does not require an account or sign-up. As a result:
 - You are solely responsible for the information you submit and for how you use the plan we generate.
-- Your generated plan is stored in **your own browser's local storage**; you bear the risk of losing it if you clear your browser data or switch devices.
+- When your plan is generated we save it on our servers, addressed by a long, unguessable **capability link** — the link itself is the key. Anyone who has the link can open the plan and update its checklist progress; anyone without it cannot. **Keep your link private if you do not want others to see your plan.** A copy is also cached in your browser's local storage.
+- If you buy the full plan, we email your permanent link to the address from your payment so you can reopen it from any device. Unpaid plans are deleted after about 30 days and paid plans after about 3 years (see our Privacy Policy).
 
 ## 5. Acceptable Use
 
@@ -42,7 +46,7 @@ You agree not to:
 
 ## 6. Your Content
 
-You retain ownership of the information you submit ("Your Content"). You grant us a **limited, non-exclusive, request-scoped license** to process Your Content to generate and return your plan, and to transmit it to our AI provider (OpenAI) for that purpose. We do **not** retain Your Content in a user account (there are none). Because we have enabled OpenAI's input/output sharing, **Your Content and the generated plan may be used by OpenAI to develop and improve its services, including training its models**, under OpenAI's terms (see our Privacy Policy §4). Please do not submit sensitive personal information in free-text fields. You warrant that you have the right to submit Your Content and that doing so does not violate any law or third-party right.
+You retain ownership of the information you submit ("Your Content"). You grant us a **limited, non-exclusive license** to process and store Your Content to generate, save, and return your plan, and to transmit it to our AI provider (OpenAI) for that purpose. We store Your Content server-side under your unguessable capability link (not in a user account \u2014 there are none), as described in §4 and our Privacy Policy. Because we have enabled OpenAI's input/output sharing, **Your Content and the generated plan may be used by OpenAI to develop and improve its services, including training its models**, under OpenAI's terms (see our Privacy Policy §4). Please do not submit sensitive personal information in free-text fields. You warrant that you have the right to submit Your Content and that doing so does not violate any law or third-party right.
 
 ## 7. Generated Output
 
@@ -60,14 +64,15 @@ The plan is produced by **probabilistic AI models** and may contain inaccuracies
 
 The Service relies on third parties whose terms also apply to your use:
 - **OpenAI** (AI generation of plan text): https://openai.com/policies
-- **Stripe** (payment processing): https://stripe.com/legal
-- **Vercel** (hosting and delivery): https://vercel.com/legal
-- **Google** (analytics/tag management): https://policies.google.com/terms
+- **Lemon Squeezy** (payment processing, Merchant of Record): https://www.lemonsqueezy.com/terms
+- **Resend** (plan-link email delivery): https://resend.com/legal/terms-of-service
+- **Vercel** (hosting, storage and delivery): https://vercel.com/legal
+- **Mixpanel / Google** (consent-gated analytics and tag management): https://mixpanel.com/legal/terms-of-use / https://policies.google.com/terms
 
 ## 10. Purchases, Pricing and Payment
 
 - The full personalized plan is available for a **one-time fee of USD $9** (or the price shown at checkout). Prices may change, but the price shown at the time of your purchase applies to that purchase.
-- Payments are processed by **Stripe**. We do not receive or store your card details.
+- Payments are processed by **Lemon Squeezy**, which acts as Merchant of Record. We do not receive or store your card details.
 - Applicable taxes may be added at checkout.
 - This is a **one-time purchase**; there is no subscription and no recurring billing.
 
@@ -79,7 +84,7 @@ Refunds are governed by our **[Refund Policy](./refund-policy.md)**, which forms
 
 - **What you receive:** upon successful payment, your full personalized relocation plan is **unlocked and delivered instantly** within the Service (in your browser). No physical goods are shipped.
 - **Delivery method and time:** electronic, effectively immediate. If generation is delayed or fails, we will re-deliver the plan or, where we cannot, refund you under the Refund Policy.
-- **Access:** the unlocked plan is available to you in your browser session; because there are no accounts, we recommend saving or exporting your plan.
+- **Access:** the unlocked plan is available in your browser and at your permanent capability link, which we also email to you after purchase; because there are no accounts, keep that link (and consider exporting your plan) so you can return to it.
 - **Support:** for any fulfillment issue, contact **support@reloka.to** and we will resolve it promptly.
 
 ## 13. Free Service / No SLA
@@ -98,15 +103,19 @@ We may block IP addresses or sessions that violate §5 (Acceptable Use). Provisi
 
 THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. RELOKA DOES NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, ERROR-FREE, OR SECURE, OR THAT AI-GENERATED OUTPUT WILL BE ACCURATE, COMPLETE, CURRENT, OR SUITABLE FOR YOUR CIRCUMSTANCES.
 
+This disclaimer applies equally to the individual who operates Reloka and to anyone acting on our behalf, in their personal capacity.
+
 ## 17. Limitation of Liability
 
 TO THE MAXIMUM EXTENT PERMITTED BY LAW, RELOKA WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, DATA, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING FROM OR RELATED TO YOUR USE OF THE SERVICE. OUR TOTAL AGGREGATE LIABILITY FOR ANY CLAIM RELATING TO THE SERVICE IS LIMITED TO THE GREATER OF (A) THE AMOUNT YOU PAID US IN THE 12 MONTHS BEFORE THE CLAIM, OR (B) USD $100.
 
-**Jurisdictional carve-out.** Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities. In those jurisdictions, our liability is limited to the maximum extent permitted by law, and the above limitations may not apply to you.
+**No personal liability.** TO THE MAXIMUM EXTENT PERMITTED BY LAW, THIS LIABILITY CAP AND THESE EXCLUSIONS APPLY NOT ONLY TO RELOKA AS A SERVICE BUT ALSO TO THE **INDIVIDUAL WHO OPERATES IT** AND TO ANY PEOPLE ACTING ON OUR BEHALF (SUCH AS CONTRACTORS OR SERVICE PROVIDERS), IN THEIR PERSONAL CAPACITY. YOU AGREE NOT TO BRING ANY CLAIM PERSONALLY AGAINST THE OPERATOR OR THOSE INDIVIDUALS THAT SEEKS MORE THAN THE CAPPED AMOUNT ABOVE, AND ANY SUCH CLAIM IS SUBJECT TO THE SAME LIMITATIONS AND EXCLUSIONS AS A CLAIM AGAINST RELOKA. This section is intended to benefit those individuals, who may rely on it.
+
+**Jurisdictional carve-out.** Some jurisdictions do not allow the exclusion or limitation of certain warranties or liabilities, and some consumer, statutory, or non-waivable rights (for example, liability for death, personal injury, fraud, or gross negligence) cannot be excluded. In those jurisdictions, our liability is limited to the maximum extent permitted by law, and the above limitations may not apply to you. Nothing here excludes liability that cannot be excluded by law.
 
 ## 18. Indemnity
 
-You agree to indemnify and hold Reloka harmless from any claims, damages, liabilities, and expenses (including reasonable legal fees) arising from Your Content, your use of the generated output, your violation of these Terms, or your violation of any law or third-party right.
+You agree to indemnify and hold Reloka — including the individual operator and anyone acting on our behalf, personally — harmless from any claims, damages, liabilities, and expenses (including reasonable legal fees) arising from Your Content, your use of the generated output, your violation of these Terms, or your violation of any law or third-party right.
 
 ## 19. Governing Law & Venue
 

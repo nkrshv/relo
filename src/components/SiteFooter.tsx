@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CookieSettingsLink from "@/components/CookieSettingsLink";
+import { MailIcon } from "@/components/icons";
 
 export default function SiteFooter() {
   return (
@@ -55,20 +56,7 @@ export default function SiteFooter() {
             aria-label="Email us at hey@reloka.to"
             className="inline-flex items-center text-stone-500 transition-colors hover:text-stone-900"
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <rect x="3" y="5" width="18" height="14" rx="2" />
-              <path d="m3 7 9 6 9-6" />
-            </svg>
+            <MailIcon className="h-4 w-4" />
           </a>
         </nav>
         <p className="max-w-md text-xs leading-relaxed text-stone-500">

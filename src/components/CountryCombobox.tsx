@@ -108,34 +108,38 @@ export default function CountryCombobox({
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
         />
-        {open && results.length > 0 && (
-          <ul
-            id={listId}
-            role="listbox"
-            className="absolute z-30 mt-1.5 max-h-64 w-full overflow-auto rounded-lg border border-stone-200 bg-white p-1 shadow-lg reveal"
-          >
-            {results.map((c, i) => {
-              const isActive = i === active;
-              return (
-                <li
-                  key={c.name}
-                  role="option"
-                  aria-selected={isActive}
-                  onMouseEnter={() => setActive(i)}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    select(c);
-                  }}
-                  className={`flex cursor-pointer items-center gap-2.5 rounded-md px-3 py-1.5 text-sm transition-colors ${
-                    isActive ? "bg-stone-100 text-stone-900" : "text-stone-600"
-                  }`}
-                >
-                  <span className="text-lg leading-none">{c.emoji}</span>
-                  <span>{c.name}</span>
-                </li>
-              );
-            })}
-          </ul>
+        {open && query.trim().length > 0 && (
+          <div className="absolute z-30 mt-1.5 w-full rounded-lg border border-stone-200 bg-white p-1 shadow-lg reveal">
+            {results.length > 0 ? (
+              <ul id={listId} role="listbox" className="max-h-64 overflow-auto">
+                {results.map((c, i) => {
+                  const isActive = i === active;
+                  return (
+                    <li
+                      key={c.name}
+                      role="option"
+                      aria-selected={isActive}
+                      onMouseEnter={() => setActive(i)}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        select(c);
+                      }}
+                      className={`flex cursor-pointer items-center gap-2.5 rounded-md px-3 py-1.5 text-sm transition-colors ${
+                        isActive ? "bg-stone-100 text-stone-900" : "text-stone-600"
+                      }`}
+                    >
+                      <span className="text-lg leading-none">{c.emoji}</span>
+                      <span>{c.name}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <p className="px-3 py-2 text-sm text-stone-500">
+                No country matches “{query.trim()}”.
+              </p>
+            )}
+          </div>
         )}
       </div>
     </div>

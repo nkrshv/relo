@@ -21,6 +21,7 @@ import {
   type CountryCensorship,
 } from "@/lib/countryCensorship";
 import { salaryForCountry, formatSalary } from "@/lib/countrySalaries";
+import { costDetailForSlug, formatRange } from "@/lib/costOfLiving";
 import {
   cryptoShortStatus,
   cryptoTaxForCountry,
@@ -32,6 +33,7 @@ import {
 import { formatMonth, formatDate } from "@/lib/dates";
 import SiteFooter from "@/components/SiteFooter";
 import CompareClimateRows from "@/components/CompareClimateRows";
+import { ChevronDownIcon } from "@/components/icons";
 import { SITE_URL } from "@/lib/siteUrls";
 
 interface Params {
@@ -119,6 +121,16 @@ function buildRows(a: Destination, b: Destination): Row[] {
   const cenB = censorshipForCountry(b.name);
   const salA = salaryForCountry(a.name);
   const salB = salaryForCountry(b.name);
+  const cdA = costDetailForSlug(a.slug);
+  const cdB = costDetailForSlug(b.slug);
+  const budgetCell = (
+    cd: ReturnType<typeof costDetailForSlug>,
+    pick: (c: NonNullable<ReturnType<typeof costDetailForSlug>>["cities"][number]) => { usd: [number, number] } | undefined,
+  ): string | null => {
+    const capital = cd?.cities[0];
+    const m = capital ? pick(capital) : undefined;
+    return m ? `${formatRange(m.usd, "USD")} / mo` : null;
+  };
 
   const messengerSummary = (c: CountryCensorship | null): string | null => {
     if (!c || c.messengers.length === 0) return null;
@@ -167,6 +179,18 @@ function buildRows(a: Destination, b: Destination): Row[] {
       b: insB?.bigMacUsd ? `$${insB.bigMacUsd.value.toFixed(2)}` : null,
       source:
         "The Economist Big Mac index (euro-area countries share one euro-area price)",
+    },
+    {
+      label: "Monthly budget · single (capital)",
+      a: budgetCell(cdA, (c) => c.monthlyBudgetSingle),
+      b: budgetCell(cdB, (c) => c.monthlyBudgetSingle),
+      source: "Reloka cost research, mid-range rent included",
+    },
+    {
+      label: "Monthly budget · family of four (capital)",
+      a: budgetCell(cdA, (c) => c.monthlyBudgetFamily4),
+      b: budgetCell(cdB, (c) => c.monthlyBudgetFamily4),
+      source: "Reloka cost research, mid-range rent included",
     },
     {
       label: "Employment taxes (not your rate)",
@@ -305,6 +329,81 @@ function buildRows(a: Destination, b: Destination): Row[] {
   return rows.filter((r) => r.a !== null || r.b !== null);
 }
 
+interface Verdict {
+  // Reasons to pick each side, derived only from data we already show.
+  aReasons: string[];
+  bReasons: string[];
+  cheaper: { name: string; detail: string } | null;
+}
+
+// A "who this is for" summary built purely from the compared metrics, so the
+// verdict always matches the table (no editorial claims). AI answer engines
+// tend to lift this line directly, so it stays factual and sourced.
+function buildVerdict(a: Destination, b: Destination): Verdict {
+  const aReasons: string[] = [];
+  const bReasons: string[] = [];
+
+  // Cost: cost-index vs USA is the most comparable; fall back to Big Mac.
+  const cdA = costDetailForSlug(a.slug);
+  const cdB = costDetailForSlug(b.slug);
+  const insA = insightsForCountry(a.name);
+  const insB = insightsForCountry(b.name);
+  let cheaper: Verdict["cheaper"] = null;
+  if (cdA?.costIndexVsUsa && cdB?.costIndexVsUsa) {
+    const av = cdA.costIndexVsUsa.value;
+    const bv = cdB.costIndexVsUsa.value;
+    if (av !== bv) {
+      const winner = av < bv ? a : b;
+      cheaper = {
+        name: winner.name,
+        detail: `cost index ${Math.min(av, bv)} vs ${Math.max(av, bv)} (USA = 100)`,
+      };
+    }
+  } else if (insA?.bigMacUsd && insB?.bigMacUsd) {
+    const av = insA.bigMacUsd.value;
+    const bv = insB.bigMacUsd.value;
+    if (av !== bv) {
+      const winner = av < bv ? a : b;
+      cheaper = {
+        name: winner.name,
+        detail: `Big Mac $${Math.min(av, bv).toFixed(2)} vs $${Math.max(av, bv).toFixed(2)}`,
+      };
+    }
+  }
+  if (cheaper) {
+    (cheaper.name === a.name ? aReasons : bReasons).push("lower day-to-day costs");
+  }
+
+  // Climate: sunny days per year, where curated for both.
+  const sunA = insA?.climate.sunnyDays;
+  const sunB = insB?.climate.sunnyDays;
+  if (sunA != null && sunB != null && sunA !== sunB) {
+    (sunA > sunB ? aReasons : bReasons).push("more sunshine");
+  }
+
+  // Employment taxes: OECD tax wedge (lower = lighter).
+  const twA = openDataForCountry(a.name)?.taxWedge?.value;
+  const twB = openDataForCountry(b.name)?.taxWedge?.value;
+  if (twA != null && twB != null && Math.round(twA) !== Math.round(twB)) {
+    (twA < twB ? aReasons : bReasons).push("lighter employment taxes");
+  }
+
+  // Safety: U.S. State Dept advisory level (lower = safer).
+  const advA = advisoryForCountry(a.name)?.level;
+  const advB = advisoryForCountry(b.name)?.level;
+  if (advA != null && advB != null && advA !== advB) {
+    (advA < advB ? aReasons : bReasons).push("a stronger safety rating");
+  }
+
+  return { aReasons, bReasons, cheaper };
+}
+
+// Joins ["x", "y", "z"] into "x, y and z".
+function joinReasons(reasons: string[]): string {
+  if (reasons.length <= 1) return reasons[0] ?? "";
+  return `${reasons.slice(0, -1).join(", ")} and ${reasons[reasons.length - 1]}`;
+}
+
 export default async function ComparePage({
   params,
 }: {
@@ -315,6 +414,21 @@ export default async function ComparePage({
   if (!parsed) notFound();
   const { a, b } = parsed;
   const rows = buildRows(a, b);
+  const verdict = buildVerdict(a, b);
+
+  const faqs: { q: string; a: string }[] = [];
+  if (verdict.cheaper) {
+    faqs.push({
+      q: `Is ${a.name} or ${b.name} cheaper?`,
+      a: `${verdict.cheaper.name} is the cheaper of the two on our comparable cost measure (${verdict.cheaper.detail}). Your real cost depends on the city and lifestyle — see the full table above, then generate a free plan for a budget matched to your exact move.`,
+    });
+  }
+  if (verdict.aReasons.length > 0) {
+    faqs.push({
+      q: `Should I choose ${a.name} over ${b.name}?`,
+      a: `On the data we track, ${a.name} comes out ahead for ${joinReasons(verdict.aReasons)}${verdict.bReasons.length > 0 ? `, while ${b.name} wins on ${joinReasons(verdict.bReasons)}` : ""}. Every figure has a source in the table above.`,
+    });
+  }
 
   // Climate + sunny days: curated where available, otherwise filled live from
   // Open-Meteo on the client (same source the plan uses), so non-curated
@@ -407,6 +521,18 @@ export default async function ComparePage({
         dateModified: OPEN_DATA_UPDATED_AT,
         isPartOf: { "@id": `${SITE_URL}/#website` },
       },
+      ...(faqs.length > 0
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: faqs.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            },
+          ]
+        : []),
     ],
   };
 
@@ -487,20 +613,7 @@ export default async function ComparePage({
                 <div>
                   <p className="flex items-center gap-1 text-sm font-medium text-stone-700">
                     Crypto taxes
-                    <svg
-                      viewBox="0 0 24 24"
-                      aria-hidden
-                      className="h-3.5 w-3.5 text-stone-500 transition-transform group-open:rotate-180"
-                    >
-                      <path
-                        d="m6 9 6 6 6-6"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <ChevronDownIcon className="h-3.5 w-3.5 text-stone-500 transition-transform group-open:rotate-180" />
                   </p>
                   <a
                     href={CRYPTO_TAX_DATASET_URL}
@@ -542,6 +655,61 @@ export default async function ComparePage({
           shown per row.
         </p>
       </section>
+
+      {(verdict.aReasons.length > 0 || verdict.bReasons.length > 0) && (
+        <section className="mx-auto max-w-3xl px-4 pb-10">
+          <div className="rounded-xl border border-stone-200 bg-white p-6">
+            <h2 className="text-xl font-semibold tracking-tight text-stone-900">
+              Bottom line: which should you choose?
+            </h2>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {verdict.aReasons.length > 0 && (
+                <div className="rounded-lg bg-stone-50 px-4 py-3">
+                  <p className="text-sm font-semibold text-stone-900">
+                    Pick {a.emoji} {a.name} if you want
+                  </p>
+                  <p className="mt-1 text-sm text-stone-600">
+                    {joinReasons(verdict.aReasons)}.
+                  </p>
+                </div>
+              )}
+              {verdict.bReasons.length > 0 && (
+                <div className="rounded-lg bg-stone-50 px-4 py-3">
+                  <p className="text-sm font-semibold text-stone-900">
+                    Pick {b.emoji} {b.name} if you want
+                  </p>
+                  <p className="mt-1 text-sm text-stone-600">
+                    {joinReasons(verdict.bReasons)}.
+                  </p>
+                </div>
+              )}
+            </div>
+            <p className="mt-3 text-xs text-stone-500">
+              Based only on the sourced metrics above. Visa eligibility and
+              paperwork depend on your passport — build a free plan for the full
+              picture.
+            </p>
+          </div>
+        </section>
+      )}
+
+      {faqs.length > 0 && (
+        <section className="mx-auto max-w-3xl px-4 pb-10">
+          <h2 className="text-xl font-semibold tracking-tight text-stone-900">
+            Frequently asked questions
+          </h2>
+          <div className="mt-4 divide-y divide-stone-200/70">
+            {faqs.map((f) => (
+              <div key={f.q} className="py-4">
+                <h3 className="text-sm font-semibold text-stone-900">{f.q}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-stone-600">
+                  {f.a}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {regimes.length > 0 && (
         <section className="mx-auto max-w-3xl px-4 pb-10">
