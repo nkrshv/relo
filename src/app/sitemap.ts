@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { DESTINATIONS } from "@/lib/countries";
+import { allCostCityParams } from "@/lib/costOfLiving";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://reloka.to";
@@ -31,6 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.75,
+    })),
+    ...allCostCityParams().map((p) => ({
+      url: `${SITE_URL}/cost-of-living/${p.country}/${p.city}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
     {
       url: `${SITE_URL}/compare`,
