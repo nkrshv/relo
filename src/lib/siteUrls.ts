@@ -1,5 +1,6 @@
 import { DESTINATIONS } from "@/lib/countries";
 import { allCostCityParams } from "@/lib/costOfLiving";
+import { allGlossarySlugs } from "@/lib/glossary";
 import { allRankingSlugs } from "@/lib/rankings";
 
 export const SITE_URL =
@@ -11,8 +12,12 @@ export function allSiteUrls(): string[] {
     SITE_URL,
     `${SITE_URL}/plan`,
     `${SITE_URL}/compare`,
+    `${SITE_URL}/glossary`,
     `${SITE_URL}/best`,
   ];
+  for (const slug of allGlossarySlugs()) {
+    urls.push(`${SITE_URL}/glossary/${slug}`);
+  }
   for (const slug of allRankingSlugs()) {
     urls.push(`${SITE_URL}/best/${slug}`);
   }
