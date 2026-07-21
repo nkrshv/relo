@@ -1,4 +1,5 @@
 import { DESTINATIONS } from "@/lib/countries";
+import { allCostCityParams } from "@/lib/costOfLiving";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://reloka.to";
@@ -9,6 +10,9 @@ export function allSiteUrls(): string[] {
   for (const d of DESTINATIONS) {
     urls.push(`${SITE_URL}/moving-to/${d.slug}`);
     urls.push(`${SITE_URL}/cost-of-living/${d.slug}`);
+  }
+  for (const p of allCostCityParams()) {
+    urls.push(`${SITE_URL}/cost-of-living/${p.country}/${p.city}`);
   }
   for (let i = 0; i < DESTINATIONS.length; i++) {
     for (let j = i + 1; j < DESTINATIONS.length; j++) {

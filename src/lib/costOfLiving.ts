@@ -767,6 +767,36 @@ export function slugsWithCostDetail(): string[] {
   return Object.keys(COST_DETAIL);
 }
 
+/** URL-safe slug for a city name, e.g. "São Paulo" -> "sao-paulo". */
+export function citySlug(city: string): string {
+  return city
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+/** Every (countrySlug, citySlug) that has researched city cost detail. */
+export function allCostCityParams(): { country: string; city: string }[] {
+  const out: { country: string; city: string }[] = [];
+  for (const [slug, cc] of Object.entries(COST_DETAIL)) {
+    for (const c of cc.cities) out.push({ country: slug, city: citySlug(c.city) });
+  }
+  return out;
+}
+
+/** Resolve one city's cost detail (plus its country context) by slug pair. */
+export function cityCostForSlugs(
+  countrySlug: string,
+  city: string,
+): { country: CountryCost; city: CityCost } | null {
+  const country = COST_DETAIL[countrySlug];
+  if (!country) return null;
+  const match = country.cities.find((c) => citySlug(c.city) === city);
+  return match ? { country, city: match } : null;
+}
+
 /** e.g. "$500–$830" or "฿18,000–฿30,000". */
 export function formatRange(
   [low, high]: [number, number],
