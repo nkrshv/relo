@@ -31,6 +31,7 @@ export default function ExportMenu({
   variant = "default",
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,24 +59,33 @@ export default function ExportMenu({
 
   function exportMarkdown() {
     setOpen(false);
-    track("Plan Exported", { format: "markdown" });
-    const md = planToMarkdown(input, plan, visa, { shareUrl });
-    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${planFileStem(input)}.md`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+    setError(null);
+    try {
+      const md = planToMarkdown(input, plan, visa, { shareUrl });
+      const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${planFileStem(input)}.md`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+      track("Plan Exported", { format: "markdown" });
+    } catch {
+      track("Plan Export Failed", { format: "markdown" });
+      setError("Couldn't build the file. Try again.");
+    }
   }
 
   return (
     <div className="relative" ref={ref}>
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => {
+          setError(null);
+          setOpen((v) => !v);
+        }}
         aria-haspopup="menu"
         aria-expanded={open}
         className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${TRIGGER_STYLES[variant]}`}
@@ -110,6 +120,15 @@ export default function ExportMenu({
             Save as Markdown
           </button>
         </div>
+      )}
+
+      {error && (
+        <p
+          role="alert"
+          className="absolute right-0 z-30 mt-1.5 w-52 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700"
+        >
+          {error}
+        </p>
       )}
     </div>
   );
