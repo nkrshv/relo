@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SavedPlan from "@/components/SavedPlan";
 import SiteFooter from "@/components/SiteFooter";
-import { getPlan } from "@/lib/planStore";
+import { getPlan, visiblePlan } from "@/lib/planStore";
 import { SITE_URL } from "@/lib/siteUrls";
 
 // Always render on-demand so the latest saved/paid state is reflected.
@@ -39,7 +39,7 @@ export default async function SavedPlanPage({
         <SavedPlan
           slug={slug}
           input={record.input}
-          plan={record.plan}
+          plan={visiblePlan(record)}
           visa={record.visa}
           paid={record.paid}
           shareUrl={`${SITE_URL}/plan/${slug}`}
