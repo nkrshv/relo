@@ -181,16 +181,16 @@ function buildRows(a: Destination, b: Destination): Row[] {
         "The Economist Big Mac index (euro-area countries share one euro-area price)",
     },
     {
-      label: "Monthly budget · single (capital)",
+      label: "Living costs · single, excl. rent (capital)",
       a: budgetCell(cdA, (c) => c.monthlyBudgetSingle),
       b: budgetCell(cdB, (c) => c.monthlyBudgetSingle),
-      source: "Reloka cost research, mid-range rent included",
+      source: "Reloka cost research, excludes rent",
     },
     {
-      label: "Monthly budget · family of four (capital)",
+      label: "Living costs · family of four, excl. rent (capital)",
       a: budgetCell(cdA, (c) => c.monthlyBudgetFamily4),
       b: budgetCell(cdB, (c) => c.monthlyBudgetFamily4),
-      source: "Reloka cost research, mid-range rent included",
+      source: "Reloka cost research, excludes rent",
     },
     {
       label: "Employment taxes (not your rate)",

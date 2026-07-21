@@ -73,7 +73,7 @@ export default async function CostOfLivingCityPage({
   if (single) {
     faqs.push({
       q: `How much money do I need to live in ${cityName}?`,
-      a: `A single person needs roughly ${formatRange(single.usd, "USD")} a month in ${cityName}, including mid-range rent${family ? `, and a family of four around ${formatRange(family.usd, "USD")}` : ""} (${formatMonth(cc.asOf)}). Your real number depends on the neighbourhood and lifestyle — generate a free plan above for a budget matched to your household and priorities.`,
+      a: `In ${cityName}, expect roughly ${formatRange(single.usd, "USD")} a month in living costs for a single person${family ? `, and about ${formatRange(family.usd, "USD")} for a family of four` : ""}, excluding rent (${formatMonth(cc.asOf)}). Add rent from the breakdown below — a one-bed typically runs ${c.rent1brCenter ? formatRange(c.rent1brCenter.usd, "USD") : "the amounts shown"} in the centre. Generate a free plan above for a budget matched to your household and priorities.`,
     });
   }
   if (c.rent1brCenter && c.rent1brOutside) {
