@@ -29,6 +29,7 @@ export default function CityCombobox({
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState(value);
   const [results, setResults] = useState<CityOption[]>([]);
+  const [loading, setLoading] = useState(false);
   const [active, setActive] = useState(0);
   const rootRef = useRef<HTMLDivElement>(null);
   const listId = useId();
@@ -44,8 +45,10 @@ export default function CityCombobox({
     if (q.length < 2) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setResults([]);
+      setLoading(false);
       return;
     }
+    setLoading(true);
     const timer = setTimeout(() => {
       fetch(
         `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=8&language=en&format=json`,
@@ -63,7 +66,8 @@ export default function CityCombobox({
           setResults(filtered.slice(0, 6));
           setActive(0);
         })
-        .catch(() => setResults([]));
+        .catch(() => setResults([]))
+        .finally(() => setLoading(false));
     }, 250);
     return () => clearTimeout(timer);
   }, [query, country]);
@@ -130,38 +134,47 @@ export default function CityCombobox({
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
         />
-        {open && results.length > 0 && (
-          <ul
-            id={listId}
-            role="listbox"
-            className="absolute z-30 mt-1.5 max-h-64 w-full overflow-auto rounded-lg border border-stone-200 bg-white p-1 shadow-lg reveal"
-          >
-            {results.map((c, i) => {
-              const isActive = i === active;
-              return (
-                <li
-                  key={`${c.name}-${c.admin1 ?? i}`}
-                  role="option"
-                  aria-selected={isActive}
-                  onMouseEnter={() => setActive(i)}
-                  onMouseDown={(e) => {
-                    e.preventDefault();
-                    select(c);
-                  }}
-                  className={`flex cursor-pointer items-center justify-between gap-2.5 rounded-md px-3 py-1.5 text-sm transition-colors ${
-                    isActive ? "bg-stone-100 text-stone-900" : "text-stone-600"
-                  }`}
-                >
-                  <span>{c.name}</span>
-                  {c.admin1 && (
-                    <span className="truncate text-xs text-stone-500">
-                      {c.admin1}
-                    </span>
-                  )}
-                </li>
-              );
-            })}
-          </ul>
+        {open && query.trim().length >= 2 && (
+          <div className="absolute z-30 mt-1.5 w-full rounded-lg border border-stone-200 bg-white p-1 shadow-lg reveal">
+            {results.length > 0 ? (
+              <ul id={listId} role="listbox" className="max-h-64 overflow-auto">
+                {results.map((c, i) => {
+                  const isActive = i === active;
+                  return (
+                    <li
+                      key={`${c.name}-${c.admin1 ?? i}`}
+                      role="option"
+                      aria-selected={isActive}
+                      onMouseEnter={() => setActive(i)}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        select(c);
+                      }}
+                      className={`flex cursor-pointer items-center justify-between gap-2.5 rounded-md px-3 py-1.5 text-sm transition-colors ${
+                        isActive ? "bg-stone-100 text-stone-900" : "text-stone-600"
+                      }`}
+                    >
+                      <span>{c.name}</span>
+                      {c.admin1 && (
+                        <span className="truncate text-xs text-stone-500">
+                          {c.admin1}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : loading ? (
+              <p className="flex items-center gap-2 px-3 py-2 text-sm text-stone-500">
+                <span className="h-3.5 w-3.5 shrink-0 animate-spin rounded-full border-2 border-stone-200 border-t-stone-500" />
+                Searching cities…
+              </p>
+            ) : (
+              <p className="px-3 py-2 text-sm text-stone-500">
+                No matching cities. You can type the name yourself.
+              </p>
+            )}
+          </div>
         )}
       </div>
     </div>
