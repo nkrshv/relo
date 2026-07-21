@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { DESTINATIONS } from "@/lib/countries";
 import { allCostCityParams } from "@/lib/costOfLiving";
 import { allGlossarySlugs } from "@/lib/glossary";
+import { allRankingSlugs } from "@/lib/rankings";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://reloka.to";
@@ -65,6 +66,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.55,
+    })),
+    {
+      url: `${SITE_URL}/best`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    },
+    ...allRankingSlugs().map((slug) => ({
+      url: `${SITE_URL}/best/${slug}`,
+      lastModified: now,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
     })),
   ];
 }

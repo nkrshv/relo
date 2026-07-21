@@ -33,6 +33,12 @@ export default function SiteFooter() {
             Glossary
           </Link>
           <Link
+            href="/best"
+            className="text-stone-500 transition-colors hover:text-stone-900"
+          >
+            Rankings
+          </Link>
+          <Link
             href="/legal/privacy-policy"
             className="text-stone-500 transition-colors hover:text-stone-900"
           >

@@ -1,6 +1,7 @@
 import { DESTINATIONS } from "@/lib/countries";
 import { allCostCityParams } from "@/lib/costOfLiving";
 import { allGlossarySlugs } from "@/lib/glossary";
+import { allRankingSlugs } from "@/lib/rankings";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://reloka.to";
@@ -12,9 +13,13 @@ export function allSiteUrls(): string[] {
     `${SITE_URL}/plan`,
     `${SITE_URL}/compare`,
     `${SITE_URL}/glossary`,
+    `${SITE_URL}/best`,
   ];
   for (const slug of allGlossarySlugs()) {
     urls.push(`${SITE_URL}/glossary/${slug}`);
+  }
+  for (const slug of allRankingSlugs()) {
+    urls.push(`${SITE_URL}/best/${slug}`);
   }
   for (const d of DESTINATIONS) {
     urls.push(`${SITE_URL}/moving-to/${d.slug}`);
